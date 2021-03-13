@@ -120,7 +120,6 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGUARM</Key>
-          <Name>猬fwdQ?dQ?趏Ek</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -170,72 +169,72 @@
         <Ww>
           <count>1</count>
           <WinNumber>2</WinNumber>
-          <ItemText>((TIM_TypeDef *) (((uint32_t)0x40000000) + 0x0400))-&gt;CNT,0x0A</ItemText>
+          <ItemText>spintest,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>2</count>
           <WinNumber>2</WinNumber>
-          <ItemText>spintest,0x0A</ItemText>
+          <ItemText>g_enc_fast_flag</ItemText>
         </Ww>
         <Ww>
           <count>3</count>
           <WinNumber>2</WinNumber>
-          <ItemText>g_enc_fast_flag</ItemText>
+          <ItemText>spinnum,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>4</count>
           <WinNumber>2</WinNumber>
-          <ItemText>spinnum,0x0A</ItemText>
+          <ItemText>Range</ItemText>
         </Ww>
         <Ww>
           <count>5</count>
           <WinNumber>2</WinNumber>
-          <ItemText>Range</ItemText>
+          <ItemText>LoadSave.mode</ItemText>
         </Ww>
         <Ww>
           <count>6</count>
           <WinNumber>2</WinNumber>
-          <ItemText>LoadSave.mode</ItemText>
+          <ItemText>SystemMessage</ItemText>
         </Ww>
         <Ww>
           <count>7</count>
           <WinNumber>2</WinNumber>
-          <ItemText>SystemMessage</ItemText>
+          <ItemText>LoadSave,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>8</count>
           <WinNumber>2</WinNumber>
-          <ItemText>LoadSave,0x0A</ItemText>
+          <ItemText>SoftTimer</ItemText>
         </Ww>
         <Ww>
           <count>9</count>
           <WinNumber>2</WinNumber>
-          <ItemText>SoftTimer</ItemText>
+          <ItemText>UART_Buffer_Rece,0x10</ItemText>
         </Ww>
         <Ww>
           <count>10</count>
           <WinNumber>2</WinNumber>
-          <ItemText>UART_Buffer_Rece,0x10</ItemText>
+          <ItemText>sendbuff</ItemText>
         </Ww>
         <Ww>
           <count>11</count>
           <WinNumber>2</WinNumber>
-          <ItemText>sendbuff</ItemText>
+          <ItemText>UART_Buffer_Size,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>12</count>
           <WinNumber>2</WinNumber>
-          <ItemText>UART_Buffer_Size,0x0A</ItemText>
+          <ItemText>t_USART,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>13</count>
           <WinNumber>2</WinNumber>
-          <ItemText>t_USART,0x0A</ItemText>
+          <ItemText>DispBuf</ItemText>
         </Ww>
         <Ww>
           <count>14</count>
           <WinNumber>2</WinNumber>
-          <ItemText>DispBuf</ItemText>
+          <ItemText>LoadSave.voltage,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>15</count>
@@ -245,70 +244,65 @@
         <Ww>
           <count>16</count>
           <WinNumber>2</WinNumber>
-          <ItemText>LoadSave.voltage,0x0A</ItemText>
+          <ItemText>g_enc_fast_flag</ItemText>
         </Ww>
         <Ww>
           <count>17</count>
           <WinNumber>2</WinNumber>
-          <ItemText>g_enc_fast_flag</ItemText>
+          <ItemText>spinbitmax,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>18</count>
           <WinNumber>2</WinNumber>
-          <ItemText>spinbitmax,0x0A</ItemText>
+          <ItemText>spinbit,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>19</count>
           <WinNumber>2</WinNumber>
-          <ItemText>spinbit,0x0A</ItemText>
+          <ItemText>DispValue.Voltage,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>20</count>
           <WinNumber>2</WinNumber>
-          <ItemText>DispValue.Voltage,0x0A</ItemText>
+          <ItemText>dacvalue[10]</ItemText>
         </Ww>
         <Ww>
           <count>21</count>
           <WinNumber>2</WinNumber>
-          <ItemText>dacvalue[10]</ItemText>
+          <ItemText>dacvalue,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>22</count>
           <WinNumber>2</WinNumber>
-          <ItemText>dacvalue,0x0A</ItemText>
+          <ItemText>mainswitch</ItemText>
         </Ww>
         <Ww>
           <count>23</count>
           <WinNumber>2</WinNumber>
-          <ItemText>mainswitch</ItemText>
+          <ItemText>UART_Buffer_Size,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>24</count>
           <WinNumber>2</WinNumber>
-          <ItemText>UART_Buffer_Size,0x0A</ItemText>
+          <ItemText>setflag</ItemText>
         </Ww>
         <Ww>
           <count>25</count>
           <WinNumber>2</WinNumber>
-          <ItemText>setflag</ItemText>
+          <ItemText>DispValue.listrunstep</ItemText>
         </Ww>
         <Ww>
           <count>26</count>
           <WinNumber>2</WinNumber>
-          <ItemText>DispValue.listrunstep</ItemText>
+          <ItemText>DispValue.listcompres</ItemText>
         </Ww>
         <Ww>
           <count>27</count>
           <WinNumber>2</WinNumber>
-          <ItemText>DispValue.listcompres</ItemText>
-        </Ww>
-        <Ww>
-          <count>28</count>
-          <WinNumber>2</WinNumber>
           <ItemText>DispValue.Current,0x0A</ItemText>
         </Ww>
         <Ww>
-          <count>29</count>
+          <count>28</count>
           <WinNumber>2</WinNumber>
           <ItemText>LoadSave.listhigh[2],0x0A</ItemText>
         </Ww>

@@ -104,8 +104,21 @@ static void USB_OTG_BSP_TimeInit ( void );
 
 void USB_OTG_BSP_Init(USB_OTG_CORE_HANDLE *pdev)
 {
-//  GPIO_InitTypeDef GPIO_InitStructure;
-
+	GPIO_InitTypeDef GPIO_InitStructure;
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA , ENABLE);
+	
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_11 | GPIO_Pin_12;
+	
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
+	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+	GPIO_Init(GPIOA, &GPIO_InitStructure);  
+	
+	GPIO_PinAFConfig(GPIOA,GPIO_PinSource11,GPIO_AF_OTG2_FS) ; 
+	GPIO_PinAFConfig(GPIOA,GPIO_PinSource12,GPIO_AF_OTG2_FS) ;
+	RCC_AHB1PeriphClockCmd( RCC_AHB1Periph_OTG_HS, ENABLE) ; 
+	
 //	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB , ENABLE);
 //	
 //	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_14 | GPIO_Pin_15;
@@ -118,8 +131,8 @@ void USB_OTG_BSP_Init(USB_OTG_CORE_HANDLE *pdev)
 //	GPIO_PinAFConfig(GPIOB,GPIO_PinSource15,GPIO_AF_OTG2_FS) ;
 //	RCC_AHB1PeriphClockCmd( RCC_AHB1Periph_OTG_HS, ENABLE) ; 
 
-//  /* Intialize Timer for delay function */
-//  USB_OTG_BSP_TimeInit();   
+  /* Intialize Timer for delay function */
+    USB_OTG_BSP_TimeInit();   
 }
 /**
   * @brief  USB_OTG_BSP_EnableInterrupt
@@ -177,7 +190,7 @@ static void USB_OTG_BSP_TimeInit ( void )
   NVIC_InitTypeDef NVIC_InitStructure;
   
   /* Set the Vector Table base address at 0x08000000 */
-  NVIC_SetVectorTable(NVIC_VectTab_FLASH, 0x00);
+  NVIC_SetVectorTable(NVIC_VectTab_FLASH, 0x40000);
   
   /* Configure the Priority Group to 2 bits */
   NVIC_PriorityGroupConfig(NVIC_PriorityGroup_0);

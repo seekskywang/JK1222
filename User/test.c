@@ -207,7 +207,7 @@ void Power_Process(void)
 //			SetSystemStatus(SYS_STATUS_TEST);//´ý²â×´Ì¬
 
         
-		key=Key_Read_WithTimeOut(TICKS_PER_SEC_SOFTTIMER/10);//µÈ´ý°´¼ü(100*10ms/10=100ms)
+//		key=Key_Read_WithTimeOut(TICKS_PER_SEC_SOFTTIMER/10);//µÈ´ý°´¼ü(100*10ms/10=100ms)
 
 		switch(key)
 		{

@@ -6,6 +6,9 @@ int main(void)
 {  	
 //	SetSystemStatus(SYS_STATUS_POWER);//开机上电状态
 //    EXTI_Key_Config();
+	NVIC_SetVectorTable(NVIC_VectTab_FLASH, 0x40000);
+//	NVIC_EnableIRQ(MCI_IRQn);
+	__enable_irq();
 	SysTick_Init();
     g_LcdDirection=1;
     softswitch=0;

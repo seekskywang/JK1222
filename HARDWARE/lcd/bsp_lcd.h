@@ -232,16 +232,28 @@ extern Typedf_Disp_Colour Colour;
 #define LTDC_R3_PINSOURCE        	GPIO_PinSource0
 #define LTDC_R3_AF			          GPIO_AF_LTDC_AF9
 
-#define LTDC_R4_GPIO_PORT        	GPIOA
-#define LTDC_R4_GPIO_CLK         	RCC_AHB1Periph_GPIOA
-#define LTDC_R4_GPIO_PIN         	GPIO_Pin_11
-#define LTDC_R4_PINSOURCE        	GPIO_PinSource11
+//#define LTDC_R4_GPIO_PORT        	GPIOA
+//#define LTDC_R4_GPIO_CLK         	RCC_AHB1Periph_GPIOA
+//#define LTDC_R4_GPIO_PIN         	GPIO_Pin_11
+//#define LTDC_R4_PINSOURCE        	GPIO_PinSource11
+//#define LTDC_R4_AF			          GPIO_AF_LTDC
+
+//#define LTDC_R5_GPIO_PORT        	GPIOA
+//#define LTDC_R5_GPIO_CLK         	RCC_AHB1Periph_GPIOA
+//#define LTDC_R5_GPIO_PIN         	GPIO_Pin_12
+//#define LTDC_R5_PINSOURCE        	GPIO_PinSource12
+//#define LTDC_R5_AF			          GPIO_AF_LTDC
+
+#define LTDC_R4_GPIO_PORT        	GPIOH
+#define LTDC_R4_GPIO_CLK         	RCC_AHB1Periph_GPIOH
+#define LTDC_R4_GPIO_PIN         	GPIO_Pin_10
+#define LTDC_R4_PINSOURCE        	GPIO_PinSource10
 #define LTDC_R4_AF			          GPIO_AF_LTDC
 
-#define LTDC_R5_GPIO_PORT        	GPIOA
-#define LTDC_R5_GPIO_CLK         	RCC_AHB1Periph_GPIOA
-#define LTDC_R5_GPIO_PIN         	GPIO_Pin_12
-#define LTDC_R5_PINSOURCE        	GPIO_PinSource12
+#define LTDC_R5_GPIO_PORT        	GPIOH
+#define LTDC_R5_GPIO_CLK         	RCC_AHB1Periph_GPIOH
+#define LTDC_R5_GPIO_PIN         	GPIO_Pin_11
+#define LTDC_R5_PINSOURCE        	GPIO_PinSource11
 #define LTDC_R5_AF			          GPIO_AF_LTDC
 
 #define LTDC_R6_GPIO_PORT        	GPIOB
@@ -656,16 +668,28 @@ typedef struct
 #define LTDC_R3_PINSOURCE        	GPIO_PinSource0
 #define LTDC_R3_AF			          GPIO_AF_LTDC_AF9
 
-#define LTDC_R4_GPIO_PORT        	GPIOA
-#define LTDC_R4_GPIO_CLK         	RCC_AHB1Periph_GPIOA
-#define LTDC_R4_GPIO_PIN         	GPIO_Pin_11
-#define LTDC_R4_PINSOURCE        	GPIO_PinSource11
+//#define LTDC_R4_GPIO_PORT        	GPIOA
+//#define LTDC_R4_GPIO_CLK         	RCC_AHB1Periph_GPIOA
+//#define LTDC_R4_GPIO_PIN         	GPIO_Pin_11
+//#define LTDC_R4_PINSOURCE        	GPIO_PinSource11
+//#define LTDC_R4_AF			          GPIO_AF_LTDC
+
+//#define LTDC_R5_GPIO_PORT        	GPIOA
+//#define LTDC_R5_GPIO_CLK         	RCC_AHB1Periph_GPIOA
+//#define LTDC_R5_GPIO_PIN         	GPIO_Pin_12
+//#define LTDC_R5_PINSOURCE        	GPIO_PinSource12
+//#define LTDC_R5_AF			          GPIO_AF_LTDC
+
+#define LTDC_R4_GPIO_PORT        	GPIOH
+#define LTDC_R4_GPIO_CLK         	RCC_AHB1Periph_GPIOH
+#define LTDC_R4_GPIO_PIN         	GPIO_Pin_10
+#define LTDC_R4_PINSOURCE        	GPIO_PinSource10
 #define LTDC_R4_AF			          GPIO_AF_LTDC
 
-#define LTDC_R5_GPIO_PORT        	GPIOA
-#define LTDC_R5_GPIO_CLK         	RCC_AHB1Periph_GPIOA
-#define LTDC_R5_GPIO_PIN         	GPIO_Pin_12
-#define LTDC_R5_PINSOURCE        	GPIO_PinSource12
+#define LTDC_R5_GPIO_PORT        	GPIOH
+#define LTDC_R5_GPIO_CLK         	RCC_AHB1Periph_GPIOH
+#define LTDC_R5_GPIO_PIN         	GPIO_Pin_11
+#define LTDC_R5_PINSOURCE        	GPIO_PinSource11
 #define LTDC_R5_AF			          GPIO_AF_LTDC
 
 #define LTDC_R6_GPIO_PORT        	GPIOB
