@@ -76,6 +76,9 @@ const u32 Port_Select[16][16]=//pos(x,y)x0-15 y0-15
 const u32 compCcolor[4]={White,Red,White,White};
 const u32 compVcolor[4]={White,White,Red,White};
 const u32 compPcolor[4]={White,White,White,Red};
+
+const u32 testcompcolor[2]={White,Red};
+
 const uint8_t User_Check_main[][12+1]=
 {
 	{"档号    "},
@@ -164,7 +167,7 @@ const uint8_t Unit_Setitem[][5+1]=
 	{"V"},
 	{"Ω"},
 	{"W"},
-	{"S"},
+	{"s"},
 	{"A/us"},
 };
 
@@ -194,7 +197,7 @@ const uint8_t All_TopName[][21+1]=
 	{"< 动态测试 >"},
 	{"< 测量设置 >    "},
 	{"< 列表测试 >    "},
-	{"< 极限列表设置 >"},
+	{"< 极限设置 >"},
 	{"< 列表扫描设置 >"},
 	{"< 系统设置 >    "},
 	{"[ LCR文件列表 ] "},
@@ -514,7 +517,7 @@ const u8 DISP_UINT[][4]=
     {" V"},
     {" Ω"},
     {" A"},
-	{" S"},
+	{" s"},
 	{" W"}
 
 };
@@ -687,6 +690,7 @@ const uint8_t List_Res[][6+1]=
 	"不合格",
 	"不合格",
 	"不合格",
+	"无",
 };
 
 const uint8_t List_ItemDisE[][6+1]=
@@ -1240,29 +1244,62 @@ void Test_Disp(u8 vsw,u8 isw)
 {
 	
 	Colour.black=LCD_COLOR_TEST_MID;
+	Colour.Fword = testcompcolor[DispValue.testcomp[0]];
 	if(vsw == 0)
 	{
 		Hex_Format(DispValue.Voltage,4,7,0);       
-		Disp_EN40(80,80,DispBuf);
-		Disp_EN40(310,80,"V");
+		Disp_EN40(80-60,80,DispBuf);
+		Disp_EN40(310-60,80,"V");
 	}else if(vsw == 1){
 		Hex_Format(DispValue.Voltage,3,6,0);       
-		Disp_EN40(80,80,DispBuf);
-		Disp_EN40(310,80,"V");
+		Disp_EN40(80-60,80,DispBuf);
+		Disp_EN40(310-60,80,"V");
 	}
+	
+	Colour.Fword = testcompcolor[DispValue.testcomp[1]];
 	if(isw == 0)
 	{
 		Hex_Format(DispValue.Current,4,7,0);  
-		Disp_EN40(80,80+40,DispBuf);
-		Disp_EN40(310,80+40,"A");
+		Disp_EN40(80-60,80+40,DispBuf);
+		Disp_EN40(310-60,80+40,"A");
 	}else if(isw == 1){
 		Hex_Format(DispValue.Current,3,6,0);  
-		Disp_EN40(80,80+40,DispBuf);
-		Disp_EN40(310,80+40,"A");
-	}	
+		Disp_EN40(80-60,80+40,DispBuf);
+		Disp_EN40(310-60,80+40,"A");
+	}
+
+	Colour.Fword = testcompcolor[DispValue.testcomp[2]];
 	Hex_Format(DispValue.Power,3,7,0);  
-	Disp_EN40(80,80+80,DispBuf);
-	Disp_EN40(310,80+80,"W"); 
+	Disp_EN40(80-60,80+80,DispBuf);
+	Disp_EN40(310-60,80+80,"W"); 
+	
+	if(LoadSave.limitdisp == 1)
+	{
+		Colour.Fword = LCD_COLOR_GREY;
+		Hex_Format(LoadSave.vhigh,4,7,0); 
+		WriteString_16(LIST2+88,80,DispBuf,0);
+		WriteString_16(LIST2+88+82,80,"V",0);
+		
+		Hex_Format(LoadSave.vlow,4,7,0); 
+		WriteString_16(LIST2+88,80+20,DispBuf,0);
+		WriteString_16(LIST2+88+82,80+20,"V",0);
+		
+		Hex_Format(LoadSave.chigh,4,7,0); 
+		WriteString_16(LIST2+88,80+40,DispBuf,0);
+		WriteString_16(LIST2+88+82,80+40,"A",0);
+		
+		Hex_Format(LoadSave.clow,4,7,0); 
+		WriteString_16(LIST2+88,80+60,DispBuf,0);
+		WriteString_16(LIST2+88+82,80+60,"A",0);
+		
+		Hex_Format(LoadSave.phigh,4,7,0); 
+		WriteString_16(LIST2+88,80+80,DispBuf,0);
+		WriteString_16(LIST2+88+82,80+80,"W",0);
+		
+		Hex_Format(LoadSave.plow,4,7,0); 
+		WriteString_16(LIST2+88,80+100,DispBuf,0);
+		WriteString_16(LIST2+88+82,80+100,"W",0);
+	}
 }
 
 
@@ -1318,15 +1355,15 @@ void Bat_Disp(u8 vsw,u8 isw)
 		WriteString_16(80,100+60,DispBuf,0);
 		WriteString_16(160,100+60,"A",0);
 	}
-	Hex_Format(DispValue.Power,3,5,0);  
+	Hex_Format(DispValue.Power,3,6,0);  
 	WriteString_16(80,100+90,DispBuf,0);
 	WriteString_16(160,100+90,"W",0);
-	Hex_Format(DispValue.Rdata,3,5,0);  
+	Hex_Format(DispValue.Rdata,4,7,0);  
 	WriteString_16(80+200,100+30,DispBuf,0);
 	WriteString_16(160+200,100+30,"Ω",0);
 	Hex_Format(DispValue.Capacity,0,6,0);  
 	WriteString_16(80+200,100+60,DispBuf,0);
-	WriteString_16(160+200,100+60,"AH",0);
+	WriteString_16(160+200,100+60,"mAH",0);
 }
 
 
@@ -1543,7 +1580,19 @@ void Disp_Test_Item(void)
 
 	
 	}
-	
+	Colour.Fword=LCD_COLOR_GREY;
+	Colour.black=LCD_COLOR_TEST_MID;
+	if(LoadSave.limitdisp == 1)
+	{
+		WriteString_16(LIST2+88-28,80,"VH:",0);
+		WriteString_16(LIST2+88-28,80+20,"VL:",0);
+		
+		WriteString_16(LIST2+88-28,80+40,"CH:",0);
+		WriteString_16(LIST2+88-28,80+60,"CL:",0);
+		
+		WriteString_16(LIST2+88-28,80+80,"PH:",0);
+		WriteString_16(LIST2+88-28,80+100,"PL:",0);
+	}
 	Disp_Button_value1(0);
 	
 
@@ -2034,21 +2083,21 @@ void Disp_Bat_value(u8 num)
 		WriteString_16(LIST1+118, FIRSTLINE+SPACE1*3, DispBuf,  0);//增加算法  把顺序改过来
 		WriteString_16(LIST1+118+82, FIRSTLINE+SPACE1*3, Unit_Setitem[0],  0);
 		
-		Black_Select=(num==5)?1:0;//曲线采样间隔
-		if(Black_Select)
-		{
-			Colour.black=LCD_COLOR_SELECT;
-		
-		}
-		else
-		{
-			Colour.black=LCD_COLOR_TEST_BACK;
-		}	
-		LCD_DrawFullRect( LIST2+118, FIRSTLINE-2,88+4 , SPACE1-2  ) ;//SPACE1
-		Colour.Fword=White;
-		Hex_Format(LoadSave.curvetime,0,2,0);
-		WriteString_16(LIST2+118, FIRSTLINE, DispBuf,  0);//增加算法  把顺序改过来
-		WriteString_16(LIST2+118+60, FIRSTLINE, Unit_Setitem[4],  0);
+//		Black_Select=(num==5)?1:0;//曲线采样间隔
+//		if(Black_Select)
+//		{
+//			Colour.black=LCD_COLOR_SELECT;
+//		
+//		}
+//		else
+//		{
+//			Colour.black=LCD_COLOR_TEST_BACK;
+//		}	
+//		LCD_DrawFullRect( LIST2+118, FIRSTLINE-2,88+4 , SPACE1-2  ) ;//SPACE1
+//		Colour.Fword=White;
+//		Hex_Format(LoadSave.curvetime,0,2,0);
+//		WriteString_16(LIST2+118, FIRSTLINE, DispBuf,  0);//增加算法  把顺序改过来
+//		WriteString_16(LIST2+118+60, FIRSTLINE, Unit_Setitem[4],  0);
 		
 		Black_Select=(num==6)?1:0;//截止电压1
 		if(Black_Select)
@@ -3053,7 +3102,7 @@ void Disp_Limit_Item(void)
         ppt=All_TopName_E;
     else
         ppt=All_TopName;
-	WriteString_16(0, 4, ppt[5],  0);
+	WriteString_16(0, 4, ppt[6],  0);
 	Colour.Fword=White;
 	Colour.black=LCD_COLOR_TEST_BACK;
     if(Jk516save.Sys_Setvalue.lanage)
@@ -3286,11 +3335,16 @@ void DispSet_value(u8 keynum)
 	{
 		Colour.black=LCD_COLOR_TEST_BACK;
 	}
-	
-	Hex_Format(LoadSave.autooff , 0 , 6 , 0);
-	LCD_DrawFullRect(LIST2+88, FIRSTLINE-2, SELECT_1END-(LIST1+70), SPACE1-4);
-	WriteString_16(LIST2+88, FIRSTLINE, DispBuf,  0);
-	WriteString_16(LIST2+90+8*7+2, FIRSTLINE,DISP_UINT[3],  0);
+	if(LoadSave.autooff != 0)
+	{
+		Hex_Format(LoadSave.autooff , 0 , 6 , 0);
+		LCD_DrawFullRect(LIST2+88, FIRSTLINE-2, SELECT_1END-(LIST1+70), SPACE1-4);
+		WriteString_16(LIST2+88, FIRSTLINE, DispBuf,  0);
+		WriteString_16(LIST2+90+8*7+2, FIRSTLINE,Unit_Setitem[4],  0);
+	}else{
+		LCD_DrawFullRect(LIST2+88, FIRSTLINE-2, SELECT_1END-(LIST1+70), SPACE1-4);
+		WriteString_16(LIST2+88, FIRSTLINE, "关闭",  0);
+	}
     
 	//WriteString_16(LIST2+88, FIRSTLINE, User_Range[Jk516save.Set_Data.Range],  0);
 	
@@ -3524,20 +3578,19 @@ void DispSet_value(u8 keynum)
 		case 7:
 			Colour.Fword=White;
 			Colour.black=LCD_COLOR_TEST_BUTON;
-            if(Jk516save.Sys_Setvalue.lanage)
+             if(Jk516save.Sys_Setvalue.lanage)
             {
-                ppt=User_Rangeset;
-            
+                pt=INPUT_E;
             }
             else
             {
-                ppt=User_Rangeset;
+                pt=INPUT;
             
             }
-			for(i=0;i<5;i++)
+			for(i=0;i<1;i++)
 			{
 				
-				WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, ppt[i],  0);
+				WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
 			}
 			break;
 		case 8:
@@ -3800,12 +3853,12 @@ void DispLimit_value(u8 keynum)
 	}
     if(LoadSave.language)
     {
-        pt=Test_Compvalue_E;
+        pt=List_BeepE;
     
     }
     else
     {
-        pt=Test_Compvalue;
+        pt=List_Beep;
     
     }
 	LCD_DrawFullRect(LIST2+88, FIRSTLINE+SPACE1*1-2, SELECT_1END-(LIST1+70), SPACE1-4);
@@ -3923,8 +3976,28 @@ void DispLimit_value(u8 keynum)
 				WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
 			}
 			break;
-		case 7:
+		
+			
 		case 8:
+			Colour.Fword=White;
+			Colour.black=LCD_COLOR_TEST_BUTON;
+            if(LoadSave.language)
+            {
+                pt=List_BeepE;
+            
+            }
+            else
+            {
+                pt=List_Beep;
+            
+            }
+			for(i=0;i<2;i++)
+			{
+				
+				WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
+			}
+			break;
+		case 7:
 		case 9:
 		case 10:
 		case 11:
@@ -4462,21 +4535,15 @@ void Use_SysSetProcess(void)
 							SetSystemStatus(SYS_STATUS_TEST);
 							break;
 						case 1:
-							Jk516save.Sys_Setvalue.uart=0;
 							break;
 						case 2:
-							Jk516save.Sys_Setvalue.buard=0;
-							Debug_USART_Config(4800);
 							break;
 						case 3:
-                            Jk516save.Sys_Setvalue.u_flag=0;
 							
 							break;
 						case 4:
-							Jk516save.Sys_Setvalue.plc=0;
 							break;
 						case 5:
-							Jk516save.Sys_Setvalue.lanage=0;
                             LCD_Clear(LCD_COLOR_TEST_BACK);
                             Disp_Sys_Item();
 							break;
@@ -4583,20 +4650,14 @@ void Use_SysSetProcess(void)
 							SetSystemStatus(SYS_STATUS_SETUP);
 							break;
 						case 1:
-							Jk516save.Sys_Setvalue.uart=1;
 							break;
 						case 2:
-							Jk516save.Sys_Setvalue.buard=1;
-							Debug_USART_Config(9600);
 							break;
 						case 3:
-							Jk516save.Sys_Setvalue.u_flag=1;
 							break;
 						case 4:
-							Jk516save.Sys_Setvalue.plc=1;
 							break;
 						case 5:
-							Jk516save.Sys_Setvalue.lanage=1;
                             LCD_Clear(LCD_COLOR_TEST_BACK);
                             Disp_Sys_Item();
 							break;
@@ -4662,8 +4723,6 @@ void Use_SysSetProcess(void)
 							SetSystemStatus(SYS_STATUS_SYSSET);
 							break;
 						case 2:
-							Jk516save.Sys_Setvalue.buard=2;
-							Debug_USART_Config(14400);
 						break;
 						default:
 						break;
@@ -4675,11 +4734,9 @@ void Use_SysSetProcess(void)
 					switch(keynum)
 					{
 						case 0:
-							SetSystemStatus(SYS_STATUS_SYS);
+							SetSystemStatus(SYS_STATUS_LIST);
 							break;
 						case 2:
-							Jk516save.Sys_Setvalue.buard=3;
-							Debug_USART_Config(19200);
 						break;
 						default:
 						break;
@@ -4690,10 +4747,9 @@ void Use_SysSetProcess(void)
 					switch(keynum)
 					{
 						case 0:
+							SetSystemStatus(SYS_STATUS_LIMITSET);
 							break;//恢复系统复位
 						case 2:
-							Jk516save.Sys_Setvalue.buard=4;
-							Debug_USART_Config(115200);
 						break;
 						default:
 						break;
@@ -4705,121 +4761,69 @@ void Use_SysSetProcess(void)
 				case Key_NUM1:
                     if(keynum==12)
                     {
-                        if(key_count<PASSWORD_LENTH-1)
-                        {
-                            Jk516save.Sys_Setvalue.textname[key_count]='1';
-                            key_count++;
-                                
-                        }
-                    
+
                     }
                         //Save_Res.Sys_Setvalue
 				break;
 				case Key_NUM2:
                     if(keynum==12)
                     {
-                        if(key_count<PASSWORD_LENTH-1)
-                        {
-                            Jk516save.Sys_Setvalue.textname[key_count]='2';
-                            key_count++;
-                                
-                        }
+
                     
                     }
 				break;
 				case Key_NUM3:
                     if(keynum==12)
                     {
-                        if(key_count<PASSWORD_LENTH-1)
-                        {
-                            Jk516save.Sys_Setvalue.textname[key_count]='3';
-                            key_count++;
-                                
-                        }
+
                     
                     }
 				break;
 				case Key_NUM4:
                     if(keynum==12)
                     {
-                        if(key_count<PASSWORD_LENTH-1)
-                        {
-                            Jk516save.Sys_Setvalue.textname[key_count]='4';
-                            key_count++;
-                                
-                        }
+
                     
                     }
 				break;
 				case Key_NUM5:
                     if(keynum==12)
                     {
-                        if(key_count<PASSWORD_LENTH-1)
-                        {
-                            Jk516save.Sys_Setvalue.textname[key_count]='5';
-                            key_count++;
-                                
-                        }
+
                     
                     }
 				break;
 				case Key_NUM6:
                     if(keynum==12)
                     {
-                        if(key_count<PASSWORD_LENTH-1)
-                        {
-                            Jk516save.Sys_Setvalue.textname[key_count]='6';
-                            key_count++;
-                                
-                        }
+
                     
                     }
 				break;
 				case Key_NUM7:
                     if(keynum==12)
                     {
-                        if(key_count<PASSWORD_LENTH-1)
-                        {
-                            Jk516save.Sys_Setvalue.textname[key_count]='7';
-                            key_count++;
-                                
-                        }
+
                     
                     }
 				break;
 				case Key_NUM8:
                     if(keynum==12)
                     {
-                        if(key_count<PASSWORD_LENTH-1)
-                        {
-                            Jk516save.Sys_Setvalue.textname[key_count]='8';
-                            key_count++;
-                                
-                        }
+
                     
                     }
 				break;
 				case Key_NUM9:
                     if(keynum==12)
                     {
-                        if(key_count<PASSWORD_LENTH-1)
-                        {
-                            Jk516save.Sys_Setvalue.textname[key_count]='9';
-                            key_count++;
-                                
-                        }
-                    
+
                     }
 				break;
 				case Key_NUM0:
                     if(keynum==12)
                     {
-                        if(key_count<PASSWORD_LENTH-1)
-                        {
-                            Jk516save.Sys_Setvalue.textname[key_count]='0';
-                            key_count++;
-                                
-                        }
+
                     
                     }
 				break;
@@ -4993,7 +4997,60 @@ void Disp_button_Num_time(void)
 
 }
 
+void Disp_button_CNum_time(void)
+{
+	
+	Disp_Fastbutton();
+	
+	Colour.black=LCD_COLOR_TEST_BUTON;
+	Colour.Fword=White;
+	WriteString_16(BUTTOM_X_VALUE, BUTTOM_Y_VALUE,Unit_Setitem[0],  0);
 
+}
+
+void Disp_button_VNum_time(void)
+{
+	
+	Disp_Fastbutton();
+	
+	Colour.black=LCD_COLOR_TEST_BUTON;
+	Colour.Fword=White;
+	WriteString_16(BUTTOM_X_VALUE, BUTTOM_Y_VALUE, Unit_Setitem[1],  0);
+
+}
+
+void Disp_button_RNum_time(void)
+{
+	
+	Disp_Fastbutton();
+	
+	Colour.black=LCD_COLOR_TEST_BUTON;
+	Colour.Fword=White;
+	WriteString_16(BUTTOM_X_VALUE, BUTTOM_Y_VALUE,Unit_Setitem[2],  0);
+
+}
+
+void Disp_button_PNum_time(void)
+{
+	
+	Disp_Fastbutton();
+	
+	Colour.black=LCD_COLOR_TEST_BUTON;
+	Colour.Fword=White;
+	WriteString_16(BUTTOM_X_VALUE, BUTTOM_Y_VALUE,Unit_Setitem[3],  0);
+
+}
+
+void Disp_button_SNum_time(void)
+{
+	
+	Disp_Fastbutton();
+	
+	Colour.black=LCD_COLOR_TEST_BUTON;
+	Colour.Fword=White;
+	WriteString_16(BUTTOM_X_VALUE, BUTTOM_Y_VALUE,Unit_Setitem[4],  0);
+
+}
 //数字键输入显示
 Sort_TypeDef Disp_NumKeyboard_Set(Disp_Coordinates_Typedef *Coordinates,u8 flag )
 {
@@ -5243,6 +5300,32 @@ Sort_TypeDef Disp_NumKeyboard_Set(Disp_Coordinates_Typedef *Coordinates,u8 flag 
 				break;
 				case Key_TRIG:
 				break;
+				case Key_Ent:
+					
+					Sort_set.Unit=0;
+					
+					While_flag=0;
+					if(key_count<lenth)
+					{
+						if(dot_num==0)
+						{
+							if(key_count>0)
+							{
+								Disp_buff[key_count]='.';
+								dot_num1=key_count;
+								key_count++;
+							
+							
+							}
+							dot_num++;
+						}
+					
+					}
+						
+					
+					Sort_set.Updata_flag=1;
+					
+				break;
 				default:
 				break;
 					
@@ -5409,11 +5492,68 @@ Sort_TypeDef Time_Set_Cov(Sort_TypeDef *Time)
 
 	return *Time;
 }
-//电阻设置
+//常规测量设置
 vu32 Disp_Set_Num(Disp_Coordinates_Typedef *Coordinates)
 {
 	Sort_TypeDef Sort_num,Sort_num1;
 	Disp_button_Num_time();
+	Sort_num=Disp_NumKeyboard_Set(Coordinates,1);
+//	Sort_num1=Time_Set_Cov(&Sort_num);
+	if(Sort_num1.Updata_flag==0)
+	{
+		Sort_num1.Dot=0;
+		Sort_num1.Num=0;
+		Sort_num1.Unit=0;
+	
+	}
+		
+	return Sort_num.Num;
+
+}
+
+//设置电流
+vu32 Disp_Set_CNum(Disp_Coordinates_Typedef *Coordinates)
+{
+	Sort_TypeDef Sort_num,Sort_num1;
+	Disp_button_CNum_time();
+	Sort_num=Disp_NumKeyboard_Set(Coordinates,1);
+//	Sort_num1=Time_Set_Cov(&Sort_num);
+	if(Sort_num1.Updata_flag==0)
+	{
+		Sort_num1.Dot=0;
+		Sort_num1.Num=0;
+		Sort_num1.Unit=0;
+	
+	}
+		
+	return Sort_num.Num;
+
+}
+
+//设置电压
+vu32 Disp_Set_VNum(Disp_Coordinates_Typedef *Coordinates)
+{
+	Sort_TypeDef Sort_num,Sort_num1;
+	Disp_button_VNum_time();
+	Sort_num=Disp_NumKeyboard_Set(Coordinates,1);
+//	Sort_num1=Time_Set_Cov(&Sort_num);
+	if(Sort_num1.Updata_flag==0)
+	{
+		Sort_num1.Dot=0;
+		Sort_num1.Num=0;
+		Sort_num1.Unit=0;
+	
+	}
+		
+	return Sort_num.Num;
+
+}
+
+//设置电压
+vu32 Disp_Set_RNum(Disp_Coordinates_Typedef *Coordinates)
+{
+	Sort_TypeDef Sort_num,Sort_num1;
+	Disp_button_RNum_time();
 	Sort_num=Disp_NumKeyboard_Set(Coordinates,1);
 //	Sort_num1=Time_Set_Cov(&Sort_num);
 	if(Sort_num1.Updata_flag==0)
@@ -5447,6 +5587,42 @@ vu32 Disp_Set_Step(Disp_Coordinates_Typedef *Coordinates)
 
 }
 
+vu32 Disp_Set_TimeS(Disp_Coordinates_Typedef *Coordinates)
+{
+	Sort_TypeDef Sort_num,Sort_num1;
+	Disp_button_SNum_time();
+	Sort_num=Disp_NumKeyboard_Set(Coordinates,1);
+//	Sort_num1=Time_Set_Cov(&Sort_num);
+	Sort_num.Num/=10000;
+	if(Sort_num1.Updata_flag==0)
+	{
+		Sort_num1.Dot=0;
+		Sort_num1.Num=0;
+		Sort_num1.Unit=0;
+	
+	}
+		
+	return Sort_num.Num;
+
+}
+
+vu32 Disp_Set_TimeP(Disp_Coordinates_Typedef *Coordinates)
+{
+	Sort_TypeDef Sort_num,Sort_num1;
+	Disp_button_PNum_time();
+	Sort_num=Disp_NumKeyboard_Set(Coordinates,1);
+//	Sort_num1=Time_Set_Cov(&Sort_num);
+	if(Sort_num1.Updata_flag==0)
+	{
+		Sort_num1.Dot=0;
+		Sort_num1.Num=0;
+		Sort_num1.Unit=0;
+	
+	}
+		
+	return Sort_num.Num;
+
+}
 vu32 Disp_List_Delay(Disp_Coordinates_Typedef *Coordinates)
 {
 	Sort_TypeDef Sort_num,Sort_num1;

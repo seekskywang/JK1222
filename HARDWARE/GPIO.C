@@ -162,7 +162,6 @@ void Beep_Off(void)
     GPIO_ResetBits(GPIOC,GPIO_Pin_10);
 
 }
-
 void keydelay(u32 n)
 {
 	while(n!=0)
@@ -170,6 +169,21 @@ void keydelay(u32 n)
 		n--;
 	}
 }
+void ListCompBeep(void)
+{
+	Beep_On();
+    keydelay(2000000);
+    Beep_Off();
+	keydelay(2000000);
+	Beep_On();
+    keydelay(2000000);
+    Beep_Off();
+	keydelay(2000000);
+	Beep_On();
+    keydelay(2000000);
+    Beep_Off();
+}
+
 void Key_beep(void)
 {
     Beep_On();

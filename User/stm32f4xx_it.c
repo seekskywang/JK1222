@@ -49,7 +49,8 @@ u8 scpnum = 0;
 u8 scpnum1 = 0;
 u8 resflag;
 u8 resdisp;
-
+u8 batstep;
+u8 listbeep;
 extern Sort_TypeDef SCPI_SET_R(void),SCPI_SET_V(void),SCPI_SET_R1(void),SCPI_SET_V1(void);
 /* Private function prototypes -----------------------------------------------*/
 extern void USB_OTG_BSP_TimerIRQ (void);
@@ -305,23 +306,62 @@ void ListComp(void)
 				DispValue.listcompres[DispValue.listrunstep] = 3;
 			}
 		}
+	}else{
+		DispValue.listcompres[DispValue.listrunstep] = 4;
 	}
+}
+
+u8 ListBeep(void)
+{
+	u8 i;
+	if(LoadSave.ListBeep != 0)
+	{
+		for(i=0;i<LoadSave.ListNum;i++)
+		{
+			if(DispValue.listcompres[i] != 0)
+			{
+				if(LoadSave.ListBeep == 1)
+				{
+					return 1;
+				}
+			}
+		}
+		if(LoadSave.ListBeep == 1)
+		{
+			return 1;
+		}
+	}
+	return 0;
 }
 
 void  BASIC_TIM_IRQHandler (void)
 {
-    static u8 num=0;
+    static u8 num,cnum=0;
+	static u32 autooffcount=0;
 	static u16 countdown=0;
     u8 i;
 	if ( TIM_GetITStatus( BASIC_TIM, TIM_IT_Update) != RESET ) 
 	{	
 		TIM_ClearITPendingBit(BASIC_TIM , TIM_IT_Update);  		
-
-        if(SystemStatus==SYS_STATUS_TEST || SystemStatus==SYS_STATUS_DYNAMIC
+		if(LoadSave.autooff != 0)
+		{
+			if(mainswitch == 1)
+			{
+				autooffcount++;
+				if(autooffcount > (LoadSave.autooff*100-1))
+				{
+					mainswitch = 0;
+					OnOff_SW(mainswitch);
+					SwitchLedOff();
+					autooffcount = 0;
+				}
+			}
+		}
+        if(SystemStatus==SYS_STATUS_TEST || SystemStatus==SYS_STATUS_BATTERY
 			|| SystemStatus==SYS_STATUS_LIST)
         {
             num++;
-            if(num>2)//10mS??
+            if(num>19)//10mS??
             {
                 num=0;
                 F_100ms=TRUE;//100ms????
@@ -333,6 +373,20 @@ void  BASIC_TIM_IRQHandler (void)
             if(num!=0)
                 num=0;
         }
+		
+		if(SystemStatus==SYS_STATUS_BATTERY)
+		{
+			cnum++;
+            if(cnum>99)//10mS??
+            {
+                cnum=0;
+                F_1s=TRUE;//100ms????
+            }
+		}else{
+			if(cnum!=0)
+				cnum = 0;
+		}
+		
 		if(SystemStatus==SYS_STATUS_LIST)
 		{
 			if(mainswitch == 1)
@@ -368,9 +422,105 @@ void  BASIC_TIM_IRQHandler (void)
 						DispValue.listrunstep = 0;
 						mainswitch = 0;
 						OnOff_SW(mainswitch);
+						SwitchLedOff();
 						resflag = 1;
+						listbeep = ListBeep();
 					}
 				}
+			}
+		}else if(SystemStatus==SYS_STATUS_BATTERY){
+			if(mainswitch == 1 && F_1s == TRUE)
+			{
+				F_1s = FALSE;
+				if(LoadSave.crange == 0)
+				{
+					DispValue.Capraw += (float)DispValue.Current/10 * 1/3600;
+				}else{
+					DispValue.Capraw += (float)DispValue.Current * 1/3600;
+				}
+				if(batstep == 1)
+				{
+					if(LoadSave.vrange == 0)
+					{
+						if(DispValue.Voltage < LoadSave.coffv1)
+						{
+							if(LoadSave.loadc2 == 0)
+							{
+								SwitchLedOff();
+								mainswitch = 0;
+								Set_Para();
+							}else{
+								batstep = 2;
+								Set_Para();
+							}
+						}
+					}else{
+						if(DispValue.Voltage*10 < LoadSave.coffv1)
+						{
+							if(LoadSave.loadc2 == 0)
+							{
+								SwitchLedOff();
+								mainswitch = 0;
+								Set_Para();
+							}else{
+								batstep = 2;
+								Set_Para();
+							}
+						}
+					}
+				}else if(batstep == 2){
+					if(LoadSave.vrange == 0)
+					{
+						if(DispValue.Voltage < LoadSave.coffv2)
+						{
+							if(LoadSave.loadc3 == 0)
+							{
+								SwitchLedOff();
+								mainswitch = 0;
+								Set_Para();
+							}else{
+								batstep = 3;
+								Set_Para();
+							}
+						}
+					}else{
+						if(DispValue.Voltage*10 < LoadSave.coffv2)
+						{
+							if(LoadSave.loadc3 == 0)
+							{
+								SwitchLedOff();
+								mainswitch = 0;
+								Set_Para();
+							}else{
+								batstep = 3;
+								Set_Para();
+							}
+						}
+					}
+				}else if(batstep == 3){
+					if(LoadSave.vrange == 0)
+					{
+						if(DispValue.Voltage < LoadSave.coffv3)
+						{
+							SwitchLedOff();
+							mainswitch = 0;
+							Set_Para();
+						}
+					}else{
+						if(DispValue.Voltage*10 < LoadSave.coffv3)
+						{
+							SwitchLedOff();
+							mainswitch = 0;
+							Set_Para();
+						}
+					}
+				}
+				DispValue.Capacity = (long)DispValue.Capraw;
+				
+				
+				
+			}else{
+				
 			}
 		}
         Key_Scan();	 

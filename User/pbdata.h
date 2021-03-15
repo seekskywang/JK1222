@@ -801,6 +801,7 @@ typedef struct
 	u32 Rdata;
 	u32 Power;
 	u32 CalValue[10];
+	float Capraw;
 	u32 Capacity;
 	u8 liststep;
 	u8 listrunstep;
@@ -811,6 +812,8 @@ typedef struct
 	u32 listp[15];
 	u8 listvrange[15];
 	u8 listcrange[15];
+	u8 testcomp[3];
+	u8 testbeep;
 ////校准测量控制电压低档
 //	u32 VLOW1;
 //	u32 SETVLOW1;
@@ -924,6 +927,7 @@ typedef struct
 extern System_TypeDef System;
 extern u8 F_Fail;//测试失败标志
 extern u8 F_100ms;//100ms定时标志
+extern u8 F_1s;//1s定时标志
 extern u8 F_Password;//密码有效标志
 extern Save_TypeDef SaveData;//保存值
 extern vu32 Voltage;//电压
@@ -963,4 +967,6 @@ extern u16 t_SPIN;
 extern u8 spinsend;
 extern u8 resflag;
 extern u8 resdisp;
+extern u8 batstep;
+extern u8 listbeep;
 #endif

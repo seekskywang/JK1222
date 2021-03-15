@@ -427,15 +427,15 @@ void Set_Para(void)
 				sendbuff[14+28] = LoadSave.listvalue[DispValue.listrunstep];//设置电流值
 			}
 		}else if(LoadSave.listmode[DispValue.listrunstep] == 2){
-			sendbuff[15+28] = LoadSave.listvalue[DispValue.listrunstep]>>24;
-			sendbuff[16+28] = LoadSave.listvalue[DispValue.listrunstep]>>16;
-			sendbuff[17+28] = LoadSave.listvalue[DispValue.listrunstep]>>8;
-			sendbuff[18+28] = LoadSave.listvalue[DispValue.listrunstep];//设置电阻值
+			sendbuff[15+28] = LoadSave.listvalue[DispValue.listrunstep]/10>>24;
+			sendbuff[16+28] = LoadSave.listvalue[DispValue.listrunstep]/10>>16;
+			sendbuff[17+28] = LoadSave.listvalue[DispValue.listrunstep]/10>>8;
+			sendbuff[18+28] = LoadSave.listvalue[DispValue.listrunstep]/10;//设置电阻值
 		}else if(LoadSave.listmode[DispValue.listrunstep] == 2){
-			sendbuff[19+28] = LoadSave.listvalue[DispValue.listrunstep]>>24;
-			sendbuff[20+28] = LoadSave.listvalue[DispValue.listrunstep]>>16;
-			sendbuff[21+28] = LoadSave.listvalue[DispValue.listrunstep]>>8; 
-			sendbuff[22+28] = LoadSave.listvalue[DispValue.listrunstep];//设置功率值
+			sendbuff[19+28] = LoadSave.listvalue[DispValue.listrunstep]/10>>24;
+			sendbuff[20+28] = LoadSave.listvalue[DispValue.listrunstep]/10>>16;
+			sendbuff[21+28] = LoadSave.listvalue[DispValue.listrunstep]/10>>8; 
+			sendbuff[22+28] = LoadSave.listvalue[DispValue.listrunstep]/10;//设置功率值
 		}
 	}else if(GetSystemStatus()==SYS_STATUS_TEST){//常规模式设置参数
 		sendbuff[11] = 0x00;
@@ -471,15 +471,84 @@ void Set_Para(void)
 		}
 		
 		
-		sendbuff[15+28] = LoadSave.risistence>>24;
-		sendbuff[16+28] = LoadSave.risistence>>16;
-		sendbuff[17+28] = LoadSave.risistence>>8;
-		sendbuff[18+28] = LoadSave.risistence;//设置电阻值
+		sendbuff[15+28] = LoadSave.risistence/10>>24;
+		sendbuff[16+28] = LoadSave.risistence/10>>16;
+		sendbuff[17+28] = LoadSave.risistence/10>>8;
+		sendbuff[18+28] = LoadSave.risistence/10;//设置电阻值
 		
-		sendbuff[19+28] = LoadSave.power>>24;
-		sendbuff[20+28] = LoadSave.power>>16;
-		sendbuff[21+28] = LoadSave.power>>8; 
-		sendbuff[22+28] = LoadSave.power;//设置功率值
+		sendbuff[19+28] = LoadSave.power/10>>24;
+		sendbuff[20+28] = LoadSave.power/10>>16;
+		sendbuff[21+28] = LoadSave.power/10>>8; 
+		sendbuff[22+28] = LoadSave.power/10;//设置功率值
+	}else if(GetSystemStatus()==SYS_STATUS_BATTERY){//常规模式设置参数
+		sendbuff[11] = 0x00;
+		sendbuff[12] = 0x00;
+		sendbuff[13] = 0x00;
+		sendbuff[14] = LoadSave.loadmode;//电池测试模式
+		
+		
+		if(LoadSave.vrange == 1)
+		{
+			sendbuff[7+28] = LoadSave.voltage/10>>24;
+			sendbuff[8+28] = LoadSave.voltage/10>>16;
+			sendbuff[9+28] = LoadSave.voltage/10>>8;
+			sendbuff[10+28] = LoadSave.voltage/10;//设置电压值
+		}else{
+			sendbuff[7+28] = LoadSave.voltage>>24;
+			sendbuff[8+28] = LoadSave.voltage>>16;
+			sendbuff[9+28] = LoadSave.voltage>>8;
+			sendbuff[10+28] = LoadSave.voltage;//设置电压值
+		}
+		
+		if(LoadSave.crange == 1)
+		{
+			if(batstep == 2)
+			{
+				sendbuff[11+28] = LoadSave.loadc2/10>>24;
+				sendbuff[12+28] = LoadSave.loadc2/10>>16;
+				sendbuff[13+28] = LoadSave.loadc2/10>>8;
+				sendbuff[14+28] = LoadSave.loadc2/10;//设置电流值
+			}else if(batstep == 3){
+				sendbuff[11+28] = LoadSave.loadc3/10>>24;
+				sendbuff[12+28] = LoadSave.loadc3/10>>16;
+				sendbuff[13+28] = LoadSave.loadc3/10>>8;
+				sendbuff[14+28] = LoadSave.loadc3/10;//设置电流值
+			}else{
+				sendbuff[11+28] = LoadSave.loadc1/10>>24;
+				sendbuff[12+28] = LoadSave.loadc1/10>>16;
+				sendbuff[13+28] = LoadSave.loadc1/10>>8;
+				sendbuff[14+28] = LoadSave.loadc1/10;//设置电流值
+			}
+		}else{
+			if(batstep == 2)
+			{
+				sendbuff[11+28] = LoadSave.loadc2>>24;
+				sendbuff[12+28] = LoadSave.loadc2>>16;
+				sendbuff[13+28] = LoadSave.loadc2>>8;
+				sendbuff[14+28] = LoadSave.loadc2;//设置电流值
+			}else if(batstep == 3){
+				sendbuff[11+28] = LoadSave.loadc3>>24;
+				sendbuff[12+28] = LoadSave.loadc3>>16;
+				sendbuff[13+28] = LoadSave.loadc3>>8;
+				sendbuff[14+28] = LoadSave.loadc3;//设置电流值
+			}else{
+				sendbuff[11+28] = LoadSave.loadc1>>24;
+				sendbuff[12+28] = LoadSave.loadc1>>16;
+				sendbuff[13+28] = LoadSave.loadc1>>8;
+				sendbuff[14+28] = LoadSave.loadc1;//设置电流值
+			}
+		}
+		
+		
+		sendbuff[15+28] = LoadSave.loadr/10>>24;
+		sendbuff[16+28] = LoadSave.loadr/10>>16;
+		sendbuff[17+28] = LoadSave.loadr/10>>8;
+		sendbuff[18+28] = LoadSave.loadr/10;//设置电阻值
+		
+		sendbuff[19+28] = LoadSave.power/10>>24;
+		sendbuff[20+28] = LoadSave.power/10>>16;
+		sendbuff[21+28] = LoadSave.power/10>>8; 
+		sendbuff[22+28] = LoadSave.power/10;//设置功率值
 	}
 	
 	sendbuff[23+28] = LoadSave.ovp>>24;
@@ -512,15 +581,23 @@ void Set_Para(void)
 	sendbuff[45+28] = LoadSave.maxc>>8;
 	sendbuff[46+28] = LoadSave.maxc;//最大限制电流
 	
-	sendbuff[47+28] = LoadSave.onvol>>24;
-	sendbuff[48+28] = LoadSave.onvol>>16;
-	sendbuff[49+28] = LoadSave.onvol>>8;
-	sendbuff[50+28] = LoadSave.onvol;//加载电压
+	if(GetSystemStatus()==SYS_STATUS_LIST)
+	{
+		sendbuff[47+28] = LoadSave.listonvol/10>>24;
+		sendbuff[48+28] = LoadSave.listonvol/10>>16;
+		sendbuff[49+28] = LoadSave.listonvol/10>>8;
+		sendbuff[50+28] = LoadSave.listonvol/10;//加载电压
+	}else{
+		sendbuff[47+28] = LoadSave.onvol/10>>24;
+		sendbuff[48+28] = LoadSave.onvol/10>>16;
+		sendbuff[49+28] = LoadSave.onvol/10>>8;
+		sendbuff[50+28] = LoadSave.onvol/10;//加载电压
+	}
 	
-	sendbuff[51+28] = LoadSave.offvol>>24;
-	sendbuff[52+28] = LoadSave.offvol>>16;
-	sendbuff[53+28] = LoadSave.offvol>>8;
-	sendbuff[54+28] = LoadSave.offvol;//卸载电压
+	sendbuff[51+28] = LoadSave.offvol/10>>24;
+	sendbuff[52+28] = LoadSave.offvol/10>>16;
+	sendbuff[53+28] = LoadSave.offvol/10>>8;
+	sendbuff[54+28] = LoadSave.offvol/10;//卸载电压
 	
 	sendbuff[55+28] = LoadSave.crise>>24;
 	sendbuff[56+28] = LoadSave.crise>>16;
@@ -935,6 +1012,21 @@ void Rec_Handle(void)
 //					psum = 0;
 //				}
 				DispValue.Power = readbuf;
+				
+				readbuf = 0;
+				readbuf += UART_Buffer_Rece[51] << 24;
+				readbuf += UART_Buffer_Rece[52] << 16;
+				readbuf += UART_Buffer_Rece[53] << 8;
+				readbuf += UART_Buffer_Rece[54];
+				mainswitch = readbuf;
+				if(mainswitch == 0)
+				{
+					SwitchLedOff();
+				}
+				if(mainswitch == 1)
+				{
+					SwitchLedOn();
+				}
 				
 				readbuf = 0;
 				readbuf += UART_Buffer_Rece[59] << 24;

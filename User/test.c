@@ -103,7 +103,10 @@ void READ_COMP(void)
 	}
 }
 
-
+void Von_check(void)
+{
+	
+}
 //};
 //==========================================================
 //函数名称：Power_Process
@@ -432,7 +435,7 @@ void Setup_Process(void)
 							Coordinates.xpos=LIST1+88;
 							Coordinates.ypos=FIRSTLINE+SPACE1*3-2;
 							Coordinates.lenth=76;
-							LoadSave.onvol=Disp_Set_Num(&Coordinates);
+							LoadSave.onvol=Disp_Set_VNum(&Coordinates);
 							Set_Para();
 							Store_set_flash();
 							break;
@@ -440,7 +443,7 @@ void Setup_Process(void)
 							Coordinates.xpos=LIST1+88;
 							Coordinates.ypos=FIRSTLINE+SPACE1*4-2;
 							Coordinates.lenth=76;
-							LoadSave.offvol=Disp_Set_Num(&Coordinates);
+							LoadSave.offvol=Disp_Set_VNum(&Coordinates);
 							Set_Para();
 							Store_set_flash();
 							break;
@@ -448,7 +451,15 @@ void Setup_Process(void)
 							Coordinates.xpos=LIST1+88;
 							Coordinates.ypos=FIRSTLINE+SPACE1*5-2;
 							Coordinates.lenth=76;
-							LoadSave.cvdowntime=Disp_Set_Num(&Coordinates);
+							LoadSave.cvdowntime=Disp_Set_VNum(&Coordinates);
+							Set_Para();
+							Store_set_flash();
+							break;
+						case 7://延时关断
+							Coordinates.xpos=LIST2+88;
+							Coordinates.ypos=FIRSTLINE-2;
+							Coordinates.lenth=76;
+							LoadSave.autooff=Disp_Set_TimeS(&Coordinates);
 							Set_Para();
 							Store_set_flash();
 							break;
@@ -456,7 +467,7 @@ void Setup_Process(void)
 							Coordinates.xpos=LIST2+88;
 							Coordinates.ypos=FIRSTLINE+SPACE1*1-2;
 							Coordinates.lenth=76;
-							LoadSave.maxc=Disp_Set_Num(&Coordinates);
+							LoadSave.maxc=Disp_Set_CNum(&Coordinates);
 							Set_Para();
 							Store_set_flash();
 						break;
@@ -464,7 +475,7 @@ void Setup_Process(void)
 							Coordinates.xpos=LIST2+88;
 							Coordinates.ypos=FIRSTLINE+SPACE1*2-2;
 							Coordinates.lenth=76;
-							LoadSave.maxv=Disp_Set_Num(&Coordinates);
+							LoadSave.maxv=Disp_Set_VNum(&Coordinates);
 							Set_Para();
 							Store_set_flash();
 						break;
@@ -472,7 +483,7 @@ void Setup_Process(void)
 							Coordinates.xpos=LIST2+88;
 							Coordinates.ypos=FIRSTLINE+SPACE1*3-2;
 							Coordinates.lenth=76;
-							LoadSave.maxp=Disp_Set_Num(&Coordinates);
+							LoadSave.maxp=Disp_Set_TimeP(&Coordinates);
 							Set_Para();
 							Store_set_flash();
 						break;
@@ -480,7 +491,7 @@ void Setup_Process(void)
 							Coordinates.xpos=LIST2+88;
 							Coordinates.ypos=FIRSTLINE+SPACE1*4-2;
 							Coordinates.lenth=76;
-							LoadSave.crise=Disp_Set_Num(&Coordinates);
+							LoadSave.crise=Disp_Set_CNum(&Coordinates);
 							Set_Para();
 							Store_set_flash();
 						break;
@@ -488,7 +499,7 @@ void Setup_Process(void)
 							Coordinates.xpos=LIST2+88;
 							Coordinates.ypos=FIRSTLINE+SPACE1*5-2;
 							Coordinates.lenth=76;
-							LoadSave.cdrop=Disp_Set_Num(&Coordinates);
+							LoadSave.cdrop=Disp_Set_CNum(&Coordinates);
 							Set_Para();
 							Store_set_flash();
 						break;
@@ -685,6 +696,93 @@ void Setup_Process(void)
 				break;
 				case Key_TRIG:
 				break;
+				case Key_Ent:
+				{
+					switch(keynum)
+					{
+						case 4://启动电压
+							Coordinates.xpos=LIST1+88;
+							Coordinates.ypos=FIRSTLINE+SPACE1*3-2;
+							Coordinates.lenth=76;
+							LoadSave.onvol=Disp_Set_VNum(&Coordinates);
+							Set_Para();
+							Store_set_flash();
+							break;
+						case 5://关断电压
+							Coordinates.xpos=LIST1+88;
+							Coordinates.ypos=FIRSTLINE+SPACE1*4-2;
+							Coordinates.lenth=76;
+							LoadSave.offvol=Disp_Set_VNum(&Coordinates);
+							Set_Para();
+							Store_set_flash();
+							break;
+						case 6://电压下降
+							Coordinates.xpos=LIST1+88;
+							Coordinates.ypos=FIRSTLINE+SPACE1*5-2;
+							Coordinates.lenth=76;
+							LoadSave.cvdowntime=Disp_Set_VNum(&Coordinates);
+							Set_Para();
+							Store_set_flash();
+							break;
+						case 7://延时关断
+							Coordinates.xpos=LIST2+88;
+							Coordinates.ypos=FIRSTLINE-2;
+							Coordinates.lenth=76;
+							LoadSave.autooff=Disp_Set_TimeS(&Coordinates);
+							Set_Para();
+							Store_set_flash();
+							break;
+						case 8://最大电流
+							Coordinates.xpos=LIST2+88;
+							Coordinates.ypos=FIRSTLINE+SPACE1*1-2;
+							Coordinates.lenth=76;
+							LoadSave.maxc=Disp_Set_CNum(&Coordinates);
+							Set_Para();
+							Store_set_flash();
+						break;
+						case 9://最大电压
+							Coordinates.xpos=LIST2+88;
+							Coordinates.ypos=FIRSTLINE+SPACE1*2-2;
+							Coordinates.lenth=76;
+							LoadSave.maxv=Disp_Set_VNum(&Coordinates);
+							Set_Para();
+							Store_set_flash();
+						break;
+						case 10://最大功率
+							Coordinates.xpos=LIST2+88;
+							Coordinates.ypos=FIRSTLINE+SPACE1*3-2;
+							Coordinates.lenth=76;
+							LoadSave.maxp=Disp_Set_TimeP(&Coordinates);
+							Set_Para();
+							Store_set_flash();
+						break;
+						case 11://上升速率
+							Coordinates.xpos=LIST2+88;
+							Coordinates.ypos=FIRSTLINE+SPACE1*4-2;
+							Coordinates.lenth=76;
+							LoadSave.crise=Disp_Set_CNum(&Coordinates);
+							Set_Para();
+							Store_set_flash();
+						break;
+						case 12://下降速率
+							Coordinates.xpos=LIST2+88;
+							Coordinates.ypos=FIRSTLINE+SPACE1*5-2;
+							Coordinates.lenth=76;
+							LoadSave.cdrop=Disp_Set_CNum(&Coordinates);
+							Set_Para();
+							Store_set_flash();
+						break;
+						default:
+						break;
+					
+					
+					}
+				}break;
+				case Key_ESC:
+				{
+					if(mainswitch == 0)
+						SetSystemStatus(SYS_STATUS_TEST);
+				}break;
 				default:
 				break;
 					
@@ -746,9 +844,9 @@ void Limit_Process(void)
 						case 1://电压上限
 						{
 							Coordinates.xpos=LIST1+88;
-							Coordinates.ypos=FIRSTLINE+-2;
+							Coordinates.ypos=FIRSTLINE;
 							Coordinates.lenth=76;
-							LoadSave.vhigh=Disp_Set_Num(&Coordinates);
+							LoadSave.vhigh=Disp_Set_VNum(&Coordinates);
 							Set_Para();
 							Store_set_flash();
 						}break;
@@ -757,15 +855,15 @@ void Limit_Process(void)
 							Coordinates.xpos=LIST1+88;
 							Coordinates.ypos=FIRSTLINE+SPACE1+-2;
 							Coordinates.lenth=76;
-							LoadSave.vlow=Disp_Set_Num(&Coordinates);
+							LoadSave.vlow=Disp_Set_VNum(&Coordinates);
 							Set_Para();
 							Store_set_flash();
 						}break;
 						case 3://电流上限
 							Coordinates.xpos=LIST1+88;
-							Coordinates.ypos=FIRSTLINE+SPACE1*2-2;
+							Coordinates.ypos=FIRSTLINE+SPACE1*2;
 							Coordinates.lenth=76;
-							LoadSave.chigh=Disp_Set_Num(&Coordinates);
+							LoadSave.chigh=Disp_Set_CNum(&Coordinates);
 							Set_Para();
 							Store_set_flash();
 							break;
@@ -773,7 +871,7 @@ void Limit_Process(void)
 							Coordinates.xpos=LIST1+88;
 							Coordinates.ypos=FIRSTLINE+SPACE1*3-2;
 							Coordinates.lenth=76;
-							LoadSave.clow=Disp_Set_Num(&Coordinates);
+							LoadSave.clow=Disp_Set_CNum(&Coordinates);
 							Set_Para();
 							Store_set_flash();
 							break;
@@ -781,7 +879,7 @@ void Limit_Process(void)
 							Coordinates.xpos=LIST1+88;
 							Coordinates.ypos=FIRSTLINE+SPACE1*4-2;
 							Coordinates.lenth=76;
-							LoadSave.phigh=Disp_Set_Num(&Coordinates);
+							LoadSave.phigh=Disp_Set_TimeP(&Coordinates);
 							Set_Para();
 							Store_set_flash();
 							break;
@@ -789,7 +887,7 @@ void Limit_Process(void)
 							Coordinates.xpos=LIST1+88;
 							Coordinates.ypos=FIRSTLINE+SPACE1*5-2;
 							Coordinates.lenth=76;
-							LoadSave.plow=Disp_Set_Num(&Coordinates);
+							LoadSave.plow=Disp_Set_TimeP(&Coordinates);
 							Set_Para();
 							Store_set_flash();
 							break;
@@ -857,28 +955,7 @@ void Limit_Process(void)
 						case 0:
 								SetSystemStatus(SYS_STATUS_SYSSET);
 							break;
-						case 1:
-                            Jk516save.Set_Data.trip=2;//快速
-							break;
-						case 2:
-                            Jk516save.Set_Data.speed=2;
-							break;
-						case 3:
-							break;
-						case 4:
 
-							break;
-						case 5:
-							break;
-						case 6:
-
-							break;
-						case 7:
-
-							break;
-						case 8:
-							Jk516save.Set_Data.beep=2;
-							break;
 
 						
 						default:
@@ -891,39 +968,6 @@ void Limit_Process(void)
 				case Key_F4:
 					switch(keynum)
 					{
-						case 0:
-								SetSystemStatus(SYS_STATUS_SYS);
-							break;
-						case 1:
-                            Jk516save.Set_Data.trip=3;//极速
-							
-									
-							break;
-						case 2:
-                            Jk516save.Set_Data.speed=3;
-							
-							break;
-						case 3:
-							break;
-						case 4:
-
-							break;
-						case 5:
-							break;
-						case 6:
-
-							break;
-						case 7:
-
-							break;
-						case 8:
-							if(Jk516save.Set_Data.openbeep==0)
-							{
-								Jk516save.Set_Data.openbeep=1;
-							}else{
-								Jk516save.Set_Data.openbeep=0;
-							}
-							break;
 						
 						default:
 							break;					
@@ -933,21 +977,7 @@ void Limit_Process(void)
 				case Key_F5:
 					switch(keynum)
 					{
-						case 0:
-							JumpBoot(55);
-						break;
-						case 4:
-						case 9:
-							break;
-						case 7:	
-							Jk516save.Set_Data.Range_Set=1;
-                            if(Jk516save.Set_Data.Range)
-							Jk516save.Set_Data.Range--;
-                            else
-                                Jk516save.Set_Data.Range=RANGE_MAX;
-                                
-                            Range=Jk516save.Set_Data.Range;
-						break;
+						
 						
 						default:
 							break;
@@ -1016,6 +1046,72 @@ void Limit_Process(void)
 				break;
 				case Key_TRIG:
 				break;
+				case Key_ESC:
+				{
+					if(mainswitch == 0)
+						SetSystemStatus(SYS_STATUS_TEST);
+				}break;
+				case Key_Ent:
+				{
+					switch(keynum)
+					{
+
+						case 1://电压上限
+						{
+							Coordinates.xpos=LIST1+88;
+							Coordinates.ypos=FIRSTLINE;
+							Coordinates.lenth=76;
+							LoadSave.vhigh=Disp_Set_VNum(&Coordinates);
+							Set_Para();
+							Store_set_flash();
+						}break;
+						case 2://电压下限
+						{
+							Coordinates.xpos=LIST1+88;
+							Coordinates.ypos=FIRSTLINE+SPACE1+-2;
+							Coordinates.lenth=76;
+							LoadSave.vlow=Disp_Set_VNum(&Coordinates);
+							Set_Para();
+							Store_set_flash();
+						}break;
+						case 3://电流上限
+							Coordinates.xpos=LIST1+88;
+							Coordinates.ypos=FIRSTLINE+SPACE1*2;
+							Coordinates.lenth=76;
+							LoadSave.chigh=Disp_Set_CNum(&Coordinates);
+							Set_Para();
+							Store_set_flash();
+							break;
+						case 4://电流下限
+							Coordinates.xpos=LIST1+88;
+							Coordinates.ypos=FIRSTLINE+SPACE1*3-2;
+							Coordinates.lenth=76;
+							LoadSave.clow=Disp_Set_CNum(&Coordinates);
+							Set_Para();
+							Store_set_flash();
+							break;
+						case 5://功率上限
+							Coordinates.xpos=LIST1+88;
+							Coordinates.ypos=FIRSTLINE+SPACE1*4-2;
+							Coordinates.lenth=76;
+							LoadSave.phigh=Disp_Set_TimeP(&Coordinates);
+							Set_Para();
+							Store_set_flash();
+							break;
+						case 6://功率下限
+							Coordinates.xpos=LIST1+88;
+							Coordinates.ypos=FIRSTLINE+SPACE1*5-2;
+							Coordinates.lenth=76;
+							LoadSave.plow=Disp_Set_TimeP(&Coordinates);
+							Set_Para();
+							Store_set_flash();
+							break;
+						default:
+							break;
+					
+					
+					}
+				}
 				default:
 				break;
 					
@@ -1027,6 +1123,98 @@ void Limit_Process(void)
 	
 	
 	
+	}
+}
+
+//常规分选
+void Test_Comp(void)
+{
+	DispValue.testbeep = 0;
+	if(LoadSave.vcomp == 1)
+	{
+		if(LoadSave.vrange == 0)
+		{
+			if(DispValue.Voltage > LoadSave.vhigh ||
+			   DispValue.Voltage < LoadSave.vlow)
+			{
+				DispValue.testcomp[0] = 1;
+			}else{
+				DispValue.testcomp[0] = 0;
+			}
+		}else if(LoadSave.vrange == 0){
+			if(DispValue.Voltage*10 > LoadSave.vhigh ||
+			   DispValue.Voltage*10 < LoadSave.vlow)
+			{
+				DispValue.testcomp[0] = 1;
+			}else{
+				DispValue.testcomp[0] = 0;
+			}
+		}
+		if(LoadSave.limitbeep == DispValue.testcomp[0])
+		{
+			DispValue.testbeep = 1;
+		}
+	}else{
+		DispValue.testcomp[0] = 0;
+	}
+
+	
+	if(LoadSave.ccomp == 1)
+	{
+		if(LoadSave.crange == 0)
+		{
+			if(DispValue.Current > LoadSave.chigh ||
+			   DispValue.Current < LoadSave.clow)
+			{
+				DispValue.testcomp[1] = 1;
+			}else{
+				DispValue.testcomp[1] = 0;
+			}
+		}else if(LoadSave.crange == 0){
+			if(DispValue.Current*10 > LoadSave.chigh ||
+			   DispValue.Current*10 < LoadSave.clow)
+			{
+				DispValue.testcomp[1] = 1;
+			}else{
+				DispValue.testcomp[1] = 0;
+			}
+		}
+		if(LoadSave.limitbeep == DispValue.testcomp[1])
+		{
+			DispValue.testbeep = 1;
+		}
+	}else{
+		DispValue.testcomp[1] = 0;
+	}
+	
+	
+	
+	if(LoadSave.pcomp == 1)
+	{
+
+		if(DispValue.Power*10 > LoadSave.phigh ||
+		   DispValue.Power*10 < LoadSave.plow)
+		{
+			DispValue.testcomp[2] = 1;
+		}else{
+			DispValue.testcomp[2] = 0;
+		}
+		if(LoadSave.limitbeep == DispValue.testcomp[2])
+		{
+			DispValue.testbeep = 1;
+		}
+	}else{
+		DispValue.testcomp[2] = 0;
+	}
+	
+}
+void Test_Beep(void)
+{
+	if(DispValue.testbeep == 1)
+	{
+		Beep_On();
+	}else if(DispValue.testbeep == 0){
+		Beep_Off();
 	}
 }
 
@@ -1119,14 +1307,24 @@ void Test_Process(void)
             
 //			Disp_R_V("V");
 			Disp_Flag = 0;
-		}  
+		}
 //		ReadData();
 		if(F_100ms == TRUE/* && setflag == 0*/)
 		{
 			ReadData();
 			F_100ms=FALSE;
 		}
+		if(mainswitch == 0)
+		{
+			DispValue.testbeep = 0;
+			DispValue.testcomp[0] = 0;
+			DispValue.testcomp[1] = 0;
+			DispValue.testcomp[2] = 0;
+		}
+		Test_Comp();//分选
+		Test_Beep();//讯响
         Test_Disp(LoadSave.vrange,LoadSave.crange);
+		
 		
         if(Keyboard.state==TRUE)
         {
@@ -1208,7 +1406,7 @@ void Test_Process(void)
 							switch(keynum)
 							{
 								case 0:
-									SetSystemStatus(SYS_STATUS_DYNAMIC);
+//									SetSystemStatus(SYS_STATUS_DYNAMIC);
 								break;
 								case 1:
 									LoadSave.mode=2;
@@ -1312,6 +1510,7 @@ void Test_Process(void)
 						break;
 
 						case Key_REST:
+							
 						break;
 						case Key_ONOFF:							
 							if(mainswitch == 0)
@@ -1331,12 +1530,46 @@ void Test_Process(void)
 						}break;
 						case Key_Ent:
 						{
-//							ReadData();
-						}break;
-						case Key_ESC:
-						{
+//							case Key_F1:
 							
+							switch(keynum)
+							{
+								case 2:
+								{
+									Coordinates.xpos=LIST2+88;
+									Coordinates.ypos=FIRSTLINE*1;
+									Coordinates.lenth=76;
+									switch(LoadSave.mode)
+									{
+										case 0:
+										{
+											LoadSave.current=Disp_Set_Num(&Coordinates);
+
+										}break;
+										case 1:
+										{
+											LoadSave.voltage=Disp_Set_Num(&Coordinates);
+										}break;
+										case 2:
+										{
+											LoadSave.risistence=Disp_Set_Num(&Coordinates);
+										}break;
+										case 3:
+										{
+											LoadSave.power=Disp_Set_Num(&Coordinates);
+										}break;
+									}
+									Set_Para();
+								}
+								break;
+
+								default:
+									break;
+							
+							
+							}
 						}break;
+						
 						case PRESS_SPIN:
 						{
 							if(spinbit < spinbitmax)
@@ -1587,8 +1820,34 @@ void Led_Process(void)
 						{
 							SetSystemStatus(SYS_STATUS_SETUP);
 						}break;
+						case Key_Ent:
+						{
+							switch(keynum)
+							{
+								case 0:
+									keynum=0;
+										//SetSystemStatus(SYS_STATUS_TEST);
+									break;
+								case 1:
+									LoadSave.mode=0;
+								break;
+								case 2:
+								{
+									Coordinates.xpos=LIST2+88;
+									Coordinates.ypos=FIRSTLINE*1;
+									Coordinates.lenth=76;
+									LoadSave.voltage=Disp_Set_Num(&Coordinates);
+								}
+								break;
+
+								default:
+									break;
+							
+							
+							}
+						}break;
 						default:
-							SetSystemStatus(SYS_STATUS_TEST);
+//							SetSystemStatus(SYS_STATUS_TEST);
 						break;
 							
 					}
@@ -1612,7 +1871,8 @@ void Battery_Process(void)
     Send_To_UTypedef pt;
     Disp_Coordinates_Typedef  Coordinates;
 	u8 Disp_Flag=1;//显示标志
-
+	F_100ms=FALSE;//100ms定时
+	F_1s = FALSE;//1s定时
     LCD_Clear(LCD_COLOR_TEST_BACK);
 
 
@@ -1620,7 +1880,7 @@ void Battery_Process(void)
 
 
     i=0;
-
+	Set_Para();
 //    EXTI_ClearITPendingBit(KEY1_INT_EXTI_LINE); 
 //    NVIC_EnableIRQ(EXTI3_IRQn);
 //    if(Jk516save.Sys_Setvalue.u_flag)
@@ -1647,11 +1907,21 @@ void Battery_Process(void)
             Int_Pe3flag=0;
             
         }
+		if(UART_Buffer_Rece_flag==1)
+		{
+			UART_Buffer_Rece_flag=0;
+			Rec_Handle();
+		}
          if(Disp_Flag==1 )//显示设置的值
 		{
 			Disp_Bat_value(keynum);
 			Disp_Flag = 0;
 		}  
+		if(F_100ms == TRUE/* && setflag == 0*/)
+		{
+			ReadData();
+			F_100ms=FALSE;
+		}
 		Bat_Disp(LoadSave.vrange,LoadSave.crange);
              
 //		Uart_Process();//串口处理
@@ -1669,12 +1939,14 @@ void Battery_Process(void)
 							switch(keynum)
 							{
 								case 0:
-									keynum=0;
+									if(mainswitch == 0)
+									{
 										SetSystemStatus(SYS_STATUS_TEST);
+									}
 									break;
 								case 1:
 									LoadSave.loadmode=0;
-									BatMode_SW();
+									Set_Para();
 									LCD_Clear(LCD_COLOR_TEST_BACK);
 									Disp_Battery_Item(1);
 									Store_set_flash();
@@ -1686,12 +1958,16 @@ void Battery_Process(void)
 										Coordinates.xpos=LIST1+118;
 										Coordinates.ypos=FIRSTLINE+SPACE1*1;
 										Coordinates.lenth=76;
-	 									LoadSave.loadc1=Disp_Set_Num(&Coordinates);
-									}else if(LoadSave.loadmode == 1){
+	 									LoadSave.loadc1=Disp_Set_CNum(&Coordinates);
+									}else if(LoadSave.loadmode == 2){
 										Coordinates.xpos=LIST1+118;
 										Coordinates.ypos=FIRSTLINE+SPACE1*1;
 										Coordinates.lenth=76;
-										LoadSave.loadr=Disp_Set_Num(&Coordinates);
+										LoadSave.loadr=Disp_Set_RNum(&Coordinates);
+									}
+									if(mainswitch == 0)
+									{
+										Set_Para();
 									}
 									Store_set_flash();
 								}
@@ -1703,7 +1979,7 @@ void Battery_Process(void)
 										Coordinates.xpos=LIST1+118;
 										Coordinates.ypos=FIRSTLINE+SPACE1*2;
 										Coordinates.lenth=76;
-										LoadSave.loadc2=Disp_Set_Num(&Coordinates);
+										LoadSave.loadc2=Disp_Set_CNum(&Coordinates);
 									}
 									Store_set_flash();
 								}
@@ -1715,7 +1991,7 @@ void Battery_Process(void)
 										Coordinates.xpos=LIST1+118;
 										Coordinates.ypos=FIRSTLINE+SPACE1*3;
 										Coordinates.lenth=76;
-										LoadSave.loadc3=Disp_Set_Num(&Coordinates);
+										LoadSave.loadc3=Disp_Set_CNum(&Coordinates);
 									}
 									Store_set_flash();
 								}
@@ -1727,12 +2003,12 @@ void Battery_Process(void)
 										Coordinates.xpos=LIST2+118;
 										Coordinates.ypos=FIRSTLINE+SPACE1*1;
 										Coordinates.lenth=76;
-										LoadSave.coffv1=Disp_Set_Num(&Coordinates);
+										LoadSave.coffv1=Disp_Set_VNum(&Coordinates);
 									}else if(LoadSave.loadmode == 1){
 										Coordinates.xpos=LIST2+118;
 										Coordinates.ypos=FIRSTLINE+SPACE1*1;
 										Coordinates.lenth=76;
-										LoadSave.coffvr=Disp_Set_Num(&Coordinates);
+										LoadSave.coffvr=Disp_Set_VNum(&Coordinates);
 									}
 									Store_set_flash();
 								}
@@ -1744,7 +2020,7 @@ void Battery_Process(void)
 										Coordinates.xpos=LIST2+118;
 										Coordinates.ypos=FIRSTLINE+SPACE1*2;
 										Coordinates.lenth=76;
-										LoadSave.coffv2=Disp_Set_Num(&Coordinates);
+										LoadSave.coffv2=Disp_Set_VNum(&Coordinates);
 									}
 									Store_set_flash();
 								}
@@ -1756,7 +2032,7 @@ void Battery_Process(void)
 										Coordinates.xpos=LIST2+118;
 										Coordinates.ypos=FIRSTLINE+SPACE1*3;
 										Coordinates.lenth=76;
-										LoadSave.coffv3=Disp_Set_Num(&Coordinates);
+										LoadSave.coffv3=Disp_Set_VNum(&Coordinates);
 									}
 									Store_set_flash();
 								}
@@ -1775,8 +2051,8 @@ void Battery_Process(void)
 								break;
 								case 1:
 								{
-									LoadSave.loadmode=1;
-									BatMode_SW();
+									LoadSave.loadmode=2;
+									Set_Para();
 									LCD_Clear(LCD_COLOR_TEST_BACK);
 									Disp_Battery_Item(1);
 									Store_set_flash();
@@ -1791,7 +2067,7 @@ void Battery_Process(void)
 							switch(keynum)
 							{
 								case 0:
-									SetSystemStatus(SYS_STATUS_DYNAMIC);
+//									SetSystemStatus(SYS_STATUS_DYNAMIC);
 								break;
 							
 							
@@ -1802,8 +2078,11 @@ void Battery_Process(void)
 							switch(keynum)//
 							{
 							   case 0:
-										
-									break;
+								if(mainswitch == 0)
+								{
+									SetSystemStatus(SYS_STATUS_LIST);
+								}									
+								break;
 	  
 								default:
 									break;
@@ -1815,6 +2094,11 @@ void Battery_Process(void)
 						case Key_F5:
 							switch(keynum)
 							{
+								case 0:
+								{
+									if(mainswitch == 0)
+										SetSystemStatus(SYS_STATUS_LIMITSET);
+								}break;
 								case 1:
 									LoadSave.mode=4;
 								break;
@@ -1871,11 +2155,15 @@ void Battery_Process(void)
 						case Key_ONOFF:							
 							if(mainswitch == 0)
 							{
+								SwitchLedOn();
+								batstep = 1;
+								DispValue.Capraw = 0;
 								mainswitch = 1;
-								OnOff_SW(mainswitch);
+								Set_Para();
 							}else{
 								mainswitch = 0;
-								OnOff_SW(mainswitch);
+								Set_Para();
+								SwitchLedOff();
 							}
 						break;
 						case Key_TRIG:
@@ -1883,10 +2171,112 @@ void Battery_Process(void)
 						break;
 						case Key_SET1:
 						{
+							if(mainswitch == 0)
 							SetSystemStatus(SYS_STATUS_SETUP);
 						}break;
+						case Key_ESC:
+						{
+							if(mainswitch == 0)
+								SetSystemStatus(SYS_STATUS_TEST);
+						}break;
+						case Key_Ent:
+						{
+							switch(keynum)
+							{
+								case 2:
+								{
+									if(LoadSave.loadmode == 0)
+									{
+										Coordinates.xpos=LIST1+118;
+										Coordinates.ypos=FIRSTLINE+SPACE1*1;
+										Coordinates.lenth=76;
+	 									LoadSave.loadc1=Disp_Set_CNum(&Coordinates);
+									}else if(LoadSave.loadmode == 2){
+										Coordinates.xpos=LIST1+118;
+										Coordinates.ypos=FIRSTLINE+SPACE1*1;
+										Coordinates.lenth=76;
+										LoadSave.loadr=Disp_Set_RNum(&Coordinates);
+									}
+									if(mainswitch == 0)
+									{
+										Set_Para();
+									}
+									Store_set_flash();
+								}
+								break;
+								case 3:
+								{
+									if(LoadSave.loadmode == 0)
+									{
+										Coordinates.xpos=LIST1+118;
+										Coordinates.ypos=FIRSTLINE+SPACE1*2;
+										Coordinates.lenth=76;
+										LoadSave.loadc2=Disp_Set_CNum(&Coordinates);
+									}
+									Store_set_flash();
+								}
+								break;
+								case 4:
+								{
+									if(LoadSave.loadmode == 0)
+									{
+										Coordinates.xpos=LIST1+118;
+										Coordinates.ypos=FIRSTLINE+SPACE1*3;
+										Coordinates.lenth=76;
+										LoadSave.loadc3=Disp_Set_CNum(&Coordinates);
+									}
+									Store_set_flash();
+								}
+								break;
+								case 6:
+								{
+									if(LoadSave.loadmode == 0)
+									{
+										Coordinates.xpos=LIST2+118;
+										Coordinates.ypos=FIRSTLINE+SPACE1*1;
+										Coordinates.lenth=76;
+										LoadSave.coffv1=Disp_Set_VNum(&Coordinates);
+									}else if(LoadSave.loadmode == 1){
+										Coordinates.xpos=LIST2+118;
+										Coordinates.ypos=FIRSTLINE+SPACE1*1;
+										Coordinates.lenth=76;
+										LoadSave.coffvr=Disp_Set_VNum(&Coordinates);
+									}
+									Store_set_flash();
+								}
+								break;
+								case 7:
+								{
+									if(LoadSave.loadmode == 0)
+									{
+										Coordinates.xpos=LIST2+118;
+										Coordinates.ypos=FIRSTLINE+SPACE1*2;
+										Coordinates.lenth=76;
+										LoadSave.coffv2=Disp_Set_VNum(&Coordinates);
+									}
+									Store_set_flash();
+								}
+								break;
+								case 8:
+								{
+									if(LoadSave.loadmode == 0)
+									{
+										Coordinates.xpos=LIST2+118;
+										Coordinates.ypos=FIRSTLINE+SPACE1*3;
+										Coordinates.lenth=76;
+										LoadSave.coffv3=Disp_Set_VNum(&Coordinates);
+									}
+									Store_set_flash();
+								}
+								break;
+								default:
+									break;
+							
+							
+							}
+						}break;
 						default:
-							SetSystemStatus(SYS_STATUS_TEST);
+//							SetSystemStatus(SYS_STATUS_TEST);
 						break;
 							
 					}
@@ -2245,8 +2635,13 @@ void List_Process(void)
 			Disp_Res_Sheet(LoadSave.ListNum);
 			resdisp = 1;
 			resflag = 0;
+			if(listbeep == 1)
+			{
+				ListCompBeep();
+				listbeep = 0;
+			}
 		}
-		if(F_100ms == TRUE/* && setflag == 0*/)
+		if(F_100ms == TRUE && resdisp == 0/* && setflag == 0*/)
 		{
 			ReadData();
 			F_100ms=FALSE;
@@ -2257,6 +2652,7 @@ void List_Process(void)
 		{
 			Disp_List_Process();
 		}
+		
 //		}
 //		Uart_Process();//串口处理
         if(Keyboard.state==TRUE)
@@ -2276,7 +2672,7 @@ void List_Process(void)
 									switch(keynum)
 									{
 										case 0:
-											keynum=0;
+											if(mainswitch == 0)
 												SetSystemStatus(SYS_STATUS_TEST);
 											break;
 										case 1:
@@ -2364,7 +2760,8 @@ void List_Process(void)
 									switch(keynum)
 									{
 										case 0:
-											
+											if(mainswitch == 0)
+												SetSystemStatus(SYS_STATUS_BATTERY);
 										break;
 										case 1:
 										{
@@ -2413,7 +2810,7 @@ void List_Process(void)
 									switch(keynum)
 									{
 										case 0:
-											SetSystemStatus(SYS_STATUS_DYNAMIC);
+//											SetSystemStatus(SYS_STATUS_DYNAMIC);
 										break;
 										case 6:
 										{
@@ -2455,6 +2852,11 @@ void List_Process(void)
 								case Key_F5:
 									switch(keynum)
 									{
+										case 0:
+										{
+											if(mainswitch == 0)
+												SetSystemStatus(SYS_STATUS_LIMITSET);
+										}
 										case 1:
 											LoadSave.mode=4;
 										break;
@@ -2543,8 +2945,73 @@ void List_Process(void)
 								{
 									SetSystemStatus(SYS_STATUS_SETUP);
 								}break;
+								case Key_ESC:
+								{
+									if(mainswitch == 0)
+										SetSystemStatus(SYS_STATUS_TEST);
+								}break;
+								case Key_Ent:
+								{									
+									switch(keynum)
+									{
+										case 1:
+											Coordinates.xpos=LIST1+118;
+											Coordinates.ypos=FIRSTLINE;
+											Coordinates.lenth=76;
+											LoadSave.ListNum=Disp_Set_Step(&Coordinates);
+											Store_set_flash();
+										break;
+										case 5:
+											Coordinates.xpos=LIST2+118;
+											Coordinates.ypos=FIRSTLINE+SPACE1*1;
+											Coordinates.lenth=76;
+											LoadSave.listonvol=Disp_Set_Num(&Coordinates);
+											Store_set_flash();
+										break;
+										case 6:
+										{
+											LoadSave.listmode[DispValue.liststep] = 0;
+											Store_set_flash();
+										}break;
+										case 7:
+										{
+											Coordinates.xpos=100;
+											Coordinates.ypos=26+4*22;
+											Coordinates.lenth=76;
+											LoadSave.listvalue[DispValue.liststep]=Disp_Set_Num(&Coordinates);
+											Store_set_flash();
+										}break;
+										case 8:
+										{
+											Coordinates.xpos=100;
+											Coordinates.ypos=26+5*22;
+											Coordinates.lenth=76;
+											LoadSave.delay[DispValue.liststep]=Disp_List_Delay(&Coordinates);
+											Store_set_flash();
+										}
+										break;
+										case 10:
+										{
+											Coordinates.xpos=100;
+											Coordinates.ypos=26+7*22;
+											Coordinates.lenth=76;
+											LoadSave.listhigh[DispValue.liststep]=Disp_Set_Num(&Coordinates);
+											Store_set_flash();
+										}break;
+										case 11:
+										{
+											Coordinates.xpos=100;
+											Coordinates.ypos=26+8*22;
+											Coordinates.lenth=76;
+											LoadSave.listlow[DispValue.liststep]=Disp_Set_Num(&Coordinates);
+											Store_set_flash();
+										}break;
+										default:
+											break;
+									}
+								}break;
 								default:
-									SetSystemStatus(SYS_STATUS_TEST);
+//									SetSystemStatus(SYS_STATUS_TEST);
 								break;
 									
 							}
@@ -2556,6 +3023,9 @@ void List_Process(void)
 									resdisp = 0;
 									List_Process();
 								}break;
+								default:
+									Disp_Flag = 0;
+								break;
 							}
 						}
 					}

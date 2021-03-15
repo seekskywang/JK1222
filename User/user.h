@@ -223,7 +223,12 @@ void Use_SysSetProcess(void);
 void Sys_Process(void);
 vu32 Disp_Set_Num(Disp_Coordinates_Typedef *Coordinates);
 vu32 Disp_Set_Step(Disp_Coordinates_Typedef *Coordinates);
+vu32 Disp_Set_TimeS(Disp_Coordinates_Typedef *Coordinates);
+vu32 Disp_Set_TimeP(Disp_Coordinates_Typedef *Coordinates);
 vu32 Disp_List_Delay(Disp_Coordinates_Typedef *Coordinates);
+vu32 Disp_Set_CNum(Disp_Coordinates_Typedef *Coordinates);
+vu32 Disp_Set_VNum(Disp_Coordinates_Typedef *Coordinates);
+vu32 Disp_Set_RNum(Disp_Coordinates_Typedef *Coordinates);
 
 void DoubHex_Format(u32 dat , u8 Dot , u8 len , u8 dispzero);
 Sort_TypeDef Disp_Set_CompNum(Disp_Coordinates_Typedef *Coordinates);

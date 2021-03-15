@@ -3,6 +3,7 @@
 
 void GPIO_Configuration(void);
 void Key_beep(void);
+void ListCompBeep(void);
 void PGA_20mR(void);
 void PGA_200mR(void);
 void PGA_2R(void);
