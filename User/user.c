@@ -310,7 +310,7 @@ const uint8_t List_Setitem[][14+1]=
 {
 	{"列表步数  :"},
 	{"步进模式  :"},
-	{"循环测试  :"},
+	{""},
 	{"列表讯响  :"},
 	{"启动电压  :"},
 };
@@ -335,6 +335,7 @@ const uint8_t Test_Modevalue_E1[][6+1]=
 const uint8_t Bat_Modevalue[][6+1]=
 {
 	{"恒流"},
+	{"恒阻"},
 	{"恒阻"}, 
 };
 
@@ -367,6 +368,7 @@ const uint8_t Test_Modevalue_E2[][6+1]=
 const uint8_t Bat_LoadMod[][6+1]=
 {
 	{"恒流"},
+	{"恒阻"},
 	{"恒阻"},
 };
 
@@ -594,9 +596,9 @@ const uint8_t BiasButton_Tip[][7+1]=  //频率选择时候的下面的提示符号
 
 const uint8_t Sys_Sys[][20+1]=
 {
-	{"仪器型号  JK2520C"},
-	{"软件版本  Ver:2.5"},
-	{"硬件版本  Ver:1.1"},
+	{"仪器型号  JK5016"},
+	{"软件版本  Ver:1.0"},
+	{"硬件版本  Ver:1.0"},
 	{"仪器编号"},
 //	{"账号    "},
 
@@ -605,9 +607,9 @@ const uint8_t Sys_Sys[][20+1]=
 };
 const uint8_t Sys_Sys_E[][20+1]=
 {
-	{"INST MODEL  JK2520C"},
-	{"SOFT VER   Ver:2.5"},
-	{"HARD VER   Ver:1.1"},
+	{"INST MODEL  JK5016"},
+	{"SOFT VER   Ver:1.0"},
+	{"HARD VER   Ver:1.0"},
 	{"SERIALNO"},
 //	{"账号    "},
 
@@ -1660,7 +1662,7 @@ void Disp_Battery_Item(u8 type)
 				WriteString_16(250, 26+(i-4)*22, pt[i],  0);
 		
 		}
-	}else if(LoadSave.loadmode == 1){
+	}else if(LoadSave.loadmode == 2){
 		pt=Bat_SetitemR;
 		for(i=0;i<8;i++)
 		{
@@ -1813,7 +1815,7 @@ void Disp_Test_value(u8 num)
 	{
 		Colour.black=LCD_COLOR_TEST_BACK;
 	}
-	LCD_DrawFullRect( LIST2+88-2, FIRSTLINE-2,SELECT_2END-LIST2-86 , SPACE1-2  ) ;//SPACE1
+	LCD_DrawFullRect( LIST2+88-2, FIRSTLINE-2,SELECT_2END-LIST2-86+4, SPACE1-2  ) ;//SPACE1
 	if(Black_Select)
 	{
 		Colour.black=LCD_COLOR_YELLOW;
@@ -2146,7 +2148,7 @@ void Disp_Bat_value(u8 num)
 		Hex_Format(LoadSave.coffv3,4,7,0);
 		WriteString_16(LIST2+118, FIRSTLINE+SPACE1*3, DispBuf,  0);//增加算法  把顺序改过来
 		WriteString_16(LIST2+118+82, FIRSTLINE+SPACE1*3, Unit_Setitem[1],  0);
-	}else if(LoadSave.loadmode == 1){
+	}else if(LoadSave.loadmode == 2){
 		Black_Select=(num==1)?1:0;//放电模式
 		if(Black_Select)
 		{
@@ -2172,27 +2174,27 @@ void Disp_Bat_value(u8 num)
 		{
 			Colour.black=LCD_COLOR_TEST_BACK;
 		}
-		LCD_DrawFullRect( LIST1+118, FIRSTLINE+SPACE1-2,88+4 , SPACE1-2  ) ;//SPACE1
+		LCD_DrawFullRect( LIST1+118, FIRSTLINE+SPACE1-2,88+16 , SPACE1-2  ) ;//SPACE1
 		Colour.Fword=White;
 		Hex_Format(LoadSave.loadr,4,7,0);
 		WriteString_16(LIST1+118, FIRSTLINE+SPACE1, DispBuf,  0);//增加算法  把顺序改过来
-		WriteString_16(LIST1+118+82, FIRSTLINE+SPACE1, Unit_Setitem[0],  0);
+		WriteString_16(LIST1+118+82, FIRSTLINE+SPACE1, Unit_Setitem[2],  0);
 		
-		Black_Select=(num==5)?1:0;//曲线采样间隔
-		if(Black_Select)
-		{
-			Colour.black=LCD_COLOR_SELECT;
-		
-		}
-		else
-		{
-			Colour.black=LCD_COLOR_TEST_BACK;
-		}	
-		LCD_DrawFullRect( LIST2+118, FIRSTLINE-2,88+4 , SPACE1-2  ) ;//SPACE1
-		Colour.Fword=White;
-		Hex_Format(LoadSave.curvetime,0,2,0);
-		WriteString_16(LIST2+118, FIRSTLINE, DispBuf,  0);//增加算法  把顺序改过来
-		WriteString_16(LIST2+118+60, FIRSTLINE, Unit_Setitem[4],  0);
+//		Black_Select=(num==5)?1:0;//曲线采样间隔
+//		if(Black_Select)
+//		{
+//			Colour.black=LCD_COLOR_SELECT;
+//		
+//		}
+//		else
+//		{
+//			Colour.black=LCD_COLOR_TEST_BACK;
+//		}	
+//		LCD_DrawFullRect( LIST2+118, FIRSTLINE-2,88+4 , SPACE1-2  ) ;//SPACE1
+//		Colour.Fword=White;
+//		Hex_Format(LoadSave.curvetime,0,2,0);
+//		WriteString_16(LIST2+118, FIRSTLINE, DispBuf,  0);//增加算法  把顺序改过来
+//		WriteString_16(LIST2+118+60, FIRSTLINE, Unit_Setitem[4],  0);
 		
 		Black_Select=(num==6)?1:0;//截止电压
 		if(Black_Select)
@@ -2654,19 +2656,19 @@ void Disp_List_value(u8 num)
     Colour.Fword=White;
 	WriteString_16(LIST1+118,FIRSTLINE+SPACE1, Step_Mode[LoadSave.StepMode],  0);
 	
-	Black_Select=(num==3)?1:0;///循环测试
-	if(Black_Select)
-	{
-		Colour.black=LCD_COLOR_SELECT;
-	
-	}
-	else
-	{
-		Colour.black=LCD_COLOR_TEST_BACK;
-	}
-	LCD_DrawFullRect( LIST1+118, FIRSTLINE+SPACE1*2-2,88+4 , SPACE1-2  ) ;//SPACE1
-    Colour.Fword=White;
-	WriteString_16(LIST1+118, FIRSTLINE+SPACE1*2, Test_Compvalue[LoadSave.LoopTest],  0);//增加算法  把顺序改过来
+//	Black_Select=(num==3)?1:0;///循环测试
+//	if(Black_Select)
+//	{
+//		Colour.black=LCD_COLOR_SELECT;
+//	
+//	}
+//	else
+//	{
+//		Colour.black=LCD_COLOR_TEST_BACK;
+//	}
+//	LCD_DrawFullRect( LIST1+118, FIRSTLINE+SPACE1*2-2,88+4 , SPACE1-2  ) ;//SPACE1
+//    Colour.Fword=White;
+//	WriteString_16(LIST1+118, FIRSTLINE+SPACE1*2, Test_Compvalue[LoadSave.LoopTest],  0);//增加算法  把顺序改过来
 
 
 	
@@ -2977,6 +2979,25 @@ void Disp_List_value(u8 num)
 					WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
 				}
 			}break;
+			case 2:
+			
+					Disp_Fastbutton();
+					Colour.Fword=White;//
+					Colour.black=LCD_COLOR_TEST_BUTON;
+					
+					if(Jk516save.Sys_Setvalue.lanage)
+					{
+						pt=Step_ModeE;
+					}
+					else
+					{
+						pt=Step_Mode;
+					
+					}
+					for(i=0;i<2;i++)
+					WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
+			
+			break;
 			case 3:
 			
 					Disp_Fastbutton();

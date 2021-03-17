@@ -129,7 +129,7 @@ void Read_set_flash(void)
 	{
 		LoadSave.ledrd = 0;
 	}
-	if(LoadSave.loadmode > 1)
+	if(LoadSave.loadmode > 2)
 	{
 		LoadSave.loadmode = 0;
 	}

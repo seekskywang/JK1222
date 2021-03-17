@@ -314,23 +314,23 @@ void ListComp(void)
 u8 ListBeep(void)
 {
 	u8 i;
-	if(LoadSave.ListBeep != 0)
+//	if(LoadSave.ListBeep != 0)
+//	{
+	for(i=0;i<LoadSave.ListNum;i++)
 	{
-		for(i=0;i<LoadSave.ListNum;i++)
+		if(DispValue.listcompres[i] != 0)
 		{
-			if(DispValue.listcompres[i] != 0)
+			if(LoadSave.ListBeep == 1)
 			{
-				if(LoadSave.ListBeep == 1)
-				{
-					return 1;
-				}
+				return 1;
 			}
 		}
-		if(LoadSave.ListBeep == 1)
-		{
-			return 1;
-		}
 	}
+	if(LoadSave.ListBeep == 0)
+	{
+		return 1;
+	}
+//	}
 	return 0;
 }
 
@@ -361,7 +361,7 @@ void  BASIC_TIM_IRQHandler (void)
 			|| SystemStatus==SYS_STATUS_LIST)
         {
             num++;
-            if(num>19)//10mS??
+            if(num>9)//10mS??
             {
                 num=0;
                 F_100ms=TRUE;//100ms????
@@ -411,103 +411,157 @@ void  BASIC_TIM_IRQHandler (void)
 				if(listtime > LoadSave.delay[DispValue.listrunstep]*10)
 				{
 					jumpflag = 1;
-					if(DispValue.listrunstep < LoadSave.ListNum-1)
+					if(LoadSave.StepMode == 0)
 					{
-						listtime = 0;
-						DispValue.listrunstep ++;
-						DispValue.listdelay = LoadSave.delay[DispValue.listrunstep];
-						Set_Para();	
-					}else{
-						listtime = 0;
-						DispValue.listrunstep = 0;
-						mainswitch = 0;
-						OnOff_SW(mainswitch);
-						SwitchLedOff();
-						resflag = 1;
-						listbeep = ListBeep();
+						if(DispValue.listrunstep < LoadSave.ListNum-1)
+						{
+							listtime = 0;
+							DispValue.listrunstep ++;
+							DispValue.listdelay = LoadSave.delay[DispValue.listrunstep];
+							Set_Para();	
+						}else{
+							listtime = 0;
+							DispValue.listrunstep = 0;
+							mainswitch = 0;
+							OnOff_SW(mainswitch);
+							SwitchLedOff();
+							resflag = 1;
+							listbeep = ListBeep();
+						}
+					}else if(LoadSave.StepMode == 1){
+						if(DispValue.listrunstep < LoadSave.ListNum-1)
+						{
+							listtime = 0;
+							DispValue.listrunstep ++;
+							mainswitch = 0;
+							SwitchLedOff();
+							DispValue.listdelay = LoadSave.delay[DispValue.listrunstep];
+							Set_Para();	
+						}else{
+							listtime = 0;
+							DispValue.listrunstep = 0;
+							mainswitch = 0;
+							OnOff_SW(mainswitch);
+							SwitchLedOff();
+							resflag = 1;
+							listbeep = ListBeep();
+						}
 					}
 				}
 			}
 		}else if(SystemStatus==SYS_STATUS_BATTERY){
-			if(mainswitch == 1 && F_1s == TRUE)
+			if(LoadSave.loadmode == 0)
 			{
-				F_1s = FALSE;
-				if(LoadSave.crange == 0)
+				if(mainswitch == 1 && F_1s == TRUE)
 				{
-					DispValue.Capraw += (float)DispValue.Current/10 * 1/3600;
-				}else{
-					DispValue.Capraw += (float)DispValue.Current * 1/3600;
+					F_1s = FALSE;
+					if(LoadSave.crange == 0)
+					{
+						DispValue.Capraw += (float)DispValue.Current/10 * 1/3600;
+					}else{
+						DispValue.Capraw += (float)DispValue.Current * 1/3600;
+					}
+					if(batstep == 1)
+					{
+						if(LoadSave.vrange == 0)
+						{
+							if(DispValue.Voltage < LoadSave.coffv1)
+							{
+								if(LoadSave.loadc2 == 0)
+								{
+									SwitchLedOff();
+									mainswitch = 0;
+									Set_Para();
+								}else{
+									batstep = 2;
+									Set_Para();
+								}
+							}
+						}else{
+							if(DispValue.Voltage*10 < LoadSave.coffv1)
+							{
+								if(LoadSave.loadc2 == 0)
+								{
+									SwitchLedOff();
+									mainswitch = 0;
+									Set_Para();
+								}else{
+									batstep = 2;
+									Set_Para();
+								}
+							}
+						}
+					}else if(batstep == 2){
+						if(LoadSave.vrange == 0)
+						{
+							if(DispValue.Voltage < LoadSave.coffv2)
+							{
+								if(LoadSave.loadc3 == 0)
+								{
+									SwitchLedOff();
+									mainswitch = 0;
+									Set_Para();
+								}else{
+									batstep = 3;
+									Set_Para();
+								}
+							}
+						}else{
+							if(DispValue.Voltage*10 < LoadSave.coffv2)
+							{
+								if(LoadSave.loadc3 == 0)
+								{
+									SwitchLedOff();
+									mainswitch = 0;
+									Set_Para();
+								}else{
+									batstep = 3;
+									Set_Para();
+								}
+							}
+						}
+					}else if(batstep == 3){
+						if(LoadSave.vrange == 0)
+						{
+							if(DispValue.Voltage < LoadSave.coffv3)
+							{
+								SwitchLedOff();
+								mainswitch = 0;
+								Set_Para();
+							}
+						}else{
+							if(DispValue.Voltage*10 < LoadSave.coffv3)
+							{
+								SwitchLedOff();
+								mainswitch = 0;
+								Set_Para();
+							}
+						}
+					}
+					DispValue.Capacity = (long)DispValue.Capraw;
 				}
-				if(batstep == 1)
-				{
-					if(LoadSave.vrange == 0)
+				
+				
+				
+			}else if(LoadSave.loadmode == 2){
+				if(mainswitch == 1 && F_1s == TRUE){
+					F_1s = FALSE;
+					if(LoadSave.crange == 0)
 					{
-						if(DispValue.Voltage < LoadSave.coffv1)
-						{
-							if(LoadSave.loadc2 == 0)
-							{
-								SwitchLedOff();
-								mainswitch = 0;
-								Set_Para();
-							}else{
-								batstep = 2;
-								Set_Para();
-							}
-						}
+						DispValue.Capraw += (float)DispValue.Current/10 * 1/3600;
 					}else{
-						if(DispValue.Voltage*10 < LoadSave.coffv1)
-						{
-							if(LoadSave.loadc2 == 0)
-							{
-								SwitchLedOff();
-								mainswitch = 0;
-								Set_Para();
-							}else{
-								batstep = 2;
-								Set_Para();
-							}
-						}
+						DispValue.Capraw += (float)DispValue.Current * 1/3600;
 					}
-				}else if(batstep == 2){
 					if(LoadSave.vrange == 0)
 					{
-						if(DispValue.Voltage < LoadSave.coffv2)
-						{
-							if(LoadSave.loadc3 == 0)
-							{
-								SwitchLedOff();
-								mainswitch = 0;
-								Set_Para();
-							}else{
-								batstep = 3;
-								Set_Para();
-							}
-						}
-					}else{
-						if(DispValue.Voltage*10 < LoadSave.coffv2)
-						{
-							if(LoadSave.loadc3 == 0)
-							{
-								SwitchLedOff();
-								mainswitch = 0;
-								Set_Para();
-							}else{
-								batstep = 3;
-								Set_Para();
-							}
-						}
-					}
-				}else if(batstep == 3){
-					if(LoadSave.vrange == 0)
-					{
-						if(DispValue.Voltage < LoadSave.coffv3)
+						if(DispValue.Voltage < LoadSave.coffvr)
 						{
 							SwitchLedOff();
 							mainswitch = 0;
 							Set_Para();
 						}
 					}else{
-						if(DispValue.Voltage*10 < LoadSave.coffv3)
+						if(DispValue.Voltage*10 < LoadSave.coffvr)
 						{
 							SwitchLedOff();
 							mainswitch = 0;
@@ -515,11 +569,6 @@ void  BASIC_TIM_IRQHandler (void)
 						}
 					}
 				}
-				DispValue.Capacity = (long)DispValue.Capraw;
-				
-				
-				
-			}else{
 				
 			}
 		}

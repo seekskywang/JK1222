@@ -566,20 +566,20 @@ void Set_Para(void)
 	sendbuff[33+28] = LoadSave.opp>>8;
 	sendbuff[34+28] = LoadSave.opp;//过功率保护
 	
-	sendbuff[35+28] = LoadSave.maxp>>24;
-	sendbuff[36+28] = LoadSave.maxp>>16;
-	sendbuff[37+28] = LoadSave.maxp>>8;
-	sendbuff[38+28] = LoadSave.maxp;//最大限制功率
+	sendbuff[35+28] = LoadSave.maxp/10>>24;
+	sendbuff[36+28] = LoadSave.maxp/10>>16;
+	sendbuff[37+28] = LoadSave.maxp/10>>8;
+	sendbuff[38+28] = LoadSave.maxp/10;//最大限制功率
 	
-	sendbuff[39+28] = LoadSave.maxv>>24;
-	sendbuff[40+28] = LoadSave.maxv>>16;
-	sendbuff[41+28] = LoadSave.maxv>>8;
-	sendbuff[42+28] = LoadSave.maxv;//最大限制电压
+	sendbuff[39+28] = LoadSave.maxv/10>>24;
+	sendbuff[40+28] = LoadSave.maxv/10>>16;
+	sendbuff[41+28] = LoadSave.maxv/10>>8;
+	sendbuff[42+28] = LoadSave.maxv/10;//最大限制电压
 	
-	sendbuff[43+28] = LoadSave.maxc>>24;
-	sendbuff[44+28] = LoadSave.maxc>>16;
-	sendbuff[45+28] = LoadSave.maxc>>8;
-	sendbuff[46+28] = LoadSave.maxc;//最大限制电流
+	sendbuff[43+28] = LoadSave.maxc/10>>24;
+	sendbuff[44+28] = LoadSave.maxc/10>>16;
+	sendbuff[45+28] = LoadSave.maxc/10>>8;
+	sendbuff[46+28] = LoadSave.maxc/10;//最大限制电流
 	
 	if(GetSystemStatus()==SYS_STATUS_LIST)
 	{
@@ -1018,14 +1018,19 @@ void Rec_Handle(void)
 				readbuf += UART_Buffer_Rece[52] << 16;
 				readbuf += UART_Buffer_Rece[53] << 8;
 				readbuf += UART_Buffer_Rece[54];
-				mainswitch = readbuf;
-				if(mainswitch == 0)
+				if(switchdelay == 0)
 				{
-					SwitchLedOff();
-				}
-				if(mainswitch == 1)
-				{
-					SwitchLedOn();
+					mainswitch = readbuf;
+					if(mainswitch == 0)
+					{
+						SwitchLedOff();
+					}
+					if(mainswitch == 1)
+					{
+						SwitchLedOn();
+					}
+				}else{
+					switchdelay --;
 				}
 				
 				readbuf = 0;

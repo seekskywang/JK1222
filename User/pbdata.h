@@ -314,9 +314,9 @@ u8 GetSoftTimerOut(u8 id);
 #define GetSystemMessage() (SystemMessage)
 #define SetSystemMessage(msg) (SystemMessage=msg)
 
-#define		MAX_SET_CURRENT       200000    //20.0000A  最大设置电流 (低档 2.00000A  高档 20.0000)
-#define		MAX_SET_VOLT          1500000    //150.000V  最大设置电压 (低档 15.0000V  高档 150.000)
-#define		MAX_SET_POW           120000    //120.000W  最大功率
+#define		MAX_SET_CURRENT       600000    //60.0000A  最大设置电流 (低档 2.00000A  高档 20.0000)
+#define		MAX_SET_VOLT          1200000    //120.000V  最大设置电压 (低档 15.0000V  高档 150.000)
+#define		MAX_SET_POW           6000000    //120.000W  最大功率
 #define		MAX_SET_RES           50000.0   //50000.0R  最大电阻
 
 
@@ -335,10 +335,10 @@ u8 GetSoftTimerOut(u8 id);
 #define		MAX_VOLOTE    				150000		//最大电压  (0-15.0000， 0-150.000)
 #define		MIN_VOLOTE    				100			  //最小电压
 
-#define		MAX_LoadVOLOTE    		150000		//最大开始带载电压值 150.000
+#define		MAX_LoadVOLOTE    		1200000		//最大开始带载电压值 150.000
 #define		MIN_LoadVOLOTE    		0			    //最小开始带载电压值
 
-#define		MAX_FreeLoadVOLOTE    120000		//最大开始卸载电压值
+#define		MAX_FreeLoadVOLOTE    1200000		//最大开始卸载电压值
 #define		MIN_FreeLoadVOLOTE    0			    //最小开始卸载电压值
 
 
@@ -363,6 +363,7 @@ u8 GetSoftTimerOut(u8 id);
 //显示刷新滤波次数
 #define DISP_FILTER		10
 
+#define SWITCH_DELAY          (3)//开关之后的读取延时
 //定义变量
 extern uint8_t softswitch;
 extern u8 dt;
@@ -927,6 +928,7 @@ typedef struct
 extern System_TypeDef System;
 extern u8 F_Fail;//测试失败标志
 extern u8 F_100ms;//100ms定时标志
+extern u8 F_set;//设置命令定时标志
 extern u8 F_1s;//1s定时标志
 extern u8 F_Password;//密码有效标志
 extern Save_TypeDef SaveData;//保存值
@@ -969,4 +971,5 @@ extern u8 resflag;
 extern u8 resdisp;
 extern u8 batstep;
 extern u8 listbeep;
+extern u8 switchdelay;
 #endif

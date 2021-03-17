@@ -122,9 +122,18 @@ uint16_t Encoder_Process(u8 list)
 			{
 				key = list;
 				if(key>10)
+				{
 					key=0;
+				}
 				else
-					key++;
+				{
+					if(key == 2)
+					{
+						key+=2;
+					}else{
+						key++;
+				}
+				}
 				return key;
 			}break;
 		}
@@ -217,9 +226,17 @@ uint16_t Encoder_Process(u8 list)
 			{
 				key = list;
 				if(key<1)
+				{
 					key=11;
-				else
-					key--;
+				}
+				else{
+					if(key ==4)
+					{
+						key-=2;
+					}else{
+						key--;
+					}
+				}
 				return key;
 			}break;
 		}
