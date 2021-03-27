@@ -84,33 +84,44 @@ uint16_t Encoder_Process(u8 list)
 		{
 			case SYS_STATUS_TEST:
 			{
-				flag_spin = 1;
-				if(list == 2)
+				if(coder_flag == 1)
 				{
-					switch(LoadSave.mode)
+					flag_spin = 1;
+					if(list == 2)
 					{
-						case 0:
+						switch(LoadSave.mode)
 						{
-							LoadSave.current += pow(10,spinbit-1);
-						}break;
-						case 1:
-						{
-							LoadSave.voltage += pow(10,spinbit-1);
-							if(LoadSave.voltage > MAX_SET_VOLT)
+							case 0:
 							{
-								LoadSave.voltage = MAX_SET_VOLT;
-							}
-						}break;
-						case 2:
-						{
-							LoadSave.risistence += pow(10,spinbit-1);
-						}break;
-						case 3:
-						{
-							LoadSave.power += pow(10,spinbit-1);
-						}break;
+								LoadSave.current += pow(10,spinbit-1);
+							}break;
+							case 1:
+							{
+								LoadSave.voltage += pow(10,spinbit-1);
+								if(LoadSave.voltage > MAX_SET_VOLT)
+								{
+									LoadSave.voltage = MAX_SET_VOLT;
+								}
+							}break;
+							case 2:
+							{
+								LoadSave.risistence += pow(10,spinbit-1);
+							}break;
+							case 3:
+							{
+								LoadSave.power += pow(10,spinbit-1);
+							}break;
+						}
+						return list;
 					}
-//					Set_Para();
+				}else{
+					key = list;
+					if(key<2)
+					{
+						key++;
+					}else{
+						key = 0;
+					}
 				}
 			}break;
 			case SYS_STATUS_DEBUG:
@@ -118,10 +129,60 @@ uint16_t Encoder_Process(u8 list)
 				dacvalue[list-1] += 100;
 				Set_Dac(list);
 			}break;
+			case SYS_STATUS_BATTERY:
+			{
+				key = list;
+				if(LoadSave.loadmode == 0)
+				{
+					if(key>7)
+					{
+						key=0;
+					}else if(key == 4){
+						key+=2;
+					}
+					else{
+						key++;
+					}
+				}else if(LoadSave.loadmode == 2){
+					if(key==6)
+					{
+						key=0;
+					}else if(key == 2){
+						key = 6;
+					}else if(key == 2){
+						key=6;
+					}else if(key == 1){
+						key=2;
+					}else if(key == 0){
+						key=1;
+					}
+				}
+				return key;
+			}break;
+			case SYS_STATUS_SETUP:
+			{
+				key = list;
+				if(key<12)
+				{
+					key++;
+				}else{
+					key = 0;
+				}
+			}break;
+			case SYS_STATUS_LIMITSET:
+			{
+				key = list;
+				if(key<11)
+				{
+					key++;
+				}else{
+					key = 0;
+				}
+			}break;
 			case SYS_STATUS_LIST:
 			{
 				key = list;
-				if(key>10)
+				if(key>11)
 				{
 					key=0;
 				}
@@ -132,10 +193,22 @@ uint16_t Encoder_Process(u8 list)
 						key+=2;
 					}else{
 						key++;
-				}
+					}
 				}
 				return key;
 			}break;
+			case SYS_STATUS_SYSSET:
+			{
+				key = list;
+				if(key<11)
+				{
+					key++;
+				}else{
+					key = 0;
+				}
+			}break;
+			default:
+			break;
 		}
 	}else if(spinnum > spintest){//ºı…Ÿ
 		Key_beep();
@@ -147,73 +220,84 @@ uint16_t Encoder_Process(u8 list)
 				switch(GetSystemStatus())
 				{
 					case SYS_STATUS_TEST:
-						flag_spin = 1;
-						if(list == 2)
+						if(coder_flag == 1)
 						{
-							switch(LoadSave.mode)
+							flag_spin = 1;
+							if(list == 2)
 							{
-								case 0:
+								switch(LoadSave.mode)
 								{
-									if(LoadSave.current < pow(10,spinbit-1))
+									case 0:
 									{
-										LoadSave.current = 0;
-									}else{
-										LoadSave.current -= pow(10,spinbit-1);
 										if(LoadSave.current < pow(10,spinbit-1))
 										{
-											if(spinbit > 1)
-											spinbit --;
+											LoadSave.current = 0;
+										}else{
+											LoadSave.current -= pow(10,spinbit-1);
+											if(LoadSave.current < pow(10,spinbit-1))
+											{
+												if(spinbit > 1)
+												spinbit --;
+											}
 										}
-									}
-								}break;
-								case 1:
-								{
-									if(LoadSave.voltage < pow(10,spinbit-1))
+									}break;
+									case 1:
 									{
-										LoadSave.voltage = 0;
-									}else{
-										LoadSave.voltage -= pow(10,spinbit-1);
 										if(LoadSave.voltage < pow(10,spinbit-1))
 										{
-											if(spinbit > 1)
-											spinbit --;
+											LoadSave.voltage = 0;
+										}else{
+											LoadSave.voltage -= pow(10,spinbit-1);
+											if(LoadSave.voltage < pow(10,spinbit-1))
+											{
+												if(spinbit > 1)
+												spinbit --;
+											}
 										}
-									}
 
-								}break;
-								case 2:
-								{
-									if(LoadSave.risistence < pow(10,spinbit-1))
+									}break;
+									case 2:
 									{
-										LoadSave.risistence = 0;
-									}else{
-										LoadSave.risistence -= pow(10,spinbit-1);
 										if(LoadSave.risistence < pow(10,spinbit-1))
 										{
-											if(spinbit > 1)
-											spinbit --;
+											LoadSave.risistence = 0;
+										}else{
+											LoadSave.risistence -= pow(10,spinbit-1);
+											if(LoadSave.risistence < pow(10,spinbit-1))
+											{
+												if(spinbit > 1)
+												spinbit --;
+											}
 										}
-									}
 
-								}break;
-								case 3:
-								{
-									if(LoadSave.power < pow(10,spinbit-1))
+									}break;
+									case 3:
 									{
-										LoadSave.power = 0;
-									}else{
-										LoadSave.power -= pow(10,spinbit-1);
 										if(LoadSave.power < pow(10,spinbit-1))
 										{
-											if(spinbit > 1)
-											spinbit --;
+											LoadSave.power = 0;
+										}else{
+											LoadSave.power -= pow(10,spinbit-1);
+											if(LoadSave.power < pow(10,spinbit-1))
+											{
+												if(spinbit > 1)
+												spinbit --;
+											}
 										}
-									}
-									
-								}break;
+										
+									}break;
+								}
+								return list;
+							}
+						}else{
+							key = list;
+							if(key>0)
+							{
+								key--;
+							}else{
+								key = 2;
 							}
 						}
-//						Set_Para();
 					break;
 				}
 			break;
@@ -222,12 +306,62 @@ uint16_t Encoder_Process(u8 list)
 				dacvalue[list-1] -= 100;
 				Set_Dac(list);
 			}break;
+			case SYS_STATUS_BATTERY:
+			{
+				key = list;
+				if(LoadSave.loadmode == 0)
+				{
+					if(key<1)
+					{
+						key=8;
+					}else if(key == 6){
+						key-=2;
+					}
+					else{
+						key--;
+					}
+				}else if(LoadSave.loadmode == 2){
+					if(key==6)
+					{
+						key=2;
+					}else if(key == 5){
+						key = 2;
+					}else if(key == 2){
+						key--;
+					}else if(key == 1){
+						key--;
+					}else if(key == 0){
+						key=6;
+					}
+				}
+				return key;
+			}break;
+			case SYS_STATUS_SETUP:
+			{
+				key = list;
+				if(key>0)
+				{
+					key--; 
+				}else{
+					key = 12;
+				}
+			}break;
+			case SYS_STATUS_LIMITSET:
+			{
+				key = list;
+				if(key>0)
+				{
+					key--; 
+				}else{
+					key = 11;
+				}
+			}break;
 			case SYS_STATUS_LIST:
 			{
 				key = list;
 				if(key<1)
 				{
-					key=11;
+					key=12;
 				}
 				else{
 					if(key ==4)
@@ -239,6 +373,18 @@ uint16_t Encoder_Process(u8 list)
 				}
 				return key;
 			}break;
+			case SYS_STATUS_SYSSET:
+			{
+				key = list;
+				if(key>0)
+				{
+					key--;
+				}else{
+					key = 11;
+				}
+			}break;
+			default:
+			break;
 		}
 	}else{
 		spinflag = 0;

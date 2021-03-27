@@ -131,7 +131,7 @@ const uint8_t Bat_Setitem[][15+1]=
 	{"放电电流1   :"},
 	{"放电电流2   :"},
 	{"放电电流3   :"},
-	{"曲线采样间隔:"},
+	{""},
 	{"截止电压1   :"},
 	{"截止电压2   :"},
 	{"截止电压3   :"},
@@ -143,7 +143,7 @@ const uint8_t Bat_SetitemR[][15+1]=
 	{"放电电阻    :"},
 	{""},
 	{""},
-	{"曲线采样间隔:"},
+	{""},
 	{"截止电压    :"},
 	{""},
 	{""},
@@ -169,6 +169,7 @@ const uint8_t Unit_Setitem[][5+1]=
 	{"W"},
 	{"s"},
 	{"A/us"},
+	{"步"},
 };
 
 const uint8_t Test_Setitem_E[][9+1]=
@@ -551,7 +552,7 @@ const uint8_t Sys_Setitem[][10+1]=
 	
 	{"日期"},
     {"时间"},
-    {"文件名称"},
+//    {"文件名称"},
 	
 };
 const uint8_t Sys_Setitem_E[][10+1]=
@@ -564,7 +565,7 @@ const uint8_t Sys_Setitem_E[][10+1]=
 	
 	{"DATE"},
     {"TIME"},
-    {"FILE"},
+//    {"FILE"},
 	
 };
 
@@ -1241,6 +1242,38 @@ void Disp_xxx(u16 data,u16 pos)
 
 
 }
+void Disp_Hint(u8 num)
+{
+	
+	if(num == 1)
+	{
+		Colour.black=LCD_COLOR_TEST_MID;
+		Colour.Fword = Red;
+		WriteString_16(LIST2+60,205,"请用数字键盘输入",0);
+	}else if(num == 2){
+		Colour.black=LCD_COLOR_TEST_BACK;
+		Colour.Fword = Red;
+		WriteString_16(LIST2+60,205,"请用数字键盘输入",0);
+	}else if(num == 3){
+		Colour.black=LCD_COLOR_TEST_MID;
+		LCD_DrawFullRect(LIST2+60,205,150,SPACE1-2);
+	}else if(num == 4){
+		Colour.black=LCD_COLOR_TEST_BACK;
+		LCD_DrawFullRect(LIST2+60,205,150, SPACE1-2);
+	}else if(num == 5){
+		Colour.black=LCD_COLOR_TEST_BACK;
+		Colour.Fword = Red;
+		WriteString_16(LIST2+60,205,"按下旋钮切换步骤",0);
+	}else if(num == 6){
+		Colour.black=LCD_COLOR_TEST_MID;
+		Colour.Fword = Red;
+		WriteString_16(LIST2+60,205,"按下旋钮快速选择",0);
+	}else if(num == 7){
+		Colour.black=LCD_COLOR_TEST_BACK;
+		Colour.Fword = Red;
+		WriteString_16(LIST2+60,205,"按下旋钮快速选择",0);
+	}
+}
 
 void Test_Disp(u8 vsw,u8 isw)
 {
@@ -1249,11 +1282,21 @@ void Test_Disp(u8 vsw,u8 isw)
 	Colour.Fword = testcompcolor[DispValue.testcomp[0]];
 	if(vsw == 0)
 	{
-		Hex_Format(DispValue.Voltage,4,7,0);       
+		if(DispValue.Voltage<100)
+		{
+			Hex_Format(0,4,7,0);  
+		}else{
+			Hex_Format(DispValue.Voltage,4,7,0);    
+		}			
 		Disp_EN40(80-60,80,DispBuf);
 		Disp_EN40(310-60,80,"V");
 	}else if(vsw == 1){
-		Hex_Format(DispValue.Voltage,3,6,0);       
+		if(DispValue.Voltage<100)
+		{
+			Hex_Format(0,3,6,0);       
+		}else{
+			Hex_Format(DispValue.Voltage,3,6,0);       
+		}	
 		Disp_EN40(80-60,80,DispBuf);
 		Disp_EN40(310-60,80,"V");
 	}
@@ -1339,11 +1382,23 @@ void Bat_Disp(u8 vsw,u8 isw)
 	Colour.black=LCD_COLOR_TEST_MID;
 	if(vsw == 0)
 	{
+		if(DispValue.Voltage<100)
+		{
+			Hex_Format(0,4,7,0);  
+		}else{
+			Hex_Format(DispValue.Voltage,4,7,0);    
+		}
 		Hex_Format(DispValue.Voltage,4,7,0);       
 		WriteString_16(80,100+30,DispBuf,0);
 		WriteString_16(160,100+30,"V",0);
 	}else if(vsw == 1){
-		Hex_Format(DispValue.Voltage,3,6,0);       
+		if(DispValue.Voltage<100)
+		{
+			Hex_Format(0,3,6,0);  
+		}else{
+			Hex_Format(DispValue.Voltage,3,6,0);    
+		}
+//		Hex_Format(DispValue.Voltage,3,6,0);       
 		WriteString_16(80,100+30,DispBuf,0);
 		WriteString_16(160,100+30,"V",0);
 	}
@@ -1441,8 +1496,8 @@ void Disp_Button_value1(uint32_t value)
             WriteString_16(10+98+94+18, 271-20, "SETUP",  0);
             WriteString_16(10+98+94+94+18, 271-40, " SYS",  0);
             WriteString_16(10+98+94+94+18, 271-20, "SETUP",  0);
-            WriteString_16(10+98+94+94+94+18, 271-40, "SYS",  0);
-            WriteString_16(10+98+94+94+94+18, 271-20, "INFO",  0);
+//            WriteString_16(10+98+94+94+94+18, 271-40, "SYS",  0);
+//            WriteString_16(10+98+94+94+94+18, 271-20, "INFO",  0);
         
         }
         else
@@ -1453,8 +1508,8 @@ void Disp_Button_value1(uint32_t value)
             WriteString_16(10+98+18, 271-20, "设置",  0);
             WriteString_16(10+98+94+18, 271-40, "系统",  0);
             WriteString_16(10+98+94+18, 271-20, "设置",  0);
-            WriteString_16(10+98+94+94+18, 271-40, "系统",  0);
-            WriteString_16(10+98+94+94+18, 271-20, "信息",  0);
+//            WriteString_16(10+98+94+94+18, 271-40, "系统",  0);
+//            WriteString_16(10+98+94+94+18, 271-20, "信息",  0);
 //			WriteString_16(10+98+94+94+94+94+18, 271-40, "固件",  0);
 //			WriteString_16(10+98+94+94+94+94+18, 271-20, "升级",  0);
         }
@@ -1816,7 +1871,7 @@ void Disp_Test_value(u8 num)
 		Colour.black=LCD_COLOR_TEST_BACK;
 	}
 	LCD_DrawFullRect( LIST2+88-2, FIRSTLINE-2,SELECT_2END-LIST2-86+4, SPACE1-2  ) ;//SPACE1
-	if(Black_Select)
+	if(Black_Select && coder_flag == 1)
 	{
 		Colour.black=LCD_COLOR_YELLOW;
 		if(spinbit < 5)
@@ -1849,6 +1904,14 @@ void Disp_Test_value(u8 num)
 	}else if(DispBuf[0] != 0x20 && DispBuf[1] != 0x20){
 		spinbitmax = 7;
 	}
+	if(num == 2)
+	{
+		Disp_Hint(1);
+	}else if(num == 1){
+		Disp_Hint(6);
+	}else{
+		Disp_Hint(3);
+	}
 	switch(num)
 	{
 		case 0:
@@ -1877,23 +1940,7 @@ void Disp_Test_value(u8 num)
 		break;
 		case 2:
 			Disp_Fastbutton();
-			Colour.Fword=White;
-			Colour.black=LCD_COLOR_TEST_BUTON;
-            if(Jk516save.Sys_Setvalue.lanage)
-            {
-                pt=INPUT_E;
-            }
-            else
-            {
-                pt=INPUT;
-            
-            }
-			for(i=0;i<1;i++)
-			{
-				
-				WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
-			}
-		break;
+
 
 		default:
 			
@@ -2148,6 +2195,15 @@ void Disp_Bat_value(u8 num)
 		Hex_Format(LoadSave.coffv3,4,7,0);
 		WriteString_16(LIST2+118, FIRSTLINE+SPACE1*3, DispBuf,  0);//增加算法  把顺序改过来
 		WriteString_16(LIST2+118+82, FIRSTLINE+SPACE1*3, Unit_Setitem[1],  0);
+		
+		if(num == 1)
+		{
+			Disp_Hint(6);
+		}else if(num == 0){
+			Disp_Hint(3);
+		}else{
+			Disp_Hint(1);
+		}
 	}else if(LoadSave.loadmode == 2){
 		Black_Select=(num==1)?1:0;//放电模式
 		if(Black_Select)
@@ -2212,7 +2268,14 @@ void Disp_Bat_value(u8 num)
 		WriteString_16(LIST2+118, FIRSTLINE+SPACE1, DispBuf,  0);//增加算法  把顺序改过来
 		WriteString_16(LIST2+118+82, FIRSTLINE+SPACE1, Unit_Setitem[1],  0);
 		
-		
+		if(num == 1)
+		{
+			Disp_Hint(6);
+		}else if(num == 0){
+			Disp_Hint(3);
+		}else{
+			Disp_Hint(1);
+		}
 	}
 	switch(num)
 	{
@@ -2244,22 +2307,22 @@ void Disp_Bat_value(u8 num)
 		case 7:
 		case 8:
 			Disp_Fastbutton();
-			Colour.Fword=White;
-			Colour.black=LCD_COLOR_TEST_BUTON;
-            if(Jk516save.Sys_Setvalue.lanage)
-            {
-                pt=INPUT_E;
-            }
-            else
-            {
-                pt=INPUT;
-            
-            }
-			for(i=0;i<1;i++)
-			{
-				
-				WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
-			}
+//			Colour.Fword=White;
+//			Colour.black=LCD_COLOR_TEST_BUTON;
+//            if(Jk516save.Sys_Setvalue.lanage)
+//            {
+//                pt=INPUT_E;
+//            }
+//            else
+//            {
+//                pt=INPUT;
+//            
+//            }
+//			for(i=0;i<1;i++)
+//			{
+//				
+//				WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
+//			}
 		break;
 
 		default:
@@ -2589,11 +2652,23 @@ void Disp_List_Process(void)
 	
 	if(LoadSave.vrange == 0)
 	{
+		if(DispValue.Voltage<100)
+		{
+			Hex_Format(0,4,7,0);  
+		}else{
+			Hex_Format(DispValue.Voltage,4,7,0);    
+		}
 		Hex_Format(DispValue.Voltage,4,7,0);       
 		WriteString_16(360,26+4*22,DispBuf,0);
 		WriteString_16(360+80,26+4*22,"V",0);
 	}else if(LoadSave.vrange == 1){
-		Hex_Format(DispValue.Voltage,3,6,0);       
+		if(DispValue.Voltage<100)
+		{
+			Hex_Format(0,3,6,0);  
+		}else{
+			Hex_Format(DispValue.Voltage,4,7,0);    
+		}
+//		Hex_Format(DispValue.Voltage,3,6,0);       
 		WriteString_16(360,26+4*22,DispBuf,0);
 		WriteString_16(360+80,26+4*22,"V",0);
 	}
@@ -2703,11 +2778,18 @@ void Disp_List_value(u8 num)
 	WriteString_16(LIST2+118+82, FIRSTLINE+SPACE1, Unit_Setitem[1],  0);
 	
 	//步骤和项目
-//	Colour.black=LCD_COLOR_TEST_MID;
+	Black_Select=(num==6)?1:0;
+	if(Black_Select)
+	{
+		Colour.black=LCD_COLOR_SELECT;
+	
+	}
+	else
+	{
+		Colour.black=LCD_COLOR_TEST_BACK;
+	}
+	LCD_DrawFullRect(0,94,80,16);
 	Colour.Fword=White;
-//	Colour.black=LCD_COLOR_TEST_MID;
-	Colour.black=LCD_COLOR_TEST_BACK;
-	LCD_DrawRect(0,26+3*22,250,26+8*22);
 	if(LoadSave.language == 0)
 	{
 		WriteString_16(0,94,"第",0);
@@ -2723,7 +2805,7 @@ void Disp_List_value(u8 num)
 	
 	
 	
-	Black_Select=(num==6)?1:0;
+	Black_Select=(num==7)?1:0;
 	if(Black_Select)
 	{
 		Colour.black=LCD_COLOR_SELECT;
@@ -2760,7 +2842,7 @@ void Disp_List_value(u8 num)
 		LCD_DrawFullRect(200,26+4*22-2,20,18);
 		WriteString_16(200,26+4*22,Unit_Setitem[LoadSave.listmode[DispValue.liststep]],0);
 		WriteString_16(200,26+5*22,"s",0);
-		Black_Select=(num==7)?1:0;
+		Black_Select=(num==8)?1:0;
 		if(Black_Select)
 		{
 			Colour.black=LCD_COLOR_SELECT;
@@ -2776,7 +2858,7 @@ void Disp_List_value(u8 num)
 		WriteString_16(100,26+4*22,DispBuf,0);
 		
 		
-		Black_Select=(num==8)?1:0;
+		Black_Select=(num==9)?1:0;
 		if(Black_Select)
 		{
 			Colour.black=LCD_COLOR_SELECT;
@@ -2791,7 +2873,7 @@ void Disp_List_value(u8 num)
 		Hex_Format(LoadSave.delay[DispValue.liststep],1,4,0);
 		WriteString_16(100,26+5*22,DispBuf,0);
 		
-		Black_Select=(num==9)?1:0;
+		Black_Select=(num==10)?1:0;
 		if(Black_Select)
 		{
 			Colour.black=LCD_COLOR_SELECT;
@@ -2805,7 +2887,7 @@ void Disp_List_value(u8 num)
 		Colour.Fword=White;
 		WriteString_16(100,26+6*22,List_CompType[LoadSave.listcomp[DispValue.liststep]],0);
 		
-		Black_Select=(num==10)?1:0;
+		Black_Select=(num==11)?1:0;
 		if(Black_Select)
 		{
 			Colour.black=LCD_COLOR_SELECT;
@@ -2820,7 +2902,7 @@ void Disp_List_value(u8 num)
 		Hex_Format(LoadSave.listhigh[DispValue.liststep],4,7,0);
 		WriteString_16(100,26+7*22,DispBuf,0);
 		
-		Black_Select=(num==11)?1:0;
+		Black_Select=(num==12)?1:0;
 		if(Black_Select)
 		{
 			Colour.black=LCD_COLOR_SELECT;
@@ -2855,20 +2937,6 @@ void Disp_List_value(u8 num)
 //		WriteString_16(173,26+4*22,"A",0);
 		LCD_DrawFullRect(200,26+4*22-2,20,18);
 		WriteString_16(200,26+5*22,"s",0);
-		Black_Select=(num==6)?1:0;
-		if(Black_Select)
-		{
-			Colour.black=LCD_COLOR_SELECT;
-		
-		}
-		else
-		{
-			Colour.black=LCD_COLOR_TEST_BACK;
-		}
-		
-		Hex_Format(LoadSave.listvalue[DispValue.liststep],4,7,0);
-		LCD_DrawRect(100,26+4*22-2,170,26+5*22-4);
-		WriteString_16(100,26+4*22,DispBuf,0);
 		Black_Select=(num==7)?1:0;
 		if(Black_Select)
 		{
@@ -2880,11 +2948,26 @@ void Disp_List_value(u8 num)
 			Colour.black=LCD_COLOR_TEST_BACK;
 		}
 		
-		Hex_Format(LoadSave.delay[DispValue.liststep],1,4,0);
-		LCD_DrawRect(100,26+5*22-2,170,26+6*22-4);
-		WriteString_16(100,26+5*22,DispBuf,0);
-		
+		Hex_Format(LoadSave.listvalue[DispValue.liststep],4,7,0);
+		LCD_DrawFullRect(100,26+4*22-2,92,20);
+		WriteString_16(100,26+4*22,DispBuf,0);
 		Black_Select=(num==8)?1:0;
+		if(Black_Select)
+		{
+			Colour.black=LCD_COLOR_SELECT;
+		
+		}
+		else
+		{
+			Colour.black=LCD_COLOR_TEST_BACK;
+		}
+		LCD_DrawFullRect(100,26+4*22-2,92,20);
+		Colour.Fword=White;
+		Hex_Format(LoadSave.listvalue[DispValue.liststep],4,7,0);
+		WriteString_16(100,26+4*22,DispBuf,0);
+		
+		
+		Black_Select=(num==9)?1:0;
 		if(Black_Select)
 		{
 			Colour.black=LCD_COLOR_SELECT;
@@ -2899,7 +2982,7 @@ void Disp_List_value(u8 num)
 		Hex_Format(LoadSave.delay[DispValue.liststep],1,4,0);
 		WriteString_16(100,26+5*22,DispBuf,0);
 		
-		Black_Select=(num==9)?1:0;
+		Black_Select=(num==10)?1:0;
 		if(Black_Select)
 		{
 			Colour.black=LCD_COLOR_SELECT;
@@ -2913,7 +2996,7 @@ void Disp_List_value(u8 num)
 		Colour.Fword=White;
 		WriteString_16(100,26+6*22,List_CompType[LoadSave.listcomp[DispValue.liststep]],0);
 		
-		Black_Select=(num==10)?1:0;
+		Black_Select=(num==11)?1:0;
 		if(Black_Select)
 		{
 			Colour.black=LCD_COLOR_SELECT;
@@ -2928,7 +3011,7 @@ void Disp_List_value(u8 num)
 		Hex_Format(LoadSave.listhigh[DispValue.liststep],4,7,0);
 		WriteString_16(100,26+7*22,DispBuf,0);
 		
-		Black_Select=(num==11)?1:0;
+		Black_Select=(num==12)?1:0;
 		if(Black_Select)
 		{
 			Colour.black=LCD_COLOR_SELECT;
@@ -2945,7 +3028,30 @@ void Disp_List_value(u8 num)
 		
 		
 	}
-
+	switch(num)
+	{
+		case 1:
+		case 5:
+		case 8:
+		case 9:
+		case 11:
+		case 12:
+			Disp_Hint(2);
+		break;
+		case 6:
+		{
+			Disp_Hint(5);
+		}break;
+		case 2:
+		case 4:
+		case 7:
+		case 10:
+			Disp_Hint(7);
+		break;
+		default:
+			Disp_Hint(4);
+		break;
+	}
 	Disp_Fastbutton();
 	if(resdisp == 0)
 	{
@@ -2954,31 +3060,31 @@ void Disp_List_value(u8 num)
 			case 0:
 					Disp_Button_value1(0);
 				break;
-			case 1:
-			case 5:
-			case 7:
-			case 8:
-			case 10:
-			case 11:
-			{
-				Disp_Fastbutton();
-				Colour.Fword=White;
-				Colour.black=LCD_COLOR_TEST_BUTON;
-				if(Jk516save.Sys_Setvalue.lanage)
-				{
-					pt=INPUT_E;
-				}
-				else
-				{
-					pt=INPUT;
-				
-				}
-				for(i=0;i<1;i++)
-				{
-					
-					WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
-				}
-			}break;
+//			case 1:
+//			case 5:
+//			case 8:
+//			case 9:
+//			case 11:
+//			case 12:
+//			{
+//				Disp_Fastbutton();
+//				Colour.Fword=White;
+//				Colour.black=LCD_COLOR_TEST_BUTON;
+//				if(Jk516save.Sys_Setvalue.lanage)
+//				{
+//					pt=INPUT_E;
+//				}
+//				else
+//				{
+//					pt=INPUT;
+//				
+//				}
+//				for(i=0;i<1;i++)
+//				{
+//					
+//					WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
+//				}
+//			}break;
 			case 2:
 			
 					Disp_Fastbutton();
@@ -3035,7 +3141,7 @@ void Disp_List_value(u8 num)
 					WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
 			
 			break;
-			case 6:
+			case 7:
 					Disp_Fastbutton();
 					Colour.Fword=White;//
 					Colour.black=LCD_COLOR_TEST_BUTON;
@@ -3053,7 +3159,7 @@ void Disp_List_value(u8 num)
 					WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
 			
 			break;	
-			case 9:
+			case 10:
 					Disp_Fastbutton();
 					Colour.Fword=White;//
 					Colour.black=LCD_COLOR_TEST_BUTON;
@@ -3217,6 +3323,7 @@ void DispSet_value(u8 keynum)
     const u8 (*ppt)[11];
 	vu32 Black_Select;
 	
+	Colour.Fword = White;
 //远端测量
 	Black_Select=(keynum==1)?1:0;
 	if(Black_Select)
@@ -3475,7 +3582,28 @@ void DispSet_value(u8 keynum)
 	
 	WriteString_16(LIST2+90+80, FIRSTLINE+SPACE1*5, " A/ms",  0);
 	
-	
+	switch(keynum)
+	{
+		case 4:
+		case 5:
+		case 6:
+		case 8:
+		case 9:
+		case 10:
+		case 11:
+		case 12:
+			Disp_Hint(2);
+		break;
+		case 1:
+		case 2:
+		case 3:
+		case 7:
+			Disp_Hint(7);
+		break;
+		default:
+			Disp_Hint(4);
+		break;
+	}
 	Disp_Fastbutton();
 	switch(keynum)
 	{
@@ -3540,174 +3668,15 @@ void DispSet_value(u8 keynum)
 			}
 			break;
 		case 4:
-			Colour.Fword=White;
-			Colour.black=LCD_COLOR_TEST_BUTON;
-            if(Jk516save.Sys_Setvalue.lanage)
-            {
-                pt=INPUT_E;
-            
-            }
-            else
-            {
-                pt=INPUT;
-            
-            }
-			for(i=0;i<1;i++)
-			{
-				
-				WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
-			}
-			break;
 		case 5:
-			Colour.Fword=White;
-			Colour.black=LCD_COLOR_TEST_BUTON;
-            if(Jk516save.Sys_Setvalue.lanage)
-            {
-                pt=Test_Compvalue_E;
-            
-            }
-            else
-            {
-                pt=Test_Compvalue;
-            
-            }
-			for(i=0;i<2;i++)
-			{
-				
-				WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
-			}
-			break;
 		case 6:
-			Colour.Fword=White;
-			Colour.black=LCD_COLOR_TEST_BUTON;
-            if(Jk516save.Sys_Setvalue.lanage)
-            {
-                pt=INPUT_E;
-            
-            }
-            else
-            {
-                pt=INPUT;
-            
-            }
-			for(i=0;i<1;i++)
-			{
-				
-				WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
-			}
-			break;
 		case 7:
-			Colour.Fword=White;
-			Colour.black=LCD_COLOR_TEST_BUTON;
-             if(Jk516save.Sys_Setvalue.lanage)
-            {
-                pt=INPUT_E;
-            }
-            else
-            {
-                pt=INPUT;
-            
-            }
-			for(i=0;i<1;i++)
-			{
-				
-				WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
-			}
-			break;
 		case 8:
-			Disp_Fastbutton();
-			Colour.Fword=White;
-			Colour.black=LCD_COLOR_TEST_BUTON;
-            if(Jk516save.Sys_Setvalue.lanage)
-            {
-                pt=INPUT_E;
-            }
-            else
-            {
-                pt=INPUT;
-            
-            }
-			for(i=0;i<1;i++)
-			{
-				
-				WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
-			}
-			break;
 		case 9:
-			Colour.Fword=White;
-			Colour.black=LCD_COLOR_TEST_BUTON;
-            if(Jk516save.Sys_Setvalue.lanage)
-            {
-                pt=INPUT_E;
-            
-            }
-            else
-            {
-                pt=INPUT;
-            
-            }
-			for(i=0;i<1;i++)
-			{
-				
-				WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
-			}
-			break;
 		case 10:
-			Colour.Fword=White;
-			Colour.black=LCD_COLOR_TEST_BUTON;
-            if(Jk516save.Sys_Setvalue.lanage)
-            {
-                pt=INPUT_E;
-            
-            }
-            else
-            {
-                pt=INPUT;
-            
-            }
-			for(i=0;i<1;i++)
-			{
-				
-				WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
-			}
-			break;
 		case 11:
-			Colour.Fword=White;
-			Colour.black=LCD_COLOR_TEST_BUTON;
-            if(Jk516save.Sys_Setvalue.lanage)
-            {
-                pt=INPUT_E;
-            
-            }
-            else
-            {
-                pt=INPUT;
-            
-            }
-			for(i=0;i<1;i++)
-			{
-				
-				WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
-			}
-			break;
 		case 12:
-			Colour.Fword=White;
-			Colour.black=LCD_COLOR_TEST_BUTON;
-            if(Jk516save.Sys_Setvalue.lanage)
-            {
-                pt=INPUT_E;
-            
-            }
-            else
-            {
-                pt=INPUT;
-            
-            }
-			for(i=0;i<1;i++)
-			{
-				
-				WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
-			}
+
 			break;
 		
 			
@@ -3733,6 +3702,7 @@ void DispLimit_value(u8 keynum)
     const u8 (*ppt)[11];
 	vu32 Black_Select;
 	
+	Colour.Fword = White;
 //电压上限
 	Black_Select=(keynum==1)?1:0;
 	if(Black_Select)
@@ -3965,7 +3935,23 @@ void DispLimit_value(u8 keynum)
 	LCD_DrawFullRect(LIST2+88, FIRSTLINE+SPACE1*4-2, SELECT_1END-(LIST1+70), SPACE1-4);
 	WriteString_16(LIST2+88, FIRSTLINE+SPACE1*4, pt[LoadSave.pcomp],  0);
 
-	
+	switch(keynum)
+	{
+		case 1:
+		case 2:
+		case 3:
+		case 4:
+		case 5:
+		case 6:
+			Disp_Hint(2);
+		break;
+		case 0:
+			Disp_Hint(4);
+		break;
+		default:
+			Disp_Hint(7);
+		break;
+	}
 	
 	Disp_Fastbutton();
 	switch(keynum)
@@ -3979,23 +3965,6 @@ void DispLimit_value(u8 keynum)
 		case 4:
 		case 5:
 		case 6:
-			Colour.Fword=White;
-			Colour.black=LCD_COLOR_TEST_BUTON;
-            if(LoadSave.language)
-            {
-                pt=INPUT_E;
-            
-            }
-            else
-            {
-                pt=INPUT;
-            
-            }
-			for(i=0;i<1;i++)
-			{
-				
-				WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
-			}
 			break;
 		
 			
@@ -4087,7 +4056,7 @@ void Disp_Sys_Item(void)
 	Colour.Fword=White;
 	Colour.black=LCD_COLOR_TEST_BACK;
     if(Jk516save.Sys_Setvalue.lanage)
-    pt=Sys_Setitem_E;
+		pt=Sys_Setitem_E;
     else
         pt=Sys_Setitem;
 //	WriteString_16(LIST1, FIRSTLINE, User_ListScan_Item[0],  0);
@@ -4519,6 +4488,7 @@ void Use_SysSetProcess(void)
 	vu8 Disp_flag=1;
 //    u8 keynum1=0;
     u8 keynum=0;
+	u8 keytrans=0;
     RTC_TimeTypeDef RTC_TimeStructure;
 	RTC_DateTypeDef RTC_DateStructure;
     LCD_Clear(LCD_COLOR_TEST_BACK);
@@ -4530,43 +4500,35 @@ void Use_SysSetProcess(void)
 	//Delay_Key();
  	while(GetSystemStatus()==SYS_STATUS_SYSSET)
 	{
-	  	
+	  	keytrans=Encoder_Process(keynum);
+		if(spinflag == 1)
+		{
+			Disp_flag = 1;
+			keynum = keytrans;
+		}
 		if(Disp_flag==1)
 		{
-           
-            
-            Jk516save.Sys_Setvalue.textname[7]=0;
 			Disp_Sys_value(keynum);
 			Disp_flag=0;
             
 		}
-		key=Key_Read_WithTimeOut(TICKS_PER_SEC_SOFTTIMER/10);
+//		key=Key_Read_WithTimeOut(TICKS_PER_SEC_SOFTTIMER/10);
         RTC_GetTime(RTC_Format_BIN, &RTC_TimeStructure);
         RTC_GetDate(RTC_Format_BIN, &RTC_DateStructure);
-		if(key!=KEY_NONE)
-		{
+		
+		key=Key_Read();
+		inputtrans = key;
+        if(key!=KEY_NONE)
+		{	
 			Disp_flag=1;
-           //Key_Beep();
 			switch(key)
 			{
 				case Key_F1:
+
 					switch(keynum)
 					{
 						case 0:
-							SetSystemStatus(SYS_STATUS_TEST);
-							break;
-						case 1:
-							break;
-						case 2:
-							break;
-						case 3:
-							
-							break;
-						case 4:
-							break;
-						case 5:
-                            LCD_Clear(LCD_COLOR_TEST_BACK);
-                            Disp_Sys_Item();
+							SetSystemStatus(SYS_STATUS_TEST);//
 							break;
 						case 6:
 							if(RTC_DateStructure.RTC_Year<1)
@@ -4624,59 +4586,25 @@ void Use_SysSetProcess(void)
 								RTC_TimeStructure.RTC_Seconds--;
                             RTC_SetTime(RTC_Format_BINorBCD, &RTC_TimeStructure);
                             RTC_WriteBackupRegister(RTC_BKP_DRX, RTC_BKP_DATA);
-							break;
-						case 12://
-							//SaveData.Sys_Setup.Bias=0;
-							break;
-						case 18:
-							//SaveData.Sys_Setup.Bus_Mode=0;
-							break;
-						case 13:
-//							if(SaveData.Sys_Setup.GP_Addr<1)
-//								SaveData.Sys_Setup.GP_Addr=99;
-//							else
-//								SaveData.Sys_Setup.GP_Addr--;
-							break;
-//						case 14:
-//							SaveData.Sys_Setup.Talk_Only=1;
-//							break;
-//						case 15:
-//							if(SaveData.Sys_Setup.Timer_Value.Hour<1)
-//								SaveData.Sys_Setup.Timer_Value.Hour=12;
-//							else
-//								SaveData.Sys_Setup.Timer_Value.Hour--;
-//							break;
-//						case 16:
-//							if(SaveData.Sys_Setup.Timer_Value.Min<1)
-//								SaveData.Sys_Setup.Timer_Value.Min=59;
-//							else
-//								SaveData.Sys_Setup.Timer_Value.Min--;
-//							break;
-//						case 17:
-//							if(SaveData.Sys_Setup.Timer_Value.Sec<1)
-//								SaveData.Sys_Setup.Timer_Value.Sec=59;
-//							else
-//								SaveData.Sys_Setup.Timer_Value.Sec--;
-//							break;
+							break;	
 						default:
-							break;
+						break;
+					
 					
 					}
-                    
+
 				break;
 				case Key_F2:
+					
+
 					switch(keynum)
 					{
 						case 0:
-							SetSystemStatus(SYS_STATUS_SETUP);
-							break;
-						case 1:
-							break;
-						case 2:
-							break;
-						case 3:
-							break;
-						case 4:
+							//if(Button_Page.page==0)
+								SetSystemStatus(SYS_STATUS_SETUP);
+//							else
+//								SetSystemStatus(SYS_STATUS_SYSSET);
+								
 							break;
 						case 5:
                             LCD_Clear(LCD_COLOR_TEST_BACK);
@@ -4730,139 +4658,149 @@ void Use_SysSetProcess(void)
                             RTC_SetTime(RTC_Format_BINorBCD, &RTC_TimeStructure);
                             RTC_WriteBackupRegister(RTC_BKP_DRX, RTC_BKP_DATA);
 							break;
-
+						
 						default:
-							break;
-					
-					}
-                    
+						break;
+					}				
+			
 				break;
 				case Key_F3:
 					switch(keynum)
 					{
 						case 0:
-							SetSystemStatus(SYS_STATUS_SYSSET);
+								SetSystemStatus(SYS_STATUS_SYSSET);
+							break;
+						case 1:
 							break;
 						case 2:
-						break;
-						default:
-						break;
-					
-					}
+							break;
+						case 3:
+							break;
+						case 4:
+
+							break;
+						case 5:
+							break;
+						case 6:
+
+							break;
+						case 7:
+
+							break;
+						case 8:
+							break;
+
 						
+						default:
+							break;
+					
+					
+					}	
+					
 				break;
 				case Key_F4:
 					switch(keynum)
 					{
 						case 0:
-							SetSystemStatus(SYS_STATUS_LIST);
+								SetSystemStatus(SYS_STATUS_SYS);
+							break;
+						case 1:
+                            
+							
+									
 							break;
 						case 2:
-						break;
+                            
+							
+							break;
+						case 3:
+							break;
+						case 4:
+
+							break;
+						case 5:
+							break;
+						case 6:
+							
+							break;
+						case 7:
+                            
+							break;
+						case 8:
+							
+							break;
+						
 						default:
-						break;
-					
-					}
+							break;					
+					}	
+				
 				break;
 				case Key_F5:
 					switch(keynum)
 					{
 						case 0:
-							SetSystemStatus(SYS_STATUS_LIMITSET);
-							break;//恢复系统复位
-						case 2:
+//							JumpBoot(55);
 						break;
+						case 4:
+						case 9:
+							break;
+						case 7:	
+							
+						break;
+						
 						default:
-						break;
+							break;
+					
 					
 					}
+                    
+					
 				break;
 
+				case Key_DOT:
 
 				case Key_NUM1:
-                    if(keynum==12)
-                    {
-
-                    }
-                        //Save_Res.Sys_Setvalue
-				break;
+				//break;
 				case Key_NUM2:
-                    if(keynum==12)
-                    {
-
-                    
-                    }
-				break;
+				//break;
 				case Key_NUM3:
-                    if(keynum==12)
-                    {
-
-                    
-                    }
-				break;
+				//break;
 				case Key_NUM4:
-                    if(keynum==12)
-                    {
-
-                    
-                    }
-				break;
+				//break;
 				case Key_NUM5:
-                    if(keynum==12)
-                    {
-
-                    
-                    }
-				break;
+				//break;
 				case Key_NUM6:
-                    if(keynum==12)
-                    {
-
-                    
-                    }
-				break;
+				//break;
 				case Key_NUM7:
-                    if(keynum==12)
-                    {
-
-                    
-                    }
-				break;
+				//break;
 				case Key_NUM8:
-                    if(keynum==12)
-                    {
-
-                    
-                    }
-				break;
+				//break;
 				case Key_NUM9:
-                    if(keynum==12)
-                    {
-
-                    }
-				break;
+				//break;
 				case Key_NUM0:
-                    if(keynum==12)
-                    {
-
-                    
-                    }
 				break;
-				case Key_DOT:
-				break;
-
 				case Key_REST:
 				break;
 				case Key_TRIG:
 				break;
+				case PRESS_SPIN:
+				{
+
+				}break;
+				case Key_Ent:
+				{
+				}break;
+				case Key_ESC:
+				{
+					if(mainswitch == 0)
+						SetSystemStatus(SYS_STATUS_TEST);
+				}break;
 				default:
 				break;
 					
 			}
-		
-		
 		}
-	
+		
 	
 	}
     Store_set_flash();
@@ -5005,6 +4943,19 @@ void Sys_Process(void)
 	}
 
 }
+void Disp_button_Num_Step(void)
+{
+	const u8 (*pt)[sizeof(Unit_Setitem[0])];
+	
+	Disp_Fastbutton();
+	
+	pt = Unit_Setitem;
+	Colour.black=LCD_COLOR_TEST_BUTON;
+	Colour.Fword=White;
+	WriteString_16(BUTTOM_X_VALUE, BUTTOM_Y_VALUE, pt[6],  0);
+
+}
+
 void Disp_button_Num_time(void)
 {
 	const u8 (*pt)[sizeof(Unit_Setitem[0])];
@@ -5075,10 +5026,11 @@ void Disp_button_SNum_time(void)
 //数字键输入显示
 Sort_TypeDef Disp_NumKeyboard_Set(Disp_Coordinates_Typedef *Coordinates,u8 flag )
 {
+	u8 initinput;
     u8 lenth;
 	vu8 While_flag=1;
 	vu8 Disp_buff[10];
-	vu8 key,i;
+	vu8 key=inputtrans,i;
 	vu8 dispflag=1;
 	vu8 dot_num=0,dot_num1=0;
 //	vu8 page=0;
@@ -5099,7 +5051,12 @@ Sort_TypeDef Disp_NumKeyboard_Set(Disp_Coordinates_Typedef *Coordinates,u8 flag 
         lenth=NUM_LENTH;
 	while(While_flag)
 	{
-		key=Key_Read();
+		if(initinput == 1)
+		{
+			key=Key_Read();
+		}else{
+			initinput = 1;
+		}
         if(key!=KEY_NONE)
 		{
 			dispflag=1;
@@ -5592,7 +5549,7 @@ vu32 Disp_Set_RNum(Disp_Coordinates_Typedef *Coordinates)
 vu32 Disp_Set_Step(Disp_Coordinates_Typedef *Coordinates)
 {
 	Sort_TypeDef Sort_num,Sort_num1;
-	Disp_button_Num_time();
+	Disp_button_Num_Step();
 	Sort_num=Disp_NumKeyboard_Set(Coordinates,1);
 //	Sort_num1=Time_Set_Cov(&Sort_num);
 	Sort_num.Num/=10000;

@@ -972,4 +972,6 @@ extern u8 resdisp;
 extern u8 batstep;
 extern u8 listbeep;
 extern u8 switchdelay;
+extern u8 inputtrans;
+extern u8 coder_flag;
 #endif

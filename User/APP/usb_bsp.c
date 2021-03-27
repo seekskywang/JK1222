@@ -105,31 +105,31 @@ static void USB_OTG_BSP_TimeInit ( void );
 void USB_OTG_BSP_Init(USB_OTG_CORE_HANDLE *pdev)
 {
 	GPIO_InitTypeDef GPIO_InitStructure;
-	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA , ENABLE);
-	
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_11 | GPIO_Pin_12;
-	
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
-	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
-	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
-	GPIO_Init(GPIOA, &GPIO_InitStructure);  
-	
-	GPIO_PinAFConfig(GPIOA,GPIO_PinSource11,GPIO_AF_OTG2_FS) ; 
-	GPIO_PinAFConfig(GPIOA,GPIO_PinSource12,GPIO_AF_OTG2_FS) ;
-	RCC_AHB1PeriphClockCmd( RCC_AHB1Periph_OTG_HS, ENABLE) ; 
-	
-//	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB , ENABLE);
+//	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA , ENABLE);
 //	
-//	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_14 | GPIO_Pin_15;
+//	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_11 | GPIO_Pin_12;
 //	
 //	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
+//	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+//	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
 //	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
-//	GPIO_Init(GPIOB, &GPIO_InitStructure);  
+//	GPIO_Init(GPIOA, &GPIO_InitStructure);  
 //	
-//	GPIO_PinAFConfig(GPIOB,GPIO_PinSource14,GPIO_AF_OTG2_FS) ; 
-//	GPIO_PinAFConfig(GPIOB,GPIO_PinSource15,GPIO_AF_OTG2_FS) ;
+//	GPIO_PinAFConfig(GPIOA,GPIO_PinSource11,GPIO_AF_OTG2_FS) ; 
+//	GPIO_PinAFConfig(GPIOA,GPIO_PinSource12,GPIO_AF_OTG2_FS) ;
 //	RCC_AHB1PeriphClockCmd( RCC_AHB1Periph_OTG_HS, ENABLE) ; 
+	
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB , ENABLE);
+	
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_14 | GPIO_Pin_15;
+	
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+	GPIO_Init(GPIOB, &GPIO_InitStructure);  
+	
+	GPIO_PinAFConfig(GPIOB,GPIO_PinSource14,GPIO_AF_OTG2_FS) ; 
+	GPIO_PinAFConfig(GPIOB,GPIO_PinSource15,GPIO_AF_OTG2_FS) ;
+	RCC_AHB1PeriphClockCmd( RCC_AHB1Periph_OTG_HS, ENABLE) ; 
 
   /* Intialize Timer for delay function */
     USB_OTG_BSP_TimeInit();   
@@ -174,8 +174,8 @@ void USB_OTG_BSP_DriveVBUS(USB_OTG_CORE_HANDLE *pdev, uint8_t state)
 
 void  USB_OTG_BSP_ConfigVBUS(USB_OTG_CORE_HANDLE *pdev)
 {
-    GPIO_ResetBits(GPIOI,GPIO_Pin_6);
-
+//    GPIO_ResetBits(GPIOI,GPIO_Pin_6);
+	GPIO_SetBits(GPIOB,GPIO_Pin_13);
 }
 
 /**

@@ -599,20 +599,42 @@ void Set_Para(void)
 	sendbuff[53+28] = LoadSave.offvol/10>>8;
 	sendbuff[54+28] = LoadSave.offvol/10;//卸载电压
 	
-	sendbuff[55+28] = LoadSave.crise>>24;
-	sendbuff[56+28] = LoadSave.crise>>16;
-	sendbuff[57+28] = LoadSave.crise>>8;
-	sendbuff[58+28] = LoadSave.crise;//电流爬升率
+	if(LoadSave.crange == 1)
+	{
+		sendbuff[55+28] = LoadSave.crise/10>>24;
+		sendbuff[56+28] = LoadSave.crise/10>>16;
+		sendbuff[57+28] = LoadSave.crise/10>>8;
+		sendbuff[58+28] = LoadSave.crise/10;//电流爬升率
+		
+		sendbuff[59+28] = LoadSave.cdrop/10>>24;
+		sendbuff[60+28] = LoadSave.cdrop/10>>16;
+		sendbuff[61+28] = LoadSave.cdrop/10>>8;
+		sendbuff[62+28] = LoadSave.cdrop/10;//电流下降率
+	}else if(LoadSave.crange == 0){
+		sendbuff[55+28] = LoadSave.crise>>24;
+		sendbuff[56+28] = LoadSave.crise>>16;
+		sendbuff[57+28] = LoadSave.crise>>8;
+		sendbuff[58+28] = LoadSave.crise;//电流爬升率
+		
+		sendbuff[59+28] = LoadSave.cdrop>>24;
+		sendbuff[60+28] = LoadSave.cdrop>>16;
+		sendbuff[61+28] = LoadSave.cdrop>>8;
+		sendbuff[62+28] = LoadSave.cdrop;//电流下降率
+	}
 	
-	sendbuff[59+28] = LoadSave.cdrop>>24;
-	sendbuff[60+28] = LoadSave.cdrop>>16;
-	sendbuff[61+28] = LoadSave.cdrop>>8;
-	sendbuff[62+28] = LoadSave.cdrop;//电流下降率
+	if(LoadSave.vrange == 1)
+	{
+		sendbuff[63+28] = LoadSave.cvdowntime/10>>24;
+		sendbuff[64+28] = LoadSave.cvdowntime/10>>16;
+		sendbuff[65+28] = LoadSave.cvdowntime/10>>8;
+		sendbuff[66+28] = LoadSave.cvdowntime/10;//CV模式电压下降时间
+	}else if(LoadSave.vrange == 0){
+		sendbuff[63+28] = LoadSave.cvdowntime>>24;
+		sendbuff[64+28] = LoadSave.cvdowntime>>16;
+		sendbuff[65+28] = LoadSave.cvdowntime>>8;
+		sendbuff[66+28] = LoadSave.cvdowntime;//CV模式电压下降时间
+	}
 	
-	sendbuff[63+28] = LoadSave.cvdowntime>>24;
-	sendbuff[64+28] = LoadSave.cvdowntime>>16;
-	sendbuff[65+28] = LoadSave.cvdowntime>>8;
-	sendbuff[66+28] = LoadSave.cvdowntime;//CV模式电压下降时间
 	
 	sendbuff[67+28] = LoadSave.ledvo>>24;
 	sendbuff[68+28] = LoadSave.ledvo>>16;
