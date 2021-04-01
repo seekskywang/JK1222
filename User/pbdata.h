@@ -412,7 +412,8 @@ enum SysStatusEnum
 	SYS_STATUS_LED,
 	SYS_STATUS_BATTERY,
 	SYS_STATUS_DYNAMIC,
-	SYS_STATUS_LIST		//列表测试
+	SYS_STATUS_LIST,		//列表测试
+	SYS_STATUS_LOCK
 };
 
 //==========================================================
@@ -815,6 +816,7 @@ typedef struct
 	u8 listcrange[15];
 	u8 testcomp[3];
 	u8 testbeep;
+	u8 Operation_MODE;
 ////校准测量控制电压低档
 //	u32 VLOW1;
 //	u32 SETVLOW1;

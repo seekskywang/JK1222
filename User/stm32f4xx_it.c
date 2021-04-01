@@ -342,7 +342,8 @@ void  BASIC_TIM_IRQHandler (void)
     u8 i;
 	if ( TIM_GetITStatus( BASIC_TIM, TIM_IT_Update) != RESET ) 
 	{	
-		TIM_ClearITPendingBit(BASIC_TIM , TIM_IT_Update);  		
+		TIM_ClearITPendingBit(BASIC_TIM , TIM_IT_Update); 
+		lockcheck();
 		if(LoadSave.autooff != 0)
 		{
 			if(mainswitch == 1)

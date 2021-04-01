@@ -57,7 +57,9 @@ int main(void)
 			case SYS_STATUS_LIST:   //列表测试显示
 				List_Process();
 			break;
-
+			case SYS_STATUS_LOCK:
+				LockProcess();
+			break;
 			
 //            
 //            case SYS_STATUS_SYS://系统信息显示

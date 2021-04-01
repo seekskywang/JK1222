@@ -308,32 +308,35 @@ void Para_Set_Comp(void)
 	}
 	
 }
-//};
-//==========================================================
-//函数名称：Power_Process
-//函数功能：上电处理
-//入口参数：无
-//出口参数：无
-//创建日期：2015.10.26
-//修改日期：2015.10.26 08:53
-//备注说明：开机长按SET进入校准调试模式
-//==========================================================
-//void DIS_Line(void)
-//{
-//  uint16_t i,j;
-//  
-//  uint32_t *p = (uint32_t *)(LCD_LAYER2_START_ADDR );
-//  
-//  for(j=0;j<480;j++)
-//  for(i=0;i<272;i++)
-//  {
-//    //ARGB8888 
-//    *p = 0x7Fff00;
-//    p++;
-//    }
-//  
-//  
-//}  
+
+
+void lockcheck(void)
+{
+	if(DispValue.Operation_MODE == 1)
+	{
+		SetSystemStatus(SYS_STATUS_LOCK);
+	}
+}
+
+void LockProcess(void)
+{
+
+	uint8_t Disp_flag=1;
+    LCD_Clear(LCD_COLOR_TEST_BACK);
+	Colour.black=LCD_COLOR_TEST_BACK;
+	Colour.Fword=LCD_COLOR_SELECT;
+ 	while(GetSystemStatus()==SYS_STATUS_LOCK)
+	{
+		if(Disp_flag == 1)
+		{
+			Disp_flag = 0;
+			WriteString_16(LIST1, FIRSTLINE+2, "与上位机通信中 为防止误操作 下位机暂时不可操作",0);//	
+			WriteString_16(LIST1, FIRSTLINE+SPACE1+2, "如需恢复下位机 请关机后重启",0);//
+		}
+		
+	}
+}
+
 void Power_Process(void)
 {
 	u16 i;
@@ -595,6 +598,7 @@ void Setup_Process(void)
     Disp_Test_Set_Item();
  	while(GetSystemStatus()==SYS_STATUS_SETUP)
 	{
+		DispValue.Operation_MODE = 1;
 	    keytrans=Encoder_Process(keynum);
 
 		if(spinflag == 1)

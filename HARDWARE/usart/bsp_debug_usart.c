@@ -1036,6 +1036,13 @@ void Rec_Handle(void)
 				DispValue.Power = readbuf;
 				
 				readbuf = 0;
+				readbuf += UART_Buffer_Rece[43] << 24;
+				readbuf += UART_Buffer_Rece[44] << 16;
+				readbuf += UART_Buffer_Rece[45] << 8;
+				readbuf += UART_Buffer_Rece[46];
+				DispValue.Operation_MODE = readbuf;
+				
+				readbuf = 0;
 				readbuf += UART_Buffer_Rece[51] << 24;
 				readbuf += UART_Buffer_Rece[52] << 16;
 				readbuf += UART_Buffer_Rece[53] << 8;

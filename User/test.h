@@ -33,6 +33,7 @@ void Internal_ResChange(u8 dat);
 void V_Samping(u8 dat);
 void Feedback_RY(u8 dat);
 void Power_Process(void);
+void LockProcess(void);
 void Idle_Process(void);
 void Setup_Process(void);
 void Test_Process(void);
@@ -48,6 +49,7 @@ void Battery_Process(void);
 void Dynamic_Process(void);
 void Limit_Process(void);
 void List_Process(void);
+void lockcheck(void);
 #endif
 
 
