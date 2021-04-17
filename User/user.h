@@ -216,7 +216,7 @@ void Disp_Test_Set_Item(void);
 void Disp_Limit_Item(void);
 void DispSet_value(u8 keynum);
 void DispLimit_value(u8 keynum);
-void Disp_Res_Sheet(u8 num);
+void Disp_Res_Sheet(u8 num,u8 page);
 
 void Use_SysSetProcess(void);
 
@@ -224,6 +224,7 @@ void Sys_Process(void);
 vu32 Disp_Set_Num(Disp_Coordinates_Typedef *Coordinates);
 vu32 Disp_Set_Step(Disp_Coordinates_Typedef *Coordinates);
 vu32 Disp_Set_TimeS(Disp_Coordinates_Typedef *Coordinates);
+vu32 Disp_Set_TimeMS(Disp_Coordinates_Typedef *Coordinates);
 vu32 Disp_Set_TimeP(Disp_Coordinates_Typedef *Coordinates);
 vu32 Disp_List_Delay(Disp_Coordinates_Typedef *Coordinates);
 vu32 Disp_Set_CNum(Disp_Coordinates_Typedef *Coordinates);

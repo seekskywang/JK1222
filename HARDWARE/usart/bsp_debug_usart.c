@@ -549,6 +549,49 @@ void Set_Para(void)
 		sendbuff[20+28] = LoadSave.power/10>>16;
 		sendbuff[21+28] = LoadSave.power/10>>8; 
 		sendbuff[22+28] = LoadSave.power/10;//设置功率值
+	}else if(GetSystemStatus()==SYS_STATUS_DYNAMIC){//动态模式设置参数
+		sendbuff[11] = 0x00;
+		sendbuff[12] = 0x00;
+		sendbuff[13] = 0x00;
+		sendbuff[14] = 4;//模式
+		
+		
+		if(LoadSave.vrange == 1)
+		{
+			sendbuff[7+28] = LoadSave.voltage/10>>24;
+			sendbuff[8+28] = LoadSave.voltage/10>>16;
+			sendbuff[9+28] = LoadSave.voltage/10>>8;
+			sendbuff[10+28] = LoadSave.voltage/10;//设置电压值
+		}else{
+			sendbuff[7+28] = LoadSave.voltage>>24;
+			sendbuff[8+28] = LoadSave.voltage>>16;
+			sendbuff[9+28] = LoadSave.voltage>>8;
+			sendbuff[10+28] = LoadSave.voltage;//设置电压值
+		}
+		
+		if(LoadSave.crange == 1)
+		{
+			sendbuff[11+28] = LoadSave.current/10>>24;
+			sendbuff[12+28] = LoadSave.current/10>>16;
+			sendbuff[13+28] = LoadSave.current/10>>8;
+			sendbuff[14+28] = LoadSave.current/10;//设置电流值
+		}else{
+			sendbuff[11+28] = LoadSave.current>>24;
+			sendbuff[12+28] = LoadSave.current>>16;
+			sendbuff[13+28] = LoadSave.current>>8;
+			sendbuff[14+28] = LoadSave.current;//设置电流值
+		}
+		
+		
+		sendbuff[15+28] = LoadSave.risistence/10>>24;
+		sendbuff[16+28] = LoadSave.risistence/10>>16;
+		sendbuff[17+28] = LoadSave.risistence/10>>8;
+		sendbuff[18+28] = LoadSave.risistence/10;//设置电阻值
+		
+		sendbuff[19+28] = LoadSave.power/10>>24;
+		sendbuff[20+28] = LoadSave.power/10>>16;
+		sendbuff[21+28] = LoadSave.power/10>>8; 
+		sendbuff[22+28] = LoadSave.power/10;//设置功率值
 	}
 	
 	sendbuff[23+28] = LoadSave.ovp>>24;
@@ -651,15 +694,28 @@ void Set_Para(void)
 	sendbuff[77+28] = LoadSave.ledrd>>8;
 	sendbuff[78+28] = LoadSave.ledrd;//LED模式RD系数，此参数是用来计算加载电压阈值范围为0-100%，例如：设置VO为30V RD-0.2  此时加载电压应为30*0.2=6，VI=30-6=24V。
 	
-	sendbuff[79+28] = LoadSave.valA>>24;
-	sendbuff[80+28] = LoadSave.valA>>16;
-	sendbuff[81+28] = LoadSave.valA>>8;
-	sendbuff[82+28] = LoadSave.valA;//动态模式拉载电流A
-	
-	sendbuff[83+28] = LoadSave.valB>>24;
-	sendbuff[84+28] = LoadSave.valB>>16;
-	sendbuff[85+28] = LoadSave.valB>>8;
-	sendbuff[86+28] = LoadSave.valB;//动态模式拉载电流B
+	if(LoadSave.crange == 1)
+	{
+		sendbuff[79+28] = LoadSave.valA/10>>24;
+		sendbuff[80+28] = LoadSave.valA/10>>16;
+		sendbuff[81+28] = LoadSave.valA/10>>8;
+		sendbuff[82+28] = LoadSave.valA/10;//动态模式拉载电流A
+		
+		sendbuff[83+28] = LoadSave.valB/10>>24;
+		sendbuff[84+28] = LoadSave.valB/10>>16;
+		sendbuff[85+28] = LoadSave.valB/10>>8;
+		sendbuff[86+28] = LoadSave.valB/10;//动态模式拉载电流B
+	}else if(LoadSave.crange == 0){
+		sendbuff[79+28] = LoadSave.valA>>24;
+		sendbuff[80+28] = LoadSave.valA>>16;
+		sendbuff[81+28] = LoadSave.valA>>8;
+		sendbuff[82+28] = LoadSave.valA;//动态模式拉载电流A
+		
+		sendbuff[83+28] = LoadSave.valB>>24;
+		sendbuff[84+28] = LoadSave.valB>>16;
+		sendbuff[85+28] = LoadSave.valB>>8;
+		sendbuff[86+28] = LoadSave.valB;//动态模式拉载电流B
+	}
 	
 	sendbuff[87+28] = LoadSave.timeA>>24;
 	sendbuff[88+28] = LoadSave.timeA>>16;
@@ -686,15 +742,15 @@ void Set_Para(void)
 	sendbuff[105+28] = LoadSave.dynamode>>8;
 	sendbuff[106+28] = LoadSave.dynamode;//动态触发模式
 	
-	sendbuff[105+28] = LoadSave.qcmode>>24;
-	sendbuff[106+28] = LoadSave.qcmode>>16;
-	sendbuff[107+28] = LoadSave.qcmode>>8;
-	sendbuff[108+28] = LoadSave.qcmode;//快充模式选择开关
+	sendbuff[107+28] = LoadSave.qcmode>>24;
+	sendbuff[108+28] = LoadSave.qcmode>>16;
+	sendbuff[109+28] = LoadSave.qcmode>>8;
+	sendbuff[110+28] = LoadSave.qcmode;//快充模式选择开关
 	
-	sendbuff[109+28] = LoadSave.Class_5>>24;
-	sendbuff[110+28] = LoadSave.Class_5>>16;
-	sendbuff[111+28] = LoadSave.Class_5>>8;
-	sendbuff[112+28] = LoadSave.Class_5;//快充模式选择开关
+	sendbuff[111+28] = LoadSave.Class_5>>24;
+	sendbuff[112+28] = LoadSave.Class_5>>16;
+	sendbuff[113+28] = LoadSave.Class_5>>8;
+	sendbuff[114+28] = LoadSave.Class_5;//快充模式选择开关
 	
 	sendbuff[115+28] = LoadSave.Class_9>>24;
 	sendbuff[116+28] = LoadSave.Class_9>>16;

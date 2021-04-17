@@ -207,6 +207,16 @@ uint16_t Encoder_Process(u8 list)
 					key = 0;
 				}
 			}break;
+			case SYS_STATUS_DYNAMIC:
+			{
+				key = list;
+				if(key<8)
+				{
+					key++;
+				}else{
+					key = 0;
+				}
+			}break;
 			default:
 			break;
 		}
@@ -381,6 +391,16 @@ uint16_t Encoder_Process(u8 list)
 					key--;
 				}else{
 					key = 11;
+				}
+			}break;
+			case SYS_STATUS_DYNAMIC:
+			{
+				key = list;
+				if(key>0)
+				{
+					key--;
+				}else{
+					key = 8;
 				}
 			}break;
 			default:

@@ -117,7 +117,7 @@ void delay(u32 nCount);
 //void delay_ms(u16 nms);
 void SetSoftTimer(u8 id, u8 ticks);
 u8 GetSoftTimerOut(u8 id);
-
+void Para_Set_Comp(void);
 //16bit数据的位操作定义
 #define	SetD0	(0x0001)
 #define	SetD1	(0x0002)
@@ -817,6 +817,7 @@ typedef struct
 	u8 testcomp[3];
 	u8 testbeep;
 	u8 Operation_MODE;
+	u8 respage;
 ////校准测量控制电压低档
 //	u32 VLOW1;
 //	u32 SETVLOW1;

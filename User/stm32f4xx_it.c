@@ -318,11 +318,13 @@ u8 ListBeep(void)
 //	{
 	for(i=0;i<LoadSave.ListNum;i++)
 	{
-		if(DispValue.listcompres[i] != 0)
+		if(DispValue.listcompres[i] != 0 && DispValue.listcompres[i] != 4)
 		{
 			if(LoadSave.ListBeep == 1)
 			{
 				return 1;
+			}else{
+				return 0;
 			}
 		}
 	}
@@ -359,7 +361,7 @@ void  BASIC_TIM_IRQHandler (void)
 			}
 		}
         if(SystemStatus==SYS_STATUS_TEST || SystemStatus==SYS_STATUS_BATTERY
-			|| SystemStatus==SYS_STATUS_LIST)
+			|| SystemStatus==SYS_STATUS_LIST || SystemStatus==SYS_STATUS_DYNAMIC)
         {
             num++;
             if(num>9)//10mS??

@@ -109,7 +109,7 @@ void READ_COMP(void)
 
 void Para_Set_Comp(void)
 {
-
+	u8 i;
 	if(LoadSave.voltage > MAX_SET_VOLT)
 	{
 		LoadSave.voltage = MAX_SET_VOLT;
@@ -249,9 +249,9 @@ void Para_Set_Comp(void)
 	{
 		LoadSave.coffvr = MAX_SET_VOLT;
 	}
-	if(LoadSave.testdis != 1)
+	if(LoadSave.testdis > 1)
 	{
-		LoadSave.testdis = 1;
+		LoadSave.testdis = 0;
 	}
 	if(LoadSave.valA > MAX_SET_CURRENT)
 	{
@@ -261,13 +261,13 @@ void Para_Set_Comp(void)
 	{
 		LoadSave.valB = MAX_SET_CURRENT;
 	}
-	if(LoadSave.timeA > 60000)
+	if(LoadSave.timeA > 600000)
 	{
-		LoadSave.timeA = 0;
+		LoadSave.timeA = 600000;
 	}
-	if(LoadSave.timeB > 60000)
+	if(LoadSave.timeB > 600000)
 	{
-		LoadSave.timeB = 0;
+		LoadSave.timeB = 600000;
 	}
 	if(LoadSave.dynaIRise > MAX_CURRENTUP)
 	{
@@ -306,7 +306,75 @@ void Para_Set_Comp(void)
 	{
 		LoadSave.ListNum = 15;
 	}
-	
+	for(i = 0;i<15;i++)
+	{
+		if(LoadSave.listmode[i] > 4)
+		{
+			LoadSave.listmode[i] = 4;
+		}
+		if(LoadSave.listmode[i] == 0)
+		{
+			if(LoadSave.listvalue[i] > MAX_SET_CURRENT)
+			{
+				LoadSave.listvalue[i] = MAX_SET_CURRENT;
+			}
+			if(LoadSave.listhigh[i] > MAX_SET_CURRENT)
+			{
+				LoadSave.listhigh[i] = MAX_SET_CURRENT;
+			}
+			if(LoadSave.listlow[i] > MAX_SET_CURRENT)
+			{
+				LoadSave.listlow[i] = MAX_SET_CURRENT;
+			}
+		}else if(LoadSave.listmode[i] == 1){
+			if(LoadSave.listvalue[i] > MAX_SET_VOLT)
+			{
+				LoadSave.listvalue[i] = MAX_SET_VOLT;
+			}
+			if(LoadSave.listhigh[i] > MAX_SET_VOLT)
+			{
+				LoadSave.listhigh[i] = MAX_SET_VOLT;
+			}
+			if(LoadSave.listlow[i] > MAX_SET_VOLT)
+			{
+				LoadSave.listlow[i] = MAX_SET_VOLT;
+			}
+		}else if(LoadSave.listmode[i] == 2){
+			if(LoadSave.listvalue[i] > MAX_SET_RES)
+			{
+				LoadSave.listvalue[i] = MAX_SET_RES;
+			}
+			if(LoadSave.listhigh[i] > MAX_SET_RES)
+			{
+				LoadSave.listhigh[i] = MAX_SET_RES;
+			}
+			if(LoadSave.listlow[i] > MAX_SET_RES)
+			{
+				LoadSave.listlow[i] = MAX_SET_RES;
+			}
+		}else if(LoadSave.listmode[i] == 3){
+			if(LoadSave.listvalue[i] > MAX_SET_POW)
+			{
+				LoadSave.listvalue[i] = MAX_SET_POW;
+			}
+			if(LoadSave.listhigh[i] > MAX_SET_POW)
+			{
+				LoadSave.listhigh[i] = MAX_SET_POW;
+			}
+			if(LoadSave.listlow[i] > MAX_SET_POW)
+			{
+				LoadSave.listlow[i] = MAX_SET_POW;
+			}
+		}
+		if(LoadSave.listcomp[i] > 3)
+		{
+			LoadSave.listcomp[i] = 3;
+		}
+		if(LoadSave.delay[i] > 36000)
+		{
+			LoadSave.delay[i] = 36000;
+		}
+	}
 }
 
 
@@ -598,7 +666,7 @@ void Setup_Process(void)
     Disp_Test_Set_Item();
  	while(GetSystemStatus()==SYS_STATUS_SETUP)
 	{
-		DispValue.Operation_MODE = 1;
+//		DispValue.Operation_MODE = 1;
 	    keytrans=Encoder_Process(keynum);
 
 		if(spinflag == 1)
@@ -1130,6 +1198,9 @@ void Limit_Process(void)
 
 					switch(keynum)
 					{
+						case 0:
+								SetSystemStatus(SYS_STATUS_SETUP);//
+						break;
 						case 7:
 						{
 							LoadSave.limitdisp = 1;
@@ -1703,7 +1774,10 @@ void Test_Process(void)
 							switch(keynum)
 							{
 								case 0:
-//									SetSystemStatus(SYS_STATUS_DYNAMIC);
+									if(mainswitch == 0)
+									{
+										SetSystemStatus(SYS_STATUS_DYNAMIC);
+									}
 								break;
 								case 1:
 									if(mainswitch == 0)
@@ -2475,7 +2549,12 @@ void Battery_Process(void)
 							switch(keynum)
 							{
 								case 0:
-//									SetSystemStatus(SYS_STATUS_DYNAMIC);
+									if(mainswitch == 0)
+									{
+										SetSystemStatus(SYS_STATUS_DYNAMIC);
+									}
+								break;
+								default:
 								break;
 							
 							
@@ -2904,6 +2983,7 @@ void Dynamic_Process(void)
     vu8 test_Vsorting,test_Rsorting;
     u32 color;
     u8 keynum=0;
+	u8 keytrans=0;
 	vu16 i;
     Send_To_UTypedef pt;
     Disp_Coordinates_Typedef  Coordinates;
@@ -2916,13 +2996,19 @@ void Dynamic_Process(void)
 
 
     i=0;
-
+	
+	Set_Para();
 
 	while(GetSystemStatus()==SYS_STATUS_DYNAMIC)
 	{
         USB_Count++;
 //        Key_Scan();
-		Encoder_Process(keynum);
+		keytrans=Encoder_Process(keynum);
+		if(spinflag == 1)
+		{
+			Disp_Flag = 1;
+			keynum = keytrans;
+		}
 //		spinvalue = TIM_GetCounter(TIM3);
         Colour.Fword=White;
         if(Disp_RTCflag)
@@ -2957,6 +3043,7 @@ void Dynamic_Process(void)
 			{
 				Disp_Flag=1;
 				key=Key_Read();
+				inputtrans = key;
 				if(key!=KEY_NONE)
 				switch(key)
 				{
@@ -2965,58 +3052,28 @@ void Dynamic_Process(void)
 							switch(keynum)
 							{
 								case 0:
-									keynum=0;
+									if(mainswitch == 0)
+									{
 										SetSystemStatus(SYS_STATUS_TEST);
+									}
 									break;
 								case 1:
-									LoadSave.testdis=0;
+									if(mainswitch == 0)
+									{
+										LoadSave.testdis=0;
+										Para_Set_Comp();
+										Store_set_flash();
+									}
 								break;
-								case 2:
-								{
-									Coordinates.xpos=LIST2+88;
-									Coordinates.ypos=FIRSTLINE*1;
-									Coordinates.lenth=76;
-									LoadSave.valA=Disp_Set_Num(&Coordinates);
-								}
-								break;
-								case 3:
-								{
-									Coordinates.xpos=LIST2+88;
-									Coordinates.ypos=FIRSTLINE*2;
-									Coordinates.lenth=76;
-									LoadSave.valA=Disp_Set_Num(&Coordinates);
-								}break;
-								case 4:
-								{
-									Coordinates.xpos=LIST2+88;
-									Coordinates.ypos=FIRSTLINE*2;
-									Coordinates.lenth=76;
-									LoadSave.dynaIRise=Disp_Set_Num(&Coordinates);
-								}break;
 								case 5:
 								{
-									LoadSave.dynamode = 0;
-								}break;
-								case 6:
-								{
-									Coordinates.xpos=LIST2+88;
-									Coordinates.ypos=FIRSTLINE*2;
-									Coordinates.lenth=76;
-									LoadSave.timeA=Disp_Set_Num(&Coordinates);
-								}break;
-								case 7:
-								{
-									Coordinates.xpos=LIST2+88;
-									Coordinates.ypos=FIRSTLINE*2;
-									Coordinates.lenth=76;
-									LoadSave.timeB=Disp_Set_Num(&Coordinates);
-								}break;
-								case 8:
-								{
-									Coordinates.xpos=LIST2+88;
-									Coordinates.ypos=FIRSTLINE*2;
-									Coordinates.lenth=76;
-									LoadSave.dynaIDrop=Disp_Set_Num(&Coordinates);
+									if(mainswitch == 0)
+									{
+										LoadSave.dynamode = 0;
+										Para_Set_Comp();
+										Set_Para();
+										Store_set_flash();
+									}
 								}break;
 								default:
 									break;
@@ -3028,15 +3085,28 @@ void Dynamic_Process(void)
 							switch(keynum)
 							{
 								case 0:
-									
+									if(mainswitch == 0)
+									{
 										SetSystemStatus(SYS_STATUS_BATTERY);
+									}
 									break;
 								case 1:
-									LoadSave.testdis=1;
+									if(mainswitch == 0)
+									{
+										LoadSave.testdis=1;
+										Para_Set_Comp();
+										Store_set_flash();
+									}
 								break;
 								case 5:
 								{
-									LoadSave.dynamode = 1;
+									if(mainswitch == 0)
+									{
+										LoadSave.dynamode = 1;
+										Para_Set_Comp();
+										Set_Para();
+										Store_set_flash();
+									}
 								}break;
 								default:
 									break;
@@ -3048,12 +3118,16 @@ void Dynamic_Process(void)
 						case Key_F3:
 							switch(keynum)
 							{
-								case 0:
-										
-									break;
+								
 								case 5:
 								{
-									LoadSave.dynamode = 2;
+									if(mainswitch == 0)
+									{
+										LoadSave.dynamode = 2;
+										Para_Set_Comp();
+										Set_Para();
+										Store_set_flash();
+									}
 								}break;
 							
 							}
@@ -3062,9 +3136,13 @@ void Dynamic_Process(void)
 						case Key_F4:
 							switch(keynum)//
 							{
-							   case 0:
-										
-									break;
+								case 0:
+									if(mainswitch == 0)
+									{
+										SetSystemStatus(SYS_STATUS_LIST);
+									}									
+								break;
+							    
 	  
 								default:
 									break;
@@ -3076,43 +3154,48 @@ void Dynamic_Process(void)
 						case Key_F5:
 							switch(keynum)
 							{
-								case 1:
-									LoadSave.mode=4;
-								break;
+								case 0:
+								{
+									if(mainswitch == 0)
+										SetSystemStatus(SYS_STATUS_LIMITSET);
+								}break;
+//								case 1:
+//									LoadSave.mode=4;
+//								break;
 								default:
 									break;
 							}
 	  
 						break;
 
-						case Key_LEFT:
-							if(keynum<5 && keynum>1)
-							{
-								keynum+=3;
-							}
-							else if(keynum>4){
-								keynum-=4;
-							}else if(keynum == 0){
-								keynum = 8;
-							}else if(keynum == 1){
-								keynum = 0;
-							}
-						break;
-						case Key_RIGHT:
-						   if(keynum<5 && keynum>0)
-							{
-								keynum+=4;
-							}
-							else if(keynum>4 && keynum <8){
-								keynum-=3;
-							}else if(keynum == 0){
-								keynum = 1;
-							}else if(keynum == 8){
-								keynum = 0;
-							}
+//						case Key_LEFT:
+//							if(keynum<5 && keynum>1)
+//							{
+//								keynum+=3;
+//							}
+//							else if(keynum>4){
+//								keynum-=4;
+//							}else if(keynum == 0){
+//								keynum = 8;
+//							}else if(keynum == 1){
+//								keynum = 0;
+//							}
+//						break;
+//						case Key_RIGHT:
+//						   if(keynum<5 && keynum>0)
+//							{
+//								keynum+=4;
+//							}
+//							else if(keynum>4 && keynum <8){
+//								keynum-=3;
+//							}else if(keynum == 0){
+//								keynum = 1;
+//							}else if(keynum == 8){
+//								keynum = 0;
+//							}
 
-								
-						break;
+//								
+//						break;
 
 						
 						case Key_NUM1:
@@ -3141,12 +3224,81 @@ void Dynamic_Process(void)
 							{
 								case 2:
 								{
-									Coordinates.xpos=LIST2+88;
-									Coordinates.ypos=FIRSTLINE*1;
-									Coordinates.lenth=76;
-									LoadSave.voltage=Disp_Set_Num(&Coordinates);
+									if(mainswitch == 0)
+									{
+										Coordinates.xpos=LIST1+118;
+										Coordinates.ypos=FIRSTLINE+SPACE1;
+										Coordinates.lenth=76;
+										LoadSave.valA=Disp_Set_CNum(&Coordinates);
+										Para_Set_Comp();
+										Store_set_flash();
+									}
 								}
 								break;
+								case 3:
+								{
+									if(mainswitch == 0)
+									{
+										Coordinates.xpos=LIST1+118;
+										Coordinates.ypos=FIRSTLINE+SPACE1*2;
+										Coordinates.lenth=76;
+										LoadSave.valB=Disp_Set_CNum(&Coordinates);
+										Para_Set_Comp();
+										Store_set_flash();
+									}
+								}break;
+								case 4:
+								{
+									if(mainswitch == 0)
+									{
+										Coordinates.xpos=LIST1+118;
+										Coordinates.ypos=FIRSTLINE+SPACE1*3;
+										Coordinates.lenth=76;
+										LoadSave.dynaIRise=Disp_Set_CNum(&Coordinates);
+										Para_Set_Comp();
+										Store_set_flash();
+									}
+								}break;
+								case 6:
+								{
+									if(mainswitch == 0)
+									{
+										Coordinates.xpos=LIST2+118;
+										Coordinates.ypos=FIRSTLINE+SPACE1;
+										Coordinates.lenth=76;
+										LoadSave.timeA=Disp_Set_TimeMS(&Coordinates);
+										Para_Set_Comp();
+										Store_set_flash();
+									}
+								}break;
+								case 7:
+								{
+									if(mainswitch == 0)
+									{
+										Coordinates.xpos=LIST2+118;
+										Coordinates.ypos=FIRSTLINE+SPACE1*2;
+										Coordinates.lenth=76;
+										LoadSave.timeB=Disp_Set_TimeMS(&Coordinates);
+										Para_Set_Comp();
+										Store_set_flash();
+									}
+								}break;
+								case 8:
+								{
+									if(mainswitch == 0)
+									{
+										Coordinates.xpos=LIST2+118;
+										Coordinates.ypos=FIRSTLINE+SPACE1*3;
+										Coordinates.lenth=76;
+										LoadSave.dynaIDrop=Disp_Set_CNum(&Coordinates);
+										Para_Set_Comp();
+										Store_set_flash();
+									}
+								}break;
+								default:
+									break;
+								
+							
 							}
 						break;
 
@@ -3158,6 +3310,70 @@ void Dynamic_Process(void)
 						case Key_SET1:
 						{
 							SetSystemStatus(SYS_STATUS_SETUP);
+						}break;
+						case Key_ONOFF:
+						{
+							if(mainswitch == 0)
+							{
+								switchdelay = SWITCH_DELAY;
+								SwitchLedOn();
+								batstep = 1;
+								DispValue.Capraw = 0;
+								mainswitch = 1;
+								Set_Para();
+							}else{
+								switchdelay = SWITCH_DELAY;
+								mainswitch = 0;
+								Set_Para();
+								SwitchLedOff();
+							}
+						}break;
+						case Key_Ent:
+						{
+							if(mainswitch == 1 && (LoadSave.dynamode == 1 || 
+								LoadSave.dynamode == 2))
+							{
+								Set_Para();
+							}
+						}break;
+						case Key_ESC:
+						{
+							if(mainswitch == 0)
+								SetSystemStatus(SYS_STATUS_TEST);
+						}break;
+						case PRESS_SPIN:
+						{
+							switch(keynum)
+							{
+								case 1:
+									if(mainswitch == 0)
+									{
+										if(LoadSave.testdis == 1)
+										{
+											LoadSave.testdis=0;
+										}else if(LoadSave.testdis == 0){
+											LoadSave.testdis=1;
+										}
+										Para_Set_Comp();
+										Store_set_flash();
+									}
+								break;
+								case 5:
+								{
+									if(mainswitch == 0)
+									{
+										if(LoadSave.dynamode < 2)
+										{
+											LoadSave.dynamode ++;
+										}else{
+											LoadSave.dynamode = 0;
+										}
+										Para_Set_Comp();
+										Set_Para();
+										Store_set_flash();
+									}
+								}break;
+							}
 						}break;
 						default:
 //							SetSystemStatus(SYS_STATUS_TEST);
@@ -3212,7 +3428,10 @@ void List_Process(void)
 	{
         USB_Count++;
 //        Key_Scan();
-		keytrans=Encoder_Process(keynum);
+		if(resdisp == 0)
+		{
+			keytrans=Encoder_Process(keynum);
+		}
 //		spinvalue = TIM_GetCounter(TIM3);
 
 		if(spinflag == 1)
@@ -3240,7 +3459,8 @@ void List_Process(void)
 		}  
 		if(resflag == 1)
 		{
-			Disp_Res_Sheet(LoadSave.ListNum);
+			DispValue.respage = 0;
+			Disp_Res_Sheet(LoadSave.ListNum,DispValue.respage);
 			resdisp = 1;
 			resflag = 0;
 			if(listbeep == 1)
@@ -3419,7 +3639,10 @@ void List_Process(void)
 									switch(keynum)
 									{
 										case 0:
-//											SetSystemStatus(SYS_STATUS_DYNAMIC);
+											if(mainswitch == 0)
+											{
+												SetSystemStatus(SYS_STATUS_DYNAMIC);
+											}
 										break;
 										case 7:
 										{
@@ -3577,7 +3800,16 @@ void List_Process(void)
 												Coordinates.xpos=100;
 												Coordinates.ypos=26+4*22;
 												Coordinates.lenth=76;
-												LoadSave.listvalue[DispValue.liststep]=Disp_Set_Num(&Coordinates);
+												if(LoadSave.listmode[DispValue.liststep] == 0)
+												{
+													LoadSave.listvalue[DispValue.liststep]=Disp_Set_CNum(&Coordinates);
+												}else if(LoadSave.listmode[DispValue.liststep] == 1){
+													LoadSave.listvalue[DispValue.liststep]=Disp_Set_VNum(&Coordinates);
+												}else if(LoadSave.listmode[DispValue.liststep] == 2){
+													LoadSave.listvalue[DispValue.liststep]=Disp_Set_RNum(&Coordinates);
+												}else if(LoadSave.listmode[DispValue.liststep] == 3){
+													LoadSave.listvalue[DispValue.liststep]=Disp_Set_TimeP(&Coordinates);
+												}
 												Para_Set_Comp();
 												Store_set_flash();
 											}
@@ -3603,7 +3835,15 @@ void List_Process(void)
 												Coordinates.xpos=100;
 												Coordinates.ypos=26+7*22;
 												Coordinates.lenth=76;
-												LoadSave.listhigh[DispValue.liststep]=Disp_Set_Num(&Coordinates);
+												if(LoadSave.listcomp[DispValue.liststep] == 0)
+												{
+												}else if(LoadSave.listcomp[DispValue.liststep] == 1){
+													LoadSave.listhigh[DispValue.liststep]=Disp_Set_CNum(&Coordinates);
+												}else if(LoadSave.listcomp[DispValue.liststep] == 2){
+													LoadSave.listhigh[DispValue.liststep]=Disp_Set_VNum(&Coordinates);
+												}else if(LoadSave.listcomp[DispValue.liststep] == 3){
+													LoadSave.listhigh[DispValue.liststep]=Disp_Set_TimeP(&Coordinates);
+												}
 												Para_Set_Comp();
 												Store_set_flash();
 											}
@@ -3615,7 +3855,15 @@ void List_Process(void)
 												Coordinates.xpos=100;
 												Coordinates.ypos=26+8*22;
 												Coordinates.lenth=76;
-												LoadSave.listlow[DispValue.liststep]=Disp_Set_Num(&Coordinates);
+												if(LoadSave.listcomp[DispValue.liststep] == 0)
+												{
+												}else if(LoadSave.listcomp[DispValue.liststep] == 1){
+													LoadSave.listlow[DispValue.liststep]=Disp_Set_CNum(&Coordinates);
+												}else if(LoadSave.listcomp[DispValue.liststep] == 2){
+													LoadSave.listlow[DispValue.liststep]=Disp_Set_VNum(&Coordinates);
+												}else if(LoadSave.listcomp[DispValue.liststep] == 3){
+													LoadSave.listlow[DispValue.liststep]=Disp_Set_TimeP(&Coordinates);
+												}
 												Para_Set_Comp();
 												Store_set_flash();
 											}
@@ -3821,6 +4069,32 @@ void List_Process(void)
 								{
 									resdisp = 0;
 									List_Process();
+								}break;
+								case Key_F3:
+								{
+									Disp_Flag = 0;
+									if(DispValue.respage > 0)
+									{
+										DispValue.respage--;
+									}
+									Disp_Res_Sheet(LoadSave.ListNum,DispValue.respage);
+								}break;
+								case Key_F4:
+								{
+									Disp_Flag = 0;
+									if(LoadSave.ListNum > 5 && LoadSave.ListNum <= 10)
+									{
+										if(DispValue.respage < 1)
+										{
+											DispValue.respage++;
+										}
+									}else if(LoadSave.ListNum > 10){
+										if(DispValue.respage < 2)
+										{
+											DispValue.respage++;
+										}
+									}
+									Disp_Res_Sheet(LoadSave.ListNum,DispValue.respage);
 								}break;
 								case Key_ONOFF:
 								{
