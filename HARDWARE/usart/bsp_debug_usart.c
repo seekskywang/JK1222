@@ -480,7 +480,7 @@ void Set_Para(void)
 		sendbuff[20+28] = LoadSave.power/10>>16;
 		sendbuff[21+28] = LoadSave.power/10>>8; 
 		sendbuff[22+28] = LoadSave.power/10;//设置功率值
-	}else if(GetSystemStatus()==SYS_STATUS_BATTERY){//常规模式设置参数
+	}else if(GetSystemStatus()==SYS_STATUS_BATTERY){//电池模式设置参数
 		sendbuff[11] = 0x00;
 		sendbuff[12] = 0x00;
 		sendbuff[13] = 0x00;
