@@ -416,10 +416,14 @@ void Set_Para(void)
 		}else if(LoadSave.listmode[DispValue.listrunstep] == 0){
 			if(LoadSave.crange == 1)
 			{
-				sendbuff[11+28] = LoadSave.listvalue[DispValue.listrunstep]/10>>24;
-				sendbuff[12+28] = LoadSave.listvalue[DispValue.listrunstep]/10>>16;
-				sendbuff[13+28] = LoadSave.listvalue[DispValue.listrunstep]/10>>8;
-				sendbuff[14+28] = LoadSave.listvalue[DispValue.listrunstep]/10;//设置电流值
+				sendbuff[11+28] = LoadSave.listvalue[DispValue.listrunstep]>>24;
+				sendbuff[12+28] = LoadSave.listvalue[DispValue.listrunstep]>>16;
+				sendbuff[13+28] = LoadSave.listvalue[DispValue.listrunstep]>>8;
+				sendbuff[14+28] = LoadSave.listvalue[DispValue.listrunstep];//设置电流值
+//				sendbuff[11+28] = LoadSave.listvalue[DispValue.listrunstep]/10>>24;
+//				sendbuff[12+28] = LoadSave.listvalue[DispValue.listrunstep]/10>>16;
+//				sendbuff[13+28] = LoadSave.listvalue[DispValue.listrunstep]/10>>8;
+//				sendbuff[14+28] = LoadSave.listvalue[DispValue.listrunstep]/10;//设置电流值
 			}else{
 				sendbuff[11+28] = LoadSave.listvalue[DispValue.listrunstep]>>24;
 				sendbuff[12+28] = LoadSave.listvalue[DispValue.listrunstep]>>16;
@@ -446,10 +450,14 @@ void Set_Para(void)
 		
 		if(LoadSave.vrange == 1)
 		{
-			sendbuff[7+28] = LoadSave.voltage/10>>24;
-			sendbuff[8+28] = LoadSave.voltage/10>>16;
-			sendbuff[9+28] = LoadSave.voltage/10>>8;
-			sendbuff[10+28] = LoadSave.voltage/10;//设置电压值
+			sendbuff[7+28] = LoadSave.voltage>>24;
+			sendbuff[8+28] = LoadSave.voltage>>16;
+			sendbuff[9+28] = LoadSave.voltage>>8;
+			sendbuff[10+28] = LoadSave.voltage;//设置电压值
+//			sendbuff[7+28] = LoadSave.voltage/10>>24;
+//			sendbuff[8+28] = LoadSave.voltage/10>>16;
+//			sendbuff[9+28] = LoadSave.voltage/10>>8;
+//			sendbuff[10+28] = LoadSave.voltage/10;//设置电压值
 		}else{
 			sendbuff[7+28] = LoadSave.voltage>>24;
 			sendbuff[8+28] = LoadSave.voltage>>16;
@@ -459,10 +467,14 @@ void Set_Para(void)
 		
 		if(LoadSave.crange == 1)
 		{
-			sendbuff[11+28] = LoadSave.current/10>>24;
-			sendbuff[12+28] = LoadSave.current/10>>16;
-			sendbuff[13+28] = LoadSave.current/10>>8;
-			sendbuff[14+28] = LoadSave.current/10;//设置电流值
+			sendbuff[11+28] = LoadSave.current>>24;
+			sendbuff[12+28] = LoadSave.current>>16;
+			sendbuff[13+28] = LoadSave.current>>8;
+			sendbuff[14+28] = LoadSave.current;//设置电流值
+//			sendbuff[11+28] = LoadSave.current/10>>24;
+//			sendbuff[12+28] = LoadSave.current/10>>16;
+//			sendbuff[13+28] = LoadSave.current/10>>8;
+//			sendbuff[14+28] = LoadSave.current/10;//设置电流值
 		}else{
 			sendbuff[11+28] = LoadSave.current>>24;
 			sendbuff[12+28] = LoadSave.current>>16;
@@ -489,10 +501,14 @@ void Set_Para(void)
 		
 		if(LoadSave.vrange == 1)
 		{
-			sendbuff[7+28] = LoadSave.voltage/10>>24;
-			sendbuff[8+28] = LoadSave.voltage/10>>16;
-			sendbuff[9+28] = LoadSave.voltage/10>>8;
-			sendbuff[10+28] = LoadSave.voltage/10;//设置电压值
+			sendbuff[7+28] = LoadSave.voltage>>24;
+			sendbuff[8+28] = LoadSave.voltage>>16;
+			sendbuff[9+28] = LoadSave.voltage>>8;
+			sendbuff[10+28] = LoadSave.voltage;//设置电压值
+//			sendbuff[7+28] = LoadSave.voltage/10>>24;
+//			sendbuff[8+28] = LoadSave.voltage/10>>16;
+//			sendbuff[9+28] = LoadSave.voltage/10>>8;
+//			sendbuff[10+28] = LoadSave.voltage/10;//设置电压值
 		}else{
 			sendbuff[7+28] = LoadSave.voltage>>24;
 			sendbuff[8+28] = LoadSave.voltage>>16;
@@ -504,20 +520,32 @@ void Set_Para(void)
 		{
 			if(batstep == 2)
 			{
-				sendbuff[11+28] = LoadSave.loadc2/10>>24;
-				sendbuff[12+28] = LoadSave.loadc2/10>>16;
-				sendbuff[13+28] = LoadSave.loadc2/10>>8;
-				sendbuff[14+28] = LoadSave.loadc2/10;//设置电流值
+				sendbuff[11+28] = LoadSave.loadc2>>24;
+				sendbuff[12+28] = LoadSave.loadc2>>16;
+				sendbuff[13+28] = LoadSave.loadc2>>8;
+				sendbuff[14+28] = LoadSave.loadc2;//设置电流值
+//				sendbuff[11+28] = LoadSave.loadc2/10>>24;
+//				sendbuff[12+28] = LoadSave.loadc2/10>>16;
+//				sendbuff[13+28] = LoadSave.loadc2/10>>8;
+//				sendbuff[14+28] = LoadSave.loadc2/10;//设置电流值
 			}else if(batstep == 3){
-				sendbuff[11+28] = LoadSave.loadc3/10>>24;
-				sendbuff[12+28] = LoadSave.loadc3/10>>16;
-				sendbuff[13+28] = LoadSave.loadc3/10>>8;
-				sendbuff[14+28] = LoadSave.loadc3/10;//设置电流值
+				sendbuff[11+28] = LoadSave.loadc3>>24;
+				sendbuff[12+28] = LoadSave.loadc3>>16;
+				sendbuff[13+28] = LoadSave.loadc3>>8;
+				sendbuff[14+28] = LoadSave.loadc3;//设置电流值
+//				sendbuff[11+28] = LoadSave.loadc3/10>>24;
+//				sendbuff[12+28] = LoadSave.loadc3/10>>16;
+//				sendbuff[13+28] = LoadSave.loadc3/10>>8;
+//				sendbuff[14+28] = LoadSave.loadc3/10;//设置电流值
 			}else{
-				sendbuff[11+28] = LoadSave.loadc1/10>>24;
-				sendbuff[12+28] = LoadSave.loadc1/10>>16;
-				sendbuff[13+28] = LoadSave.loadc1/10>>8;
-				sendbuff[14+28] = LoadSave.loadc1/10;//设置电流值
+				sendbuff[11+28] = LoadSave.loadc1>>24;
+				sendbuff[12+28] = LoadSave.loadc1>>16;
+				sendbuff[13+28] = LoadSave.loadc1>>8;
+				sendbuff[14+28] = LoadSave.loadc1;//设置电流值
+//				sendbuff[11+28] = LoadSave.loadc1/10>>24;
+//				sendbuff[12+28] = LoadSave.loadc1/10>>16;
+//				sendbuff[13+28] = LoadSave.loadc1/10>>8;
+//				sendbuff[14+28] = LoadSave.loadc1/10;//设置电流值
 			}
 		}else{
 			if(batstep == 2)
@@ -558,10 +586,14 @@ void Set_Para(void)
 		
 		if(LoadSave.vrange == 1)
 		{
-			sendbuff[7+28] = LoadSave.voltage/10>>24;
-			sendbuff[8+28] = LoadSave.voltage/10>>16;
-			sendbuff[9+28] = LoadSave.voltage/10>>8;
-			sendbuff[10+28] = LoadSave.voltage/10;//设置电压值
+			sendbuff[7+28] = LoadSave.voltage>>24;
+			sendbuff[8+28] = LoadSave.voltage>>16;
+			sendbuff[9+28] = LoadSave.voltage>>8;
+			sendbuff[10+28] = LoadSave.voltage;//设置电压值
+//			sendbuff[7+28] = LoadSave.voltage/10>>24;
+//			sendbuff[8+28] = LoadSave.voltage/10>>16;
+//			sendbuff[9+28] = LoadSave.voltage/10>>8;
+//			sendbuff[10+28] = LoadSave.voltage/10;//设置电压值
 		}else{
 			sendbuff[7+28] = LoadSave.voltage>>24;
 			sendbuff[8+28] = LoadSave.voltage>>16;
@@ -571,10 +603,14 @@ void Set_Para(void)
 		
 		if(LoadSave.crange == 1)
 		{
-			sendbuff[11+28] = LoadSave.current/10>>24;
-			sendbuff[12+28] = LoadSave.current/10>>16;
-			sendbuff[13+28] = LoadSave.current/10>>8;
-			sendbuff[14+28] = LoadSave.current/10;//设置电流值
+			sendbuff[11+28] = LoadSave.current>>24;
+			sendbuff[12+28] = LoadSave.current>>16;
+			sendbuff[13+28] = LoadSave.current>>8;
+			sendbuff[14+28] = LoadSave.current;//设置电流值
+//			sendbuff[11+28] = LoadSave.current/10>>24;
+//			sendbuff[12+28] = LoadSave.current/10>>16;
+//			sendbuff[13+28] = LoadSave.current/10>>8;
+//			sendbuff[14+28] = LoadSave.current/10;//设置电流值
 		}else{
 			sendbuff[11+28] = LoadSave.current>>24;
 			sendbuff[12+28] = LoadSave.current>>16;
@@ -644,15 +680,25 @@ void Set_Para(void)
 	
 	if(LoadSave.crange == 1)
 	{
-		sendbuff[55+28] = LoadSave.crise/10>>24;
-		sendbuff[56+28] = LoadSave.crise/10>>16;
-		sendbuff[57+28] = LoadSave.crise/10>>8;
-		sendbuff[58+28] = LoadSave.crise/10;//电流爬升率
+		sendbuff[55+28] = LoadSave.crise>>24;
+		sendbuff[56+28] = LoadSave.crise>>16;
+		sendbuff[57+28] = LoadSave.crise>>8;
+		sendbuff[58+28] = LoadSave.crise;//电流爬升率
 		
-		sendbuff[59+28] = LoadSave.cdrop/10>>24;
-		sendbuff[60+28] = LoadSave.cdrop/10>>16;
-		sendbuff[61+28] = LoadSave.cdrop/10>>8;
-		sendbuff[62+28] = LoadSave.cdrop/10;//电流下降率
+		sendbuff[59+28] = LoadSave.cdrop>>24;
+		sendbuff[60+28] = LoadSave.cdrop>>16;
+		sendbuff[61+28] = LoadSave.cdrop>>8;
+		sendbuff[62+28] = LoadSave.cdrop;//电流下降率
+		
+//		sendbuff[55+28] = LoadSave.crise/10>>24;
+//		sendbuff[56+28] = LoadSave.crise/10>>16;
+//		sendbuff[57+28] = LoadSave.crise/10>>8;
+//		sendbuff[58+28] = LoadSave.crise/10;//电流爬升率
+//		
+//		sendbuff[59+28] = LoadSave.cdrop/10>>24;
+//		sendbuff[60+28] = LoadSave.cdrop/10>>16;
+//		sendbuff[61+28] = LoadSave.cdrop/10>>8;
+//		sendbuff[62+28] = LoadSave.cdrop/10;//电流下降率
 	}else if(LoadSave.crange == 0){
 		sendbuff[55+28] = LoadSave.crise>>24;
 		sendbuff[56+28] = LoadSave.crise>>16;
@@ -667,10 +713,14 @@ void Set_Para(void)
 	
 	if(LoadSave.vrange == 1)
 	{
-		sendbuff[63+28] = LoadSave.cvdowntime/10>>24;
-		sendbuff[64+28] = LoadSave.cvdowntime/10>>16;
-		sendbuff[65+28] = LoadSave.cvdowntime/10>>8;
-		sendbuff[66+28] = LoadSave.cvdowntime/10;//CV模式电压下降时间
+		sendbuff[63+28] = LoadSave.cvdowntime>>24;
+		sendbuff[64+28] = LoadSave.cvdowntime>>16;
+		sendbuff[65+28] = LoadSave.cvdowntime>>8;
+		sendbuff[66+28] = LoadSave.cvdowntime;//CV模式电压下降时间
+//		sendbuff[63+28] = LoadSave.cvdowntime/10>>24;
+//		sendbuff[64+28] = LoadSave.cvdowntime/10>>16;
+//		sendbuff[65+28] = LoadSave.cvdowntime/10>>8;
+//		sendbuff[66+28] = LoadSave.cvdowntime/10;//CV模式电压下降时间
 	}else if(LoadSave.vrange == 0){
 		sendbuff[63+28] = LoadSave.cvdowntime>>24;
 		sendbuff[64+28] = LoadSave.cvdowntime>>16;
@@ -696,15 +746,25 @@ void Set_Para(void)
 	
 	if(LoadSave.crange == 1)
 	{
-		sendbuff[79+28] = LoadSave.valA/10>>24;
-		sendbuff[80+28] = LoadSave.valA/10>>16;
-		sendbuff[81+28] = LoadSave.valA/10>>8;
-		sendbuff[82+28] = LoadSave.valA/10;//动态模式拉载电流A
+		sendbuff[79+28] = LoadSave.valA>>24;
+		sendbuff[80+28] = LoadSave.valA>>16;
+		sendbuff[81+28] = LoadSave.valA>>8;
+		sendbuff[82+28] = LoadSave.valA;//动态模式拉载电流A
 		
-		sendbuff[83+28] = LoadSave.valB/10>>24;
-		sendbuff[84+28] = LoadSave.valB/10>>16;
-		sendbuff[85+28] = LoadSave.valB/10>>8;
-		sendbuff[86+28] = LoadSave.valB/10;//动态模式拉载电流B
+		sendbuff[83+28] = LoadSave.valB>>24;
+		sendbuff[84+28] = LoadSave.valB>>16;
+		sendbuff[85+28] = LoadSave.valB>>8;
+		sendbuff[86+28] = LoadSave.valB;//动态模式拉载电流B
+		
+//		sendbuff[79+28] = LoadSave.valA/10>>24;
+//		sendbuff[80+28] = LoadSave.valA/10>>16;
+//		sendbuff[81+28] = LoadSave.valA/10>>8;
+//		sendbuff[82+28] = LoadSave.valA/10;//动态模式拉载电流A
+//		
+//		sendbuff[83+28] = LoadSave.valB/10>>24;
+//		sendbuff[84+28] = LoadSave.valB/10>>16;
+//		sendbuff[85+28] = LoadSave.valB/10>>8;
+//		sendbuff[86+28] = LoadSave.valB/10;//动态模式拉载电流B
 	}else if(LoadSave.crange == 0){
 		sendbuff[79+28] = LoadSave.valA>>24;
 		sendbuff[80+28] = LoadSave.valA>>16;
