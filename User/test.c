@@ -30,6 +30,7 @@ u8 switchdelay;
 u8 setcount;
 u8 inputtrans;
 u8 coder_flag=0;
+u8 buttonpage1=1;
 //const u8 RANGE_UNIT[11]=
 //{
 //	4,
@@ -738,7 +739,7 @@ void Setup_Process(void)
 					{
 						case 0:
 							//if(Button_Page.page==0)
-								SetSystemStatus(SYS_STATUS_SETUP);
+								SetSystemStatus(SYS_STATUS_LIMITSET);
 //							else
 //								SetSystemStatus(SYS_STATUS_SYSSET);
 								
@@ -861,7 +862,21 @@ void Setup_Process(void)
 				break;
 
 				
-
+				case Key_LEFT:
+					if(keynum>6)
+					{
+						keynum-=6;
+					}else if(keynum == 1){
+						keynum = 0;
+					}
+				break;
+				case Key_RIGHT:
+					if(keynum<7 && keynum>0){
+						keynum+=6;
+					}else if(keynum == 0){
+						keynum = 1;
+					}
+				break;
 
 				case Key_DOT:
 
@@ -1271,30 +1286,16 @@ void Limit_Process(void)
 					if(keynum>6)
 					{
 						keynum-=6;
-					}
-					else if(keynum<7 && keynum>1){
-						keynum+=5;
 					}else if(keynum == 1){
 						keynum = 0;
-					}else if(keynum == 0){
-						keynum = 6;
 					}
-						
 				break;
 				case Key_RIGHT:
-					if(keynum>6 && keynum < 12)
-					{
-						keynum-=5;
-					}
-					else if(keynum<6 && keynum>0){
+					if(keynum<6 && keynum>0){
 						keynum+=6;
 					}else if(keynum == 0){
 						keynum = 1;
-					}else if(keynum == 6){
-						keynum = 0;
 					}
-					
-						
 				break;
 
 				case Key_DOT:
@@ -1645,6 +1646,9 @@ void Test_Process(void)
 //        }
 //    }
 	spinbit = 1;
+	coder_flag = 1;
+	keynum = 2;
+	buttonpage1 = 1;
 	while(GetSystemStatus()==SYS_STATUS_TEST)
 	{
         USB_Count++;
@@ -1727,130 +1731,170 @@ void Test_Process(void)
 				{
 						case Key_F1:
 							
-							switch(keynum)
+//							switch(keynum)
+//							{
+//								case 0:
+//									keynum=0;
+//										//SetSystemStatus(SYS_STATUS_TEST);
+//									break;
+//								case 1:
+							if(buttonpage1 == 1)
 							{
-								case 0:
-									keynum=0;
-										//SetSystemStatus(SYS_STATUS_TEST);
-									break;
-								case 1:
-									if(mainswitch == 0)
-									{
-										LoadSave.mode=0;
-										Mode_SW();
-										Store_set_flash();
-									}
-								break;
-
-								default:
-									break;
-							
-							
+								if(mainswitch == 0)
+								{
+									LoadSave.mode=0;
+									Mode_SW();
+									Store_set_flash();
+								}
+							}else{
+								if(mainswitch == 0)
+								{
+									LoadSave.mode=6;
+									Mode_SW();
+									Store_set_flash();
+								}
 							}
+//								break;
+
+//								default:
+//									break;
+//							
+//							
+//							}
 						break;
 						case Key_F2:
-							switch(keynum)
+//							switch(keynum)
+//							{
+//								case 0:
+//									if(mainswitch == 0)
+//										SetSystemStatus(SYS_STATUS_BATTERY);
+//									break;
+//								case 1:
+							if(buttonpage1 == 1)
 							{
-								case 0:
-									if(mainswitch == 0)
-										SetSystemStatus(SYS_STATUS_BATTERY);
-									break;
-								case 1:
-									if(mainswitch == 0)
-									{
-										LoadSave.mode=1;
-										Mode_SW();
-										Store_set_flash();
-									}
-								break;
-								default:
-									break;
-							
-							
+								if(mainswitch == 0)
+								{
+									LoadSave.mode=1;
+									Mode_SW();
+									Store_set_flash();
+								}
+							}else{
+								SetSystemStatus(SYS_STATUS_BATTERY);
 							}
+//								break;
+//								default:
+//									break;
+//							
+//							
+//							}
 		//					Savetoeeprom();
 						break;
 						case Key_F3:
-							switch(keynum)
+//							switch(keynum)
+//							{
+//								case 0:
+//									if(mainswitch == 0)
+//									{
+//										SetSystemStatus(SYS_STATUS_DYNAMIC);
+//									}
+//								break;
+//								case 1:
+							if(buttonpage1 == 1)
 							{
-								case 0:
-									if(mainswitch == 0)
-									{
-										SetSystemStatus(SYS_STATUS_DYNAMIC);
-									}
-								break;
-								case 1:
-									if(mainswitch == 0)
-									{
-										LoadSave.mode=2;
-										Mode_SW();
-										Store_set_flash();
-									}
-								break;
-							
+								if(mainswitch == 0)
+								{
+									LoadSave.mode=2;
+									Mode_SW();
+									Store_set_flash();
+								}
+							}else{
+								SetSystemStatus(SYS_STATUS_DYNAMIC);
 							}
+//								break;
+//							
+//							}
 		//					Savetoeeprom();
 						break;
 						case Key_F4:
-							switch(keynum)//
+//							switch(keynum)//
+//							{
+//								case 0:
+//									if(mainswitch == 0)
+//									SetSystemStatus(SYS_STATUS_LIST);
+//							    break;
+//								case 1:
+							if(buttonpage1 == 1)
 							{
-								case 0:
-									if(mainswitch == 0)
-									SetSystemStatus(SYS_STATUS_LIST);
-							    break;
-								case 1:
-									if(mainswitch == 0)
-									{
-										LoadSave.mode=3;
-										Mode_SW();
-										Store_set_flash();
-									}
-								break;
-								default:
-									break;
-							
-							
-							}	
+								if(mainswitch == 0)
+								{
+									LoadSave.mode=3;
+									Mode_SW();
+									Store_set_flash();
+								}
+							}else{
+								SetSystemStatus(SYS_STATUS_LIST);
+							}
+//								break;
+//								default:
+//									break;
+//							
+//							
+//							}	
 		//					Savetoeeprom();
 						break;
 						case Key_F5:
-							switch(keynum)
+//							switch(keynum)
+//							{
+//								case 0:
+//								{
+//									if(mainswitch == 0)
+//									SetSystemStatus(SYS_STATUS_LIMITSET);
+//								}break;
+//								case 1:
+							if(buttonpage1 == 1)
 							{
-								case 0:
-								{
-									if(mainswitch == 0)
-									SetSystemStatus(SYS_STATUS_LIMITSET);
-								}break;
-								case 1:
-									if(mainswitch == 0)
-									{
-										LoadSave.mode=6;
-										Mode_SW();
-										Store_set_flash();
-									}
-								break;
-								default:
-									break;
+								buttonpage1=2;
+							}else{
+								buttonpage1=1;
 							}
+//									if(mainswitch == 0)
+//									{
+//										LoadSave.mode=6;
+//										Mode_SW();
+//										Store_set_flash();
+//									}
+//								break;
+//								default:
+//									break;
+//							}
 	  
 						break;
 
-//						case Key_LEFT:
-//							if(keynum<1)
-//								keynum=2;
-//							else
-//								keynum--;
-//						  
-//						break;
-//						case Key_RIGHT:
-//							if(keynum>1)
-//								keynum=0;
-//							else
-//								keynum++;
-//						   
-					 
-								
+						case Key_LEFT:
+							if(coder_flag == 1/* && keynum == 2*/)
+							{
+								if(spinbit < spinbitmax)
+								{
+									spinbit ++;
+								}else{
+									spinbit = 1;
+								}
+							}
+						  
 						break;
+						case Key_RIGHT:
+							if(coder_flag == 1/* && keynum == 2*/)
+							{
+								if(spinbit > 1)
+								{
+									spinbit --;
+								}else{
+									spinbit = spinbitmax;
+								}
+							}
+						break;
+					 
+
 
 						
 						case Key_NUM1:
@@ -1875,10 +1919,10 @@ void Test_Process(void)
 						case Key_NUM0:
 //						break;
 						case Key_DOT:
-						switch(keynum)
-						{
-							case 2:
-							{
+//						switch(keynum)
+//						{
+//							case 2:
+//							{
 								Coordinates.xpos=LIST2+88;
 								Coordinates.ypos=FIRSTLINE*1;
 								Coordinates.lenth=76;
@@ -1904,11 +1948,11 @@ void Test_Process(void)
 								}
 								Para_Set_Comp();
 								Set_Para();
-							}
-							break;
-							default:
-							break;
-						}
+//							}
+//							break;
+//							default:
+//							break;
+//						}
 						break;
 
 						case Key_REST:
@@ -1940,10 +1984,10 @@ void Test_Process(void)
 						{
 //							case Key_F1:
 							
-							switch(keynum)
-							{
-								case 2:
-								{
+//							switch(keynum)
+//							{
+//								case 2:
+//								{
 									Coordinates.xpos=LIST2+88;
 									Coordinates.ypos=FIRSTLINE*1;
 									Coordinates.lenth=76;
@@ -1969,29 +2013,29 @@ void Test_Process(void)
 									}
 									Para_Set_Comp();
 									Set_Para();
-								}
-								break;
+//								}
+//								break;
 
-								default:
-									break;
-							
-							
-							}
+//								default:
+//									break;
+//							
+//							
+//							}
 						}break;
 						case Key_ESC:
 						{
-							if(coder_flag == 1)
-							{
-								coder_flag = 0;
-							}
+//							if(coder_flag == 1)
+//							{
+//								coder_flag = 0;
+//							}
 						}break;
 						case PRESS_SPIN:
 						{
-							if(coder_flag == 0  && keynum == 2)
-							{
-								coder_flag = 1;
-							}
-							if(coder_flag == 1 && keynum == 2)
+//							if(coder_flag == 0  && keynum == 2)
+//							{
+//								coder_flag = 1;
+//							}
+							if(coder_flag == 1/* && keynum == 2*/)
 							{
 								if(spinbit < spinbitmax)
 								{
@@ -2000,22 +2044,22 @@ void Test_Process(void)
 									spinbit = 1;
 								}
 							}
-							if(keynum == 1)
-							{
-								if(mainswitch == 0)
-								{
-									if(LoadSave.mode < 3)
-									{
-										LoadSave.mode++;
-									}else if(LoadSave.mode==3){
-										LoadSave.mode = 6;
-									}else{
-										LoadSave.mode = 0;
-									}
-									Mode_SW();
-									Store_set_flash();
-								}
-							}
+//							if(keynum == 1)
+//							{
+//								if(mainswitch == 0)
+//								{
+//									if(LoadSave.mode < 3)
+//									{
+//										LoadSave.mode++;
+//									}else if(LoadSave.mode==3){
+//										LoadSave.mode = 6;
+//									}else{
+//										LoadSave.mode = 0;
+//									}
+//									Mode_SW();
+//									Store_set_flash();
+//								}
+//							}
 						}break;
 						default:
 							SetSystemStatus(SYS_STATUS_TEST);
@@ -2408,114 +2452,6 @@ void Battery_Process(void)
 										Store_set_flash();
 									}
 								break;
-//								case 2:
-//								{
-//									
-//									if(mainswitch == 0)
-//									{
-//										if(LoadSave.loadmode == 0)
-//										{
-//											Coordinates.xpos=LIST1+118;
-//											Coordinates.ypos=FIRSTLINE+SPACE1*1;
-//											Coordinates.lenth=76;
-//											LoadSave.loadc1=Disp_Set_CNum(&Coordinates);
-//										}else if(LoadSave.loadmode == 2){
-//											Coordinates.xpos=LIST1+118;
-//											Coordinates.ypos=FIRSTLINE+SPACE1*1;
-//											Coordinates.lenth=80;
-//											LoadSave.loadr=Disp_Set_RNum(&Coordinates);
-//										}
-//										Para_Set_Comp();
-//										Set_Para();
-//									}
-//									Store_set_flash();
-//								}
-//								break;
-//								case 3:
-//								{
-//									if(mainswitch == 0)
-//									{
-//										if(LoadSave.loadmode == 0)
-//										{
-//											Coordinates.xpos=LIST1+118;
-//											Coordinates.ypos=FIRSTLINE+SPACE1*2;
-//											Coordinates.lenth=76;
-//											LoadSave.loadc2=Disp_Set_CNum(&Coordinates);
-//										}
-//										Para_Set_Comp();
-//										Store_set_flash();
-//									}
-//								}
-//								break;
-//								case 4:
-//								{
-//									if(mainswitch == 0)
-//									{
-//										if(LoadSave.loadmode == 0)
-//										{
-//											Coordinates.xpos=LIST1+118;
-//											Coordinates.ypos=FIRSTLINE+SPACE1*3;
-//											Coordinates.lenth=76;
-//											LoadSave.loadc3=Disp_Set_CNum(&Coordinates);
-//										}
-//										Para_Set_Comp();
-//										Store_set_flash();
-//									}
-//								}
-//								break;
-//								case 6:
-//								{
-//									if(mainswitch == 0)
-//									{
-//										if(LoadSave.loadmode == 0)
-//										{
-//											Coordinates.xpos=LIST2+118;
-//											Coordinates.ypos=FIRSTLINE+SPACE1*1;
-//											Coordinates.lenth=76;
-//											LoadSave.coffv1=Disp_Set_VNum(&Coordinates);
-//										}else if(LoadSave.loadmode == 2){
-//											Coordinates.xpos=LIST2+118;
-//											Coordinates.ypos=FIRSTLINE+SPACE1*1;
-//											Coordinates.lenth=76;
-//											LoadSave.coffvr=Disp_Set_VNum(&Coordinates);
-//										}
-//										Para_Set_Comp();
-//										Store_set_flash();
-//									}
-//								}
-//								break;
-//								case 7:
-//								{
-//									if(mainswitch == 0)
-//									{
-//										if(LoadSave.loadmode == 0)
-//										{
-//											Coordinates.xpos=LIST2+118;
-//											Coordinates.ypos=FIRSTLINE+SPACE1*2;
-//											Coordinates.lenth=76;
-//											LoadSave.coffv2=Disp_Set_VNum(&Coordinates);
-//										}
-//										Para_Set_Comp();
-//										Store_set_flash();
-//									}
-//								}
-//								break;
-//								case 8:
-//								{
-//									if(mainswitch == 0)
-//									{
-//										if(LoadSave.loadmode == 0)
-//										{
-//											Coordinates.xpos=LIST2+118;
-//											Coordinates.ypos=FIRSTLINE+SPACE1*3;
-//											Coordinates.lenth=76;
-//											LoadSave.coffv3=Disp_Set_VNum(&Coordinates);
-//										}
-//										Para_Set_Comp();
-//										Store_set_flash();
-//									}
-//								}
-//								break;
 								default:
 									break;
 							
@@ -2598,22 +2534,21 @@ void Battery_Process(void)
 						case Key_LEFT:
 							if(LoadSave.loadmode == 0)
 							{
-								if(keynum<1)
-									keynum=8;
-								else
-									keynum--;
+								if(keynum>5){
+									keynum-=4;
+								}else if(keynum < 3 && keynum > 0){
+									keynum --;
+								}
 							}else if(LoadSave.loadmode == 2){
 								if(keynum==6)
 								{
-									keynum--;
+									keynum=2;
 								}else if(keynum == 5){
 									keynum = 2;
 								}else if(keynum == 2){
 									keynum--;
 								}else if(keynum == 1){
 									keynum--;
-								}else if(keynum == 0){
-									keynum=6;
 								}
 							}
 						  
@@ -2621,18 +2556,13 @@ void Battery_Process(void)
 						case Key_RIGHT:
 							if(LoadSave.loadmode == 0)
 							{
-								if(keynum>7)
-									keynum=0;
-								else
+								if(keynum<5 && keynum>1)
+									keynum+=4;
+								else if(keynum<2)
 									keynum++;
 							}else if(LoadSave.loadmode == 2){
-								if(keynum==6)
-								{
-									keynum=0;
-								}else if(keynum == 5){
-									keynum = 6;
-								}else if(keynum == 2){
-									keynum=5;
+								if(keynum == 2){
+									keynum=6;
 								}else if(keynum == 1){
 									keynum=2;
 								}else if(keynum == 0){
@@ -3168,34 +3098,21 @@ void Dynamic_Process(void)
 	  
 						break;
 
-//						case Key_LEFT:
-//							if(keynum<5 && keynum>1)
-//							{
-//								keynum+=3;
-//							}
-//							else if(keynum>4){
-//								keynum-=4;
-//							}else if(keynum == 0){
-//								keynum = 8;
-//							}else if(keynum == 1){
-//								keynum = 0;
-//							}
-//						break;
-//						case Key_RIGHT:
-//						   if(keynum<5 && keynum>0)
-//							{
-//								keynum+=4;
-//							}
-//							else if(keynum>4 && keynum <8){
-//								keynum-=3;
-//							}else if(keynum == 0){
-//								keynum = 1;
-//							}else if(keynum == 8){
-//								keynum = 0;
-//							}
-
-//								
-//						break;
+						case Key_LEFT:
+							if(keynum>4){
+								keynum-=4;
+							}else if(keynum == 1){
+								keynum = 0;
+							}
+						break;
+						case Key_RIGHT:
+						   if(keynum<5 && keynum>0)
+							{
+								keynum+=4;
+							}else if(keynum == 0){
+								keynum = 1;
+							}
+						break;
 
 						
 						case Key_NUM1:
@@ -3718,29 +3635,29 @@ void List_Process(void)
 			  
 								break;
 
-//								case Key_LEFT:
-//		//							if(keynum<1)
-//		//								keynum=11;
-//		//							else
-//		//								keynum--;
-//									if(DispValue.liststep > 0)
-//									{
-//										DispValue.liststep --;
-//									}
-//								break;
-//								case Key_RIGHT:
-//									if(DispValue.liststep < LoadSave.ListNum-1)
-//									{
-//										DispValue.liststep ++;
-//									}
-//		//							if(keynum>10)
-//		//								keynum=0;
-//		//							else
-//		//								keynum++;
-//								   
-//							 
-//										
-//								break;
+								case Key_LEFT:
+		//							if(keynum<1)
+		//								keynum=11;
+		//							else
+		//								keynum--;
+									if(DispValue.liststep > 0)
+									{
+										DispValue.liststep --;
+									}
+								break;
+								case Key_RIGHT:
+									if(DispValue.liststep < LoadSave.ListNum-1)
+									{
+										DispValue.liststep ++;
+									}
+		//							if(keynum>10)
+		//								keynum=0;
+		//							else
+		//								keynum++;
+								   
+							 
+										
+								break;
 
 								
 								case Key_NUM1:

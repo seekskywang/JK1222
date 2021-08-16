@@ -313,6 +313,7 @@ const uint8_t Test_Modevalue1[][6+1]=
 	{"动态"},
 	{"LED"},
 	{"短路"},
+	{"更多"},
 
 };
 
@@ -338,8 +339,12 @@ const uint8_t Test_Modevalue_E1[][6+1]=
 {
 	{"CV"},
 	{"CC"}, 
-	{"定电阻"},
-	{"定功率"},
+	{"CR"},
+	{"CW"},
+	{"DYNA"},
+	{"LET"}, 
+	{"SHORT"},
+	{"MORE"},
 };
 
 const uint8_t Bat_Modevalue[][6+1]=
@@ -1258,7 +1263,7 @@ void Disp_Hint(u8 num)
 	{
 		Colour.black=LCD_COLOR_TEST_MID;
 		Colour.Fword = Red;
-		WriteString_16(LIST2+60,205,"请用数字键盘输入",0);
+		WriteString_16(LIST2+40,205,"请用数字键盘或旋钮输入",0);
 	}else if(num == 2){
 		Colour.black=LCD_COLOR_TEST_BACK;
 		Colour.Fword = Red;
@@ -1281,6 +1286,10 @@ void Disp_Hint(u8 num)
 		Colour.black=LCD_COLOR_TEST_BACK;
 		Colour.Fword = Red;
 		WriteString_16(LIST2+60,205,"按下旋钮快速选择",0);
+	}else if(num == 8){
+		Colour.black=LCD_COLOR_TEST_MID;
+		Colour.Fword = Red;
+		WriteString_16(LIST2+60,205,"请用数字键盘输入",0);
 	}
 }
 
@@ -1472,6 +1481,10 @@ void Disp_Fastbutton(void)
 	}
 
 }//118
+
+
+
+
 void Disp_Button_value1(uint32_t value)
 {
 	Disp_Fastbutton();
@@ -1519,6 +1532,32 @@ void Disp_Button_value1(uint32_t value)
 		WriteString_16(84+80+80+80+80+18, 271-20, " 2/2",  0);
     
     }else if(value==2){
+		if(Jk516save.Sys_Setvalue.lanage)
+        {
+            WriteString_16(10+98+18, 271-40, "MEAS",  0);
+            WriteString_16(10+98+18, 271-20, "DISP",  0);
+            WriteString_16(10+98+94+18, 271-40, "LIMIT",  0);
+            WriteString_16(10+98+94+18, 271-20, "SETUP",  0);
+            WriteString_16(10+98+94+94+18, 271-40, " SYS",  0);
+            WriteString_16(10+98+94+94+18, 271-20, "SETUP",  0);
+//            WriteString_16(10+98+94+94+94+18, 271-40, "SYS",  0);
+//            WriteString_16(10+98+94+94+94+18, 271-20, "INFO",  0);
+        
+        }
+        else
+        {
+			WriteString_16(10+18, 271-40, "测量",  0);
+            WriteString_16(10+18, 271-20, "显示",  0);
+            WriteString_16(10+98+18, 271-40, "极限",  0);
+            WriteString_16(10+98+18, 271-20, "设置",  0);
+            WriteString_16(10+98+94+18, 271-40, "系统",  0);
+            WriteString_16(10+98+94+18, 271-20, "设置",  0);
+//            WriteString_16(10+98+94+94+18, 271-40, "系统",  0);
+//            WriteString_16(10+98+94+94+18, 271-20, "信息",  0);
+//			WriteString_16(10+98+94+94+94+94+18, 271-40, "固件",  0);
+//			WriteString_16(10+98+94+94+94+94+18, 271-20, "升级",  0);
+        }
+	}else if(value==3){
 		if(Jk516save.Sys_Setvalue.lanage)
         {
             WriteString_16(10+98+18, 271-40, "MEAS",  0);
@@ -1681,7 +1720,7 @@ void Disp_Test_Item(void)
 		WriteString_16(LIST2+88-28,80+80,"PH:",0);
 		WriteString_16(LIST2+88-28,80+100,"PL:",0);
 	}
-	Disp_Button_value1(0);
+//	Disp_Button_page1(0);
 	
 
 }
@@ -1858,22 +1897,22 @@ void Disp_Test_value(u8 num)
 //	vu32 xpose;
 	vu32 Black_Select;
 //	vu32 Select_color;
+	if(Jk516save.Sys_Setvalue.lanage)
+	{
+		pt=Test_Modevalue_E1;
+	}
+	else
+	{
+		pt=Test_Modevalue1;
 	
+	}
 	if(LoadSave.mode <4)
 	{
 		Colour.black=LCD_COLOR_TEST_BACK;
 		WriteString_16(250, 26+(3-3)*22, Mode_Setitem[LoadSave.mode],  0);
 	}
 	
-	if(Jk516save.Sys_Setvalue.lanage)
-    {
-        pt=Test_Modevalue_E1;
-    }
-    else
-    {
-        pt=Test_Modevalue1;
-    
-    }
+
 	Black_Select=(num==1)?1:0;//模式
 	if(Black_Select)
 	{
@@ -1943,40 +1982,53 @@ void Disp_Test_value(u8 num)
 	}else{
 		Disp_Hint(3);
 	}
-	switch(num)
-	{
-		case 0:
-				Disp_Button_value1(0);
-			break;
-		case 1:
+//	switch(num)
+//	{
+//		case 0:
+//				Disp_Button_value1(0);
+//			break;
+//		case 1:
 				Disp_Fastbutton();
 				Colour.Fword=White;//
 				Colour.black=LCD_COLOR_TEST_BUTON;
-				
 				if(Jk516save.Sys_Setvalue.lanage)
-                {
-                    pt=Test_Modevalue_E1;
-                }
-                else
-                {
-                    pt=Test_Modevalue1;
-                
-                }
-				for(i=0;i<4;i++)
 				{
-					WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
+					pt=Test_Modevalue_E1;
 				}
+				else
+				{
+					pt=Test_Modevalue1;
 				
-				WriteString_16(BUTTOM_X_VALUE+4*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[6],  0);
-		break;
-		case 2:
-			Disp_Fastbutton();
+				}
+				if(buttonpage1 == 1)
+				{
+					
+					for(i=0;i<4;i++)
+					{
+						WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
+					}
+					
+					WriteString_16(BUTTOM_X_VALUE+4*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[7],  0);
+				}else if(buttonpage1 == 2){
+					WriteString_16(BUTTOM_X_VALUE, BUTTOM_Y_VALUE, pt[6],  0);
+					WriteString_16(BUTTOM_X_VALUE+4*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[7],  0);
+					WriteString_16(10+98+18, 271-40, "电池",  0);
+					WriteString_16(10+98+18, 271-20, "测试",  0);
+					WriteString_16(10+98+94+18, 271-40, "动态",  0);
+					WriteString_16(10+98+94+18, 271-20, "测试",  0);
+					WriteString_16(10+98+94+94+18, 271-40, "列表",  0);
+					WriteString_16(10+98+94+94+18, 271-20, "测试",  0);
+					
+				}
+//		break;
+//		case 2:
+//			Disp_Fastbutton();
 
 
-		default:
-			
-		break;	
-	}
+//		default:
+//			
+//		break;	
+//	}
 }
 
 
@@ -2233,7 +2285,7 @@ void Disp_Bat_value(u8 num)
 		}else if(num == 0){
 			Disp_Hint(3);
 		}else{
-			Disp_Hint(1);
+			Disp_Hint(8);
 		}
 	}else if(LoadSave.loadmode == 2){
 		Black_Select=(num==1)?1:0;//放电模式
@@ -2305,7 +2357,7 @@ void Disp_Bat_value(u8 num)
 		}else if(num == 0){
 			Disp_Hint(3);
 		}else{
-			Disp_Hint(1);
+			Disp_Hint(8);
 		}
 	}
 	switch(num)
@@ -3319,7 +3371,7 @@ void Disp_Limit_Item(void)
 		
 	}	
 	//Disp_Button_TestSet(0);
-    Disp_Button_value1(2);
+    Disp_Button_value1(3);
 
 }
 
@@ -3368,7 +3420,7 @@ void Disp_Test_Set_Item(void)
 		
 	}	
 	//Disp_Button_TestSet(0);
-    Disp_Button_value1(0);
+    Disp_Button_value1(2);
 
 }
 
@@ -4016,7 +4068,7 @@ void DispLimit_value(u8 keynum)
 	switch(keynum)
 	{
 		case 0:
-				Disp_Button_value1(2);
+				Disp_Button_value1(3);
 			break;
 		case 1:
 		case 2:

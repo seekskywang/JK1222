@@ -384,6 +384,7 @@ extern u8 range_over;
 extern u8 Int_Pe3flag;
 extern const u8 fit_allnum[4];
 extern u32 last_R_disp,last_V_disp;
+extern u8 buttonpage1;
 //==========================================================
 //ϵͳ״̬
 enum SysStatusEnum

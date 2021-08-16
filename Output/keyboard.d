@@ -2,7 +2,7 @@
 ..\..\output\keyboard.o: ..\..\User\pbdata.h
 ..\..\output\keyboard.o: ..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h
 ..\..\output\keyboard.o: ..\..\Libraries\CMSIS\Include\core_cm4.h
-..\..\output\keyboard.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+..\..\output\keyboard.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 ..\..\output\keyboard.o: ..\..\Libraries\CMSIS\Include\core_cmInstr.h
 ..\..\output\keyboard.o: ..\..\Libraries\CMSIS\Include\core_cmFunc.h
 ..\..\output\keyboard.o: ..\..\Libraries\CMSIS\Include\core_cmSimd.h
@@ -40,7 +40,7 @@
 ..\..\output\keyboard.o: ..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_sai.h
 ..\..\output\keyboard.o: ..\..\HARDWARE\./led/bsp_led.h
 ..\..\output\keyboard.o: ..\..\HARDWARE\./sdram/bsp_sdram.h
-..\..\output\keyboard.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+..\..\output\keyboard.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 ..\..\output\keyboard.o: ..\..\HARDWARE\./lcd/bsp_lcd.h
 ..\..\output\keyboard.o: ..\..\HARDWARE\./font/fonts.h
 ..\..\output\keyboard.o: ..\..\User\./flash/bsp_spi_flash.h
@@ -49,7 +49,7 @@
 ..\..\output\keyboard.o: ..\..\HARDWARE\./tim_pwm/bsp_general_tim.h
 ..\..\output\keyboard.o: ..\..\HARDWARE\./systick/bsp_SysTick.h
 ..\..\output\keyboard.o: ..\..\HARDWARE\./adc/bsp_adc.h
-..\..\output\keyboard.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+..\..\output\keyboard.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 ..\..\output\keyboard.o: ..\..\HARDWARE\gpio.h
 ..\..\output\keyboard.o: ..\..\HARDWARE\4094.h
 ..\..\output\keyboard.o: ..\..\HARDWARE\ad7706.h
@@ -63,4 +63,4 @@
 ..\..\output\keyboard.o: ..\..\User\flash.h
 ..\..\output\keyboard.o: ..\..\User\spi.h
 ..\..\output\keyboard.o: ..\..\User\bsp_exti.h
-..\..\output\keyboard.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
+..\..\output\keyboard.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h

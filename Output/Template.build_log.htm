@@ -5,11 +5,11 @@
 <h2>Tool Versions:</h2>
 IDE-Version: μVision V5.25.3.0
 Copyright (C) 2018 ARM Ltd and ARM Germany GmbH. All rights reserved.
-License Information: 1 Microsoft, Microsoft, LIC=S5ITG-V5G2Q-BXVUY-I5T0J-4HUEL-MI8C5
+License Information: 1 Microsoft, Microsoft, LIC=03C6R-KIDXE-2Z1W4-FI5SL-E8BHU-R7F4D
  
 Tool Versions:
-Toolchain:       MDK-ARM Professional  Version: 5.25.2.0
-Toolchain Path:  D:\Keil_v5\ARM\ARMCC\Bin
+Toolchain:       MDK-ARM Plus  Version: 5.25.2.0
+Toolchain Path:  E:\Keil_v5\ARM\ARMCC\Bin
 C Compiler:      Armcc.exe V5.06 update 6 (build 750)
 Assembler:       Armasm.exe V5.06 update 6 (build 750)
 Linker/Locator:  ArmLink.exe V5.06 update 6 (build 750)
@@ -22,34 +22,80 @@ Dialog DLL:      TCM.DLL V1.35.1.0
  
 <h2>Project:</h2>
 F:\JK1222\Project\RVMDK（uv5）\BH-F429.uvprojx
-Project File Date:  04/17/2021
+Project File Date:  08/14/2021
 
 <h2>Output:</h2>
-*** Using Compiler 'V5.06 update 6 (build 750)', folder: 'D:\Keil_v5\ARM\ARMCC\Bin'
+*** Using Compiler 'V5.06 update 6 (build 750)', folder: 'E:\Keil_v5\ARM\ARMCC\Bin'
 Build target '工程模板'
-compiling bsp_debug_usart.c...
-..\..\HARDWARE\usart\bsp_debug_usart.c(1236): warning:  #1-D: last line of file ends without a newline
-  }
-..\..\HARDWARE\usart\bsp_debug_usart.c: 1 warning, 0 errors
+compiling test.c...
+..\..\User\test.c(1611): warning:  #177-D: variable "oldskip"  was declared but never referenced
+        static u32 oldskip;
+..\..\User\test.c(1612): warning:  #177-D: variable "sendbuf"  was declared but never referenced
+        char sendbuf[24];
+..\..\User\test.c(1615): warning:  #177-D: variable "fnum"  was declared but never referenced
+      UINT fnum;
+..\..\User\test.c(1617): warning:  #177-D: variable "color"  was declared but never referenced
+      u32 color;
+..\..\User\test.c(1625): warning:  #177-D: variable "initset"  was declared but never referenced
+        u8 initset = 15;//每次进入界面后重新设置初始参数
+..\..\User\test.c(2087): warning:  #177-D: variable "oldskip"  was declared but never referenced
+        static u32 oldskip;
+..\..\User\test.c(2088): warning:  #177-D: variable "sendbuf"  was declared but never referenced
+        char sendbuf[24];
+..\..\User\test.c(2091): warning:  #177-D: variable "fnum"  was declared but never referenced
+      UINT fnum;
+..\..\User\test.c(2093): warning:  #177-D: variable "color"  was declared but never referenced
+      u32 color;
+..\..\User\test.c(2344): warning:  #177-D: variable "oldskip"  was declared but never referenced
+        static u32 oldskip;
+..\..\User\test.c(2345): warning:  #177-D: variable "sendbuf"  was declared but never referenced
+        char sendbuf[24];
+..\..\User\test.c(2348): warning:  #177-D: variable "fnum"  was declared but never referenced
+      UINT fnum;
+..\..\User\test.c(2350): warning:  #177-D: variable "color"  was declared but never referenced
+      u32 color;
+..\..\User\test.c(2908): warning:  #177-D: variable "oldskip"  was declared but never referenced
+        static u32 oldskip;
+..\..\User\test.c(2909): warning:  #177-D: variable "sendbuf"  was declared but never referenced
+        char sendbuf[24];
+..\..\User\test.c(2912): warning:  #177-D: variable "fnum"  was declared but never referenced
+      UINT fnum;
+..\..\User\test.c(2914): warning:  #177-D: variable "color"  was declared but never referenced
+      u32 color;
+..\..\User\test.c(3318): warning:  #177-D: variable "oldskip"  was declared but never referenced
+        static u32 oldskip;
+..\..\User\test.c(3319): warning:  #177-D: variable "sendbuf"  was declared but never referenced
+        char sendbuf[24];
+..\..\User\test.c(3322): warning:  #177-D: variable "fnum"  was declared but never referenced
+      UINT fnum;
+..\..\User\test.c(3324): warning:  #177-D: variable "color"  was declared but never referenced
+      u32 color;
+..\..\User\test.c(3331): warning:  #177-D: variable "initset"  was declared but never referenced
+        u8 initset = 10;//每次进入界面后重新设置初始参数
+..\..\User\test.c(4184): warning:  #177-D: variable "a"  was declared but never referenced
+      float a,b;
+..\..\User\test.c(4184): warning:  #177-D: variable "b"  was declared but never referenced
+      float a,b;
+..\..\User\test.c: 24 warnings, 0 errors
 linking...
-Program Size: Code=72028 RO-data=453316 RW-data=420 ZI-data=26492  
+Program Size: Code=72380 RO-data=453388 RW-data=420 ZI-data=26492  
 FromELF: creating hex file...
-After Build - User command #1: D:\Keil_v5\ARM\ARMCC\bin\fromelf.exe --bin -o ..\..\Output\update.bin ..\..\Output\Template.axf
-"..\..\Output\Template.axf" - 0 Error(s), 1 Warning(s).
+After Build - User command #1: E:\Keil_v5\ARM\ARMCC\bin\fromelf.exe --bin -o ..\..\Output\update.bin ..\..\Output\Template.axf
+"..\..\Output\Template.axf" - 0 Error(s), 24 Warning(s).
 
 <h2>Software Packages used:</h2>
 
 Package Vendor: Keil
-                http://www.keil.com/pack/Keil.STM32F4xx_DFP.2.12.0.pack
-                Keil.STM32F4xx_DFP.2.12.0
+                http://www.keil.com/pack/Keil.STM32F4xx_DFP.2.13.0.pack
+                Keil.STM32F4xx_DFP.2.13.0
                 STMicroelectronics STM32F4 Series Device Support, Drivers and Examples
 
 <h2>Collection of Component include folders:</h2>
   .\RTE\_________
-  D:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.12.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include
+  D:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include
 
 <h2>Collection of Component Files used:</h2>
-Build Time Elapsed:  00:00:05
+Build Time Elapsed:  00:00:06
 </pre>
 </body>
 </html>

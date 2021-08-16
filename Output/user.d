@@ -1,11 +1,11 @@
 ..\..\output\user.o: ..\..\User\user.c
-..\..\output\user.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
-..\..\output\user.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
-..\..\output\user.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
+..\..\output\user.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+..\..\output\user.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+..\..\output\user.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
 ..\..\output\user.o: ..\..\User\pbdata.h
 ..\..\output\user.o: ..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h
 ..\..\output\user.o: ..\..\Libraries\CMSIS\Include\core_cm4.h
-..\..\output\user.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+..\..\output\user.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 ..\..\output\user.o: ..\..\Libraries\CMSIS\Include\core_cmInstr.h
 ..\..\output\user.o: ..\..\Libraries\CMSIS\Include\core_cmFunc.h
 ..\..\output\user.o: ..\..\Libraries\CMSIS\Include\core_cmSimd.h

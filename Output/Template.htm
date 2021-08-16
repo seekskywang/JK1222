@@ -3,7 +3,7 @@
 <title>Static Call Graph - [..\..\Output\Template.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image ..\..\Output\Template.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Thu Apr 29 13:36:12 2021
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Mon Aug 16 15:47:55 2021
 <BR><P>
 <H3>Maximum Stack Usage =        440 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -651,7 +651,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Battery_Process
 </UL>
 
-<P><STRONG><a name="[8f]"></a>Battery_Process</STRONG> (Thumb, 1824 bytes, Stack size 40 bytes, test.o(i.Battery_Process))
+<P><STRONG><a name="[8f]"></a>Battery_Process</STRONG> (Thumb, 1820 bytes, Stack size 40 bytes, test.o(i.Battery_Process))
 <BR><BR>[Stack]<UL><LI>Max Depth = 392<LI>Call Chain = Battery_Process &rArr; Encoder_Process &rArr; __hardfp_pow &rArr; __kernel_poly &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
 </UL>
 <BR>[Calls]<UL><LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SwitchLedOff
@@ -826,16 +826,14 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Disp_Sys_value
 </UL>
 
-<P><STRONG><a name="[b4]"></a>Disp_Button_value1</STRONG> (Thumb, 556 bytes, Stack size 8 bytes, user.o(i.Disp_Button_value1))
+<P><STRONG><a name="[b4]"></a>Disp_Button_value1</STRONG> (Thumb, 720 bytes, Stack size 8 bytes, user.o(i.Disp_Button_value1))
 <BR><BR>[Stack]<UL><LI>Max Depth = 120<LI>Call Chain = Disp_Button_value1 &rArr; Disp_Fastbutton &rArr; LCD_DrawFullRect &rArr; DMA2D_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WriteString_16
 <LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Disp_Fastbutton
 </UL>
 <BR>[Called By]<UL><LI><a href="#[12e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;input_password
-<LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Disp_Test_value
 <LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Disp_Test_Set_Item
-<LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Disp_Test_Item
 <LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Disp_Sys_Item
 <LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Disp_List_value
 <LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Disp_List_Item
@@ -925,7 +923,7 @@ Global Symbols
 <LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispLimit_value
 </UL>
 
-<P><STRONG><a name="[b2]"></a>Disp_Hint</STRONG> (Thumb, 224 bytes, Stack size 8 bytes, user.o(i.Disp_Hint))
+<P><STRONG><a name="[b2]"></a>Disp_Hint</STRONG> (Thumb, 256 bytes, Stack size 8 bytes, user.o(i.Disp_Hint))
 <BR><BR>[Stack]<UL><LI>Max Depth = 112<LI>Call Chain = Disp_Hint &rArr; WriteString_16 &rArr; PutChar &rArr; GetASCIICode
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WriteString_16
@@ -1214,12 +1212,11 @@ Global Symbols
 <LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Disp_Limit_Item
 </UL>
 
-<P><STRONG><a name="[e1]"></a>Disp_Test_Item</STRONG> (Thumb, 266 bytes, Stack size 16 bytes, user.o(i.Disp_Test_Item))
+<P><STRONG><a name="[e1]"></a>Disp_Test_Item</STRONG> (Thumb, 260 bytes, Stack size 16 bytes, user.o(i.Disp_Test_Item))
 <BR><BR>[Stack]<UL><LI>Max Depth = 136<LI>Call Chain = Disp_Test_Item &rArr; Disp_TestScreen &rArr; Disp_TopBar_Color &rArr; LCD_DrawFullRect &rArr; DMA2D_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WriteString_16
 <LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Disp_TestScreen
-<LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Disp_Button_value1
 </UL>
 <BR>[Called By]<UL><LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Test_Process
 </UL>
@@ -1234,15 +1231,14 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[15a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Setup_Process
 </UL>
 
-<P><STRONG><a name="[e3]"></a>Disp_Test_value</STRONG> (Thumb, 640 bytes, Stack size 24 bytes, user.o(i.Disp_Test_value))
-<BR><BR>[Stack]<UL><LI>Max Depth = 144<LI>Call Chain = Disp_Test_value &rArr; Disp_Button_value1 &rArr; Disp_Fastbutton &rArr; LCD_DrawFullRect &rArr; DMA2D_Init
+<P><STRONG><a name="[e3]"></a>Disp_Test_value</STRONG> (Thumb, 732 bytes, Stack size 24 bytes, user.o(i.Disp_Test_value))
+<BR><BR>[Stack]<UL><LI>Max Depth = 136<LI>Call Chain = Disp_Test_value &rArr; Disp_Hint &rArr; WriteString_16 &rArr; PutChar &rArr; GetASCIICode
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WriteString_16
 <LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_DrawFullRect
 <LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Hex_Format
 <LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Disp_Hint
 <LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Disp_Fastbutton
-<LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Disp_Button_value1
 </UL>
 <BR>[Called By]<UL><LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Test_Process
 </UL>
@@ -1376,7 +1372,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Dynamic_Process
 </UL>
 
-<P><STRONG><a name="[e8]"></a>Dynamic_Process</STRONG> (Thumb, 1550 bytes, Stack size 88 bytes, test.o(i.Dynamic_Process))
+<P><STRONG><a name="[e8]"></a>Dynamic_Process</STRONG> (Thumb, 1588 bytes, Stack size 88 bytes, test.o(i.Dynamic_Process))
 <BR><BR>[Stack]<UL><LI>Max Depth = 440<LI>Call Chain = Dynamic_Process &rArr; Encoder_Process &rArr; __hardfp_pow &rArr; __kernel_poly &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
 </UL>
 <BR>[Calls]<UL><LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SwitchLedOff
@@ -1851,7 +1847,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[113]"></a>Limit_Process</STRONG> (Thumb, 1192 bytes, Stack size 32 bytes, test.o(i.Limit_Process))
+<P><STRONG><a name="[113]"></a>Limit_Process</STRONG> (Thumb, 1148 bytes, Stack size 32 bytes, test.o(i.Limit_Process))
 <BR><BR>[Stack]<UL><LI>Max Depth = 384<LI>Call Chain = Limit_Process &rArr; Encoder_Process &rArr; __hardfp_pow &rArr; __kernel_poly &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
 </UL>
 <BR>[Calls]<UL><LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Set_Para
@@ -1886,7 +1882,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[115]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;List_Process
 </UL>
 
-<P><STRONG><a name="[115]"></a>List_Process</STRONG> (Thumb, 2844 bytes, Stack size 40 bytes, test.o(i.List_Process))
+<P><STRONG><a name="[115]"></a>List_Process</STRONG> (Thumb, 2910 bytes, Stack size 40 bytes, test.o(i.List_Process))
 <BR><BR>[Stack]<UL><LI>Max Depth = 392 + In Cycle
 <LI>Call Chain = List_Process &rArr;  List_Process (Cycle)
 </UL>
@@ -2500,7 +2496,7 @@ Global Symbols
 <LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Battery_Process
 </UL>
 
-<P><STRONG><a name="[15a]"></a>Setup_Process</STRONG> (Thumb, 1496 bytes, Stack size 32 bytes, test.o(i.Setup_Process))
+<P><STRONG><a name="[15a]"></a>Setup_Process</STRONG> (Thumb, 1536 bytes, Stack size 32 bytes, test.o(i.Setup_Process))
 <BR><BR>[Stack]<UL><LI>Max Depth = 384<LI>Call Chain = Setup_Process &rArr; Encoder_Process &rArr; __hardfp_pow &rArr; __kernel_poly &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
 </UL>
 <BR>[Calls]<UL><LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Set_Para
@@ -2750,7 +2746,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Test_Process
 </UL>
 
-<P><STRONG><a name="[178]"></a>Test_Process</STRONG> (Thumb, 1158 bytes, Stack size 40 bytes, test.o(i.Test_Process))
+<P><STRONG><a name="[178]"></a>Test_Process</STRONG> (Thumb, 1088 bytes, Stack size 40 bytes, test.o(i.Test_Process))
 <BR><BR>[Stack]<UL><LI>Max Depth = 392<LI>Call Chain = Test_Process &rArr; Encoder_Process &rArr; __hardfp_pow &rArr; __kernel_poly &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
 </UL>
 <BR>[Calls]<UL><LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SwitchLedOff

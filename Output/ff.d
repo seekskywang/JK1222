@@ -4,5 +4,5 @@
 ..\..\output\ff.o: ..\..\FATFS\ffconf.h
 ..\..\output\ff.o: ..\..\FATFS\diskio.h
 ..\..\output\ff.o: ..\..\FATFS\attributes.h
-..\..\output\ff.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
-..\..\output\ff.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
+..\..\output\ff.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+..\..\output\ff.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
