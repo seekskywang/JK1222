@@ -97,11 +97,14 @@ const uint8_t User_Check_Item[][12+1]=
 	
 	{"电流低档1"},
 	{"电流低档2"},
+	{"电流低档3"},
+	{"电流低档4"},
 	
     {"电流高档1"},
 	{"电流高档2"},
     {"电流高档3"},
-
+	{"电流高档4"},
+	{"电流高档5"},
 
 };
 const uint8_t Test_Setitem[][9+1]=
@@ -1940,7 +1943,7 @@ void Disp_Test_value(u8 num)
 	{
 		Colour.black=LCD_COLOR_TEST_BACK;
 	}
-	LCD_DrawFullRect( LIST2+88-2, FIRSTLINE-2,SELECT_2END-LIST2-86+4, SPACE1-2  ) ;//SPACE1
+	LCD_DrawFullRect( LIST2+88-2, FIRSTLINE-2,SELECT_2END-LIST2-86+4+10, SPACE1-2  ) ;//SPACE1
 	if(Black_Select && coder_flag == 1)
 	{
 		Colour.black=LCD_COLOR_YELLOW;
@@ -1962,10 +1965,10 @@ void Disp_Test_value(u8 num)
 	}else if(LoadSave.mode == 2){//CR
 		Hex_Format(LoadSave.risistence,4,7,0);
 	}else if(LoadSave.mode == 3){//CP
-		Hex_Format(LoadSave.power,4,7,0);
+		Hex_Format(LoadSave.power,4,8,0);
 	}
 	WriteString_16(LIST2+88, FIRSTLINE, DispBuf,  0);//增加算法  把顺序改过来
-	WriteString_16(LIST2+90+80, FIRSTLINE, MODE_UINT[LoadSave.mode],  0);
+	WriteString_16(LIST2+90+80+10, FIRSTLINE, MODE_UINT[LoadSave.mode],  0);
 	if(DispBuf[0] == 0x20 && DispBuf[1] == 0x20)
 	{
 		spinbitmax = 5;
@@ -3647,10 +3650,10 @@ void DispSet_value(u8 keynum)
 		Colour.black=LCD_COLOR_TEST_BACK;
 	}
 	
-	Hex_Format(LoadSave.maxp , 4 , 7 , 0);
+	Hex_Format(LoadSave.maxp , 4 , 8 , 0);
 	LCD_DrawFullRect(LIST2+88, FIRSTLINE+SPACE1*3-2, SELECT_1END-(LIST1+70), SPACE1-4);
 	WriteString_16(LIST2+88, FIRSTLINE+SPACE1*3, DispBuf,  0);
-	WriteString_16(LIST2+90+80, FIRSTLINE+SPACE1*3,DISP_UINT[4],  0);
+	WriteString_16(LIST2+90+80+10, FIRSTLINE+SPACE1*3,DISP_UINT[4],  0);
 		
 	
 //上升速率
@@ -3890,10 +3893,10 @@ void DispLimit_value(u8 keynum)
 	{
 		Colour.black=LCD_COLOR_TEST_BACK;
 	}
-	Hex_Format(LoadSave.phigh ,4 , 7 , 0);
+	Hex_Format(LoadSave.phigh ,4 , 8 , 0);
 	LCD_DrawFullRect(LIST1+88, FIRSTLINE+SPACE1*4-2, SELECT_1END-(LIST1+70), SPACE1-4);
 	WriteString_16(LIST1+88, FIRSTLINE+SPACE1*4, DispBuf,  0);
-	WriteString_16(LIST1+90+80, FIRSTLINE+SPACE1*4,DISP_UINT[4],  0);
+	WriteString_16(LIST1+90+80+10, FIRSTLINE+SPACE1*4,DISP_UINT[4],  0);
 	
 	
 	
@@ -3911,10 +3914,10 @@ void DispLimit_value(u8 keynum)
 		Colour.black=LCD_COLOR_TEST_BACK;
 	}
 	
-	Hex_Format(LoadSave.plow ,4 , 7 , 0);
+	Hex_Format(LoadSave.plow ,4 , 8 , 0);
 	LCD_DrawFullRect(LIST1+88, FIRSTLINE+SPACE1*5-2, SELECT_1END-(LIST1+70), SPACE1-4);
 	WriteString_16(LIST1+88, FIRSTLINE+SPACE1*5, DispBuf,  0);
-	WriteString_16(LIST1+90+80, FIRSTLINE+SPACE1*5,DISP_UINT[4],  0);
+	WriteString_16(LIST1+90+80+10, FIRSTLINE+SPACE1*5,DISP_UINT[4],  0);
 
 //极限显示
 	Black_Select=(keynum==7)?1:0;
@@ -6319,10 +6322,16 @@ void Disp_Debug_value(vu8 list)
 			Colour.black=LCD_COLOR_TEST_BACK;
 		}
 	
-	
-		LCD_DrawFullRect( LIST1+160, FIRSTLINE+(SPACE1-2)*(i),90 , SPACE1-2 ) ;//SPACE1
-		Hex_Format(DispValue.CalValue[i], 4 , 7 , 0);//sprintf((char *)DispBuf,"%4",Save_Res;
-		WriteString_16(LIST1+160, FIRSTLINE+(SPACE1-2)*(i), DispBuf,  1);
+		if(i < 10)
+		{
+			LCD_DrawFullRect( LIST1+160, FIRSTLINE+(SPACE1-2)*(i),90 , SPACE1-2 ) ;//SPACE1
+			Hex_Format(DispValue.CalValue[i], 4 , 7 , 0);//sprintf((char *)DispBuf,"%4",Save_Res;
+			WriteString_16(LIST1+160, FIRSTLINE+(SPACE1-2)*(i), DispBuf,  1);
+		}else{
+			LCD_DrawFullRect( LIST2+100, FIRSTLINE+(SPACE1-2)*(i-10),90 , SPACE1-2 ) ;//SPACE1
+			Hex_Format(DispValue.CalValue[i], 4 , 7 , 0);//sprintf((char *)DispBuf,"%4",Save_Res;
+			WriteString_16(LIST2+100, FIRSTLINE+(SPACE1-2)*(i-10), DispBuf,  1);
+		}
 		
 //		LCD_DrawRect( LIST1+160+160, FIRSTLINE+SPACE1*(i+1)-2,SELECT_1END+40+160 , FIRSTLINE+SPACE1*(i+2)-4 , Colour.black ) ;//SPACE1
 		//Hex_Format(Save_Res.Debug_Value[i].ad_value, Debug_Dot[i] , 4 , 0);//sprintf((char *)DispBuf,"%4",Save_Res;
@@ -6366,10 +6375,15 @@ void Disp_UserCheck_Item(void)
 
 //	}
 	
-	for(i=0;i<(sizeof(User_Check_Item)/(sizeof(User_Check_Item[0])));i++)
+	for(i=0;i<10;i++)
 	{
 		WriteString_16(LIST1, FIRSTLINE+(SPACE1-2)*(i), User_Check_Item[i],  0);
 
+	}
+	
+	for(i=0;i<4;i++)
+	{
+		WriteString_16(LIST2, FIRSTLINE+(SPACE1-2)*(i), User_Check_Item[i+10],  0);
 	}
 //	else
 //	{

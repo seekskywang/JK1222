@@ -22,7 +22,11 @@ vu8 sendbuff[200];
 u8 setflag;
 vu16 Hardware_CRC(vu8 *p_buffer,vu8 count);
 //u32 dacvalue[10] = {1000,7000,1000,2000,3000,20000,50000,10000,20000,30000};
-u32 dacvalue[10] = {7000,20000,1000,10000,15000,20000,50000,10000,20000,30000};
+u32 dacvalue[14] = {
+1000,12000,//电压低档位
+10000,20000,40000,//电压高档位
+5000,10000,30000,50000,//电流低档位
+10000,20000,30000,40000,50000};//电流高档位
 u32 vsum,isum,rsum,psum;
 static void NVIC_Configuration(void)
 {
@@ -169,7 +173,7 @@ void CalHandle(u8 step)
 	sendbuff[0] = 0x01;
 	sendbuff[2] = step;
 	sendbuff[1] = 0xA5;
-	if(step == 1 || step == 2 || step == 6 || step == 7)
+	if(step == 1 || step == 2 || step == 6 || step == 7 || step == 8|| step == 9)
 	{
 		sendbuff[3] = DispValue.CalValue[step-1]>>24;
 		sendbuff[4] = DispValue.CalValue[step-1]>>16;
@@ -191,7 +195,7 @@ void Set_Dac(u8 step)
 {
 	memset((char *)sendbuff,0,sizeof(sendbuff));
 	sendbuff[0] = 0x01;
-	sendbuff[2] = 0x0B;
+	sendbuff[2] = 0x0F;
 	sendbuff[1] = 0xA5;
 	sendbuff[3] = dacvalue[step-1]>>24;
 	sendbuff[4] = dacvalue[step-1]>>16;

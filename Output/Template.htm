@@ -3,7 +3,7 @@
 <title>Static Call Graph - [..\..\Output\Template.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image ..\..\Output\Template.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Thu Oct 21 14:06:18 2021
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Fri Oct 22 16:18:14 2021
 <BR><P>
 <H3>Maximum Stack Usage =        440 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -699,7 +699,7 @@ Global Symbols
 <P><STRONG><a name="[8]"></a>BusFault_Handler</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, stm32f4xx_it.o(i.BusFault_Handler))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f429_439xx.o(RESET)
 </UL>
-<P><STRONG><a name="[a4]"></a>CalHandle</STRONG> (Thumb, 212 bytes, Stack size 8 bytes, bsp_debug_usart.o(i.CalHandle))
+<P><STRONG><a name="[a4]"></a>CalHandle</STRONG> (Thumb, 220 bytes, Stack size 8 bytes, bsp_debug_usart.o(i.CalHandle))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = CalHandle &rArr; Usart1_Send &rArr; Usart_SendByte
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Usart1_Send
@@ -849,7 +849,7 @@ Global Symbols
 <LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DispLimit_value
 </UL>
 
-<P><STRONG><a name="[ba]"></a>Disp_Debug_value</STRONG> (Thumb, 194 bytes, Stack size 16 bytes, user.o(i.Disp_Debug_value))
+<P><STRONG><a name="[ba]"></a>Disp_Debug_value</STRONG> (Thumb, 272 bytes, Stack size 16 bytes, user.o(i.Disp_Debug_value))
 <BR><BR>[Stack]<UL><LI>Max Depth = 128<LI>Call Chain = Disp_Debug_value &rArr; Disp_Fastbutton &rArr; LCD_DrawFullRect &rArr; DMA2D_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WriteString_16
@@ -1256,7 +1256,7 @@ Global Symbols
 <LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Disp_BatScreen
 </UL>
 
-<P><STRONG><a name="[e4]"></a>Disp_UserCheck_Item</STRONG> (Thumb, 86 bytes, Stack size 8 bytes, user.o(i.Disp_UserCheck_Item))
+<P><STRONG><a name="[e4]"></a>Disp_UserCheck_Item</STRONG> (Thumb, 130 bytes, Stack size 8 bytes, user.o(i.Disp_UserCheck_Item))
 <BR><BR>[Stack]<UL><LI>Max Depth = 128<LI>Call Chain = Disp_UserCheck_Item &rArr; Disp_Usercheck_Screen &rArr; Disp_TopBar_Color &rArr; LCD_DrawFullRect &rArr; DMA2D_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WriteString_16

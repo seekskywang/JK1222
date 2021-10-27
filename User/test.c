@@ -4260,7 +4260,7 @@ void Use_DebugProcess(void)
 					Mode_SW();
 				break;
 				case Key_RIGHT:
-					if(list>9){
+					if(list>13){
 						list=0;
 					}else{
 						list ++;

@@ -294,7 +294,7 @@ void Para_Set_Comp(void);
 #define RANGE_LIMIT_VLOW (11000*45)
 
 
-#define DEBUG_RANGE 10
+#define DEBUG_RANGE 14
 //==========================================================
 //标准电压DA   50V   500V
 //==========================================================
@@ -316,7 +316,7 @@ void Para_Set_Comp(void);
 
 #define		MAX_SET_CURRENT       600000    //60.0000A  最大设置电流 (低档 2.00000A  高档 20.0000)
 #define		MAX_SET_VOLT          1200000    //120.000V  最大设置电压 (低档 15.0000V  高档 150.000)
-#define		MAX_SET_POW           6000000    //120.000W  最大功率
+#define		MAX_SET_POW           12000000    //120.000W  最大功率
 #define		MAX_SET_RES           50000.0   //50000.0R  最大电阻
 
 
@@ -803,7 +803,7 @@ typedef struct
 	u32 Current;
 	u32 Rdata;
 	u32 Power;
-	u32 CalValue[10];
+	u32 CalValue[14];
 	float Capraw;
 	u32 Capacity;
 	u8 liststep;
@@ -964,7 +964,7 @@ extern u8 spinbit;
 extern u8 spinbitmax;
 extern u16 spintest,spinnum;
 extern u8 spinflag;
-extern u32 dacvalue[10];
+extern u32 dacvalue[14];
 extern u8 setflag;
 extern u8 mainswitch;
 extern u8 jumpflag;
