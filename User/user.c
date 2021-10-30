@@ -561,7 +561,7 @@ const uint8_t User_Rangeset[][11]=
 };
 const uint8_t Sys_Setitem[][10+1]=
 {
-	{"串口开关"},
+	{"本机地址"},
 	{"波特率  "},
 	{"U盘开关"},
 	{"I/O口   "},
@@ -574,7 +574,7 @@ const uint8_t Sys_Setitem[][10+1]=
 };
 const uint8_t Sys_Setitem_E[][10+1]=
 {
-	{"SERIAL"},
+	{"ADDR"},
 	{"BAUD "},
 	{"U_DISK"},
 	{"I/O_PORT"},
@@ -4216,18 +4216,19 @@ void Disp_Sys_value(u8 keynum)
 	{
 		Colour.black=LCD_COLOR_TEST_BACK;
 	}
-	if(Jk516save.Sys_Setvalue.lanage)
-    {
-        pt=Test_Compvalue_E;
-    
-    }
-    else
-    {
-        pt=Test_Compvalue;
-    
-    }	
-	LCD_DrawFullRect( LIST1+90, FIRSTLINE,SELECT_1END-(LIST1+90) , SPACE1-4 ) ;//SPACE1
-	WriteString_16(LIST1+90, FIRSTLINE+2, pt[1],  0);//
+//	if(Jk516save.Sys_Setvalue.lanage)
+//    {
+//        pt=Test_Compvalue_E;
+//    
+//    }
+//    else
+//    {
+//        pt=Test_Compvalue;
+//    
+//    }	
+	LCD_DrawFullRect( LIST1+90, FIRSTLINE,SELECT_1END-(LIST1+90) , SPACE1-4 ) ;//SPACE1+
+	Hex_Format(LoadSave.Addr,0,3,0);
+	WriteString_16(LIST1+90, FIRSTLINE+2, DispBuf,  0);//
 	
 //波特率
 	Black_Select=(keynum==2)?1:0;
@@ -4441,22 +4442,22 @@ void Disp_Sys_value(u8 keynum)
 		case 0:
 				Disp_Button_SysSet();
 			break;
-		case 1:
-            if(Jk516save.Sys_Setvalue.lanage)
-            {
-                pt=Test_Compvalue_E;
-            
-            }
-            else
-            {
-                pt=Test_Compvalue;
-            
-            }
-            for(i=0;i<2;i++)
-            WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
+//		case 1:
+////            if(Jk516save.Sys_Setvalue.lanage)
+////            {
+////                pt=Test_Compvalue_E;
+////            
+////            }
+////            else
+////            {
+////                pt=Test_Compvalue;
+////            
+////            }
+////            for(i=0;i<2;i++)
+////            WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
 
 
-		break;
+//		break;
 		case 2:
 			for(i=0;i<5;i++)
 			{
@@ -4598,6 +4599,7 @@ void Use_SysSetProcess(void)
 {	
 	//vu32 keynum=0;
 	vu8 key,i;
+	Disp_Coordinates_Typedef  Coordinates;
 //    uint8_t Disp_buff[12];
     char key_count=0;
 	vu8 Disp_flag=1;
@@ -4918,6 +4920,17 @@ void Use_SysSetProcess(void)
 				case Key_NUM9:
 				//break;
 				case Key_NUM0:
+					switch(keynum)
+					{
+						case 1:
+							Coordinates.xpos=LIST1+88+2;
+							Coordinates.ypos=FIRSTLINE;
+							Coordinates.lenth=76;
+							LoadSave.Addr=Disp_Set_Addr(&Coordinates);
+							Set_Para();
+							Store_set_flash();
+						break;
+					}
 				break;
 				case Key_REST:
 				break;
@@ -5659,6 +5672,31 @@ vu32 Disp_Set_CNum(Disp_Coordinates_Typedef *Coordinates)
 
 }
 
+
+//设置地址
+vu32 Disp_Set_Addr(Disp_Coordinates_Typedef *Coordinates)
+{
+	Sort_TypeDef Sort_num,Sort_num1;
+//	Disp_button_CNum_time();
+	Sort_num=Disp_NumKeyboard_Set(Coordinates,1);
+	Sort_num.Num/=10000;
+	if(Sort_num.Num > 255)
+	{
+		Sort_num.Num = 255;
+	}
+//	Sort_num1=Time_Set_Cov(&Sort_num);
+	if(Sort_num1.Updata_flag==0)
+	{
+		Sort_num1.Dot=0;
+		Sort_num1.Num=0;
+		Sort_num1.Unit=0;
+	
+	}
+		
+	return Sort_num.Num;
+
+}
+
 //设置电压
 vu32 Disp_Set_VNum(Disp_Coordinates_Typedef *Coordinates)
 {
@@ -5933,9 +5971,9 @@ Sort_TypeDef Input_Set_Cov(Sort_TypeDef *Input_Ref)//
 	value=Input_Ref->Num/(pow(10,7-Input_Ref->Dot));
 	value*=(float)1000000;
 	
-	if(value>12000000)
+	if(value>6000000)
 	{
-		value=12000000;
+		value=6000000;
 	}
 	if(value>=(float)1e7)
 	{

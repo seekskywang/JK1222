@@ -400,7 +400,7 @@ void Set_Para(void)
 	sendbuff[23] = 0x00;
 	sendbuff[24] = 0x00;
 	sendbuff[25] = 0x00;
-	sendbuff[26] = 0x01;//µÿ÷∑
+	sendbuff[26] = LoadSave.Addr;//µÿ÷∑
 	
 	sendbuff[27] = 0x00;
 	sendbuff[28] = 0x00;

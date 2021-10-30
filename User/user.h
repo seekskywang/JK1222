@@ -230,6 +230,7 @@ vu32 Disp_List_Delay(Disp_Coordinates_Typedef *Coordinates);
 vu32 Disp_Set_CNum(Disp_Coordinates_Typedef *Coordinates);
 vu32 Disp_Set_VNum(Disp_Coordinates_Typedef *Coordinates);
 vu32 Disp_Set_RNum(Disp_Coordinates_Typedef *Coordinates);
+vu32 Disp_Set_Addr(Disp_Coordinates_Typedef *Coordinates);
 
 void DoubHex_Format(u32 dat , u8 Dot , u8 len , u8 dispzero);
 Sort_TypeDef Disp_Set_CompNum(Disp_Coordinates_Typedef *Coordinates);
