@@ -350,6 +350,24 @@ void Sence_SW(void)
 	setflag = 1;
 }
 
+//设置波特率
+void Set_Baudrate(void)
+{
+	memset((char *)sendbuff,0,sizeof(sendbuff));
+	sendbuff[0] = 0x01;
+	sendbuff[1] = 0x06;
+	sendbuff[2] = 0x00;
+	sendbuff[3] = 0x11;
+	sendbuff[4] = 0x00;
+	sendbuff[5] = 0x00;
+	sendbuff[6] = 0x00;
+	sendbuff[7] = LoadSave.Baudrate;
+	sendbuff[8] = Hardware_CRC(sendbuff,8)>>8;
+	sendbuff[9] = Hardware_CRC(sendbuff,8);
+	Usart1_Send((char *)sendbuff,10);
+	setflag = 1;
+}
+
 //设置参数
 void Set_Para(void)
 {
@@ -386,8 +404,8 @@ void Set_Para(void)
 	
 	sendbuff[27] = 0x00;
 	sendbuff[28] = 0x00;
-	sendbuff[29] = 0x25;
-	sendbuff[30] = 0x80;//波特率
+	sendbuff[29] = 0x00;
+	sendbuff[30] = LoadSave.Baudrate;//波特率
 	
 	sendbuff[31] = 0x00;
 	sendbuff[32] = 0x00;

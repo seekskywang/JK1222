@@ -4227,7 +4227,7 @@ void Disp_Sys_value(u8 keynum)
     
     }	
 	LCD_DrawFullRect( LIST1+90, FIRSTLINE,SELECT_1END-(LIST1+90) , SPACE1-4 ) ;//SPACE1
-	WriteString_16(LIST1+90, FIRSTLINE+2, pt[Jk516save.Sys_Setvalue.uart],  0);//
+	WriteString_16(LIST1+90, FIRSTLINE+2, pt[1],  0);//
 	
 //波特率
 	Black_Select=(keynum==2)?1:0;
@@ -4242,7 +4242,7 @@ void Disp_Sys_value(u8 keynum)
 	}
 		
 	LCD_DrawFullRect( LIST1+90, FIRSTLINE+SPACE1,SELECT_1END-(LIST1+90) , SPACE1-4  ) ;//SPACE1
-	WriteString_16(LIST1+90, FIRSTLINE+SPACE1+2, Sys_Buard_Value[Jk516save.Sys_Setvalue.buard],  0);
+	WriteString_16(LIST1+90, FIRSTLINE+SPACE1+2, Sys_Buard_Value[LoadSave.Baudrate],  0);
 	//U盘开关
     Black_Select=(keynum==3)?1:0;
 	if(Black_Select)
@@ -4645,6 +4645,12 @@ void Use_SysSetProcess(void)
 						case 0:
 							SetSystemStatus(SYS_STATUS_TEST);//
 							break;
+						case 2:
+						{
+							LoadSave.Baudrate = 0;
+							Set_Baudrate();
+							Store_set_flash();
+						}break;
 						case 6:
 							if(RTC_DateStructure.RTC_Year<1)
 								RTC_DateStructure.RTC_Year=RTC_YEAR_MAX;
@@ -4653,10 +4659,10 @@ void Use_SysSetProcess(void)
                                     RTC_DateStructure.RTC_Year=0;
                                 else
 								RTC_DateStructure.RTC_Year--;
-                           // RTC_SetTime (LPC_RTC, RTC_TIMETYPE_YEAR, RTC_TIME_DISP.YEAR);
+								// RTC_SetTime (LPC_RTC, RTC_TIMETYPE_YEAR, RTC_TIME_DISP.YEAR);
                             
-                            //RTC_CalibConfig(LPC_RTC, 0, RTC_CALIB_DIR_FORWARD);
-                            //RTC_CalibCounterCmd(LPC_RTC, ENABLE);
+								//RTC_CalibConfig(LPC_RTC, 0, RTC_CALIB_DIR_FORWARD);
+								//RTC_CalibCounterCmd(LPC_RTC, ENABLE);
                                 RTC_SetDate(RTC_Format_BINorBCD, &RTC_DateStructure);
                                 RTC_WriteBackupRegister(RTC_BKP_DRX, RTC_BKP_DATA);
 							break;
@@ -4721,6 +4727,12 @@ void Use_SysSetProcess(void)
 //								SetSystemStatus(SYS_STATUS_SYSSET);
 								
 							break;
+						case 2:
+						{
+							LoadSave.Baudrate = 1;
+							Set_Baudrate();
+							Store_set_flash();
+						}break;
 						case 5:
                             LCD_Clear(LCD_COLOR_TEST_BACK);
                             Disp_Sys_Item();
@@ -4786,9 +4798,14 @@ void Use_SysSetProcess(void)
 //								SetSystemStatus(SYS_STATUS_SYSSET);
 							break;
 						case 1:
-							break;
+						{
+						}break;
 						case 2:
-							break;
+						{
+							LoadSave.Baudrate = 2;
+							Set_Baudrate();
+							Store_set_flash();
+						}break;
 						case 3:
 							break;
 						case 4:
@@ -4825,9 +4842,11 @@ void Use_SysSetProcess(void)
 									
 							break;
 						case 2:
-                            
-							
-							break;
+						{
+							LoadSave.Baudrate = 3;
+							Set_Baudrate();
+							Store_set_flash();
+						}break;
 						case 3:
 							break;
 						case 4:
@@ -4856,6 +4875,12 @@ void Use_SysSetProcess(void)
 						case 0:
 //							JumpBoot(55);
 						break;
+						case 2:
+						{
+							LoadSave.Baudrate = 4;
+							Set_Baudrate();
+							Store_set_flash();
+						}break;
 						case 4:
 						case 9:
 							break;
@@ -4918,7 +4943,7 @@ void Use_SysSetProcess(void)
 		
 	
 	}
-    Store_set_flash();
+    
 }
 
 void Disp_Sys(void)

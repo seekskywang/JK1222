@@ -316,7 +316,7 @@ void Para_Set_Comp(void);
 
 #define		MAX_SET_CURRENT       600000    //60.0000A  最大设置电流 (低档 2.00000A  高档 20.0000)
 #define		MAX_SET_VOLT          1200000    //120.000V  最大设置电压 (低档 15.0000V  高档 150.000)
-#define		MAX_SET_POW           12000000    //120.000W  最大功率
+#define		MAX_SET_POW           12000000    //1200.000W  最大功率
 #define		MAX_SET_RES           50000.0   //50000.0R  最大电阻
 
 
@@ -676,6 +676,8 @@ typedef struct
 	vu8 listcomp[15];//列表负载比较类型
 	vu32 listhigh[15];//列表负载上限
 	vu32 listlow[15];//列表负载下限
+//系统设置
+	u16 Baudrate;//波特率
 }SaveData_Typedef;
 extern SaveData_Typedef LoadSave;
 typedef struct
