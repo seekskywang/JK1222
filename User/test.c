@@ -453,7 +453,7 @@ void Power_Process(void)
 //	/*默认设置不透明	，该函数参数为不透明度，范围 0-0xff ，0为全透明，0xff为不透明*/
     LCD_SetTransparency(0xff);
 	LCD_Clear(LCD_COLOR_TEST_BACK);
-    lcd_image((uint8_t *)gImage_open);
+//    lcd_image((uint8_t *)gImage_open);
     SPI_FLASH_Init();
 
 	InitGlobalValue();//初始化全局变量
