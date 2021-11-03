@@ -5971,9 +5971,9 @@ Sort_TypeDef Input_Set_Cov(Sort_TypeDef *Input_Ref)//
 	value=Input_Ref->Num/(pow(10,7-Input_Ref->Dot));
 	value*=(float)1000000;
 	
-	if(value>12000000)
+	if(value>6000000)
 	{
-		value=12000000;
+		value=6000000;
 	}
 	if(value>=(float)1e7)
 	{

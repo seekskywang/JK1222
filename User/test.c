@@ -375,6 +375,14 @@ void Para_Set_Comp(void)
 		{
 			LoadSave.delay[i] = 36000;
 		}
+		if(LoadSave.Baudrate > 4)
+		{
+			LoadSave.Baudrate = 1;
+		}
+		if(LoadSave.Addr > 255)
+		{
+			LoadSave.Addr = 1;
+		}
 	}
 }
 
