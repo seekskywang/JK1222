@@ -111,6 +111,58 @@ void READ_COMP(void)
 void Para_Set_Comp(void)
 {
 	u8 i;
+	if(LoadSave.sence > 1)
+	{
+		LoadSave.sence = 0;
+	}
+	if(LoadSave.crange > 1)
+	{
+		LoadSave.crange = 0;
+	}
+	if(LoadSave.vrange > 1)
+	{
+		LoadSave.vrange = 0;
+	}
+	if(LoadSave.limitdisp > 1)
+	{
+		LoadSave.limitdisp = 0;
+	}
+	if(LoadSave.limitbeep > 1)
+	{
+		LoadSave.limitbeep = 0;
+	}
+	if(LoadSave.vcomp > 1)
+	{
+		LoadSave.vcomp = 0;
+	}
+	if(LoadSave.ccomp > 1)
+	{
+		LoadSave.ccomp = 0;
+	}
+	if(LoadSave.pcomp > 1)
+	{
+		LoadSave.pcomp = 0;
+	}
+	if(LoadSave.language > 1)
+	{
+		LoadSave.language = 0;
+	}
+	if(LoadSave.ListNum > 15)
+	{
+		LoadSave.ListNum = 1;
+	}
+	if(LoadSave.StepMode > 1)
+	{
+		LoadSave.StepMode = 1;
+	}
+	if(LoadSave.LoopTest > 1)
+	{
+		LoadSave.LoopTest = 1;
+	}
+	if(LoadSave.ListBeep > 1)
+	{
+		LoadSave.ListBeep = 1;
+	}
 	if(LoadSave.voltage > MAX_SET_VOLT)
 	{
 		LoadSave.voltage = MAX_SET_VOLT;
@@ -139,7 +191,7 @@ void Para_Set_Comp(void)
 	LoadSave.crmode = 0;
 	if(LoadSave.autooff > 999999)
 	{
-		LoadSave.offvol = 999999;
+		LoadSave.autooff = 999999;
 	}
 	if(LoadSave.maxv > MAX_SET_VOLT)
 	{
@@ -309,9 +361,9 @@ void Para_Set_Comp(void)
 	}
 	for(i = 0;i<15;i++)
 	{
-		if(LoadSave.listmode[i] > 4)
+		if(LoadSave.listmode[i] > 3)
 		{
-			LoadSave.listmode[i] = 4;
+			LoadSave.listmode[i] = 3;
 		}
 		if(LoadSave.listmode[i] == 0)
 		{
@@ -382,6 +434,10 @@ void Para_Set_Comp(void)
 		if(LoadSave.Addr > 255)
 		{
 			LoadSave.Addr = 1;
+		}
+		if(LoadSave.listonvol > MAX_SET_VOLT)
+		{
+			LoadSave.listonvol = 0;
 		}
 	}
 }
@@ -461,7 +517,7 @@ void Power_Process(void)
 //	/*默认设置不透明	，该函数参数为不透明度，范围 0-0xff ，0为全透明，0xff为不透明*/
     LCD_SetTransparency(0xff);
 	LCD_Clear(LCD_COLOR_TEST_BACK);
-//    lcd_image((uint8_t *)gImage_open);
+    lcd_image((uint8_t *)gImage_open);
     SPI_FLASH_Init();
 
 	InitGlobalValue();//初始化全局变量

@@ -27,61 +27,37 @@ Project File Date:  11/01/2021
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'E:\Keil_v5\ARM\ARMCC\Bin'
 Build target '工程模板'
-compiling test.c...
-..\..\User\test.c(1619): warning:  #177-D: variable "oldskip"  was declared but never referenced
-        static u32 oldskip;
-..\..\User\test.c(1620): warning:  #177-D: variable "sendbuf"  was declared but never referenced
-        char sendbuf[24];
-..\..\User\test.c(1623): warning:  #177-D: variable "fnum"  was declared but never referenced
-      UINT fnum;
-..\..\User\test.c(1625): warning:  #177-D: variable "color"  was declared but never referenced
-      u32 color;
-..\..\User\test.c(1633): warning:  #177-D: variable "initset"  was declared but never referenced
-        u8 initset = 15;//每次进入界面后重新设置初始参数
-..\..\User\test.c(2095): warning:  #177-D: variable "oldskip"  was declared but never referenced
-        static u32 oldskip;
-..\..\User\test.c(2096): warning:  #177-D: variable "sendbuf"  was declared but never referenced
-        char sendbuf[24];
-..\..\User\test.c(2099): warning:  #177-D: variable "fnum"  was declared but never referenced
-      UINT fnum;
-..\..\User\test.c(2101): warning:  #177-D: variable "color"  was declared but never referenced
-      u32 color;
-..\..\User\test.c(2352): warning:  #177-D: variable "oldskip"  was declared but never referenced
-        static u32 oldskip;
-..\..\User\test.c(2353): warning:  #177-D: variable "sendbuf"  was declared but never referenced
-        char sendbuf[24];
-..\..\User\test.c(2356): warning:  #177-D: variable "fnum"  was declared but never referenced
-      UINT fnum;
-..\..\User\test.c(2358): warning:  #177-D: variable "color"  was declared but never referenced
-      u32 color;
-..\..\User\test.c(2916): warning:  #177-D: variable "oldskip"  was declared but never referenced
-        static u32 oldskip;
-..\..\User\test.c(2917): warning:  #177-D: variable "sendbuf"  was declared but never referenced
-        char sendbuf[24];
-..\..\User\test.c(2920): warning:  #177-D: variable "fnum"  was declared but never referenced
-      UINT fnum;
-..\..\User\test.c(2922): warning:  #177-D: variable "color"  was declared but never referenced
-      u32 color;
-..\..\User\test.c(3326): warning:  #177-D: variable "oldskip"  was declared but never referenced
-        static u32 oldskip;
-..\..\User\test.c(3327): warning:  #177-D: variable "sendbuf"  was declared but never referenced
-        char sendbuf[24];
-..\..\User\test.c(3330): warning:  #177-D: variable "fnum"  was declared but never referenced
-      UINT fnum;
-..\..\User\test.c(3332): warning:  #177-D: variable "color"  was declared but never referenced
-      u32 color;
-..\..\User\test.c(3339): warning:  #177-D: variable "initset"  was declared but never referenced
-        u8 initset = 10;//每次进入界面后重新设置初始参数
-..\..\User\test.c(4192): warning:  #177-D: variable "a"  was declared but never referenced
-      float a,b;
-..\..\User\test.c(4192): warning:  #177-D: variable "b"  was declared but never referenced
-      float a,b;
-..\..\User\test.c: 24 warnings, 0 errors
+compiling user.c...
+..\..\User\user.c(1818): warning:  #177-D: variable "pt"  was declared but never referenced
+        const u8 (*pt)[sizeof(List_Setitem[0])];
+..\..\User\user.c(1898): warning:  #177-D: variable "ppt"  was declared but never referenced
+      const u8 (*ppt)[11];
+..\..\User\user.c(2043): warning:  #177-D: variable "ppt"  was declared but never referenced
+      const u8 (*ppt)[11];
+..\..\User\user.c(2150): warning:  #177-D: variable "ppt"  was declared but never referenced
+      const u8 (*ppt)[11];
+..\..\User\user.c(2425): warning:  #177-D: variable "ppt"  was declared but never referenced
+      const u8 (*ppt)[11];
+..\..\User\user.c(2611): warning:  #177-D: variable "ppt"  was declared but never referenced
+        const u8 (*ppt)[11];
+..\..\User\user.c(2806): warning:  #177-D: variable "ppt"  was declared but never referenced
+        const u8 (*ppt)[11];
+..\..\User\user.c(3436): warning:  #177-D: variable "pt1"  was declared but never referenced
+        const u8 (*pt1)[8];
+..\..\User\user.c(3437): warning:  #177-D: variable "ppt"  was declared but never referenced
+      const u8 (*ppt)[11];
+..\..\User\user.c(3815): warning:  #177-D: variable "pt1"  was declared but never referenced
+        const u8 (*pt1)[8];
+..\..\User\user.c(3816): warning:  #177-D: variable "ppt"  was declared but never referenced
+      const u8 (*ppt)[11];
+..\..\User\user.c(4604): warning:  #177-D: variable "key_count"  was declared but never referenced
+      char key_count=0;
+..\..\User\user.c: 12 warnings, 0 errors
 linking...
-Program Size: Code=72724 RO-data=61756 RW-data=436 ZI-data=26636  
+Program Size: Code=72996 RO-data=453436 RW-data=436 ZI-data=26636  
 FromELF: creating hex file...
 After Build - User command #1: E:\Keil_v5\ARM\ARMCC\bin\fromelf.exe --bin -o ..\..\Output\update.bin ..\..\Output\Template.axf
-"..\..\Output\Template.axf" - 0 Error(s), 24 Warning(s).
+"..\..\Output\Template.axf" - 0 Error(s), 12 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -95,7 +71,7 @@ Package Vendor: Keil
   D:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include
 
 <h2>Collection of Component Files used:</h2>
-Build Time Elapsed:  00:00:03
+Build Time Elapsed:  00:00:06
 </pre>
 </body>
 </html>

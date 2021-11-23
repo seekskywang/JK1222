@@ -1303,21 +1303,21 @@ void Test_Disp(u8 vsw,u8 isw)
 	Colour.Fword = testcompcolor[DispValue.testcomp[0]];
 	if(vsw == 0)
 	{
-		if(DispValue.Voltage<100)
-		{
-			Hex_Format(0,4,7,0);  
-		}else{
+//		if(DispValue.Voltage<100)
+//		{
+//			Hex_Format(0,4,7,0);  
+//		}else{
 			Hex_Format(DispValue.Voltage,4,7,0);    
-		}			
+//		}			
 		Disp_EN40(80-60,80,DispBuf);
 		Disp_EN40(310-60,80,"V");
 	}else if(vsw == 1){
-		if(DispValue.Voltage<100)
-		{
-			Hex_Format(0,3,6,0);       
-		}else{
+//		if(DispValue.Voltage<100)
+//		{
+//			Hex_Format(0,3,6,0);       
+//		}else{
 			Hex_Format(DispValue.Voltage,3,6,0);       
-		}	
+//		}	
 		Disp_EN40(80-60,80,DispBuf);
 		Disp_EN40(310-60,80,"V");
 	}
