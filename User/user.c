@@ -89,22 +89,57 @@ const uint8_t User_Check_main[][12+1]=
 const uint8_t User_Check_Item[][12+1]=
 {
 	{"电压低档1"},
-	{"电压低档2"},
-	
+	{"电压低档2"},	
 	{"电压高档1"},
 	{"电压高档2"},
-    {"电压高档3"},
+    {"电压高档3"},	
+	{"电压高档4"},
+	{"电压高档5"},
+	{"电压高档6"},
 	
+	{"CV低档1"},
+	{"CV低档2"},	
+	{"CV高档1"},
+	{"CV高档2"},
+    {"CV高档3"},
+	{"CV高档4"},
+	{"CV高档5"},
+    {"CV高档6"}
+//	
+//	{"电流低档4"},
+//    {"电流高档1"},
+//	
+//	{"电流高档2"},
+//    {"电流高档3"},
+//	{"电流高档4"},
+//	{"电流高档5"},
+	
+	
+
+};
+
+const uint8_t User_Check_Item1[][12+1]=
+{
 	{"电流低档1"},
-	{"电流低档2"},
+	{"电流低档2"},	
 	{"电流低档3"},
 	{"电流低档4"},
-	
-    {"电流高档1"},
+    {"电流高档1"},	
 	{"电流高档2"},
-    {"电流高档3"},
+	{"电流高档3"},
 	{"电流高档4"},
 	{"电流高档5"},
+	
+//	
+//	{"电流低档4"},
+//    {"电流高档1"},
+//	
+//	{"电流高档2"},
+//    {"电流高档3"},
+//	{"电流高档4"},
+//	{"电流高档5"},
+	
+	
 
 };
 const uint8_t Test_Setitem[][9+1]=
@@ -359,8 +394,8 @@ const uint8_t Bat_Modevalue[][6+1]=
 
 const uint8_t Calvalue[][6+1]=
 {
-	{"  "},
-	{"  "},
+	{"电压"},
+	{"电流"},
 	{"档位"},
 	{"设置"},
 	{"校准"},
@@ -701,7 +736,7 @@ const uint8_t List_ItemDis[][6+1]=
 	"定电阻",
 	"定功率",
 //	"开路",
-	"短路",
+	"短路空",
 };
 
 const uint8_t List_Res[][6+1]=
@@ -1039,6 +1074,27 @@ const u8 Test_Uint[][4]=
     {"MΩ"},
 
 };
+
+//反接警告
+void MissConDisp(void)
+{
+	Colour.black = LCD_COLOR_TEST_BUTON;
+	LCD_DrawFullRect(120, 92,360-120 ,205-92);
+	Colour.black = Red;
+	LCD_FillTriangle(150,130,170,100,140,140);
+	Colour.black = LCD_COLOR_YELLOW;
+	LCD_DrawFullRect(148,110,153-148,130-110);
+	LCD_DrawFullRect(148,132,153-148,137-132);
+	Colour.Fword = Red;
+	Colour.black = LCD_COLOR_TEST_BUTON;
+	WriteString_16(134,145,"警告",0);
+	WriteString_16(175,100,"电源反接",0);
+	WriteString_16(175,120,"请先断开电源",0);
+	WriteString_16(175,140,"再按确认键恢复测试",0);
+	
+//	LCD_DrawLine();
+}
+
 void Disp_Open(void)
 {
     u32 colour;
@@ -1318,7 +1374,7 @@ void Test_Disp(u8 vsw,u8 isw)
 //		}else{
 			Hex_Format(DispValue.Voltage,3,6,0);       
 //		}	
-		Disp_EN40(80-60,80,DispBuf);
+		Disp_EN40(80-60+28,80,DispBuf);
 		Disp_EN40(310-60,80,"V");
 	}
 	
@@ -1330,7 +1386,7 @@ void Test_Disp(u8 vsw,u8 isw)
 		Disp_EN40(310-60,80+40,"A");
 	}else if(isw == 1){
 		Hex_Format(DispValue.Current,3,6,0);  
-		Disp_EN40(80-60,80+40,DispBuf);
+		Disp_EN40(80-60+28,80+40,DispBuf);
 		Disp_EN40(310-60,80+40,"A");
 	}
 
@@ -1947,11 +2003,21 @@ void Disp_Test_value(u8 num)
 	if(Black_Select && coder_flag == 1)
 	{
 		Colour.black=LCD_COLOR_YELLOW;
-		if(spinbit < 5)
+		if(LoadSave.mode == 2)//CR
 		{
-			LCD_DrawFullRect(LIST2+88+8*10-spinbit*10, FIRSTLINE+16,8, 2);
+			if(spinbit < 2)
+			{
+				LCD_DrawFullRect(LIST2+88+8*10-spinbit*10, FIRSTLINE+16,8, 2);
+			}else{
+				LCD_DrawFullRect(LIST2+88+7*10-spinbit*10, FIRSTLINE+16,8, 2);
+			}
 		}else{
-			LCD_DrawFullRect(LIST2+88+7*10-spinbit*10, FIRSTLINE+16,8, 2);
+			if(spinbit < 5)
+			{
+				LCD_DrawFullRect(LIST2+88+8*10-spinbit*10, FIRSTLINE+16,8, 2);
+			}else{
+				LCD_DrawFullRect(LIST2+88+7*10-spinbit*10, FIRSTLINE+16,8, 2);
+			}
 		}
 		Colour.black=LCD_COLOR_SELECT;	
 	}		
@@ -1963,11 +2029,15 @@ void Disp_Test_value(u8 num)
 	}else if(LoadSave.mode == 1){//CV
 		Hex_Format(LoadSave.voltage,4,7,0);
 	}else if(LoadSave.mode == 2){//CR
-		Hex_Format(LoadSave.risistence,4,7,0);
+		Hex_Format(LoadSave.risistence,1,7,0);
 	}else if(LoadSave.mode == 3){//CP
-		Hex_Format(LoadSave.power,4,8,0);
+		Hex_Format(LoadSave.power,4,7,0);
 	}
-	WriteString_16(LIST2+88, FIRSTLINE, DispBuf,  0);//增加算法  把顺序改过来
+	if(LoadSave.mode == 2){//CR
+		WriteString_16(LIST2+88, FIRSTLINE, DispBuf,  0);//增加算法  把顺序改过来
+	}else{
+		WriteString_16(LIST2+88, FIRSTLINE, DispBuf,  0);//增加算法  把顺序改过来
+	}
 	WriteString_16(LIST2+90+80+10, FIRSTLINE, MODE_UINT[LoadSave.mode],  0);
 	if(DispBuf[0] == 0x20 && DispBuf[1] == 0x20)
 	{
@@ -1991,38 +2061,46 @@ void Disp_Test_value(u8 num)
 //				Disp_Button_value1(0);
 //			break;
 //		case 1:
-				Disp_Fastbutton();
-				Colour.Fword=White;//
-				Colour.black=LCD_COLOR_TEST_BUTON;
-				if(Jk516save.Sys_Setvalue.lanage)
-				{
-					pt=Test_Modevalue_E1;
-				}
-				else
-				{
-					pt=Test_Modevalue1;
-				
-				}
-				if(buttonpage1 == 1)
-				{
-					
-					for(i=0;i<4;i++)
-					{
-						WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
-					}
-					
-					WriteString_16(BUTTOM_X_VALUE+4*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[7],  0);
-				}else if(buttonpage1 == 2){
-					WriteString_16(BUTTOM_X_VALUE, BUTTOM_Y_VALUE, pt[6],  0);
-					WriteString_16(BUTTOM_X_VALUE+4*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[7],  0);
-					WriteString_16(10+98+18, 271-40, "电池",  0);
-					WriteString_16(10+98+18, 271-20, "测试",  0);
-					WriteString_16(10+98+94+18, 271-40, "动态",  0);
-					WriteString_16(10+98+94+18, 271-20, "测试",  0);
-					WriteString_16(10+98+94+94+18, 271-40, "列表",  0);
-					WriteString_16(10+98+94+94+18, 271-20, "测试",  0);
-					
-				}
+	if(DispValue.alertdisp == 0)
+	{
+		Disp_Fastbutton();
+		Colour.Fword=White;//
+		Colour.black=LCD_COLOR_TEST_BUTON;
+		if(Jk516save.Sys_Setvalue.lanage)
+		{
+			pt=Test_Modevalue_E1;
+		}
+		else
+		{
+			pt=Test_Modevalue1;
+		
+		}
+		if(buttonpage1 == 1)
+		{
+			
+			for(i=0;i<4;i++)
+			{
+				WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
+			}
+			
+			WriteString_16(BUTTOM_X_VALUE+4*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[7],  0);
+		}else if(buttonpage1 == 2){
+			WriteString_16(BUTTOM_X_VALUE, BUTTOM_Y_VALUE, pt[6],  0);
+			WriteString_16(BUTTOM_X_VALUE+4*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[7],  0);
+			WriteString_16(10+98+18, 271-40, "电池",  0);
+			WriteString_16(10+98+18, 271-20, "测试",  0);
+			WriteString_16(10+98+94+18, 271-40, "动态",  0);
+			WriteString_16(10+98+94+18, 271-20, "测试",  0);
+			WriteString_16(10+98+94+94+18, 271-40, "列表",  0);
+			WriteString_16(10+98+94+94+18, 271-20, "测试",  0);
+			
+		}
+	}else{
+		Disp_Fastbutton();
+		Colour.Fword=White;//
+		Colour.black=LCD_COLOR_TEST_BUTON;
+		WriteString_16(BUTTOM_X_VALUE+4*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, "确认",  0);
+	}
 //		break;
 //		case 2:
 //			Disp_Fastbutton();
@@ -2318,7 +2396,7 @@ void Disp_Bat_value(u8 num)
 		}
 		LCD_DrawFullRect( LIST1+118, FIRSTLINE+SPACE1-2,88+16 , SPACE1-2  ) ;//SPACE1
 		Colour.Fword=White;
-		Hex_Format(LoadSave.loadr,4,7,0);
+		Hex_Format(LoadSave.loadr,1,7,0);
 		WriteString_16(LIST1+118, FIRSTLINE+SPACE1, DispBuf,  0);//增加算法  把顺序改过来
 		WriteString_16(LIST1+118+82, FIRSTLINE+SPACE1, Unit_Setitem[2],  0);
 		
@@ -2363,57 +2441,65 @@ void Disp_Bat_value(u8 num)
 			Disp_Hint(8);
 		}
 	}
-	switch(num)
+	if(DispValue.alertdisp == 0)
 	{
-		case 0:
-				Disp_Button_value1(0);
-			break;
-		case 1:
-				Disp_Fastbutton();
-				Colour.Fword=White;//
-				Colour.black=LCD_COLOR_TEST_BUTON;
-				
-				if(Jk516save.Sys_Setvalue.lanage)
-                {
-                    pt=Test_Modevalue_E1;
-                }
-                else
-                {
-                    pt=Bat_Modevalue;
-                
-                }
-				for(i=0;i<2;i++)
-				WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
-		
-		break;
-		case 2:
-		case 3:
-		case 4:
-		case 6:
-		case 7:
-		case 8:
-			Disp_Fastbutton();
-//			Colour.Fword=White;
-//			Colour.black=LCD_COLOR_TEST_BUTON;
-//            if(Jk516save.Sys_Setvalue.lanage)
-//            {
-//                pt=INPUT_E;
-//            }
-//            else
-//            {
-//                pt=INPUT;
-//            
-//            }
-//			for(i=0;i<1;i++)
-//			{
-//				
-//				WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
-//			}
-		break;
-
-		default:
+		switch(num)
+		{
+			case 0:
+					Disp_Button_value1(0);
+				break;
+			case 1:
+					Disp_Fastbutton();
+					Colour.Fword=White;//
+					Colour.black=LCD_COLOR_TEST_BUTON;
+					
+					if(Jk516save.Sys_Setvalue.lanage)
+					{
+						pt=Test_Modevalue_E1;
+					}
+					else
+					{
+						pt=Bat_Modevalue;
+					
+					}
+					for(i=0;i<2;i++)
+					WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
 			
-		break;	
+			break;
+			case 2:
+			case 3:
+			case 4:
+			case 6:
+			case 7:
+			case 8:
+				Disp_Fastbutton();
+	//			Colour.Fword=White;
+	//			Colour.black=LCD_COLOR_TEST_BUTON;
+	//            if(Jk516save.Sys_Setvalue.lanage)
+	//            {
+	//                pt=INPUT_E;
+	//            }
+	//            else
+	//            {
+	//                pt=INPUT;
+	//            
+	//            }
+	//			for(i=0;i<1;i++)
+	//			{
+	//				
+	//				WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
+	//			}
+			break;
+
+			default:
+				
+			break;	
+		}
+	}else{
+		Disp_Fastbutton();
+		Colour.Fword=White;//
+		Colour.black=LCD_COLOR_TEST_BUTON;
+		WriteString_16(BUTTOM_X_VALUE+4*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, "确认",  0);
 	}
 }
 
@@ -2555,52 +2641,60 @@ void Disp_Dyn_value(u8 num)
 	WriteString_16(LIST2+118, FIRSTLINE+SPACE1*3, DispBuf,  0);//增加算法  把顺序改过来
 	WriteString_16(LIST2+118+60, FIRSTLINE+SPACE1*3, Unit_Setitem[5],  0);
 	
-	switch(num)
+	if(DispValue.alertdisp == 0)
 	{
-		case 0:
-				Disp_Button_value1(0);
+		switch(num)
+		{
+			case 0:
+					Disp_Button_value1(0);
+				break;
+			case 1:
+					Disp_Fastbutton();
+					Colour.Fword=White;//
+					Colour.black=LCD_COLOR_TEST_BUTON;
+					
+					if(Jk516save.Sys_Setvalue.lanage)
+					{
+						pt=Test_Compvalue_E;
+					}
+					else
+					{
+						pt=Test_Compvalue;
+					
+					}
+					for(i=0;i<2;i++)
+					WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
+			
 			break;
-		case 1:
+			case 5:
 				Disp_Fastbutton();
-				Colour.Fword=White;//
+				Colour.Fword=White;
 				Colour.black=LCD_COLOR_TEST_BUTON;
-				
 				if(Jk516save.Sys_Setvalue.lanage)
-                {
-                    pt=Test_Compvalue_E;
-                }
-                else
-                {
-                    pt=Test_Compvalue;
-                
-                }
-				for(i=0;i<2;i++)
-				WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
-		
-		break;
-		case 5:
-			Disp_Fastbutton();
-			Colour.Fword=White;
-			Colour.black=LCD_COLOR_TEST_BUTON;
-            if(Jk516save.Sys_Setvalue.lanage)
-            {
-                pt=Tran_Mode;
-            }
-            else
-            {
-                pt=Tran_Mode;
-            
-            }
-			for(i=0;i<3;i++)
-			{
+				{
+					pt=Tran_Mode;
+				}
+				else
+				{
+					pt=Tran_Mode;
 				
-				WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
-			}
-		break;
+				}
+				for(i=0;i<3;i++)
+				{
+					
+					WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
+				}
+			break;
 
-		default:
-			Disp_Fastbutton();
-		break;	
+			default:
+				Disp_Fastbutton();
+			break;	
+		}
+	}else{
+		Disp_Fastbutton();
+		Colour.Fword=White;//
+		Colour.black=LCD_COLOR_TEST_BUTON;
+		WriteString_16(BUTTOM_X_VALUE+4*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, "确认",  0);
 	}
 }
 
@@ -2742,6 +2836,12 @@ void Disp_List_Process(void)
 		WriteString_16(300,94,"Step",0);
 		Hex_Format(DispValue.listrunstep+1, 0 , 2 , 0);//显示步数
 		WriteString_16(22+16+300,94 ,DispBuf,0);
+	}
+	if(LoadSave.language == 0)
+	{
+		WriteString_16(400,94,List_ItemDis[LoadSave.listmode[DispValue.listrunstep]],0);	
+	}else if(LoadSave.language == 1){
+		WriteString_16(400,94,List_ItemDisE[LoadSave.listmode[DispValue.listrunstep]],0);	
 	}
 	if(LoadSave.language == 0)
 	{
@@ -2964,7 +3064,12 @@ void Disp_List_value(u8 num)
 		}
 		LCD_DrawFullRect(100,26+4*22-2,92,20);
 		Colour.Fword=White;
-		Hex_Format(LoadSave.listvalue[DispValue.liststep],4,7,0);
+		if(LoadSave.listmode[DispValue.liststep] == 2)
+		{
+			Hex_Format(LoadSave.listvalue[DispValue.liststep],1,7,0);
+		}else{
+			Hex_Format(LoadSave.listvalue[DispValue.liststep],4,7,0);
+		}
 		WriteString_16(100,26+4*22,DispBuf,0);
 		
 		
@@ -3166,151 +3271,159 @@ void Disp_List_value(u8 num)
 			Disp_Hint(4);
 		break;
 	}
-	Disp_Fastbutton();
-	if(resdisp == 0)
+	if(DispValue.alertdisp == 0)
 	{
-		switch(num)
+		Disp_Fastbutton();
+		if(resdisp == 0)
 		{
-			case 0:
-					Disp_Button_value1(0);
-				break;
-//			case 1:
-//			case 5:
-//			case 8:
-//			case 9:
-//			case 11:
-//			case 12:
-//			{
-//				Disp_Fastbutton();
-//				Colour.Fword=White;
-//				Colour.black=LCD_COLOR_TEST_BUTON;
-//				if(Jk516save.Sys_Setvalue.lanage)
-//				{
-//					pt=INPUT_E;
-//				}
-//				else
-//				{
-//					pt=INPUT;
-//				
-//				}
-//				for(i=0;i<1;i++)
-//				{
-//					
-//					WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
-//				}
-//			}break;
-			case 2:
-			
-					Disp_Fastbutton();
-					Colour.Fword=White;//
-					Colour.black=LCD_COLOR_TEST_BUTON;
-					
-					if(Jk516save.Sys_Setvalue.lanage)
-					{
-						pt=Step_ModeE;
-					}
-					else
-					{
-						pt=Step_Mode;
-					
-					}
-					for(i=0;i<2;i++)
-					WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
-			
-			break;
-			case 3:
-			
-					Disp_Fastbutton();
-					Colour.Fword=White;//
-					Colour.black=LCD_COLOR_TEST_BUTON;
-					
-					if(Jk516save.Sys_Setvalue.lanage)
-					{
-						pt=Test_Compvalue_E;
-					}
-					else
-					{
-						pt=Test_Compvalue;
-					
-					}
-					for(i=0;i<2;i++)
-					WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
-			
-			break;
-			case 4:
-					Disp_Fastbutton();
-					Colour.Fword=White;//
-					Colour.black=LCD_COLOR_TEST_BUTON;
-					
-					if(Jk516save.Sys_Setvalue.lanage)
-					{
-						pt=List_BeepE;
-					}
-					else
-					{
-						pt=List_Beep;
-					
-					}
-					for(i=0;i<2;i++)
-					WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
-			
-			break;
-			case 7:
-					Disp_Fastbutton();
-					Colour.Fword=White;//
-					Colour.black=LCD_COLOR_TEST_BUTON;
-					
-					if(Jk516save.Sys_Setvalue.lanage)
-					{
-						pt=List_ItemDisE;
-					}
-					else
-					{
-						pt=List_ItemDis;
-					
-					}
-					for(i=0;i<5;i++)
-					WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
-			
-			break;	
-			case 10:
-					Disp_Fastbutton();
-					Colour.Fword=White;//
-					Colour.black=LCD_COLOR_TEST_BUTON;
-					
-					if(Jk516save.Sys_Setvalue.lanage)
-					{
-						pt=List_CompTypeE;
-					}
-					else
-					{
-						pt=List_CompType;
-					
-					}
-					for(i=0;i<4;i++)
-					WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
-			
-			break;	
-			default:
+			switch(num)
+			{
+				case 0:
+						Disp_Button_value1(0);
+					break;
+	//			case 1:
+	//			case 5:
+	//			case 8:
+	//			case 9:
+	//			case 11:
+	//			case 12:
+	//			{
+	//				Disp_Fastbutton();
+	//				Colour.Fword=White;
+	//				Colour.black=LCD_COLOR_TEST_BUTON;
+	//				if(Jk516save.Sys_Setvalue.lanage)
+	//				{
+	//					pt=INPUT_E;
+	//				}
+	//				else
+	//				{
+	//					pt=INPUT;
+	//				
+	//				}
+	//				for(i=0;i<1;i++)
+	//				{
+	//					
+	//					WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
+	//				}
+	//			}break;
+				case 2:
 				
-			break;	
+						Disp_Fastbutton();
+						Colour.Fword=White;//
+						Colour.black=LCD_COLOR_TEST_BUTON;
+						
+						if(Jk516save.Sys_Setvalue.lanage)
+						{
+							pt=Step_ModeE;
+						}
+						else
+						{
+							pt=Step_Mode;
+						
+						}
+						for(i=0;i<2;i++)
+						WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
+				
+				break;
+				case 3:
+				
+						Disp_Fastbutton();
+						Colour.Fword=White;//
+						Colour.black=LCD_COLOR_TEST_BUTON;
+						
+						if(Jk516save.Sys_Setvalue.lanage)
+						{
+							pt=Test_Compvalue_E;
+						}
+						else
+						{
+							pt=Test_Compvalue;
+						
+						}
+						for(i=0;i<2;i++)
+						WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
+				
+				break;
+				case 4:
+						Disp_Fastbutton();
+						Colour.Fword=White;//
+						Colour.black=LCD_COLOR_TEST_BUTON;
+						
+						if(Jk516save.Sys_Setvalue.lanage)
+						{
+							pt=List_BeepE;
+						}
+						else
+						{
+							pt=List_Beep;
+						
+						}
+						for(i=0;i<2;i++)
+						WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
+				
+				break;
+				case 7:
+						Disp_Fastbutton();
+						Colour.Fword=White;//
+						Colour.black=LCD_COLOR_TEST_BUTON;
+						
+						if(Jk516save.Sys_Setvalue.lanage)
+						{
+							pt=List_ItemDisE;
+						}
+						else
+						{
+							pt=List_ItemDis;
+						
+						}
+						for(i=0;i<5;i++)
+						WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
+				
+				break;	
+				case 10:
+						Disp_Fastbutton();
+						Colour.Fword=White;//
+						Colour.black=LCD_COLOR_TEST_BUTON;
+						
+						if(Jk516save.Sys_Setvalue.lanage)
+						{
+							pt=List_CompTypeE;
+						}
+						else
+						{
+							pt=List_CompType;
+						
+						}
+						for(i=0;i<4;i++)
+						WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
+				
+				break;	
+				default:
+					
+				break;	
+			}
+		}else if(resdisp == 1){
+			Disp_Fastbutton();
+			Colour.Fword=White;//
+			Colour.black=LCD_COLOR_TEST_BUTON;
+			
+			if(Jk516save.Sys_Setvalue.lanage)
+			{
+				pt=List_ResBackE;
+			}
+			else
+			{
+				pt=List_ResBack;
+			
+			}
+			for(i=0;i<5;i++)
+			WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
 		}
-	}else if(resdisp == 1){
+	}else{
 		Disp_Fastbutton();
 		Colour.Fword=White;//
 		Colour.black=LCD_COLOR_TEST_BUTON;
-		
-		if(Jk516save.Sys_Setvalue.lanage)
-		{
-			pt=List_ResBackE;
-		}
-		else
-		{
-			pt=List_ResBack;
-		
-		}
-		for(i=0;i<5;i++)
-		WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
+		WriteString_16(BUTTOM_X_VALUE+4*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, "确认",  0);
 	}
 
 	
@@ -5723,6 +5836,7 @@ vu32 Disp_Set_RNum(Disp_Coordinates_Typedef *Coordinates)
 	Disp_button_RNum_time();
 	Sort_num=Disp_NumKeyboard_Set(Coordinates,1);
 //	Sort_num1=Time_Set_Cov(&Sort_num);
+	Sort_num.Num/=1000;
 	if(Sort_num1.Updata_flag==0)
 	{
 		Sort_num1.Dot=0;
@@ -6373,34 +6487,53 @@ void Disp_Debug_value(vu8 list)
 	const u8 (*pt)[7];
 	vu32 Black_Select;
 //	vu32 Select_color;
-	for(i=0;i<DEBUG_RANGE;i++)
+	if(calpage == 0)
 	{
-		if(list==(i+1))
+		for(i=0;i<DEBUG_RANGE;i++)
 		{
-			Colour.black=LCD_COLOR_SELECT;
-		
-		}
-		else
-		{
-			Colour.black=LCD_COLOR_TEST_BACK;
-		}
-	
-		if(i < 10)
-		{
-			LCD_DrawFullRect( LIST1+160, FIRSTLINE+(SPACE1-2)*(i),90 , SPACE1-2 ) ;//SPACE1
-			Hex_Format(DispValue.CalValue[i], 4 , 7 , 0);//sprintf((char *)DispBuf,"%4",Save_Res;
-			WriteString_16(LIST1+160, FIRSTLINE+(SPACE1-2)*(i), DispBuf,  1);
-		}else{
-			LCD_DrawFullRect( LIST2+100, FIRSTLINE+(SPACE1-2)*(i-10),90 , SPACE1-2 ) ;//SPACE1
-			Hex_Format(DispValue.CalValue[i], 4 , 7 , 0);//sprintf((char *)DispBuf,"%4",Save_Res;
-			WriteString_16(LIST2+100, FIRSTLINE+(SPACE1-2)*(i-10), DispBuf,  1);
-		}
-		
-//		LCD_DrawRect( LIST1+160+160, FIRSTLINE+SPACE1*(i+1)-2,SELECT_1END+40+160 , FIRSTLINE+SPACE1*(i+2)-4 , Colour.black ) ;//SPACE1
-		//Hex_Format(Save_Res.Debug_Value[i].ad_value, Debug_Dot[i] , 4 , 0);//sprintf((char *)DispBuf,"%4",Save_Res;
-		
-		
+			if(list==(i+1))
+			{
+				Colour.black=LCD_COLOR_SELECT;
 			
+			}
+			else
+			{
+				Colour.black=LCD_COLOR_TEST_BACK;
+			}
+		
+			if(i < 10)
+			{
+				LCD_DrawFullRect( LIST1+160, FIRSTLINE+(SPACE1-2)*(i),90 , SPACE1-2 ) ;//SPACE1
+				Hex_Format(DispValue.CalValue[i], 4 , 7 , 0);//sprintf((char *)DispBuf,"%4",Save_Res;
+				WriteString_16(LIST1+160, FIRSTLINE+(SPACE1-2)*(i), DispBuf,  1);
+			}else{
+				LCD_DrawFullRect( LIST2+100, FIRSTLINE+(SPACE1-2)*(i-10),90 , SPACE1-2 ) ;//SPACE1
+				Hex_Format(DispValue.CalValue[i], 4 , 7 , 0);//sprintf((char *)DispBuf,"%4",Save_Res;
+				WriteString_16(LIST2+100, FIRSTLINE+(SPACE1-2)*(i-10), DispBuf,  1);
+			}
+		}
+	}else if(calpage == 1){
+		for(i=0;i<9;i++)
+		{
+			if(list==(i+1))
+			{
+				Colour.black=LCD_COLOR_SELECT;
+			}
+			else
+			{
+				Colour.black=LCD_COLOR_TEST_BACK;
+			}
+//			if(i < 10)
+//			{
+				LCD_DrawFullRect( LIST1+160, FIRSTLINE+(SPACE1-2)*(i),90 , SPACE1-2 ) ;//SPACE1
+				Hex_Format(DispValue.CalValue[i+16], 4 , 7 , 0);//sprintf((char *)DispBuf,"%4",Save_Res;
+				WriteString_16(LIST1+160, FIRSTLINE+(SPACE1-2)*(i), DispBuf,  1);
+//			}else{
+//				LCD_DrawFullRect( LIST2+100, FIRSTLINE+(SPACE1-2)*(i-10),90 , SPACE1-2 ) ;//SPACE1
+//				Hex_Format(DispValue.CalValue[i], 4 , 7 , 0);//sprintf((char *)DispBuf,"%4",Save_Res;
+//				WriteString_16(LIST2+100, FIRSTLINE+(SPACE1-2)*(i-10), DispBuf,  1);
+//			}
+		}
 	}
 	Colour.black=LCD_COLOR_TEST_BACK;
 	
@@ -6431,22 +6564,37 @@ void Disp_UserCheck_Item(void)
 	WriteString_16(0, 4, All_TopName[5],  0);
 	Colour.Fword=White;
 	Colour.black=LCD_COLOR_TEST_BACK;//User_Check_main
-	
+	Hex_Format(LoadSave.ErrCnt[0],0,5,0);
+	WriteString_16(200, 4,DispBuf ,  0);
 //	for(i=0;i<(sizeof(User_Check_main)/(sizeof(User_Check_main[0])));i++)
 //	{
 //		WriteString_16(LIST1+160*i, FIRSTLINE, User_Check_main[i],  0);
 
 //	}
 	
-	for(i=0;i<10;i++)
+	if(calpage == 0)
 	{
-		WriteString_16(LIST1, FIRSTLINE+(SPACE1-2)*(i), User_Check_Item[i],  0);
+		for(i=0;i<10;i++)
+		{
+			WriteString_16(LIST1, FIRSTLINE+(SPACE1-2)*(i), User_Check_Item[i],  0);
 
-	}
-	
-	for(i=0;i<4;i++)
-	{
-		WriteString_16(LIST2, FIRSTLINE+(SPACE1-2)*(i), User_Check_Item[i+10],  0);
+		}
+		
+		for(i=0;i<6;i++)
+		{
+			WriteString_16(LIST2, FIRSTLINE+(SPACE1-2)*(i), User_Check_Item[i+10],  0);
+		}
+	}else if(calpage == 1){
+		for(i=0;i<9;i++)
+		{
+			WriteString_16(LIST1, FIRSTLINE+(SPACE1-2)*(i), User_Check_Item1[i],  0);
+
+		}
+		
+//		for(i=0;i<6;i++)
+//		{
+//			WriteString_16(LIST2, FIRSTLINE+(SPACE1-2)*(i), User_Check_Item[i+10],  0);
+//		}
 	}
 //	else
 //	{

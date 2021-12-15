@@ -294,7 +294,7 @@ void Para_Set_Comp(void);
 #define RANGE_LIMIT_VLOW (11000*45)
 
 
-#define DEBUG_RANGE 14
+#define DEBUG_RANGE 16
 //==========================================================
 //标准电压DA   50V   500V
 //==========================================================
@@ -317,7 +317,7 @@ void Para_Set_Comp(void);
 #define		MAX_SET_CURRENT       600000    //60.0000A  最大设置电流 (低档 2.00000A  高档 20.0000)
 #define		MAX_SET_VOLT          1200000    //120.000V  最大设置电压 (低档 15.0000V  高档 150.000)
 #define		MAX_SET_POW           12000000    //1200.000W  最大功率
-#define		MAX_SET_RES           50000.0   //50000.0R  最大电阻
+#define		MAX_SET_RES           2000000   //200000.0R  最大电阻
 
 
 #define		MAX_CURRENT    				20000			//最大电流 ( 2A )不同档位电流小数点不同 ( 0- 2.0000, 0-20.000)
@@ -385,6 +385,7 @@ extern u8 Int_Pe3flag;
 extern const u8 fit_allnum[4];
 extern u32 last_R_disp,last_V_disp;
 extern u8 buttonpage1;
+extern u8 calpage;
 //==========================================================
 //系统状态
 enum SysStatusEnum
@@ -679,6 +680,8 @@ typedef struct
 //系统设置
 	u16 Baudrate;//波特率
 	u16 Addr;//本机地址
+//反接记录
+	u16 ErrCnt[4];
 }SaveData_Typedef;
 extern SaveData_Typedef LoadSave;
 typedef struct
@@ -806,7 +809,7 @@ typedef struct
 	u32 Current;
 	u32 Rdata;
 	u32 Power;
-	u32 CalValue[14];
+	u32 CalValue[25];
 	float Capraw;
 	u32 Capacity;
 	u8 liststep;
@@ -822,6 +825,8 @@ typedef struct
 	u8 testbeep;
 	u8 Operation_MODE;
 	u8 respage;
+	u8 protectflag;
+	u8 alertdisp;
 ////校准测量控制电压低档
 //	u32 VLOW1;
 //	u32 SETVLOW1;
@@ -967,7 +972,7 @@ extern u8 spinbit;
 extern u8 spinbitmax;
 extern u16 spintest,spinnum;
 extern u8 spinflag;
-extern u32 dacvalue[14];
+extern u32 dacvalue[17];
 extern u8 setflag;
 extern u8 mainswitch;
 extern u8 jumpflag;
@@ -981,4 +986,5 @@ extern u8 listbeep;
 extern u8 switchdelay;
 extern u8 inputtrans;
 extern u8 coder_flag;
+extern u16 dacctrl;
 #endif

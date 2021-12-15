@@ -119,10 +119,6 @@
       <TargetDriverDllRegistry>
         <SetRegEntry>
           <Number>0</Number>
-          <Key>DLGUARM</Key>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
           <Key>PWSTATINFO</Key>
           <Name>200,50,700</Name>
         </SetRegEntry>
@@ -163,6 +159,11 @@
           <count>1</count>
           <WinNumber>1</WinNumber>
           <ItemText>LoadSave</ItemText>
+        </Ww>
+        <Ww>
+          <count>2</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>DispValue.CalValue,0x0A</ItemText>
         </Ww>
       </WatchWindow1>
       <WatchWindow2>
@@ -375,6 +376,11 @@
           <count>41</count>
           <WinNumber>2</WinNumber>
           <ItemText>DispValue.Voltage</ItemText>
+        </Ww>
+        <Ww>
+          <count>42</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>LoadSave.listvalue,0x0A</ItemText>
         </Ww>
       </WatchWindow2>
       <MemoryWindow1>

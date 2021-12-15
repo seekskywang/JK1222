@@ -31,6 +31,8 @@ u8 setcount;
 u8 inputtrans;
 u8 coder_flag=0;
 u8 buttonpage1=1;
+u8 calpage;
+u16 dacctrl=100;
 //const u8 RANGE_UNIT[11]=
 //{
 //	4,
@@ -182,11 +184,11 @@ void Para_Set_Comp(void)
 
 	if(LoadSave.onvol > MAX_LoadVOLOTE)
 	{
-		LoadSave.onvol = MAX_LoadVOLOTE;
+		LoadSave.onvol = 0;
 	}
 	if(LoadSave.offvol > MAX_FreeLoadVOLOTE)
 	{
-		LoadSave.offvol = MAX_FreeLoadVOLOTE;
+		LoadSave.offvol = 0;
 	}
 	LoadSave.crmode = 0;
 	if(LoadSave.autooff > 999999)
@@ -306,6 +308,10 @@ void Para_Set_Comp(void)
 	{
 		LoadSave.testdis = 0;
 	}
+	if(LoadSave.dynamode > 2)
+	{
+		LoadSave.dynamode = 0;
+	}
 	if(LoadSave.valA > MAX_SET_CURRENT)
 	{
 		LoadSave.valA = MAX_SET_CURRENT;
@@ -361,9 +367,9 @@ void Para_Set_Comp(void)
 	}
 	for(i = 0;i<15;i++)
 	{
-		if(LoadSave.listmode[i] > 3)
+		if(LoadSave.listmode[i] > 4)
 		{
-			LoadSave.listmode[i] = 3;
+			LoadSave.listmode[i] = 4;
 		}
 		if(LoadSave.listmode[i] == 0)
 		{
@@ -1571,6 +1577,7 @@ void Limit_Process(void)
 //常规分选
 void Test_Comp(void)
 {
+	u8 i;
 	DispValue.testbeep = 0;
 	if(LoadSave.vcomp == 1)
 	{
@@ -1592,10 +1599,10 @@ void Test_Comp(void)
 				DispValue.testcomp[0] = 0;
 			}
 		}
-		if(LoadSave.limitbeep == DispValue.testcomp[0])
-		{
-			DispValue.testbeep = 1;
-		}
+//		if(LoadSave.limitbeep == DispValue.testcomp[0])
+//		{
+//			DispValue.testbeep = 1;
+//		}
 	}else{
 		DispValue.testcomp[0] = 0;
 	}
@@ -1621,10 +1628,10 @@ void Test_Comp(void)
 				DispValue.testcomp[1] = 0;
 			}
 		}
-		if(LoadSave.limitbeep == DispValue.testcomp[1])
-		{
-			DispValue.testbeep = 1;
-		}
+//		if(LoadSave.limitbeep == DispValue.testcomp[1])
+//		{
+//			DispValue.testbeep = 1;
+//		}
 	}else{
 		DispValue.testcomp[1] = 0;
 	}
@@ -1641,12 +1648,38 @@ void Test_Comp(void)
 		}else{
 			DispValue.testcomp[2] = 0;
 		}
-		if(LoadSave.limitbeep == DispValue.testcomp[2])
-		{
-			DispValue.testbeep = 1;
-		}
+//		if(LoadSave.limitbeep == DispValue.testcomp[2])
+//		{
+//			DispValue.testbeep = 1;
+//		}
 	}else{
 		DispValue.testcomp[2] = 0;
+	}
+	if(LoadSave.pcomp == 1 || LoadSave.vcomp == 1 || LoadSave.ccomp == 1)
+	{
+		for(i=0;i<3;i++)
+		{
+			if(LoadSave.limitbeep == 0)
+			{
+				if(DispValue.testcomp[i] == 1)
+				{
+					DispValue.testbeep = 0;
+					break;
+				}else{
+					DispValue.testbeep = 1;
+				}
+			}else if(LoadSave.limitbeep == 1){
+				if(DispValue.testcomp[i] == 1)
+				{
+					DispValue.testbeep = 1;
+					break;
+				}else{
+					DispValue.testbeep = 0;
+				}
+			}
+		}
+	}else{
+		DispValue.testbeep = 0;
 	}
 	
 }
@@ -1713,6 +1746,8 @@ void Test_Process(void)
 	coder_flag = 1;
 	keynum = 2;
 	buttonpage1 = 1;
+//	DispValue.protectflag = 2;
+//	DispValue.alertdisp=1;
 	while(GetSystemStatus()==SYS_STATUS_TEST)
 	{
         USB_Count++;
@@ -1721,6 +1756,10 @@ void Test_Process(void)
 //		spinvalue = TIM_GetCounter(TIM3);
 		
 		keytrans=Encoder_Process(keynum);
+//		Colour.Fword=White;
+//		Colour.black=LCD_COLOR_TEST_BACK;//User_Check_main
+//		Hex_Format(DispValue.protectflag,0,2,0);
+//		WriteString_16(170, 4,DispBuf ,  0);
 		if(spinflag == 1)
 		{
 			Disp_Flag = 1;
@@ -1780,7 +1819,19 @@ void Test_Process(void)
 			Test_Comp();//分选
 			Test_Beep();//讯响
 		}
-        Test_Disp(LoadSave.vrange,LoadSave.crange);
+		if(DispValue.alertdisp == 0)
+		{
+			Test_Disp(LoadSave.vrange,LoadSave.crange);
+		}else if(DispValue.alertdisp == 1){
+			MissConDisp();
+			Disp_Fastbutton();
+			Colour.Fword=White;//
+			Colour.black=LCD_COLOR_TEST_BUTON;
+			WriteString_16(BUTTOM_X_VALUE+4*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, "确认",  0);
+			DispValue.alertdisp = 2;
+			LoadSave.ErrCnt[0]++;
+			Store_set_flash();
+		}
 		
 		
         if(Keyboard.state==TRUE)
@@ -1915,11 +1966,21 @@ void Test_Process(void)
 //									SetSystemStatus(SYS_STATUS_LIMITSET);
 //								}break;
 //								case 1:
-							if(buttonpage1 == 1)
+							if(DispValue.alertdisp == 0)
 							{
-								buttonpage1=2;
+								if(buttonpage1 == 1)
+								{
+									buttonpage1=2;
+								}else{
+									buttonpage1=1;
+								}
 							}else{
-								buttonpage1=1;
+								if(DispValue.protectflag == 0)
+								{
+									DispValue.alertdisp = 0;
+									LCD_Clear(LCD_COLOR_TEST_BACK);
+									Disp_Test_Item();
+								}
 							}
 //									if(mainswitch == 0)
 //									{
@@ -2003,7 +2064,7 @@ void Test_Process(void)
 									}break;
 									case 2:
 									{
-										LoadSave.risistence=Disp_Set_Num(&Coordinates);
+										LoadSave.risistence=Disp_Set_RNum(&Coordinates);
 									}break;
 									case 3:
 									{
@@ -2474,7 +2535,20 @@ void Battery_Process(void)
 			ReadData();
 			F_100ms=FALSE;
 		}
-		Bat_Disp(LoadSave.vrange,LoadSave.crange);
+		if(DispValue.alertdisp == 0)
+		{
+			Bat_Disp(LoadSave.vrange,LoadSave.crange);
+		}else if(DispValue.alertdisp == 1){
+			MissConDisp();
+			Disp_Fastbutton();
+			Colour.Fword=White;//
+			Colour.black=LCD_COLOR_TEST_BUTON;
+			WriteString_16(BUTTOM_X_VALUE+4*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, "确认",  0);
+			DispValue.alertdisp = 2;
+			LoadSave.ErrCnt[0]++;
+			Store_set_flash();
+		}
+		
         if(setflag != 0)
 		{
 			if(setcount == 5)
@@ -2579,18 +2653,28 @@ void Battery_Process(void)
 		//					Savetoeeprom();
 						break;
 						case Key_F5:
-							switch(keynum)
+							if(DispValue.alertdisp == 0)
 							{
-								case 0:
+								switch(keynum)
 								{
-									if(mainswitch == 0)
-										SetSystemStatus(SYS_STATUS_LIMITSET);
-								}break;
-								case 1:
-									LoadSave.mode=4;
-								break;
-								default:
+									case 0:
+									{
+										if(mainswitch == 0)
+											SetSystemStatus(SYS_STATUS_LIMITSET);
+									}break;
+									case 1:
+										LoadSave.mode=4;
 									break;
+									default:
+										break;
+								}
+							}else{
+								if(DispValue.protectflag == 0)
+								{
+									DispValue.alertdisp = 0;
+									LCD_Clear(LCD_COLOR_TEST_BACK);
+									 Disp_Battery_Item(0); 
+								}
 							}
 	  
 						break;
@@ -3028,7 +3112,20 @@ void Dynamic_Process(void)
 			ReadData();
 			F_100ms=FALSE;
 		}
-		Dynamic_Disp(LoadSave.vrange,LoadSave.crange);
+		if(DispValue.alertdisp == 0)
+		{
+			Dynamic_Disp(LoadSave.vrange,LoadSave.crange);
+		}else if(DispValue.alertdisp == 1){
+			MissConDisp();
+			Disp_Fastbutton();
+			Colour.Fword=White;//
+			Colour.black=LCD_COLOR_TEST_BUTON;
+			WriteString_16(BUTTOM_X_VALUE+4*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, "确认",  0);
+			DispValue.alertdisp = 2;
+			LoadSave.ErrCnt[0]++;
+			Store_set_flash();
+		}
+		
              
 //		Uart_Process();//串口处理
         if(Keyboard.state==TRUE)
@@ -3146,19 +3243,30 @@ void Dynamic_Process(void)
 		//					Savetoeeprom();
 						break;
 						case Key_F5:
-							switch(keynum)
+							if(DispValue.alertdisp == 0)
 							{
-								case 0:
+								switch(keynum)
 								{
-									if(mainswitch == 0)
-										SetSystemStatus(SYS_STATUS_LIMITSET);
-								}break;
-//								case 1:
-//									LoadSave.mode=4;
-//								break;
-								default:
-									break;
+									case 0:
+									{
+										if(mainswitch == 0)
+											SetSystemStatus(SYS_STATUS_LIMITSET);
+									}break;
+	//								case 1:
+	//									LoadSave.mode=4;
+	//								break;
+									default:
+										break;
+								}
+							}else{
+								if(DispValue.protectflag == 0)
+								{
+									DispValue.alertdisp = 0;
+									LCD_Clear(LCD_COLOR_TEST_BACK);
+									Disp_Dynamic_Item();
+								}
 							}
+							
 	  
 						break;
 
@@ -3469,7 +3577,20 @@ void List_Process(void)
 //		{
 		if(resdisp != 1)
 		{
-			Disp_List_Process();
+			if(DispValue.alertdisp == 0)
+			{
+				Disp_List_Process();
+			}else if(DispValue.alertdisp == 1){
+				MissConDisp();
+				Disp_Fastbutton();
+				Colour.Fword=White;//
+				Colour.black=LCD_COLOR_TEST_BUTON;
+				WriteString_16(BUTTOM_X_VALUE+4*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, "确认",  0);
+				DispValue.alertdisp = 2;
+				LoadSave.ErrCnt[0]++;
+				Store_set_flash();
+			}
+			
 		}
 		
 //		}
@@ -3675,27 +3796,38 @@ void List_Process(void)
 				//					Savetoeeprom();
 								break;
 								case Key_F5:
-									switch(keynum)
+									if(DispValue.alertdisp == 0)
 									{
-										case 0:
+										switch(keynum)
 										{
-											if(mainswitch == 0)
-												SetSystemStatus(SYS_STATUS_LIMITSET);
-										}
-										case 1:
-//											LoadSave.mode=4;
-										break;
-										case 7:
-										{
-											if(mainswitch == 0)
+											case 0:
 											{
-												LoadSave.listmode[DispValue.liststep] = 4;
-												Store_set_flash();
+												if(mainswitch == 0)
+													SetSystemStatus(SYS_STATUS_LIMITSET);
 											}
-										}break;
-										default:
+											case 1:
+	//											LoadSave.mode=4;
 											break;
+											case 7:
+											{
+												if(mainswitch == 0)
+												{
+													LoadSave.listmode[DispValue.liststep] = 4;
+													Store_set_flash();
+												}
+											}break;
+											default:
+												break;
+										}
+									}else{
+										if(DispValue.protectflag == 0)
+										{
+											DispValue.alertdisp = 0;
+											LCD_Clear(LCD_COLOR_TEST_BACK);
+											Disp_List_Item();
+										}
 									}
+									
 			  
 								break;
 
@@ -3888,6 +4020,7 @@ void List_Process(void)
 										}
 									}else{
 										switchdelay = SWITCH_DELAY;
+										DispValue.liststep = 0;//每次进入列表后步骤复位
 										mainswitch = 0;
 										SwitchLedOff();
 										Set_Para();
@@ -4280,25 +4413,41 @@ void Use_DebugProcess(void)
 			switch(key)
 			{
 				case Key_F1:
-
+					calpage = 0;
+					LCD_Clear(LCD_COLOR_TEST_BACK);
+					Disp_UserCheck_Item();
 				break;
 				case Key_F2:
-
+					calpage = 1;
+					LCD_Clear(LCD_COLOR_TEST_BACK);
+					Disp_UserCheck_Item();
 				break;
 				case Key_F3:
-					if(list == 1||list == 2)
+					if(calpage == 0)
 					{
-						LoadSave.vrange = 0;
-						V_Gear_SW();
-					}else if(list == 3||list == 4||list == 5){
-						LoadSave.vrange = 1;
-						V_Gear_SW();
-					}else if(list == 6||list == 7){
-						LoadSave.crange = 0;
-						I_Gear_SW();
-					}else if(list == 8||list == 9||list == 10){
-						LoadSave.crange = 1;
-						I_Gear_SW();
+						if(list == 1||list == 2)
+						{
+							LoadSave.vrange = 0;
+							V_Gear_SW();
+						}else if(list >= 3&&list <= 8){
+							LoadSave.vrange = 1;
+							V_Gear_SW();
+						}else if(list == 9||list == 10){
+							LoadSave.vrange = 0;
+							V_Gear_SW();
+						}else if(list >= 11&&list <= 16){
+							LoadSave.vrange = 1;
+							V_Gear_SW();
+						}
+					}else if(calpage == 1){
+						if(list >= 1&&list <= 4)
+						{
+							LoadSave.crange = 0;
+							I_Gear_SW();
+						}else if(list >= 5&&list <= 9){
+							LoadSave.crange = 1;
+							I_Gear_SW();
+						}
 					}
 				break;
 				case Key_F4:
@@ -4310,12 +4459,21 @@ void Use_DebugProcess(void)
 
 				
 				case Key_LEFT:
-					if(list<1){
-						list=DEBUG_RANGE;
-					}else{
-						list --;
+					if(calpage == 0)
+					{
+						if(list<1){
+							list=DEBUG_RANGE;
+						}else{
+							list --;
+						}
+					}else if(calpage == 1){
+						if(list<1){
+							list=9;
+						}else{
+							list --;
+						}
 					}
-					if(list < 6)
+					if(calpage == 0)
 					{
 						LoadSave.mode = 1;
 					}else{
@@ -4324,12 +4482,21 @@ void Use_DebugProcess(void)
 					Mode_SW();
 				break;
 				case Key_RIGHT:
-					if(list>13){
-						list=0;
-					}else{
-						list ++;
+					if(calpage == 0)
+					{
+						if(list>15){
+							list=0;
+						}else{
+							list ++;
+						}
+					}else if(calpage == 1){
+						if(list>8){
+							list=0;
+						}else{
+							list ++;
+						}
 					}
-					if(list < 6)
+					if(calpage == 0)
 					{
 						LoadSave.mode = 1;
 					}else{
@@ -4359,10 +4526,26 @@ void Use_DebugProcess(void)
 				case Key_NUM9:
 				//break;
 				case Key_NUM0:
-					Coordinates.xpos=LIST1+160;
-					Coordinates.ypos=FIRSTLINE+(SPACE1-2)*(list-1);
-					Coordinates.lenth=70;
-					DispValue.CalValue[list-1] = Disp_Set_Num(&Coordinates);
+					if(calpage == 0)
+					{
+						if(list < 11)
+						{
+							Coordinates.xpos=LIST1+160;
+							Coordinates.ypos=FIRSTLINE+(SPACE1-2)*(list-1);
+							Coordinates.lenth=70;
+							DispValue.CalValue[list-1] = Disp_Set_Num(&Coordinates);
+						}else{
+							Coordinates.xpos=LIST2+100;
+							Coordinates.ypos=FIRSTLINE+(SPACE1-2)*(list-11);
+							Coordinates.lenth=70;
+							DispValue.CalValue[list-1] = Disp_Set_Num(&Coordinates);
+						}
+					}else if(calpage == 1){
+						Coordinates.xpos=LIST1+160;
+						Coordinates.ypos=FIRSTLINE+(SPACE1-2)*(list-1);
+						Coordinates.lenth=70;
+						DispValue.CalValue[list+16-1] = Disp_Set_Num(&Coordinates);
+					}
 				break;
 				
 				case Key_REST:
@@ -4377,14 +4560,28 @@ void Use_DebugProcess(void)
 					{
 						mainswitch = 1;
 						OnOff_SW(mainswitch);
+						SwitchLedOn();
 					}else{
 						mainswitch = 0;
 						OnOff_SW(mainswitch);
+						SwitchLedOff();
 					}
 				}break;
 				case Key_SET1:
 				{
-					Set_Para();
+					LoadSave.ErrCnt[0] = 0;
+					Store_set_flash();
+					LCD_Clear(LCD_COLOR_TEST_BACK);
+					Disp_UserCheck_Item();
+				}break;
+				case PRESS_SPIN:
+				{
+					if(dacctrl == 100)
+					{
+						dacctrl = 1000;
+					}else if(dacctrl == 1000){
+						dacctrl = 100;
+					}
 				}break;
 				default:
 				break;

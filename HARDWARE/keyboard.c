@@ -112,6 +112,7 @@ uint16_t Encoder_Process(u8 list)
 								LoadSave.power += pow(10,spinbit-1);
 							}break;
 						}
+						Para_Set_Comp();
 						return list;
 					}
 				}else{
@@ -126,7 +127,12 @@ uint16_t Encoder_Process(u8 list)
 			}break;
 			case SYS_STATUS_DEBUG:
 			{
-				dacvalue[list-1] += 100;
+				if(calpage == 0)
+				{
+					dacvalue[list-1-8] += dacctrl;
+				}else if(calpage == 1){
+					dacvalue[list+7] += dacctrl;
+				}
 				Set_Dac(list);
 			}break;
 			case SYS_STATUS_BATTERY:
@@ -313,7 +319,13 @@ uint16_t Encoder_Process(u8 list)
 			break;
 			case SYS_STATUS_DEBUG:
 			{
-				dacvalue[list-1] -= 100;
+				if(calpage == 0)
+				{
+					dacvalue[list-1-8] -= dacctrl;
+				}else if(calpage == 1){
+					dacvalue[list+7] -= dacctrl;
+				}
+//				dacvalue[list-1] -= 100;
 				Set_Dac(list);
 			}break;
 			case SYS_STATUS_BATTERY:

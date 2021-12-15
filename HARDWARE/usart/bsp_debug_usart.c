@@ -22,9 +22,9 @@ vu8 sendbuff[200];
 u8 setflag;
 vu16 Hardware_CRC(vu8 *p_buffer,vu8 count);
 //u32 dacvalue[10] = {1000,7000,1000,2000,3000,20000,50000,10000,20000,30000};
-u32 dacvalue[14] = {
-1000,12000,//电压低档位
-10000,20000,40000,//电压高档位
+u32 dacvalue[17] = {
+10000,30000,//电压低档位
+3000,10000,20000,30000,40000,50000,//电压高档位
 5000,10000,30000,50000,//电流低档位
 10000,20000,30000,40000,50000};//电流高档位
 u32 vsum,isum,rsum,psum;
@@ -171,19 +171,40 @@ void CalHandle(u8 step)
 	memset((char *)sendbuff,0,sizeof(sendbuff));
 	
 	sendbuff[0] = 0x01;
-	sendbuff[2] = step;
-	sendbuff[1] = 0xA5;
-	if(step == 1 || step == 2 || step == 6 || step == 7 || step == 8|| step == 9)
+	if(calpage == 0)
 	{
-		sendbuff[3] = DispValue.CalValue[step-1]>>24;
-		sendbuff[4] = DispValue.CalValue[step-1]>>16;
-		sendbuff[5] = DispValue.CalValue[step-1]>>8;
-		sendbuff[6] = DispValue.CalValue[step-1];
-	}else{
-		sendbuff[3] = DispValue.CalValue[step-1]/10>>24;
-		sendbuff[4] = DispValue.CalValue[step-1]/10>>16;
-		sendbuff[5] = DispValue.CalValue[step-1]/10>>8;
-		sendbuff[6] = DispValue.CalValue[step-1]/10;
+		sendbuff[2] = step;
+	}else if(calpage == 1){
+		sendbuff[2] = step+16;
+	}
+	sendbuff[1] = 0xA5;
+	if(calpage == 0)
+	{
+		if(step == 1 || step == 2 || step == 9 || step == 10)
+		{
+			sendbuff[3] = DispValue.CalValue[step-1]>>24;
+			sendbuff[4] = DispValue.CalValue[step-1]>>16;
+			sendbuff[5] = DispValue.CalValue[step-1]>>8;
+			sendbuff[6] = DispValue.CalValue[step-1];
+		}else{
+			sendbuff[3] = DispValue.CalValue[step-1]/10>>24;
+			sendbuff[4] = DispValue.CalValue[step-1]/10>>16;
+			sendbuff[5] = DispValue.CalValue[step-1]/10>>8;
+			sendbuff[6] = DispValue.CalValue[step-1]/10;
+		}
+	}else if(calpage == 1){
+		if(step == 1 || step == 2 || step == 3 || step == 4)
+		{
+			sendbuff[3] = DispValue.CalValue[step+16-1]>>24;
+			sendbuff[4] = DispValue.CalValue[step+16-1]>>16;
+			sendbuff[5] = DispValue.CalValue[step+16-1]>>8;
+			sendbuff[6] = DispValue.CalValue[step+16-1];
+		}else{
+			sendbuff[3] = DispValue.CalValue[step+16-1]/10>>24;
+			sendbuff[4] = DispValue.CalValue[step+16-1]/10>>16;
+			sendbuff[5] = DispValue.CalValue[step+16-1]/10>>8;
+			sendbuff[6] = DispValue.CalValue[step+16-1]/10;
+		}
 	}
 	sendbuff[7] = Hardware_CRC(sendbuff,7)>>8;
 	sendbuff[8] = Hardware_CRC(sendbuff,7);
@@ -195,12 +216,20 @@ void Set_Dac(u8 step)
 {
 	memset((char *)sendbuff,0,sizeof(sendbuff));
 	sendbuff[0] = 0x01;
-	sendbuff[2] = 0x0F;
+	sendbuff[2] = 0xEE;
 	sendbuff[1] = 0xA5;
-	sendbuff[3] = dacvalue[step-1]>>24;
-	sendbuff[4] = dacvalue[step-1]>>16;
-	sendbuff[5] = dacvalue[step-1]>>8;
-	sendbuff[6] = dacvalue[step-1];
+	if(calpage == 0)
+	{
+		sendbuff[3] = dacvalue[step-1-8]>>24;
+		sendbuff[4] = dacvalue[step-1-8]>>16;
+		sendbuff[5] = dacvalue[step-1-8]>>8;
+		sendbuff[6] = dacvalue[step-1-8];
+	}else if(calpage == 1){
+		sendbuff[3] = dacvalue[step+7]>>24;
+		sendbuff[4] = dacvalue[step+7]>>16;
+		sendbuff[5] = dacvalue[step+7]>>8;
+		sendbuff[6] = dacvalue[step+7];
+	}
 	sendbuff[7] = Hardware_CRC(sendbuff,7)>>8;
 	sendbuff[8] = Hardware_CRC(sendbuff,7);
 	Usart1_Send((char *)sendbuff,9);
@@ -350,6 +379,24 @@ void Sence_SW(void)
 	setflag = 1;
 }
 
+//保护标志复位
+void ProtectRst(void)
+{
+	memset((char *)sendbuff,0,sizeof(sendbuff));
+	sendbuff[0] = 0x01;
+	sendbuff[1] = 0x06;
+	sendbuff[2] = 0x00;
+	sendbuff[3] = 0x0B;
+	sendbuff[4] = 0x00;
+	sendbuff[5] = 0x00;
+	sendbuff[6] = 0x00;
+	sendbuff[7] = 0x00;
+	sendbuff[8] = Hardware_CRC(sendbuff,8)>>8;
+	sendbuff[9] = Hardware_CRC(sendbuff,8);
+	Usart1_Send((char *)sendbuff,10);
+	setflag = 1;
+}
+
 //设置波特率
 void Set_Baudrate(void)
 {
@@ -419,16 +466,21 @@ void Set_Para(void)
 		sendbuff[11] = 0x00;
 		sendbuff[12] = 0x00;
 		sendbuff[13] = 0x00;
-		sendbuff[14] = LoadSave.listmode[DispValue.listrunstep];//模式
+		if(LoadSave.listmode[DispValue.listrunstep] == 4)
+		{
+			sendbuff[14] = 6;
+		}else{
+			sendbuff[14] = LoadSave.listmode[DispValue.listrunstep];//模式
+		}
 		
 		if(LoadSave.listmode[DispValue.listrunstep] == 1)
 		{
 			if(LoadSave.vrange == 1)
 			{
-				sendbuff[7+28] = LoadSave.listvalue[DispValue.listrunstep]/10>>24;
-				sendbuff[8+28] = LoadSave.listvalue[DispValue.listrunstep]/10>>16;
-				sendbuff[9+28] = LoadSave.listvalue[DispValue.listrunstep]/10>>8;
-				sendbuff[10+28] = LoadSave.listvalue[DispValue.listrunstep]/10;//设置电压值
+				sendbuff[7+28] = LoadSave.listvalue[DispValue.listrunstep]>>24;
+				sendbuff[8+28] = LoadSave.listvalue[DispValue.listrunstep]>>16;
+				sendbuff[9+28] = LoadSave.listvalue[DispValue.listrunstep]>>8;
+				sendbuff[10+28] = LoadSave.listvalue[DispValue.listrunstep];//设置电压值
 			}else{
 				sendbuff[7+28] = LoadSave.listvalue[DispValue.listrunstep]>>24;
 				sendbuff[8+28] = LoadSave.listvalue[DispValue.listrunstep]>>16;
@@ -453,11 +505,11 @@ void Set_Para(void)
 				sendbuff[14+28] = LoadSave.listvalue[DispValue.listrunstep];//设置电流值
 			}
 		}else if(LoadSave.listmode[DispValue.listrunstep] == 2){
-			sendbuff[15+28] = LoadSave.listvalue[DispValue.listrunstep]/10>>24;
-			sendbuff[16+28] = LoadSave.listvalue[DispValue.listrunstep]/10>>16;
-			sendbuff[17+28] = LoadSave.listvalue[DispValue.listrunstep]/10>>8;
-			sendbuff[18+28] = LoadSave.listvalue[DispValue.listrunstep]/10;//设置电阻值
-		}else if(LoadSave.listmode[DispValue.listrunstep] == 2){
+			sendbuff[15+28] = LoadSave.listvalue[DispValue.listrunstep]>>24;
+			sendbuff[16+28] = LoadSave.listvalue[DispValue.listrunstep]>>16;
+			sendbuff[17+28] = LoadSave.listvalue[DispValue.listrunstep]>>8;
+			sendbuff[18+28] = LoadSave.listvalue[DispValue.listrunstep];//设置电阻值
+		}else if(LoadSave.listmode[DispValue.listrunstep] == 3){
 			sendbuff[19+28] = LoadSave.listvalue[DispValue.listrunstep]/10>>24;
 			sendbuff[20+28] = LoadSave.listvalue[DispValue.listrunstep]/10>>16;
 			sendbuff[21+28] = LoadSave.listvalue[DispValue.listrunstep]/10>>8; 
@@ -505,10 +557,10 @@ void Set_Para(void)
 		}
 		
 		
-		sendbuff[15+28] = LoadSave.risistence/10>>24;
-		sendbuff[16+28] = LoadSave.risistence/10>>16;
-		sendbuff[17+28] = LoadSave.risistence/10>>8;
-		sendbuff[18+28] = LoadSave.risistence/10;//设置电阻值
+		sendbuff[15+28] = LoadSave.risistence>>24;
+		sendbuff[16+28] = LoadSave.risistence>>16;
+		sendbuff[17+28] = LoadSave.risistence>>8;
+		sendbuff[18+28] = LoadSave.risistence;//设置电阻值
 		
 		sendbuff[19+28] = LoadSave.power/10>>24;
 		sendbuff[20+28] = LoadSave.power/10>>16;
@@ -590,10 +642,10 @@ void Set_Para(void)
 		}
 		
 		
-		sendbuff[15+28] = LoadSave.loadr/10>>24;
-		sendbuff[16+28] = LoadSave.loadr/10>>16;
-		sendbuff[17+28] = LoadSave.loadr/10>>8;
-		sendbuff[18+28] = LoadSave.loadr/10;//设置电阻值
+		sendbuff[15+28] = LoadSave.loadr>>24;
+		sendbuff[16+28] = LoadSave.loadr>>16;
+		sendbuff[17+28] = LoadSave.loadr>>8;
+		sendbuff[18+28] = LoadSave.loadr;//设置电阻值
 		
 		sendbuff[19+28] = LoadSave.power/10>>24;
 		sendbuff[20+28] = LoadSave.power/10>>16;
@@ -641,10 +693,10 @@ void Set_Para(void)
 		}
 		
 		
-		sendbuff[15+28] = LoadSave.risistence/10>>24;
-		sendbuff[16+28] = LoadSave.risistence/10>>16;
-		sendbuff[17+28] = LoadSave.risistence/10>>8;
-		sendbuff[18+28] = LoadSave.risistence/10;//设置电阻值
+		sendbuff[15+28] = LoadSave.risistence>>24;
+		sendbuff[16+28] = LoadSave.risistence>>16;
+		sendbuff[17+28] = LoadSave.risistence>>8;
+		sendbuff[18+28] = LoadSave.risistence;//设置电阻值
 		
 		sendbuff[19+28] = LoadSave.power/10>>24;
 		sendbuff[20+28] = LoadSave.power/10>>16;
@@ -1179,6 +1231,17 @@ void Rec_Handle(void)
 				readbuf += UART_Buffer_Rece[45] << 8;
 				readbuf += UART_Buffer_Rece[46];
 				DispValue.Operation_MODE = readbuf;
+				
+				readbuf = 0;
+				readbuf += UART_Buffer_Rece[47] << 24;
+				readbuf += UART_Buffer_Rece[48] << 16;
+				readbuf += UART_Buffer_Rece[49] << 8;
+				readbuf += UART_Buffer_Rece[50];
+				DispValue.protectflag = readbuf;
+				if(DispValue.protectflag == 2)
+				{
+					DispValue.alertdisp = 1;
+				}
 				
 				readbuf = 0;
 				readbuf += UART_Buffer_Rece[51] << 24;

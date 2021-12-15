@@ -236,6 +236,7 @@ void DoubHex_Format(u32 dat , u8 Dot , u8 len , u8 dispzero);
 Sort_TypeDef Disp_Set_CompNum(Disp_Coordinates_Typedef *Coordinates);
 void Disp_Range(u8 hand,u8 range);
 void Disp_Open(void);
+void MissConDisp(void);
 void BubbleSort(uint32_t A[], uint16_t n);//
 
 uint8_t R_Comp(void);//µç×è±È½Ï
