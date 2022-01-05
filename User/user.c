@@ -231,10 +231,10 @@ const uint8_t Test_Setitem_E[][9+1]=
 
 const uint8_t Mode_Setitem[][9+1]=
 {
-	{"电流    :"},
-	{"电压    :"},
-	{"电阻    :"},
-	{"功率    :"},
+	{"电流   :"},
+	{"电压   :"},
+	{"电阻   :"},
+	{"功率   :"},
 };
 
 const uint8_t All_TopName[][21+1]=
@@ -1999,7 +1999,12 @@ void Disp_Test_value(u8 num)
 	{
 		Colour.black=LCD_COLOR_TEST_BACK;
 	}
-	LCD_DrawFullRect( LIST2+88-2, FIRSTLINE-2,SELECT_2END-LIST2-86+4+10, SPACE1-2  ) ;//SPACE1
+//	if(LoadSave.mode == 3)
+//	{
+		LCD_DrawFullRect( LIST2+88-2-10, FIRSTLINE-2,SELECT_2END-LIST2-86+4+10, SPACE1-2  ) ;//SPACE1
+//	}else{
+//		LCD_DrawFullRect( LIST2+88-2, FIRSTLINE-2,SELECT_2END-LIST2-86+4+10, SPACE1-2  ) ;//SPACE1
+//	}
 	if(Black_Select && coder_flag == 1)
 	{
 		Colour.black=LCD_COLOR_YELLOW;
@@ -2031,21 +2036,45 @@ void Disp_Test_value(u8 num)
 	}else if(LoadSave.mode == 2){//CR
 		Hex_Format(LoadSave.risistence,1,7,0);
 	}else if(LoadSave.mode == 3){//CP
-		Hex_Format(LoadSave.power,4,7,0);
+		if(LoadSave.Version == 0)
+		{
+			Hex_Format(LoadSave.power,4,8,0);
+		}else{
+			Hex_Format(LoadSave.power,4,7,0);
+		}
 	}
-	if(LoadSave.mode == 2){//CR
-		WriteString_16(LIST2+88, FIRSTLINE, DispBuf,  0);//增加算法  把顺序改过来
+	if(LoadSave.mode == 3){//CP
+		if(LoadSave.Version == 0)
+		{
+			WriteString_16(LIST2+88-10, FIRSTLINE, DispBuf,  0);//增加算法  把顺序改过来
+		}else{
+			WriteString_16(LIST2+88, FIRSTLINE, DispBuf,  0);//增加算法  把顺序改过来
+		}
+		
 	}else{
 		WriteString_16(LIST2+88, FIRSTLINE, DispBuf,  0);//增加算法  把顺序改过来
 	}
 	WriteString_16(LIST2+90+80+10, FIRSTLINE, MODE_UINT[LoadSave.mode],  0);
-	if(DispBuf[0] == 0x20 && DispBuf[1] == 0x20)
-	{
-		spinbitmax = 5;
-	}else if(DispBuf[0] == 0x20 && DispBuf[1] != 0x20){
-		spinbitmax = 6;
-	}else if(DispBuf[0] != 0x20 && DispBuf[1] != 0x20){
-		spinbitmax = 7;
+	if(LoadSave.mode == 3){//CP
+		if(DispBuf[0] == 0x20 && DispBuf[1] == 0x20 && DispBuf[2] == 0x20)
+		{
+			spinbitmax = 5;
+		}else if(DispBuf[0] == 0x20 && DispBuf[1] == 0x20 && DispBuf[2] != 0x20){
+			spinbitmax = 6;
+		}else if(DispBuf[0] == 0x20 && DispBuf[1] != 0x20 && DispBuf[2] != 0x20){
+			spinbitmax = 7;
+		}else if(DispBuf[0] != 0x20 && DispBuf[1] != 0x20 && DispBuf[2] != 0x20){
+			spinbitmax = 8;
+		}
+	}else{
+		if(DispBuf[0] == 0x20 && DispBuf[1] == 0x20)
+		{
+			spinbitmax = 5;
+		}else if(DispBuf[0] == 0x20 && DispBuf[1] != 0x20){
+			spinbitmax = 6;
+		}else if(DispBuf[0] != 0x20 && DispBuf[1] != 0x20){
+			spinbitmax = 7;
+		}
 	}
 	if(num == 2)
 	{
@@ -3068,7 +3097,7 @@ void Disp_List_value(u8 num)
 		{
 			Hex_Format(LoadSave.listvalue[DispValue.liststep],1,7,0);
 		}else{
-			Hex_Format(LoadSave.listvalue[DispValue.liststep],4,7,0);
+			Hex_Format(LoadSave.listvalue[DispValue.liststep],4,8,0);
 		}
 		WriteString_16(100,26+4*22,DispBuf,0);
 		
@@ -6566,6 +6595,14 @@ void Disp_UserCheck_Item(void)
 	Colour.black=LCD_COLOR_TEST_BACK;//User_Check_main
 	Hex_Format(LoadSave.ErrCnt[0],0,5,0);
 	WriteString_16(200, 4,DispBuf ,  0);
+	if(LoadSave.Version == 0)
+	{
+		WriteString_16(360, 4,"1200W" ,  0);
+	}else if(LoadSave.Version == 1){
+		WriteString_16(360, 4," 800W" ,  0);
+	}else if(LoadSave.Version == 2){
+		WriteString_16(360, 4," 600W" ,  0);
+	}
 //	for(i=0;i<(sizeof(User_Check_main)/(sizeof(User_Check_main[0])));i++)
 //	{
 //		WriteString_16(LIST1+160*i, FIRSTLINE, User_Check_main[i],  0);

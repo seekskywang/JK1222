@@ -118,6 +118,11 @@ void delay(u32 nCount);
 void SetSoftTimer(u8 id, u8 ticks);
 u8 GetSoftTimerOut(u8 id);
 void Para_Set_Comp(void);
+
+//版本定义
+#define LOADVER1200
+#define LOADVER800
+#define LOADVER600
 //16bit数据的位操作定义
 #define	SetD0	(0x0001)
 #define	SetD1	(0x0002)
@@ -316,7 +321,13 @@ void Para_Set_Comp(void);
 
 #define		MAX_SET_CURRENT       600000    //60.0000A  最大设置电流 (低档 2.00000A  高档 20.0000)
 #define		MAX_SET_VOLT          1200000    //120.000V  最大设置电压 (低档 15.0000V  高档 150.000)
-#define		MAX_SET_POW           12000000    //1200.000W  最大功率
+//#ifdef LOADVER1200
+//#define		powermax           12000000    //1200.0000W  最大功率
+//#elif define LOADVER800
+//#define		powermax           8000000    //800.0000W  最大功率
+//#elif define LOADVER600
+//#define		powermax           6000000    //600.0000W  最大功率
+//#endif
 #define		MAX_SET_RES           2000000   //200000.0R  最大电阻
 
 
@@ -682,6 +693,8 @@ typedef struct
 	u16 Addr;//本机地址
 //反接记录
 	u16 ErrCnt[4];
+//版本区分
+	u8 Version;//0-1200W;1-800W;2-600W;
 }SaveData_Typedef;
 extern SaveData_Typedef LoadSave;
 typedef struct

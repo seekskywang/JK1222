@@ -58,7 +58,7 @@ void Read_set_flash(void)
 //	{
 //		LoadSave.risistence = 0;
 //	}
-//	if(LoadSave.power > MAX_SET_POW)
+//	if(LoadSave.power > powermax)
 //	{
 //		LoadSave.power = 0;
 //	}
@@ -103,7 +103,7 @@ void Read_set_flash(void)
 //	{
 //		LoadSave.maxc = 0;
 //	}
-//	if(LoadSave.maxp > MAX_SET_POW)
+//	if(LoadSave.maxp > powermax)
 //	{
 //		LoadSave.maxp = 0;
 //	}
@@ -243,11 +243,11 @@ void Read_set_flash(void)
 //	{
 //		LoadSave.clow = 0;
 //	}
-//	if(LoadSave.phigh > MAX_SET_POW)
+//	if(LoadSave.phigh > powermax)
 //	{
 //		LoadSave.phigh = 0;
 //	}
-//	if(LoadSave.plow > MAX_SET_POW)
+//	if(LoadSave.plow > powermax)
 //	{
 //		LoadSave.plow = 0;
 //	}

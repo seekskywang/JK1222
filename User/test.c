@@ -33,6 +33,7 @@ u8 coder_flag=0;
 u8 buttonpage1=1;
 u8 calpage;
 u16 dacctrl=100;
+u32 powermax;
 //const u8 RANGE_UNIT[11]=
 //{
 //	4,
@@ -113,6 +114,18 @@ void READ_COMP(void)
 void Para_Set_Comp(void)
 {
 	u8 i;
+	if(LoadSave.Version > 2)
+	{
+		LoadSave.Version=0;
+	}
+	if(LoadSave.Version == 0)
+	{
+		powermax = 12000000;
+	}else if(LoadSave.Version == 1){
+		powermax = 8000000;
+	}else if(LoadSave.Version == 2){
+		powermax = 6000000;
+	}
 	if(LoadSave.sence > 1)
 	{
 		LoadSave.sence = 0;
@@ -177,9 +190,9 @@ void Para_Set_Comp(void)
 	{
 		LoadSave.risistence = MAX_SET_RES;
 	}
-	if(LoadSave.power > MAX_SET_POW)
+	if(LoadSave.power > powermax)
 	{
-		LoadSave.power = MAX_SET_POW;
+		LoadSave.power = powermax;
 	}
 
 	if(LoadSave.onvol > MAX_LoadVOLOTE)
@@ -203,9 +216,9 @@ void Para_Set_Comp(void)
 	{
 		LoadSave.maxc = MAX_SET_CURRENT;
 	}
-	if(LoadSave.maxp > MAX_SET_POW)
+	if(LoadSave.maxp > powermax)
 	{
-		LoadSave.maxp = MAX_SET_POW;
+		LoadSave.maxp = powermax;
 	}
 	if(LoadSave.crise > MAX_CURRENTUP)
 	{
@@ -353,9 +366,9 @@ void Para_Set_Comp(void)
 	{
 		LoadSave.clow = 0;
 	}
-	if(LoadSave.phigh > MAX_SET_POW)
+	if(LoadSave.phigh > powermax)
 	{
-		LoadSave.phigh = MAX_SET_POW;
+		LoadSave.phigh = powermax;
 	}
 	if(LoadSave.plow > LoadSave.phigh)
 	{
@@ -412,17 +425,17 @@ void Para_Set_Comp(void)
 				LoadSave.listlow[i] = MAX_SET_RES;
 			}
 		}else if(LoadSave.listmode[i] == 3){
-			if(LoadSave.listvalue[i] > MAX_SET_POW)
+			if(LoadSave.listvalue[i] > powermax)
 			{
-				LoadSave.listvalue[i] = MAX_SET_POW;
+				LoadSave.listvalue[i] = powermax;
 			}
-			if(LoadSave.listhigh[i] > MAX_SET_POW)
+			if(LoadSave.listhigh[i] > powermax)
 			{
-				LoadSave.listhigh[i] = MAX_SET_POW;
+				LoadSave.listhigh[i] = powermax;
 			}
-			if(LoadSave.listlow[i] > MAX_SET_POW)
+			if(LoadSave.listlow[i] > powermax)
 			{
-				LoadSave.listlow[i] = MAX_SET_POW;
+				LoadSave.listlow[i] = powermax;
 			}
 		}
 		if(LoadSave.listcomp[i] > 3)
@@ -2048,26 +2061,36 @@ void Test_Process(void)
 //						{
 //							case 2:
 //							{
-								Coordinates.xpos=LIST2+88;
-								Coordinates.ypos=FIRSTLINE*1;
-								Coordinates.lenth=76;
+								
 								switch(LoadSave.mode)
 								{
 									case 0:
 									{
+										Coordinates.xpos=LIST2+88;
+										Coordinates.ypos=FIRSTLINE*1;
+										Coordinates.lenth=76;
 										LoadSave.current=Disp_Set_Num(&Coordinates);
 
 									}break;
 									case 1:
 									{
+										Coordinates.xpos=LIST2+88;
+										Coordinates.ypos=FIRSTLINE*1;
+										Coordinates.lenth=76;
 										LoadSave.voltage=Disp_Set_Num(&Coordinates);
 									}break;
 									case 2:
 									{
+										Coordinates.xpos=LIST2+88;
+										Coordinates.ypos=FIRSTLINE*1;
+										Coordinates.lenth=76;
 										LoadSave.risistence=Disp_Set_RNum(&Coordinates);
 									}break;
 									case 3:
 									{
+										Coordinates.xpos=LIST2+88-10;
+										Coordinates.ypos=FIRSTLINE*1;
+										Coordinates.lenth=76;
 										LoadSave.power=Disp_Set_Num(&Coordinates);
 									}break;
 								}
@@ -4582,6 +4605,23 @@ void Use_DebugProcess(void)
 					}else if(dacctrl == 1000){
 						dacctrl = 100;
 					}
+				}break;
+				case Key_SHIFT:
+				{
+					if(LoadSave.Version < 2)
+					{
+						LoadSave.Version++;
+					}else{
+						LoadSave.Version=0;
+					}
+					Store_set_flash();
+					LCD_Clear(LCD_COLOR_TEST_BACK);
+					Disp_UserCheck_Item();
+				}break;
+				case Key_ESC:
+				{
+					if(mainswitch == 0)
+						SetSystemStatus(SYS_STATUS_TEST);
 				}break;
 				default:
 				break;
