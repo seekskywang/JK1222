@@ -6602,6 +6602,8 @@ void Disp_UserCheck_Item(void)
 		WriteString_16(360, 4," 800W" ,  0);
 	}else if(LoadSave.Version == 2){
 		WriteString_16(360, 4," 600W" ,  0);
+	}else if(LoadSave.Version == 3){
+		WriteString_16(360, 4," 400W" ,  0);
 	}
 //	for(i=0;i<(sizeof(User_Check_main)/(sizeof(User_Check_main[0])));i++)
 //	{

@@ -114,7 +114,7 @@ void READ_COMP(void)
 void Para_Set_Comp(void)
 {
 	u8 i;
-	if(LoadSave.Version > 2)
+	if(LoadSave.Version > 3)
 	{
 		LoadSave.Version=0;
 	}
@@ -125,6 +125,8 @@ void Para_Set_Comp(void)
 		powermax = 8000000;
 	}else if(LoadSave.Version == 2){
 		powermax = 6000000;
+	}else if(LoadSave.Version == 3){
+		powermax = 4000000;
 	}
 	if(LoadSave.sence > 1)
 	{
@@ -182,10 +184,19 @@ void Para_Set_Comp(void)
 	{
 		LoadSave.voltage = MAX_SET_VOLT;
 	}
-	if(LoadSave.current > MAX_SET_CURRENT)
+	if(LoadSave.Version == 3)
 	{
-		LoadSave.current = MAX_SET_CURRENT;
+		if(LoadSave.current > 400000)
+		{
+			LoadSave.current = 400000;
+		}
+	}else{
+		if(LoadSave.current > MAX_SET_CURRENT)
+		{
+			LoadSave.current = MAX_SET_CURRENT;
+		}
 	}
+	
 	if(LoadSave.risistence > MAX_SET_RES)
 	{
 		LoadSave.risistence = MAX_SET_RES;
@@ -212,9 +223,21 @@ void Para_Set_Comp(void)
 	{
 		LoadSave.maxv = MAX_SET_VOLT;
 	}
-	if(LoadSave.maxc > MAX_SET_CURRENT)
+//	if(LoadSave.maxc > MAX_SET_CURRENT)
+//	{
+//		LoadSave.maxc = MAX_SET_CURRENT;
+//	}
+	if(LoadSave.Version == 3)
 	{
-		LoadSave.maxc = MAX_SET_CURRENT;
+		if(LoadSave.maxc > 400000)
+		{
+			LoadSave.maxc = 400000;
+		}
+	}else{
+		if(LoadSave.maxc > MAX_SET_CURRENT)
+		{
+			LoadSave.maxc = MAX_SET_CURRENT;
+		}
 	}
 	if(LoadSave.maxp > powermax)
 	{
@@ -269,10 +292,22 @@ void Para_Set_Comp(void)
 	{
 		LoadSave.ledvo = 0;
 	}
-	if(LoadSave.ledio > MAX_SET_CURRENT)
+	if(LoadSave.Version == 3)
 	{
-		LoadSave.ledio = 0;
+		if(LoadSave.ledio > 400000)
+		{
+			LoadSave.ledio = 400000;
+		}
+	}else{
+		if(LoadSave.ledio > MAX_SET_CURRENT)
+		{
+			LoadSave.ledio = MAX_SET_CURRENT;
+		}
 	}
+//	if(LoadSave.ledio > MAX_SET_CURRENT)
+//	{
+//		LoadSave.ledio = 0;
+//	}
 	if(LoadSave.ledrd > MAX_SET_RES)
 	{
 		LoadSave.ledrd = 0;
@@ -281,18 +316,46 @@ void Para_Set_Comp(void)
 	{
 		LoadSave.loadmode = 0;
 	}
-	if(LoadSave.loadc1 > MAX_SET_CURRENT)
+	if(LoadSave.Version == 3)
 	{
-		LoadSave.loadc1 = MAX_SET_CURRENT;
+		if(LoadSave.loadc1 > 400000)
+		{
+			LoadSave.loadc1 = 400000;
+		}
+		if(LoadSave.loadc2 > 400000)
+		{
+			LoadSave.loadc2 = 400000;
+		}
+		if(LoadSave.loadc3 > 400000)
+		{
+			LoadSave.loadc3 = 400000;
+		}
+	}else{
+		if(LoadSave.loadc1 > MAX_SET_CURRENT)
+		{
+			LoadSave.loadc1 = MAX_SET_CURRENT;
+		}
+		if(LoadSave.loadc2 > MAX_SET_CURRENT)
+		{
+			LoadSave.loadc2 = MAX_SET_CURRENT;
+		}
+		if(LoadSave.loadc3 > MAX_SET_CURRENT)
+		{
+			LoadSave.loadc3 = MAX_SET_CURRENT;
+		}
 	}
-	if(LoadSave.loadc2 > MAX_SET_CURRENT)
-	{
-		LoadSave.loadc2 = MAX_SET_CURRENT;
-	}
-	if(LoadSave.loadc3 > MAX_SET_CURRENT)
-	{
-		LoadSave.loadc3 = MAX_SET_CURRENT;
-	}
+//	if(LoadSave.loadc1 > MAX_SET_CURRENT)
+//	{
+//		LoadSave.loadc1 = MAX_SET_CURRENT;
+//	}
+//	if(LoadSave.loadc2 > MAX_SET_CURRENT)
+//	{
+//		LoadSave.loadc2 = MAX_SET_CURRENT;
+//	}
+//	if(LoadSave.loadc3 > MAX_SET_CURRENT)
+//	{
+//		LoadSave.loadc3 = MAX_SET_CURRENT;
+//	}
 	if(LoadSave.curvetime > 10)
 	{
 		LoadSave.curvetime = 0;
@@ -325,14 +388,27 @@ void Para_Set_Comp(void)
 	{
 		LoadSave.dynamode = 0;
 	}
-	if(LoadSave.valA > MAX_SET_CURRENT)
+	if(LoadSave.Version == 3)
 	{
-		LoadSave.valA = MAX_SET_CURRENT;
+		if(LoadSave.valA > 400000)
+		{
+			LoadSave.valA = 400000;
+		}
+		if(LoadSave.valB > 400000)
+		{
+			LoadSave.valB = 400000;
+		}
+	}else{
+		if(LoadSave.valA > MAX_SET_CURRENT)
+		{
+			LoadSave.valA = MAX_SET_CURRENT;
+		}
+		if(LoadSave.valB > MAX_SET_CURRENT)
+		{
+			LoadSave.valB = MAX_SET_CURRENT;
+		}
 	}
-	if(LoadSave.valB > MAX_SET_CURRENT)
-	{
-		LoadSave.valB = MAX_SET_CURRENT;
-	}
+	
 	if(LoadSave.timeA > 600000)
 	{
 		LoadSave.timeA = 600000;
@@ -358,10 +434,19 @@ void Para_Set_Comp(void)
 	{
 		LoadSave.vlow = 0;
 	}
-	if(LoadSave.chigh > MAX_SET_CURRENT)
+	if(LoadSave.Version == 3)
 	{
-		LoadSave.chigh = MAX_SET_CURRENT;
+		if(LoadSave.chigh > 400000)
+		{
+			LoadSave.chigh = 400000;
+		}
+	}else{
+		if(LoadSave.chigh > MAX_SET_CURRENT)
+		{
+			LoadSave.chigh = MAX_SET_CURRENT;
+		}
 	}
+	
 	if(LoadSave.clow > LoadSave.chigh)
 	{
 		LoadSave.clow = 0;
@@ -386,18 +471,35 @@ void Para_Set_Comp(void)
 		}
 		if(LoadSave.listmode[i] == 0)
 		{
-			if(LoadSave.listvalue[i] > MAX_SET_CURRENT)
+			if(LoadSave.Version == 3)
 			{
-				LoadSave.listvalue[i] = MAX_SET_CURRENT;
+				if(LoadSave.listvalue[i] > 400000)
+				{
+					LoadSave.listvalue[i] = 400000;
+				}
+				if(LoadSave.listhigh[i] > 400000)
+				{
+					LoadSave.listhigh[i] = 400000;
+				}
+				if(LoadSave.listlow[i] > 400000)
+				{
+					LoadSave.listlow[i] = 400000;
+				}
+			}else{
+				if(LoadSave.listvalue[i] > MAX_SET_CURRENT)
+				{
+					LoadSave.listvalue[i] = MAX_SET_CURRENT;
+				}
+				if(LoadSave.listhigh[i] > MAX_SET_CURRENT)
+				{
+					LoadSave.listhigh[i] = MAX_SET_CURRENT;
+				}
+				if(LoadSave.listlow[i] > MAX_SET_CURRENT)
+				{
+					LoadSave.listlow[i] = MAX_SET_CURRENT;
+				}
 			}
-			if(LoadSave.listhigh[i] > MAX_SET_CURRENT)
-			{
-				LoadSave.listhigh[i] = MAX_SET_CURRENT;
-			}
-			if(LoadSave.listlow[i] > MAX_SET_CURRENT)
-			{
-				LoadSave.listlow[i] = MAX_SET_CURRENT;
-			}
+			
 		}else if(LoadSave.listmode[i] == 1){
 			if(LoadSave.listvalue[i] > MAX_SET_VOLT)
 			{
@@ -4608,7 +4710,7 @@ void Use_DebugProcess(void)
 				}break;
 				case Key_SHIFT:
 				{
-					if(LoadSave.Version < 2)
+					if(LoadSave.Version < 3)
 					{
 						LoadSave.Version++;
 					}else{
