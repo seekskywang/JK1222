@@ -374,6 +374,8 @@ void Para_Set_Comp(void);
 //显示刷新滤波次数
 #define DISP_FILTER		10
 
+#define STARTDELAY		80
+
 #define SWITCH_DELAY          (3)//开关之后的读取延时
 //定义变量
 extern uint8_t softswitch;
@@ -682,6 +684,7 @@ typedef struct
 	u8 LoopTest;//循环测试
 	u8 ListBeep;//列表讯响
 	vu32 listonvol;//启动电压
+	vu32 gatev;//门槛电压
 	vu8 listmode[15];//列表负载模式
 	vu32 listvalue[15];//列表负载值
 	vu16 delay[15];//列表负载延时

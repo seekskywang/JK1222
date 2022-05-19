@@ -359,7 +359,7 @@ const uint8_t List_Setitem[][14+1]=
 {
 	{"列表步数  :"},
 	{"步进模式  :"},
-	{""},
+	{"门槛电压  :"},
 	{"列表讯响  :"},
 	{"启动电压  :"},
 };
@@ -721,12 +721,14 @@ const uint8_t Step_Mode[][6+1]=
 {
 	" 连续",
 	" 触发",
+	" 自动",
 };
 
 const uint8_t Step_ModeE[][6+1]=
 {
-	" AUTO",
+	" CONS",
 	" TRIG",
+	" AUTO",
 };
 
 const uint8_t List_ItemDis[][6+1]=
@@ -817,7 +819,7 @@ const vu32 Debug_Compvalue[][2]=
 	{8000,12000},
 	{8000,12000},
 	{8000,12000},
-    {8000,12000},
+  {8000,12000},
 	{8000,12000},
 	{8000,12000},
 	{50000,80000},
@@ -1684,7 +1686,7 @@ void Disp_Button_TestSet(uint32_t value)
 void Disp_Button_SysSet(void)
 {
 
-		Disp_Button_value1(2);
+		Disp_Button_value1(3);
 
 
 }
@@ -2001,7 +2003,7 @@ void Disp_Test_value(u8 num)
 	}
 //	if(LoadSave.mode == 3)
 //	{
-		LCD_DrawFullRect( LIST2+88-2-10, FIRSTLINE-2,SELECT_2END-LIST2-86+4+10, SPACE1-2  ) ;//SPACE1
+		LCD_DrawFullRect( LIST2+88-2-10, FIRSTLINE-2,SELECT_2END-LIST2-86+4+10+10, SPACE1-2  ) ;//SPACE1
 //	}else{
 //		LCD_DrawFullRect( LIST2+88-2, FIRSTLINE-2,SELECT_2END-LIST2-86+4+10, SPACE1-2  ) ;//SPACE1
 //	}
@@ -2966,20 +2968,21 @@ void Disp_List_value(u8 num)
     Colour.Fword=White;
 	WriteString_16(LIST1+118,FIRSTLINE+SPACE1, Step_Mode[LoadSave.StepMode],  0);
 	
-//	Black_Select=(num==3)?1:0;///循环测试
-//	if(Black_Select)
-//	{
-//		Colour.black=LCD_COLOR_SELECT;
-//	
-//	}
-//	else
-//	{
-//		Colour.black=LCD_COLOR_TEST_BACK;
-//	}
-//	LCD_DrawFullRect( LIST1+118, FIRSTLINE+SPACE1*2-2,88+4 , SPACE1-2  ) ;//SPACE1
-//    Colour.Fword=White;
-//	WriteString_16(LIST1+118, FIRSTLINE+SPACE1*2, Test_Compvalue[LoadSave.LoopTest],  0);//增加算法  把顺序改过来
-
+	Black_Select=(num==3)?1:0;///门槛电压
+	if(Black_Select)
+	{
+		Colour.black=LCD_COLOR_SELECT;
+	
+	}
+	else
+	{
+		Colour.black=LCD_COLOR_TEST_BACK;
+	}
+	LCD_DrawFullRect( LIST1+118, FIRSTLINE+SPACE1*2-2,88+4 , SPACE1-2  ) ;//SPACE1
+	Hex_Format(LoadSave.gatev,4,7,0);
+  Colour.Fword=White;
+	WriteString_16(LIST1+118, FIRSTLINE+SPACE1*2, DispBuf,  0);//增加算法  把顺序改过来
+	WriteString_16(LIST1+118+82, FIRSTLINE+SPACE1*2, Unit_Setitem[1],  0);
 
 	
 	Black_Select=(num==4)?1:0;//列表讯响
@@ -3350,26 +3353,7 @@ void Disp_List_value(u8 num)
 							pt=Step_Mode;
 						
 						}
-						for(i=0;i<2;i++)
-						WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
-				
-				break;
-				case 3:
-				
-						Disp_Fastbutton();
-						Colour.Fword=White;//
-						Colour.black=LCD_COLOR_TEST_BUTON;
-						
-						if(Jk516save.Sys_Setvalue.lanage)
-						{
-							pt=Test_Compvalue_E;
-						}
-						else
-						{
-							pt=Test_Compvalue;
-						
-						}
-						for(i=0;i<2;i++)
+						for(i=0;i<3;i++)
 						WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
 				
 				break;
@@ -4330,7 +4314,7 @@ void Disp_Sys_Item(void)
 //	}
     Colour.black=White;
 	Disp_SysLine();
-	Disp_Button_value1(2);
+	Disp_Button_value1(3);
 	//Disp_Button_SysSet();
 }
 

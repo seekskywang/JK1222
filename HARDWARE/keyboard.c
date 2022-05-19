@@ -194,12 +194,12 @@ uint16_t Encoder_Process(u8 list)
 				}
 				else
 				{
-					if(key == 2)
-					{
-						key+=2;
-					}else{
+//					if(key == 2)
+//					{
+//						key+=2;
+//					}else{
 						key++;
-					}
+//					}
 				}
 				return key;
 			}break;
@@ -386,12 +386,12 @@ uint16_t Encoder_Process(u8 list)
 					key=12;
 				}
 				else{
-					if(key ==4)
-					{
-						key-=2;
-					}else{
+//					if(key ==4)
+//					{
+//						key-=2;
+//					}else{
 						key--;
-					}
+//					}
 				}
 				return key;
 			}break;

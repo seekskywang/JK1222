@@ -40,6 +40,7 @@
 
 extern USB_OTG_CORE_HANDLE          USB_OTG_Core;
 extern USBH_HOST                    USB_Host;
+extern u8 startdelay;
 struct MODS_T g_tModS;
 u8 g_mods_timeout = 0;
 u32 Tick_10ms=0;
@@ -414,7 +415,7 @@ void  BASIC_TIM_IRQHandler (void)
 				if(listtime > LoadSave.delay[DispValue.listrunstep]*10)
 				{
 					jumpflag = 1;
-					if(LoadSave.StepMode == 0)
+					if(LoadSave.StepMode == 0 || LoadSave.StepMode == 2)
 					{
 						if(DispValue.listrunstep < LoadSave.ListNum-1)
 						{
@@ -423,6 +424,7 @@ void  BASIC_TIM_IRQHandler (void)
 							DispValue.listdelay = LoadSave.delay[DispValue.listrunstep];
 							Set_Para();	
 						}else{
+							startdelay=STARTDELAY;
 							listtime = 0;
 							DispValue.listrunstep = 0;
 							mainswitch = 0;

@@ -34,6 +34,7 @@ u8 buttonpage1=1;
 u8 calpage;
 u16 dacctrl=100;
 u32 powermax;
+u8 startdelay;
 //const u8 RANGE_UNIT[11]=
 //{
 //	4,
@@ -168,7 +169,7 @@ void Para_Set_Comp(void)
 	{
 		LoadSave.ListNum = 1;
 	}
-	if(LoadSave.StepMode > 1)
+	if(LoadSave.StepMode > 2)
 	{
 		LoadSave.StepMode = 1;
 	}
@@ -559,6 +560,10 @@ void Para_Set_Comp(void)
 		if(LoadSave.listonvol > MAX_SET_VOLT)
 		{
 			LoadSave.listonvol = 0;
+		}
+		if(LoadSave.gatev > MAX_SET_VOLT)
+		{
+			LoadSave.gatev = 0;
 		}
 	}
 }
@@ -3637,7 +3642,7 @@ void List_Process(void)
     i=0;
 	Set_Para();
 
-	
+	startdelay=STARTDELAY;
 	while(GetSystemStatus()==SYS_STATUS_LIST)
 	{
         USB_Count++;
@@ -3683,7 +3688,7 @@ void List_Process(void)
 				listbeep = 0;
 			}
 		}
-		if(F_100ms == TRUE && resdisp == 0/* && setflag == 0*/)
+		if(F_100ms == TRUE/* && resdisp == 0*//* && setflag == 0*/)
 		{
 			ReadData();
 			F_100ms=FALSE;
@@ -3698,6 +3703,7 @@ void List_Process(void)
 				setcount++;
 			}
 		}
+		
 //		if(mainswitch == 1)
 //		{
 		if(resdisp != 1)
@@ -3705,6 +3711,44 @@ void List_Process(void)
 			if(DispValue.alertdisp == 0)
 			{
 				Disp_List_Process();
+				if(LoadSave.StepMode == 2 && mainswitch == 0)
+				{
+					if(startdelay == 0)
+					{
+						if(LoadSave.vrange == 0)
+						{
+							if(DispValue.Voltage >= LoadSave.gatev)
+							{
+								if(mainswitch == 0)
+								{
+									switchdelay = SWITCH_DELAY;
+									mainswitch = 1;
+									listreset();
+									SwitchLedOn();
+									Set_Para();
+				//								OnOff_SW(mainswitch);
+									DispValue.listdelay = LoadSave.delay[0];
+								}
+							}
+						}else if(LoadSave.vrange == 1){
+							if(DispValue.Voltage*10 >= LoadSave.gatev)
+							{
+								if(mainswitch == 0)
+								{
+									switchdelay = SWITCH_DELAY;
+									mainswitch = 1;
+									listreset();
+									SwitchLedOn();
+									Set_Para();
+				//								OnOff_SW(mainswitch);
+									DispValue.listdelay = LoadSave.delay[0];
+								}
+							}
+						}
+					}else{
+						startdelay--;
+					}
+				}
 			}else if(DispValue.alertdisp == 1){
 				MissConDisp();
 				Disp_Fastbutton();
@@ -3715,8 +3759,42 @@ void List_Process(void)
 				LoadSave.ErrCnt[0]++;
 				Store_set_flash();
 			}
-			
+		}else{
+			if(LoadSave.StepMode == 2)
+			{
+				startdelay=STARTDELAY;
+				if(LoadSave.StepMode == 2)
+				{
+					if(DispValue.Voltage < LoadSave.gatev)
+						{
+							resdisp = 0;
+							List_Process();
+						}
+					}else if(LoadSave.vrange == 1){
+						if(DispValue.Voltage*10 < LoadSave.gatev)
+						{
+							resdisp = 0;
+							List_Process();
+						}
+				}
+			}
 		}
+//		else{
+//			if(LoadSave.StepMode == 2)
+//			{
+//				if(DispValue.Voltage < LoadSave.gatev)
+//					{
+//						resdisp = 0;
+//						List_Process();
+//					}
+//				}else if(LoadSave.vrange == 1){
+//					if(DispValue.Voltage*10 < LoadSave.gatev)
+//					{
+//						resdisp = 0;
+//						List_Process();
+//					}
+//			}
+//		}
 		
 //		}
 //		Uart_Process();//´®¿Ú´¦Àí
@@ -3871,6 +3949,14 @@ void List_Process(void)
 												SetSystemStatus(SYS_STATUS_DYNAMIC);
 											}
 										break;
+										case 2:
+										{
+											if(mainswitch == 0)
+											{
+												LoadSave.StepMode = 2;
+												Store_set_flash();
+											}
+										}
 										case 7:
 										{
 											if(mainswitch == 0)
@@ -4016,6 +4102,17 @@ void List_Process(void)
 												Para_Set_Comp();
 												Store_set_flash();
 											}
+										break;
+										case 3:
+										if(mainswitch == 0)
+										{
+											Coordinates.xpos=LIST1+118;
+											Coordinates.ypos=FIRSTLINE+SPACE1*2;
+											Coordinates.lenth=76;
+											LoadSave.gatev=Disp_Set_VNum(&Coordinates);
+											Para_Set_Comp();
+											Store_set_flash();
+										}
 										break;
 
 										case 5:
@@ -4254,8 +4351,8 @@ void List_Process(void)
 										{
 											case 2:
 											{
-												if(LoadSave.StepMode == 0)
-													LoadSave.StepMode = 1;
+												if(LoadSave.StepMode < 2)
+													LoadSave.StepMode ++;
 												else
 													LoadSave.StepMode = 0;
 												Store_set_flash();
