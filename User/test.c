@@ -3711,7 +3711,7 @@ void List_Process(void)
 			if(DispValue.alertdisp == 0)
 			{
 				Disp_List_Process();
-				if(LoadSave.StepMode == 2 && mainswitch == 0)
+				if(LoadSave.StepMode == 2 && mainswitch == 0 && LoadSave.gatev > 500)
 				{
 					if(startdelay == 0)
 					{
@@ -3763,7 +3763,7 @@ void List_Process(void)
 			if(LoadSave.StepMode == 2)
 			{
 				startdelay=STARTDELAY;
-				if(LoadSave.StepMode == 2)
+				if(LoadSave.vrange == 0)
 				{
 					if(DispValue.Voltage < LoadSave.gatev)
 						{
