@@ -2038,7 +2038,7 @@ void Disp_Test_value(u8 num)
 	}else if(LoadSave.mode == 2){//CR
 		Hex_Format(LoadSave.risistence,1,7,0);
 	}else if(LoadSave.mode == 3){//CP
-		if(LoadSave.Version == 0)
+		if(LoadSave.Version == 0 || LoadSave.Version == 4)
 		{
 			Hex_Format(LoadSave.power,4,8,0);
 		}else{
@@ -2046,7 +2046,7 @@ void Disp_Test_value(u8 num)
 		}
 	}
 	if(LoadSave.mode == 3){//CP
-		if(LoadSave.Version == 0)
+		if(LoadSave.Version == 0 || LoadSave.Version == 4)
 		{
 			WriteString_16(LIST2+88-10, FIRSTLINE, DispBuf,  0);//增加算法  把顺序改过来
 		}else{
@@ -6588,6 +6588,8 @@ void Disp_UserCheck_Item(void)
 		WriteString_16(360, 4," 600W" ,  0);
 	}else if(LoadSave.Version == 3){
 		WriteString_16(360, 4," 400W" ,  0);
+	}else if(LoadSave.Version == 4){
+		WriteString_16(360, 4,"2400W" ,  0);
 	}
 //	for(i=0;i<(sizeof(User_Check_main)/(sizeof(User_Check_main[0])));i++)
 //	{

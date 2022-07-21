@@ -27,8 +27,61 @@ Project File Date:  02/19/2022
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'E:\Keil_v5\ARM\ARMCC\Bin'
 Build target '工程模板'
+compiling test.c...
+..\..\User\test.c(1890): warning:  #177-D: variable "oldskip"  was declared but never referenced
+        static u32 oldskip;
+..\..\User\test.c(1891): warning:  #177-D: variable "sendbuf"  was declared but never referenced
+        char sendbuf[24];
+..\..\User\test.c(1894): warning:  #177-D: variable "fnum"  was declared but never referenced
+      UINT fnum;
+..\..\User\test.c(1896): warning:  #177-D: variable "color"  was declared but never referenced
+      u32 color;
+..\..\User\test.c(1904): warning:  #177-D: variable "initset"  was declared but never referenced
+        u8 initset = 15;//每次进入界面后重新设置初始参数
+..\..\User\test.c(2404): warning:  #177-D: variable "oldskip"  was declared but never referenced
+        static u32 oldskip;
+..\..\User\test.c(2405): warning:  #177-D: variable "sendbuf"  was declared but never referenced
+        char sendbuf[24];
+..\..\User\test.c(2408): warning:  #177-D: variable "fnum"  was declared but never referenced
+      UINT fnum;
+..\..\User\test.c(2410): warning:  #177-D: variable "color"  was declared but never referenced
+      u32 color;
+..\..\User\test.c(2661): warning:  #177-D: variable "oldskip"  was declared but never referenced
+        static u32 oldskip;
+..\..\User\test.c(2662): warning:  #177-D: variable "sendbuf"  was declared but never referenced
+        char sendbuf[24];
+..\..\User\test.c(2665): warning:  #177-D: variable "fnum"  was declared but never referenced
+      UINT fnum;
+..\..\User\test.c(2667): warning:  #177-D: variable "color"  was declared but never referenced
+      u32 color;
+..\..\User\test.c(3248): warning:  #177-D: variable "oldskip"  was declared but never referenced
+        static u32 oldskip;
+..\..\User\test.c(3249): warning:  #177-D: variable "sendbuf"  was declared but never referenced
+        char sendbuf[24];
+..\..\User\test.c(3252): warning:  #177-D: variable "fnum"  was declared but never referenced
+      UINT fnum;
+..\..\User\test.c(3254): warning:  #177-D: variable "color"  was declared but never referenced
+      u32 color;
+..\..\User\test.c(3682): warning:  #177-D: variable "oldskip"  was declared but never referenced
+        static u32 oldskip;
+..\..\User\test.c(3683): warning:  #177-D: variable "sendbuf"  was declared but never referenced
+        char sendbuf[24];
+..\..\User\test.c(3686): warning:  #177-D: variable "fnum"  was declared but never referenced
+      UINT fnum;
+..\..\User\test.c(3688): warning:  #177-D: variable "color"  was declared but never referenced
+      u32 color;
+..\..\User\test.c(3695): warning:  #177-D: variable "initset"  was declared but never referenced
+        u8 initset = 10;//每次进入界面后重新设置初始参数
+..\..\User\test.c(4665): warning:  #177-D: variable "a"  was declared but never referenced
+      float a,b;
+..\..\User\test.c(4665): warning:  #177-D: variable "b"  was declared but never referenced
+      float a,b;
+..\..\User\test.c: 24 warnings, 0 errors
+linking...
+Program Size: Code=77580 RO-data=453900 RW-data=460 ZI-data=26764  
+FromELF: creating hex file...
 After Build - User command #1: E:\Keil_v5\ARM\ARMCC\bin\fromelf.exe --bin -o ..\..\Output\update.bin ..\..\Output\Template.axf
-"..\..\Output\Template.axf" - 0 Error(s), 0 Warning(s).
+"..\..\Output\Template.axf" - 0 Error(s), 24 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -42,7 +95,7 @@ Package Vendor: Keil
   D:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include
 
 <h2>Collection of Component Files used:</h2>
-Build Time Elapsed:  00:00:01
+Build Time Elapsed:  00:00:06
 </pre>
 </body>
 </html>

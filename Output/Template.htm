@@ -3,7 +3,7 @@
 <title>Static Call Graph - [..\..\Output\Template.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image ..\..\Output\Template.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Sat May 21 10:11:16 2022
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Thu Jun 16 14:54:19 2022
 <BR><P>
 <H3>Maximum Stack Usage =        440 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -1248,7 +1248,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[15f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Setup_Process
 </UL>
 
-<P><STRONG><a name="[e5]"></a>Disp_Test_value</STRONG> (Thumb, 1158 bytes, Stack size 24 bytes, user.o(i.Disp_Test_value))
+<P><STRONG><a name="[e5]"></a>Disp_Test_value</STRONG> (Thumb, 1172 bytes, Stack size 24 bytes, user.o(i.Disp_Test_value))
 <BR><BR>[Stack]<UL><LI>Max Depth = 136<LI>Call Chain = Disp_Test_value &rArr; Disp_Hint &rArr; WriteString_16 &rArr; PutChar &rArr; GetASCIICode
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WriteString_16
@@ -1273,7 +1273,7 @@ Global Symbols
 <LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Disp_BatScreen
 </UL>
 
-<P><STRONG><a name="[e6]"></a>Disp_UserCheck_Item</STRONG> (Thumb, 314 bytes, Stack size 8 bytes, user.o(i.Disp_UserCheck_Item))
+<P><STRONG><a name="[e6]"></a>Disp_UserCheck_Item</STRONG> (Thumb, 340 bytes, Stack size 8 bytes, user.o(i.Disp_UserCheck_Item))
 <BR><BR>[Stack]<UL><LI>Max Depth = 128<LI>Call Chain = Disp_UserCheck_Item &rArr; Disp_Usercheck_Screen &rArr; Disp_TopBar_Color &rArr; LCD_DrawFullRect &rArr; DMA2D_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WriteString_16
@@ -2039,7 +2039,7 @@ Global Symbols
 <LI><a href="#[123]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RTC_CLK_Config
 </UL>
 
-<P><STRONG><a name="[9e]"></a>Para_Set_Comp</STRONG> (Thumb, 1984 bytes, Stack size 0 bytes, test.o(i.Para_Set_Comp))
+<P><STRONG><a name="[9e]"></a>Para_Set_Comp</STRONG> (Thumb, 2364 bytes, Stack size 0 bytes, test.o(i.Para_Set_Comp))
 <BR><BR>[Called By]<UL><LI><a href="#[17d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Test_Process
 <LI><a href="#[15f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Setup_Process
 <LI><a href="#[11a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;List_Process
@@ -2388,6 +2388,7 @@ Global Symbols
 <LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Hardware_CRC
 </UL>
 <BR>[Called By]<UL><LI><a href="#[17d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Test_Process
+<LI><a href="#[15f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Setup_Process
 <LI><a href="#[11a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;List_Process
 <LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Dynamic_Process
 <LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Battery_Process
@@ -2566,12 +2567,13 @@ Global Symbols
 <LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Battery_Process
 </UL>
 
-<P><STRONG><a name="[15f]"></a>Setup_Process</STRONG> (Thumb, 1536 bytes, Stack size 32 bytes, test.o(i.Setup_Process))
+<P><STRONG><a name="[15f]"></a>Setup_Process</STRONG> (Thumb, 1558 bytes, Stack size 32 bytes, test.o(i.Setup_Process))
 <BR><BR>[Stack]<UL><LI>Max Depth = 384<LI>Call Chain = Setup_Process &rArr; Encoder_Process &rArr; __hardfp_pow &rArr; __kernel_poly &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
 </UL>
 <BR>[Calls]<UL><LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Set_Para
 <LI><a href="#[160]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;V_Gear_SW
 <LI><a href="#[15d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Sence_SW
+<LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Rec_Handle
 <LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I_Gear_SW
 <LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Para_Set_Comp
 <LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Store_set_flash

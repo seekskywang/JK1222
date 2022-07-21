@@ -115,7 +115,7 @@ void READ_COMP(void)
 void Para_Set_Comp(void)
 {
 	u8 i;
-	if(LoadSave.Version > 3)
+	if(LoadSave.Version > 4)
 	{
 		LoadSave.Version=0;
 	}
@@ -128,6 +128,8 @@ void Para_Set_Comp(void)
 		powermax = 6000000;
 	}else if(LoadSave.Version == 3){
 		powermax = 4000000;
+	}else if(LoadSave.Version == 4){
+		powermax = 24000000;
 	}
 	if(LoadSave.sence > 1)
 	{
@@ -191,6 +193,11 @@ void Para_Set_Comp(void)
 		{
 			LoadSave.current = 400000;
 		}
+	}else if(LoadSave.Version == 4){
+		if(LoadSave.current > 2400000)
+		{
+			LoadSave.current = 2400000;
+		}
 	}else{
 		if(LoadSave.current > MAX_SET_CURRENT)
 		{
@@ -233,6 +240,11 @@ void Para_Set_Comp(void)
 		if(LoadSave.maxc > 400000)
 		{
 			LoadSave.maxc = 400000;
+		}
+	}else if(LoadSave.Version == 4){
+		if(LoadSave.maxc > 2400000)
+		{
+			LoadSave.maxc = 2400000;
 		}
 	}else{
 		if(LoadSave.maxc > MAX_SET_CURRENT)
@@ -299,6 +311,11 @@ void Para_Set_Comp(void)
 		{
 			LoadSave.ledio = 400000;
 		}
+	}else if(LoadSave.Version == 4){
+		if(LoadSave.ledio > 2400000)
+		{
+			LoadSave.ledio = 2400000;
+		}
 	}else{
 		if(LoadSave.ledio > MAX_SET_CURRENT)
 		{
@@ -330,6 +347,19 @@ void Para_Set_Comp(void)
 		if(LoadSave.loadc3 > 400000)
 		{
 			LoadSave.loadc3 = 400000;
+		}
+	}else if(LoadSave.Version == 4){
+		if(LoadSave.loadc1 > 2400000)
+		{
+			LoadSave.loadc1 = 2400000;
+		}
+		if(LoadSave.loadc2 > 2400000)
+		{
+			LoadSave.loadc2 = 2400000;
+		}
+		if(LoadSave.loadc3 > 2400000)
+		{
+			LoadSave.loadc3 = 2400000;
 		}
 	}else{
 		if(LoadSave.loadc1 > MAX_SET_CURRENT)
@@ -399,6 +429,15 @@ void Para_Set_Comp(void)
 		{
 			LoadSave.valB = 400000;
 		}
+	}else if(LoadSave.Version == 4){
+		if(LoadSave.valA > 2400000)
+		{
+			LoadSave.valA = 2400000;
+		}
+		if(LoadSave.valB > 2400000)
+		{
+			LoadSave.valB = 2400000;
+		}
 	}else{
 		if(LoadSave.valA > MAX_SET_CURRENT)
 		{
@@ -440,6 +479,11 @@ void Para_Set_Comp(void)
 		if(LoadSave.chigh > 400000)
 		{
 			LoadSave.chigh = 400000;
+		}
+	}else if(LoadSave.Version == 4){
+		if(LoadSave.chigh > 2400000)
+		{
+			LoadSave.chigh = 2400000;
 		}
 	}else{
 		if(LoadSave.chigh > MAX_SET_CURRENT)
@@ -485,6 +529,19 @@ void Para_Set_Comp(void)
 				if(LoadSave.listlow[i] > 400000)
 				{
 					LoadSave.listlow[i] = 400000;
+				}
+			}else if(LoadSave.Version == 4){
+				if(LoadSave.listvalue[i] > 2400000)
+				{
+					LoadSave.listvalue[i] = 2400000;
+				}
+				if(LoadSave.listhigh[i] > 2400000)
+				{
+					LoadSave.listhigh[i] = 2400000;
+				}
+				if(LoadSave.listlow[i] > 2400000)
+				{
+					LoadSave.listlow[i] = 2400000;
 				}
 			}else{
 				if(LoadSave.listvalue[i] > MAX_SET_CURRENT)
@@ -872,6 +929,11 @@ void Setup_Process(void)
            
 			Disp_Flag=0;
 		
+		}
+		if(UART_Buffer_Rece_flag==1)
+		{
+			UART_Buffer_Rece_flag=0;
+			Rec_Handle();
 		}
 		if(setflag != 0)
 		{
@@ -4807,7 +4869,7 @@ void Use_DebugProcess(void)
 				}break;
 				case Key_SHIFT:
 				{
-					if(LoadSave.Version < 3)
+					if(LoadSave.Version < 4)
 					{
 						LoadSave.Version++;
 					}else{
