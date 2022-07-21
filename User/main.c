@@ -47,10 +47,10 @@ int main(void)
 			case SYS_STATUS_LIMITSET://极限设置
 				Limit_Process();
 			break;
-            case SYS_STATUS_SYSSET : //系统设置
-                
-                Use_SysSetProcess();
-             break;
+			case SYS_STATUS_SYSSET : //系统设置
+					
+					Use_SysSetProcess();
+			 break;
 			case SYS_STATUS_DEBUG:
 				Use_DebugProcess();//调试处理
 			break;
