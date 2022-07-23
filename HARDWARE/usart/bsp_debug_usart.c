@@ -415,6 +415,24 @@ void Set_Baudrate(void)
 	setflag = 1;
 }
 
+//设置通讯方式
+void Set_Comm(void)
+{
+	memset((char *)sendbuff,0,sizeof(sendbuff));
+	sendbuff[0] = 0x01;
+	sendbuff[1] = 0x06;
+	sendbuff[2] = 0x00;
+	sendbuff[3] = 0x2C;
+	sendbuff[4] = 0x00;
+	sendbuff[5] = 0x00;
+	sendbuff[6] = 0x00;
+	sendbuff[7] = LoadSave.COMM;
+	sendbuff[8] = Hardware_CRC(sendbuff,8)>>8;
+	sendbuff[9] = Hardware_CRC(sendbuff,8);
+	Usart1_Send((char *)sendbuff,10);
+	setflag = 1;
+}
+
 //设置参数
 void Set_Para(void)
 {
@@ -876,10 +894,10 @@ void Set_Para(void)
 	sendbuff[105+28] = LoadSave.dynamode>>8;
 	sendbuff[106+28] = LoadSave.dynamode;//动态触发模式
 	
-	sendbuff[107+28] = LoadSave.qcmode>>24;
-	sendbuff[108+28] = LoadSave.qcmode>>16;
-	sendbuff[109+28] = LoadSave.qcmode>>8;
-	sendbuff[110+28] = LoadSave.qcmode;//快充模式选择开关
+	sendbuff[107+28] = LoadSave.COMM>>24;
+	sendbuff[108+28] = LoadSave.COMM>>16;
+	sendbuff[109+28] = LoadSave.COMM>>8;
+	sendbuff[110+28] = LoadSave.COMM;//通讯选择
 	
 	sendbuff[111+28] = LoadSave.Class_5>>24;
 	sendbuff[112+28] = LoadSave.Class_5>>16;

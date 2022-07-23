@@ -496,6 +496,13 @@ const uint8_t Test_Compvalue_E[][6+1]=
 
 };
 
+const uint8_t Test_Commvalue_E[][6+1]=
+{
+	{"RS232"},
+	{"RS485"}
+
+};
+
 const uint8_t Test_Rangevalue[][6+1]=
 {
 	{"低"},
@@ -518,7 +525,7 @@ const uint8_t Setup_Beep[][6+1]=
 };
 const uint8_t Setup_Beep1[][7+1]=
 {
-	"关闭  ",
+	"关 闭  ",
 	"合格  ",
 	"不合格",
 	"开路OFF"
@@ -599,7 +606,7 @@ const uint8_t Sys_Setitem[][10+1]=
 	{"本机地址"},
 	{"波特率  "},
 	{"U盘开关"},
-	{"I/O口   "},
+	{"通讯接口"},
 	{"显示语言"},
 	
 	{"日期"},
@@ -4393,7 +4400,7 @@ void Disp_Sys_value(u8 keynum)
     }	
 	LCD_DrawFullRect( LIST1+90, FIRSTLINE+SPACE1*2,SELECT_1END-(LIST1+90) , SPACE1-4  ) ;//SPACE1
 	WriteString_16(LIST1+90, FIRSTLINE+SPACE1*2+2, pt[Jk516save.Sys_Setvalue.u_flag],  0);
-	//IO接口开关
+	//通讯接口选择
     Black_Select=(keynum==4)?1:0;
 	if(Black_Select)
 	{
@@ -4406,16 +4413,16 @@ void Disp_Sys_value(u8 keynum)
 	}
 	if(Jk516save.Sys_Setvalue.lanage)
     {
-        pt=Test_Compvalue_E;
+        pt=Test_Commvalue_E;
     
     }
     else
     {
-        pt=Test_Compvalue;
+        pt=Test_Commvalue_E;
     
     }	
 	LCD_DrawFullRect( LIST1+90, FIRSTLINE+SPACE1*3,SELECT_1END-(LIST1+90) , SPACE1-4  ) ;//SPACE1
-	WriteString_16(LIST1+90, FIRSTLINE+SPACE1*3+2, pt[Jk516save.Sys_Setvalue.plc],  0);
+	WriteString_16(LIST1+90, FIRSTLINE+SPACE1*3+2, pt[LoadSave.COMM],  0);
 	
 //显示语言
 	Black_Select=(keynum==5)?1:0;
@@ -4611,12 +4618,12 @@ void Disp_Sys_value(u8 keynum)
 		case 4:
             if(Jk516save.Sys_Setvalue.lanage)
             {
-                pt=Test_Compvalue_E;
+                pt=Test_Commvalue_E;
             
             }
             else
             {
-                pt=Test_Compvalue;
+                pt=Test_Commvalue_E;
             
             }
 			for(i=0;i<2;i++)
@@ -4779,6 +4786,12 @@ void Use_SysSetProcess(void)
 							Set_Baudrate();
 							Store_set_flash();
 						}break;
+						case 4:
+						{
+							LoadSave.COMM = 0;
+							Set_Comm();
+							Store_set_flash();
+						}break;
 						case 6:
 							if(RTC_DateStructure.RTC_Year<1)
 								RTC_DateStructure.RTC_Year=RTC_YEAR_MAX;
@@ -4859,6 +4872,12 @@ void Use_SysSetProcess(void)
 						{
 							LoadSave.Baudrate = 1;
 							Set_Baudrate();
+							Store_set_flash();
+						}break;
+						case 4:
+						{
+							LoadSave.COMM = 1;
+							Set_Comm();
 							Store_set_flash();
 						}break;
 						case 5:

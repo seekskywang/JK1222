@@ -698,6 +698,10 @@ typedef struct
 	u16 ErrCnt[4];
 //版本区分
 	u8 Version;//0-1200W;1-800W;2-600W;
+//通讯接口
+	u8 COMM;//0-232;1-485;
+//logo
+	u8 jkflag;
 }SaveData_Typedef;
 extern SaveData_Typedef LoadSave;
 typedef struct

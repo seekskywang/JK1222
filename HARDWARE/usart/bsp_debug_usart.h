@@ -48,6 +48,7 @@ void BatMode_SW(void);
 void Sence_SW(void);
 void ProtectRst(void);
 void Set_Baudrate(void);
+void Set_Comm(void);
 void CalHandle(u8 step);
 void ReadData(void);
 void Rec_Handle(void);
