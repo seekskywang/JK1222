@@ -4840,8 +4840,8 @@ void Use_DebugProcess(void)
 				break;
 				
 				case Key_REST:
-                    
-					
+          LoadSave.jkflag=!LoadSave.jkflag;          
+					Store_set_flash();
 				break;
 				case Key_TRIG:
 				break;
