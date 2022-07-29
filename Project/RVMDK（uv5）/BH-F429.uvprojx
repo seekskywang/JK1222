@@ -767,6 +767,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\User\bsp_exti.c</FilePath>
             </File>
+            <File>
+              <FileName>bsp_bmp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\HARDWARE\bsp_bmp.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
