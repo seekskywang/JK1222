@@ -63,4 +63,7 @@
 ..\..\output\main.o: ..\..\User\flash.h
 ..\..\output\main.o: ..\..\User\spi.h
 ..\..\output\main.o: ..\..\User\bsp_exti.h
+..\..\output\main.o: ..\..\FATFS\ff.h
+..\..\output\main.o: ..\..\FATFS\integer.h
+..\..\output\main.o: ..\..\FATFS\ffconf.h
 ..\..\output\main.o: ..\..\HARDWARE\1650\tm1650.h

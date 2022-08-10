@@ -63,3 +63,6 @@
 ..\..\output\pbdata.o: ..\..\User\flash.h
 ..\..\output\pbdata.o: ..\..\User\spi.h
 ..\..\output\pbdata.o: ..\..\User\bsp_exti.h
+..\..\output\pbdata.o: ..\..\FATFS\ff.h
+..\..\output\pbdata.o: ..\..\FATFS\integer.h
+..\..\output\pbdata.o: ..\..\FATFS\ffconf.h

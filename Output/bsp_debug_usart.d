@@ -63,3 +63,6 @@
 ..\..\output\bsp_debug_usart.o: ..\..\User\flash.h
 ..\..\output\bsp_debug_usart.o: ..\..\User\spi.h
 ..\..\output\bsp_debug_usart.o: ..\..\User\bsp_exti.h
+..\..\output\bsp_debug_usart.o: ..\..\FATFS\ff.h
+..\..\output\bsp_debug_usart.o: ..\..\FATFS\integer.h
+..\..\output\bsp_debug_usart.o: ..\..\FATFS\ffconf.h

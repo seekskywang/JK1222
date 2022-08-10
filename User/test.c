@@ -8,6 +8,7 @@
 #include "open.h"
 #include "flash_if.h"
 #include "tm1650.h"
+#include "bsp_bmp.h"
 
 //反馈切换
 // 输入0 1 2 3  U16_4094
@@ -35,6 +36,7 @@ u8 calpage;
 u16 dacctrl=100;
 u32 powermax;
 u8 startdelay;
+u8 bmpname[30];
 //const u8 RANGE_UNIT[11]=
 //{
 //	4,
@@ -719,12 +721,12 @@ void Power_Process(void)
 
 	i=0;//显示延时
 	Read_set_flash();
-//     USBH_Init(&USB_OTG_Core,
-//			USB_OTG_HS_CORE_ID,
-//            &USB_Host,
-//            &USBH_MSC_cb,
-//            &USR_cb);
-//     USBH_Process(&USB_OTG_Core, &USB_Host);
+     USBH_Init(&USB_OTG_Core,
+			USB_OTG_HS_CORE_ID,
+            &USB_Host,
+            &USBH_MSC_cb,
+            &USR_cb);
+     USBH_Process(&USB_OTG_Core, &USB_Host);
 	Beep_Off();
 	READ_COMP();
 	while(GetSystemStatus()==SYS_STATUS_POWER)
@@ -1375,6 +1377,11 @@ void Setup_Process(void)
 					if(mainswitch == 0)
 						SetSystemStatus(SYS_STATUS_TEST);
 				}break;
+				case Key_SAVE:
+				{
+					
+					result=Screen_shot(0,0,480,272,(const char *)bmpname);
+				}break;
 				default:
 				break;
 					
@@ -1748,7 +1755,12 @@ void Limit_Process(void)
 					
 					
 					}
-				}
+				}break;
+				case Key_SAVE:
+				{
+					
+					result=Screen_shot(0,0,480,272,(const char *)bmpname);
+				}break;
 				default:
 				break;
 					
@@ -1945,6 +1957,10 @@ void Test_Process(void)
 //		spinvalue = TIM_GetCounter(TIM3);
 		
 		keytrans=Encoder_Process(keynum);
+		USBH_Process(&USB_OTG_Core, &USB_Host);
+							USB_Count=0;
+
+							result = f_mount(&fs,"0:",1);
 //		Colour.Fword=White;
 //		Colour.black=LCD_COLOR_TEST_BACK;//User_Check_main
 //		Hex_Format(DispValue.protectflag,0,2,0);
@@ -2384,6 +2400,15 @@ void Test_Process(void)
 //									Store_set_flash();
 //								}
 //							}
+						}break;
+						case Key_SAVE:
+						{
+							
+							result=Screen_shot(0,0,480,272,(const char *)bmpname);
+						}break;
+						case Key_ON:
+						{
+							
 						}break;
 						default:
 							SetSystemStatus(SYS_STATUS_TEST);
@@ -3239,6 +3264,11 @@ void Battery_Process(void)
 							
 							}
 						}break;
+						case Key_SAVE:
+						{
+							
+							result=Screen_shot(0,0,480,272,(const char *)bmpname);
+						}break;
 						default:
 //							SetSystemStatus(SYS_STATUS_TEST);
 						break;
@@ -3662,6 +3692,11 @@ void Dynamic_Process(void)
 									}
 								}break;
 							}
+						}break;
+						case Key_SAVE:
+						{
+							
+							result=Screen_shot(0,0,480,272,(const char *)bmpname);
 						}break;
 						default:
 //							SetSystemStatus(SYS_STATUS_TEST);
@@ -4462,6 +4497,11 @@ void List_Process(void)
 										}
 									}
 								}break;
+								case Key_SAVE:
+								{
+									
+									result=Screen_shot(0,0,480,272,(const char *)bmpname);
+								}break;
 								default:
 //									SetSystemStatus(SYS_STATUS_TEST);
 								break;
@@ -4512,6 +4552,11 @@ void List_Process(void)
 									Set_Para();
 									DispValue.listdelay = LoadSave.delay[0];
 									List_Process();
+								}break;
+								case Key_SAVE:
+								{
+									
+									result=Screen_shot(0,0,480,272,(const char *)bmpname);
 								}break;
 								default:
 									Disp_Flag = 0;

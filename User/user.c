@@ -832,6 +832,15 @@ const uint8_t List_Res[][6+1]=
 	"无",
 };
 
+const uint8_t List_ResE[][6+1]=
+{
+	"PASS",
+	"FAIL",
+	"FAIL",
+	"FAIL",
+	"NONE",
+};
+
 const uint8_t List_ItemDisE[][6+1]=
 {
 	"CC   ",
@@ -1448,10 +1457,10 @@ void Disp_Hint(u8 num)
 			WriteString_16(LIST2+30,205,"Input with keyboard.",0);
 		}else if(num == 3){
 			Colour.black=LCD_COLOR_TEST_MID;
-			LCD_DrawFullRect(LIST2-80+24,205,150+130,SPACE1-2);
+			LCD_DrawFullRect(LIST2-80+24+24,205,150+130-24,SPACE1-2);
 		}else if(num == 4){
 			Colour.black=LCD_COLOR_TEST_BACK;
-			LCD_DrawFullRect(LIST2-80+24,205,150+130, SPACE1-2);
+			LCD_DrawFullRect(LIST2-80+24+24,205,150+130-24, SPACE1-2);
 		}else if(num == 5){
 			Colour.black=LCD_COLOR_TEST_BACK;
 			Colour.Fword = Red;
@@ -1677,7 +1686,7 @@ void Disp_Button_value1(uint32_t value)
             WriteString_16(10+18, 271-20, "DISP",  0);
             WriteString_16(10+98+18, 271-40, "BAT",  0);
             WriteString_16(10+98+18, 271-20, "TEST",  0);
-            WriteString_16(10+98+94+18, 271-40, " DYNA",  0);
+            WriteString_16(10+98+94+18, 271-40, "DYNA",  0);
             WriteString_16(10+98+94+18, 271-20, "TEST",  0);
             WriteString_16(10+98+94+94+18, 271-40, "LIST",  0);
             WriteString_16(10+98+94+94+18, 271-20, "TEST",  0);
@@ -2926,12 +2935,12 @@ void Disp_Res_Sheet(u8 num,u8 page)
 	Colour.black=LCD_COLOR_TEST_BACK;
 	if(LoadSave.language == 1)
 	{
-		WriteString_16(3,94,  "NO",  0);
-		WriteString_16(3+40,73,  "MODE",  0);
-		WriteString_16(3+40+40,73,  "PARA1",  0);
-		WriteString_16(3+40+40+100,73,  "PARA2",  0);
-		WriteString_16(3+40+40+100+100,73,  "RES1",  0);
-		WriteString_16(3+40+40+100+100+100,73,  "RES2",  0);
+		WriteString_16(3,97,  "NO",  0);
+		WriteString_16(3+60,97,  "MODE",  0);
+		WriteString_16(3+30+80+40,97,  "V",  0);
+		WriteString_16(3+30+80+40+100,97,  "I",  0);
+		WriteString_16(3+30+80+40+100+100,97,  "P",  0);
+		WriteString_16(3+10+80+40+100+100+100,97,  "RES",  0);
 	}else if(LoadSave.language == 0){
 		WriteString_16(3,97,  "序号",  0);
 		WriteString_16(3+60,97,  "项目",  0);
@@ -2992,8 +3001,10 @@ void Disp_Res_Sheet(u8 num,u8 page)
 		WriteString_16(3+80+40+100+100,97+22+22*i,DispBuf, 0);
 		
 		Colour.Fword = White;
-		WriteString_16(3+80+40+100+100+100,97+22+22*i, List_Res[DispValue.listcompres[i+DispValue.respage*5]], 0);//结果
-		
+		if(LoadSave.language == 0)
+			WriteString_16(3+80+40+100+100+100,97+22+22*i, List_Res[DispValue.listcompres[i+DispValue.respage*5]], 0);//结果
+		else
+			WriteString_16(3+80+40+100+100+100,97+22+22*i, List_ResE[DispValue.listcompres[i+DispValue.respage*5]], 0);//结果
 		
 	}
 }
@@ -5259,6 +5270,11 @@ void Use_SysSetProcess(void)
 					if(mainswitch == 0)
 						SetSystemStatus(SYS_STATUS_TEST);
 				}break;
+				case Key_SAVE:
+				{
+					
+					result=Screen_shot(0,0,480,272,(const char *)bmpname);
+				}break;
 				default:
 				break;
 					
@@ -6650,7 +6666,13 @@ void Disp_dateandtime(void)
 //    WriteString_16(SORTING_XDISP-20, LIST1+4, Range_Disp_Test[hand][range],  0);
     memcpy((void*)Send_To_U.No,LCDTemp,19);
     Send_To_U.No[19]=9;
-
+		sprintf(bmpname,"0:20%0.2d%0.2d%0.2d%0.2d%0.2d%0.2d.bmp", 
+    RTC_DateStructure.RTC_Year,
+    RTC_DateStructure.RTC_Month, 
+    RTC_DateStructure.RTC_Date,
+    RTC_TimeStructure.RTC_Hours, 
+    RTC_TimeStructure.RTC_Minutes,
+    RTC_TimeStructure.RTC_Seconds);
 }
 
 void Disp_Debug_Reference( vu8 list,Test_ValueTypedef eee,Test_ValueTypedef ddd)

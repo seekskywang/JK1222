@@ -63,10 +63,10 @@
 ..\..\output\test.o: ..\..\User\flash.h
 ..\..\output\test.o: ..\..\User\spi.h
 ..\..\output\test.o: ..\..\User\bsp_exti.h
-..\..\output\test.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
 ..\..\output\test.o: ..\..\FATFS\ff.h
 ..\..\output\test.o: ..\..\FATFS\integer.h
 ..\..\output\test.o: ..\..\FATFS\ffconf.h
+..\..\output\test.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
 ..\..\output\test.o: ..\..\HARDWARE\cpld.h
 ..\..\output\test.o: ..\..\User\./APP/usbh_bsp.h
 ..\..\output\test.o: ..\..\User\./APP/usb_conf.h
@@ -92,3 +92,5 @@
 ..\..\output\test.o: ..\..\User\flash_if.h
 ..\..\output\test.o: ..\..\User\flash_if.h
 ..\..\output\test.o: ..\..\HARDWARE\1650\tm1650.h
+..\..\output\test.o: ..\..\HARDWARE\bsp_bmp.h
+..\..\output\test.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h

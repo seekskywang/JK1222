@@ -63,4 +63,7 @@
 ..\..\output\gpio.o: ..\..\User\flash.h
 ..\..\output\gpio.o: ..\..\User\spi.h
 ..\..\output\gpio.o: ..\..\User\bsp_exti.h
+..\..\output\gpio.o: ..\..\FATFS\ff.h
+..\..\output\gpio.o: ..\..\FATFS\integer.h
+..\..\output\gpio.o: ..\..\FATFS\ffconf.h
 ..\..\output\gpio.o: ..\..\HARDWARE\cpld.h

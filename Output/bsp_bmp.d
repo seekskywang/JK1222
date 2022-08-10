@@ -64,5 +64,8 @@
 ..\..\output\bsp_bmp.o: ..\..\User\flash.h
 ..\..\output\bsp_bmp.o: ..\..\User\spi.h
 ..\..\output\bsp_bmp.o: ..\..\User\bsp_exti.h
+..\..\output\bsp_bmp.o: ..\..\FATFS\ff.h
+..\..\output\bsp_bmp.o: ..\..\FATFS\integer.h
+..\..\output\bsp_bmp.o: ..\..\FATFS\ffconf.h
 ..\..\output\bsp_bmp.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
 ..\..\output\bsp_bmp.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h

@@ -63,3 +63,6 @@
 ..\..\output\flash_eerom.o: ..\..\User\flash.h
 ..\..\output\flash_eerom.o: ..\..\User\spi.h
 ..\..\output\flash_eerom.o: ..\..\User\bsp_exti.h
+..\..\output\flash_eerom.o: ..\..\FATFS\ff.h
+..\..\output\flash_eerom.o: ..\..\FATFS\integer.h
+..\..\output\flash_eerom.o: ..\..\FATFS\ffconf.h

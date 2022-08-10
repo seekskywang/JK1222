@@ -64,6 +64,9 @@
 ..\..\output\stm32f4xx_it.o: ..\..\User\flash.h
 ..\..\output\stm32f4xx_it.o: ..\..\User\spi.h
 ..\..\output\stm32f4xx_it.o: ..\..\User\bsp_exti.h
+..\..\output\stm32f4xx_it.o: ..\..\FATFS\ff.h
+..\..\output\stm32f4xx_it.o: ..\..\FATFS\integer.h
+..\..\output\stm32f4xx_it.o: ..\..\FATFS\ffconf.h
 ..\..\output\stm32f4xx_it.o: ..\..\User\APP\usb_bsp.h
 ..\..\output\stm32f4xx_it.o: ..\..\Libraries\STM32_USB_OTG_Driver\inc\usb_core.h
 ..\..\output\stm32f4xx_it.o: ..\..\User\APP\usb_conf.h

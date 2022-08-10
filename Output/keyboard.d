@@ -63,4 +63,7 @@
 ..\..\output\keyboard.o: ..\..\User\flash.h
 ..\..\output\keyboard.o: ..\..\User\spi.h
 ..\..\output\keyboard.o: ..\..\User\bsp_exti.h
+..\..\output\keyboard.o: ..\..\FATFS\ff.h
+..\..\output\keyboard.o: ..\..\FATFS\integer.h
+..\..\output\keyboard.o: ..\..\FATFS\ffconf.h
 ..\..\output\keyboard.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h

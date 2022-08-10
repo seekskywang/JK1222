@@ -63,4 +63,7 @@
 ..\..\output\bsp_lcd.o: ..\..\User\flash.h
 ..\..\output\bsp_lcd.o: ..\..\User\spi.h
 ..\..\output\bsp_lcd.o: ..\..\User\bsp_exti.h
+..\..\output\bsp_lcd.o: ..\..\FATFS\ff.h
+..\..\output\bsp_lcd.o: ..\..\FATFS\integer.h
+..\..\output\bsp_lcd.o: ..\..\FATFS\ffconf.h
 ..\..\output\bsp_lcd.o: ..\..\User\hzk.h

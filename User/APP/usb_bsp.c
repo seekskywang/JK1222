@@ -175,7 +175,9 @@ void USB_OTG_BSP_DriveVBUS(USB_OTG_CORE_HANDLE *pdev, uint8_t state)
 void  USB_OTG_BSP_ConfigVBUS(USB_OTG_CORE_HANDLE *pdev)
 {
 //    GPIO_ResetBits(GPIOI,GPIO_Pin_6);
+//	GPIO_SetBits(GPIOB,GPIO_Pin_13);
 	GPIO_SetBits(GPIOB,GPIO_Pin_13);
+	GPIO_ResetBits(GPIOC,GPIO_Pin_8);
 }
 
 /**

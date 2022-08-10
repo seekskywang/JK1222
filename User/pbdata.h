@@ -103,7 +103,7 @@
 #include "flash.h" 
 #include "spi.h"
 #include "bsp_exti.h"
-
+#include "ff.h"
 
 
 
@@ -399,6 +399,10 @@ extern const u8 fit_allnum[4];
 extern u32 last_R_disp,last_V_disp;
 extern u8 buttonpage1;
 extern u8 calpage;
+extern FRESULT result;
+extern FATFS fs;
+extern FIL file;
+extern u8 bmpname[30];
 //==========================================================
 //ϵͳ״̬
 enum SysStatusEnum

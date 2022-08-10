@@ -2281,7 +2281,29 @@ void LCD_FillPolyLine(pPoint Points, uint16_t PointCount)
   LCD_FillTriangle(X_center, X2, X_first, Y_center, Y2, Y_first); 
 }
 
-
+/**
+  * @brief  读LCD的像素值
+  * @param  Xpos: X 轴坐标位置
+  * @param  Ypos: Y 轴坐标位置
+  * @retval RGB像素值
+  */
+uint32_t LCD_ReadPixel(uint16_t Xpos, uint16_t Ypos)
+{
+  uint32_t r1,r2,r3,ret = 0;
+  
+	
+//    /* 从SDRAM显存中读取颜色数据 */
+//    ret  = (*(__IO uint8_t*) (CurrentFrameBuffer + (3*(Ypos*LCD_PIXEL_WIDTH + Xpos))+2) & 0x00FFFFFF);
+//	ret |= (*(__IO uint8_t*) (CurrentFrameBuffer + (3*(Ypos*LCD_PIXEL_WIDTH + Xpos))+1) & 0x00FFFFFF);
+//	ret |= (*(__IO uint8_t*) (CurrentFrameBuffer + (3*(Ypos*LCD_PIXEL_WIDTH + Xpos))) & 0x00FFFFFF);
+	
+	r1 = (*(__IO uint8_t*) (CurrentFrameBuffer + (3*(Ypos*LCD_PIXEL_WIDTH + Xpos))+2) & 0x00FFFFFF);
+	r2 = (*(__IO uint8_t*) (CurrentFrameBuffer + (3*(Ypos*LCD_PIXEL_WIDTH + Xpos))+1) & 0x00FFFFFF);
+	r3 = (*(__IO uint8_t*) (CurrentFrameBuffer + (3*(Ypos*LCD_PIXEL_WIDTH + Xpos))) & 0x00FFFFFF);
+	
+	ret = (r1<<16)+(r2<<8)+r3;
+  return ret;
+}
 
 
 /**

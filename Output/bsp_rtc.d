@@ -64,3 +64,6 @@
 ..\..\output\bsp_rtc.o: ..\..\User\flash.h
 ..\..\output\bsp_rtc.o: ..\..\User\spi.h
 ..\..\output\bsp_rtc.o: ..\..\User\bsp_exti.h
+..\..\output\bsp_rtc.o: ..\..\FATFS\ff.h
+..\..\output\bsp_rtc.o: ..\..\FATFS\integer.h
+..\..\output\bsp_rtc.o: ..\..\FATFS\ffconf.h

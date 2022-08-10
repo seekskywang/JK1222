@@ -64,6 +64,9 @@
 ..\..\output\user.o: ..\..\User\flash.h
 ..\..\output\user.o: ..\..\User\spi.h
 ..\..\output\user.o: ..\..\User\bsp_exti.h
+..\..\output\user.o: ..\..\FATFS\ff.h
+..\..\output\user.o: ..\..\FATFS\integer.h
+..\..\output\user.o: ..\..\FATFS\ffconf.h
 ..\..\output\user.o: ..\..\User\./APP/usbh_bsp.h
 ..\..\output\user.o: ..\..\User\./APP/usb_conf.h
 ..\..\output\user.o: ..\..\User\./APP/usb_bsp.h
@@ -83,8 +86,5 @@
 ..\..\output\user.o: ..\..\Libraries\STM32_USB_HOST_Library\Core\inc\usbh_hcs.h
 ..\..\output\user.o: ..\..\Libraries\STM32_USB_HOST_Library\Class\MSC\inc\usbh_msc_core.h
 ..\..\output\user.o: ..\..\User\./APP/usbh_usr.h
-..\..\output\user.o: ..\..\FATFS\ff.h
-..\..\output\user.o: ..\..\FATFS\integer.h
-..\..\output\user.o: ..\..\FATFS\ffconf.h
 ..\..\output\user.o: ..\..\HARDWARE\cpld.h
 ..\..\output\user.o: ..\..\User\./RTC/bsp_rtc.h
