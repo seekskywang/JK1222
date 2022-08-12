@@ -27,45 +27,75 @@ Project File Date:  07/29/2022
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'E:\Keil_v5\ARM\ARMCC\Bin'
 Build target '工程模板'
-compiling user.c...
-..\..\User\user.c(1954): warning:  #177-D: variable "pt"  was declared but never referenced
-      const u8 (*pt)[sizeof(Bat_Setitem[0])];
-..\..\User\user.c(2001): warning:  #177-D: variable "pt"  was declared but never referenced
-        const u8 (*pt)[sizeof(List_Setitem[0])];
-..\..\User\user.c(2084): warning:  #177-D: variable "ppt"  was declared but never referenced
-      const u8 (*ppt)[11];
-..\..\User\user.c(2295): warning:  #177-D: variable "ppt"  was declared but never referenced
-      const u8 (*ppt)[11];
-..\..\User\user.c(2402): warning:  #177-D: variable "ppt"  was declared but never referenced
-      const u8 (*ppt)[11];
-..\..\User\user.c(2691): warning:  #177-D: variable "ppt"  was declared but never referenced
-      const u8 (*ppt)[11];
-..\..\User\user.c(2892): warning:  #177-D: variable "ppt"  was declared but never referenced
-        const u8 (*ppt)[11];
-..\..\User\user.c(3095): warning:  #177-D: variable "ppt"  was declared but never referenced
-        const u8 (*ppt)[11];
-..\..\User\user.c(3735): warning:  #177-D: variable "pt1"  was declared but never referenced
-        const u8 (*pt1)[8];
-..\..\User\user.c(3736): warning:  #177-D: variable "ppt"  was declared but never referenced
-      const u8 (*ppt)[11];
-..\..\User\user.c(4119): warning:  #177-D: variable "pt1"  was declared but never referenced
-        const u8 (*pt1)[8];
-..\..\User\user.c(4120): warning:  #177-D: variable "ppt"  was declared but never referenced
-      const u8 (*ppt)[11];
-..\..\User\user.c(5276): warning:  #223-D: function "Screen_shot" declared implicitly
+compiling test.c...
+..\..\User\test.c(1426): warning:  #188-D: enumerated type mixed with another type
                                         result=Screen_shot(0,0,480,272,(const char *)bmpname);
-..\..\User\user.c(5276): warning:  #188-D: enumerated type mixed with another type
+..\..\User\test.c(1805): warning:  #188-D: enumerated type mixed with another type
                                         result=Screen_shot(0,0,480,272,(const char *)bmpname);
-..\..\User\user.c(4908): warning:  #177-D: variable "key_count"  was declared but never referenced
-      char key_count=0;
-..\..\User\user.c(6669): warning:  #167-D: argument of type "u8 *" is incompatible with parameter of type "char *restrict"
-                sprintf(bmpname,"0:20%0.2d%0.2d%0.2d%0.2d%0.2d%0.2d.bmp", 
-..\..\User\user.c: 16 warnings, 0 errors
+..\..\User\test.c(2450): warning:  #188-D: enumerated type mixed with another type
+                                                        result=Screen_shot(0,0,480,272,(const char *)bmpname);
+..\..\User\test.c(1952): warning:  #177-D: variable "oldskip"  was declared but never referenced
+        static u32 oldskip;
+..\..\User\test.c(1953): warning:  #177-D: variable "sendbuf"  was declared but never referenced
+        char sendbuf[24];
+..\..\User\test.c(1956): warning:  #177-D: variable "fnum"  was declared but never referenced
+      UINT fnum;
+..\..\User\test.c(1958): warning:  #177-D: variable "color"  was declared but never referenced
+      u32 color;
+..\..\User\test.c(1966): warning:  #177-D: variable "initset"  was declared but never referenced
+        u8 initset = 15;//每次进入界面后重新设置初始参数
+..\..\User\test.c(2479): warning:  #177-D: variable "oldskip"  was declared but never referenced
+        static u32 oldskip;
+..\..\User\test.c(2480): warning:  #177-D: variable "sendbuf"  was declared but never referenced
+        char sendbuf[24];
+..\..\User\test.c(2483): warning:  #177-D: variable "fnum"  was declared but never referenced
+      UINT fnum;
+..\..\User\test.c(2485): warning:  #177-D: variable "color"  was declared but never referenced
+      u32 color;
+..\..\User\test.c(3313): warning:  #188-D: enumerated type mixed with another type
+                                                        result=Screen_shot(0,0,480,272,(const char *)bmpname);
+..\..\User\test.c(2736): warning:  #177-D: variable "oldskip"  was declared but never referenced
+        static u32 oldskip;
+..\..\User\test.c(2737): warning:  #177-D: variable "sendbuf"  was declared but never referenced
+        char sendbuf[24];
+..\..\User\test.c(2740): warning:  #177-D: variable "fnum"  was declared but never referenced
+      UINT fnum;
+..\..\User\test.c(2742): warning:  #177-D: variable "color"  was declared but never referenced
+      u32 color;
+..\..\User\test.c(3742): warning:  #188-D: enumerated type mixed with another type
+                                                        result=Screen_shot(0,0,480,272,(const char *)bmpname);
+..\..\User\test.c(3328): warning:  #177-D: variable "oldskip"  was declared but never referenced
+        static u32 oldskip;
+..\..\User\test.c(3329): warning:  #177-D: variable "sendbuf"  was declared but never referenced
+        char sendbuf[24];
+..\..\User\test.c(3332): warning:  #177-D: variable "fnum"  was declared but never referenced
+      UINT fnum;
+..\..\User\test.c(3334): warning:  #177-D: variable "color"  was declared but never referenced
+      u32 color;
+..\..\User\test.c(4546): warning:  #188-D: enumerated type mixed with another type
+                                                                        result=Screen_shot(0,0,480,272,(const char *)bmpname);
+..\..\User\test.c(4602): warning:  #188-D: enumerated type mixed with another type
+                                                                        result=Screen_shot(0,0,480,272,(const char *)bmpname);
+..\..\User\test.c(3767): warning:  #177-D: variable "oldskip"  was declared but never referenced
+        static u32 oldskip;
+..\..\User\test.c(3768): warning:  #177-D: variable "sendbuf"  was declared but never referenced
+        char sendbuf[24];
+..\..\User\test.c(3771): warning:  #177-D: variable "fnum"  was declared but never referenced
+      UINT fnum;
+..\..\User\test.c(3773): warning:  #177-D: variable "color"  was declared but never referenced
+      u32 color;
+..\..\User\test.c(3780): warning:  #177-D: variable "initset"  was declared but never referenced
+        u8 initset = 10;//每次进入界面后重新设置初始参数
+..\..\User\test.c(4760): warning:  #177-D: variable "a"  was declared but never referenced
+      float a,b;
+..\..\User\test.c(4760): warning:  #177-D: variable "b"  was declared but never referenced
+      float a,b;
+..\..\User\test.c: 31 warnings, 0 errors
 linking...
-Program Size: Code=96804 RO-data=629892 RW-data=604 ZI-data=57708  
+Program Size: Code=97116 RO-data=629892 RW-data=604 ZI-data=57708  
 FromELF: creating hex file...
 After Build - User command #1: E:\Keil_v5\ARM\ARMCC\bin\fromelf.exe --bin -o ..\..\Output\update.bin ..\..\Output\Template.axf
-"..\..\Output\Template.axf" - 0 Error(s), 16 Warning(s).
+"..\..\Output\Template.axf" - 0 Error(s), 31 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -79,7 +109,7 @@ Package Vendor: Keil
   D:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include
 
 <h2>Collection of Component Files used:</h2>
-Build Time Elapsed:  00:00:04
+Build Time Elapsed:  00:00:08
 </pre>
 </body>
 </html>

@@ -121,7 +121,7 @@ void Para_Set_Comp(void)
 	{
 		LoadSave.COMM=0;
 	}
-	if(LoadSave.Version > 4)
+	if(LoadSave.Version > 5)
 	{
 		LoadSave.Version=0;
 	}
@@ -136,6 +136,8 @@ void Para_Set_Comp(void)
 		powermax = 4000000;
 	}else if(LoadSave.Version == 4){
 		powermax = 24000000;
+	}else if(LoadSave.Version == 5){
+		powermax = 32000000;
 	}
 	if(LoadSave.sence > 1)
 	{
@@ -189,9 +191,17 @@ void Para_Set_Comp(void)
 	{
 		LoadSave.ListBeep = 1;
 	}
-	if(LoadSave.voltage > MAX_SET_VOLT)
+	if(LoadSave.Version == 5)
 	{
-		LoadSave.voltage = MAX_SET_VOLT;
+		if(LoadSave.voltage > 1500000)
+		{
+			LoadSave.voltage = 1500000;
+		}
+	}else{
+		if(LoadSave.voltage > MAX_SET_VOLT)
+		{
+			LoadSave.voltage = MAX_SET_VOLT;
+		}
 	}
 	if(LoadSave.Version == 3)
 	{
@@ -199,7 +209,7 @@ void Para_Set_Comp(void)
 		{
 			LoadSave.current = 400000;
 		}
-	}else if(LoadSave.Version == 4){
+	}else if(LoadSave.Version == 4 || LoadSave.Version == 5){
 		if(LoadSave.current > 2400000)
 		{
 			LoadSave.current = 2400000;
@@ -233,10 +243,19 @@ void Para_Set_Comp(void)
 	{
 		LoadSave.autooff = 999999;
 	}
-	if(LoadSave.maxv > MAX_SET_VOLT)
+	if(LoadSave.Version == 5)
 	{
-		LoadSave.maxv = MAX_SET_VOLT;
+		if(LoadSave.maxv > 1500000)
+		{
+			LoadSave.maxv = 1500000;
+		}
+	}else{
+		if(LoadSave.maxv > MAX_SET_VOLT)
+		{
+			LoadSave.maxv = MAX_SET_VOLT;
+		}
 	}
+	
 //	if(LoadSave.maxc > MAX_SET_CURRENT)
 //	{
 //		LoadSave.maxc = MAX_SET_CURRENT;
@@ -247,7 +266,7 @@ void Para_Set_Comp(void)
 		{
 			LoadSave.maxc = 400000;
 		}
-	}else if(LoadSave.Version == 4){
+	}else if(LoadSave.Version == 4 || LoadSave.Version == 5){
 		if(LoadSave.maxc > 2400000)
 		{
 			LoadSave.maxc = 2400000;
@@ -317,7 +336,7 @@ void Para_Set_Comp(void)
 		{
 			LoadSave.ledio = 400000;
 		}
-	}else if(LoadSave.Version == 4){
+	}else if(LoadSave.Version == 4 || LoadSave.Version == 5){
 		if(LoadSave.ledio > 2400000)
 		{
 			LoadSave.ledio = 2400000;
@@ -354,7 +373,7 @@ void Para_Set_Comp(void)
 		{
 			LoadSave.loadc3 = 400000;
 		}
-	}else if(LoadSave.Version == 4){
+	}else if(LoadSave.Version == 4 || LoadSave.Version == 5){
 		if(LoadSave.loadc1 > 2400000)
 		{
 			LoadSave.loadc1 = 2400000;
@@ -397,25 +416,49 @@ void Para_Set_Comp(void)
 	{
 		LoadSave.curvetime = 0;
 	}
-	if(LoadSave.coffv1 > MAX_SET_VOLT)
+	if(LoadSave.Version == 5)
 	{
-		LoadSave.coffv1 = MAX_SET_VOLT;
-	}
-	if(LoadSave.coffv2 > MAX_SET_VOLT)
-	{
-		LoadSave.coffv2 = MAX_SET_VOLT;
-	}
-	if(LoadSave.coffv3 > MAX_SET_VOLT)
-	{
-		LoadSave.coffv3 = MAX_SET_VOLT;
-	}
-	if(LoadSave.loadr > MAX_SET_RES)
-	{
-		LoadSave.loadr = MAX_SET_RES;
-	}
-	if(LoadSave.coffvr > MAX_SET_VOLT)
-	{
-		LoadSave.coffvr = MAX_SET_VOLT;
+		if(LoadSave.coffv1 > 1500000)
+		{
+			LoadSave.coffv1 = 1500000;
+		}
+		if(LoadSave.coffv2 > 1500000)
+		{
+			LoadSave.coffv2 = 1500000;
+		}
+		if(LoadSave.coffv3 > 1500000)
+		{
+			LoadSave.coffv3 = 1500000;
+		}
+		if(LoadSave.loadr > MAX_SET_RES)
+		{
+			LoadSave.loadr = MAX_SET_RES;
+		}
+		if(LoadSave.coffvr > 1500000)
+		{
+			LoadSave.coffvr = 1500000;
+		}
+	}else{
+		if(LoadSave.coffv1 > MAX_SET_VOLT)
+		{
+			LoadSave.coffv1 = MAX_SET_VOLT;
+		}
+		if(LoadSave.coffv2 > MAX_SET_VOLT)
+		{
+			LoadSave.coffv2 = MAX_SET_VOLT;
+		}
+		if(LoadSave.coffv3 > MAX_SET_VOLT)
+		{
+			LoadSave.coffv3 = MAX_SET_VOLT;
+		}
+		if(LoadSave.loadr > MAX_SET_RES)
+		{
+			LoadSave.loadr = MAX_SET_RES;
+		}
+		if(LoadSave.coffvr > MAX_SET_VOLT)
+		{
+			LoadSave.coffvr = MAX_SET_VOLT;
+		}
 	}
 	if(LoadSave.testdis > 1)
 	{
@@ -435,7 +478,7 @@ void Para_Set_Comp(void)
 		{
 			LoadSave.valB = 400000;
 		}
-	}else if(LoadSave.Version == 4){
+	}else if(LoadSave.Version == 4 || LoadSave.Version == 5){
 		if(LoadSave.valA > 2400000)
 		{
 			LoadSave.valA = 2400000;
@@ -486,7 +529,7 @@ void Para_Set_Comp(void)
 		{
 			LoadSave.chigh = 400000;
 		}
-	}else if(LoadSave.Version == 4){
+	}else if(LoadSave.Version == 4 || LoadSave.Version == 5){
 		if(LoadSave.chigh > 2400000)
 		{
 			LoadSave.chigh = 2400000;
@@ -536,7 +579,7 @@ void Para_Set_Comp(void)
 				{
 					LoadSave.listlow[i] = 400000;
 				}
-			}else if(LoadSave.Version == 4){
+			}else if(LoadSave.Version == 4 || LoadSave.Version == 5){
 				if(LoadSave.listvalue[i] > 2400000)
 				{
 					LoadSave.listvalue[i] = 2400000;
@@ -1267,7 +1310,7 @@ void Setup_Process(void)
 								LoadSave.crange = 1;
 							else
 								LoadSave.crange = 0;
-							Sence_SW();
+							I_Gear_SW();
 							Store_set_flash();
 						}break;
 						case 3:
@@ -1276,7 +1319,7 @@ void Setup_Process(void)
 								LoadSave.vrange = 1;
 							else
 								LoadSave.vrange = 0;
-							Sence_SW();
+							V_Gear_SW();
 							Store_set_flash();
 						}break;
 					}
@@ -4921,7 +4964,7 @@ void Use_DebugProcess(void)
 				}break;
 				case Key_SHIFT:
 				{
-					if(LoadSave.Version < 4)
+					if(LoadSave.Version < 5)//0-1200;1-800;2-600;3-400;4-2400;5-3500
 					{
 						LoadSave.Version++;
 					}else{
