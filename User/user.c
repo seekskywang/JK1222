@@ -574,10 +574,17 @@ const uint8_t Test_Compvalue_E[][6+1]=
 const uint8_t Test_Commvalue_E[][6+1]=
 {
 	{"RS232"},
-	{"RS485"}
-
+	{"RS485"},
+  {"RS232"},
 };
 
+const uint8_t Test_PCTLvalue_E[][6+1]=
+{
+	{"MODBUS"},
+	{"SCPI"},
+	{"SCPI"}
+
+};
 const uint8_t Test_Rangevalue[][6+1]=
 {
 	{"低"},
@@ -679,7 +686,7 @@ const uint8_t User_Rangeset[][11]=
 const uint8_t Sys_Setitem[][10+1]=
 {
 	{"本机地址"},
-	{"波特率  "},
+	{"通讯协议"},
 	{"U盘开关"},
 	{"通讯接口"},
 	{"显示语言"},
@@ -692,13 +699,13 @@ const uint8_t Sys_Setitem[][10+1]=
 const uint8_t Sys_Setitem_E[][10+1]=
 {
 	{"ADDR"},
-	{"BAUD "},
+	{"PROTOCOL"},
 	{"U_DISK"},
 	{"I/O_PORT"},
 	{"LANGUAGE"},
 	
 	{"DATE"},
-    {"TIME"},
+  {"TIME"},
 //    {"FILE"},
 	
 };
@@ -4534,7 +4541,7 @@ void Disp_Sys_value(u8 keynum)
 	Hex_Format(LoadSave.Addr,0,3,0);
 	WriteString_16(LIST1+90, FIRSTLINE+2, DispBuf,  0);//
 	
-//波特率
+//通讯协议
 	Black_Select=(keynum==2)?1:0;
 	if(Black_Select)
 	{
@@ -4547,7 +4554,7 @@ void Disp_Sys_value(u8 keynum)
 	}
 		
 	LCD_DrawFullRect( LIST1+90, FIRSTLINE+SPACE1,SELECT_1END-(LIST1+90) , SPACE1-4  ) ;//SPACE1
-	WriteString_16(LIST1+90, FIRSTLINE+SPACE1+2, Sys_Buard_Value[LoadSave.Baudrate],  0);
+	WriteString_16(LIST1+90, FIRSTLINE+SPACE1+2, Test_PCTLvalue_E[LoadSave.COMM],  0);
 	//U盘开关
     Black_Select=(keynum==3)?1:0;
 	if(Black_Select)
@@ -4763,10 +4770,10 @@ void Disp_Sys_value(u8 keynum)
 
 //		break;
 		case 2:
-			for(i=0;i<5;i++)
+			for(i=0;i<2;i++)
 			{
 				
-				WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, Sys_Buard_Value[i],  0);
+				WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, Test_PCTLvalue_E[i],  0);
 			}
 		break;
 		case 3:
@@ -4953,8 +4960,8 @@ void Use_SysSetProcess(void)
 							break;
 						case 2:
 						{
-							LoadSave.Baudrate = 0;
-							Set_Baudrate();
+							LoadSave.COMM = 0;
+							Set_Comm();
 							Store_set_flash();
 						}break;
 						case 4:
@@ -5046,8 +5053,8 @@ void Use_SysSetProcess(void)
 							break;
 						case 2:
 						{
-							LoadSave.Baudrate = 1;
-							Set_Baudrate();
+							LoadSave.COMM = 2;
+							Set_Comm();
 							Store_set_flash();
 						}break;
 						case 4:

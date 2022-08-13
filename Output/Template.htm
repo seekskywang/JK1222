@@ -3,7 +3,7 @@
 <title>Static Call Graph - [..\..\Output\Template.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image ..\..\Output\Template.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Wed Aug 10 16:56:40 2022
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Sat Aug 13 13:34:36 2022
 <BR><P>
 <H3>Maximum Stack Usage =       1212 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -495,12 +495,12 @@ Global Symbols
 <LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_round
 <LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_epilogue
 </UL>
-<BR>[Called By]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dsub
+<BR>[Called By]<UL><LI><a href="#[214]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_poly
+<LI><a href="#[20c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mathlib_dbl_infnan2
+<LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dsub
 <LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Encoder_Process
 <LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_drsub
 <LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_pow
-<LI><a href="#[214]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_poly
-<LI><a href="#[20c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mathlib_dbl_infnan2
 </UL>
 
 <P><STRONG><a name="[8e]"></a>__aeabi_dsub</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, dadd.o(.text))
@@ -525,10 +525,10 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_epilogue
 </UL>
-<BR>[Called By]<UL><LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_pow
-<LI><a href="#[214]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_poly
+<BR>[Called By]<UL><LI><a href="#[214]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_poly
 <LI><a href="#[213]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mathlib_dbl_underflow
 <LI><a href="#[20f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mathlib_dbl_overflow
+<LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_pow
 </UL>
 
 <P><STRONG><a name="[91]"></a>__aeabi_ddiv</STRONG> (Thumb, 222 bytes, Stack size 32 bytes, ddiv.o(.text))
@@ -536,9 +536,9 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_round
 </UL>
-<BR>[Called By]<UL><LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_pow
-<LI><a href="#[212]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mathlib_dbl_invalid
+<BR>[Called By]<UL><LI><a href="#[212]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mathlib_dbl_invalid
 <LI><a href="#[20e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mathlib_dbl_divzero
+<LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_pow
 </UL>
 
 <P><STRONG><a name="[92]"></a>__aeabi_i2d</STRONG> (Thumb, 34 bytes, Stack size 16 bytes, dflti.o(.text))
@@ -579,16 +579,16 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[8a]"></a>__aeabi_llsl</STRONG> (Thumb, 30 bytes, Stack size 0 bytes, llshl.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
-<LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_epilogue
+<BR><BR>[Called By]<UL><LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_epilogue
+<LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
 </UL>
 
 <P><STRONG><a name="[250]"></a>_ll_shift_l</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, llshl.o(.text), UNUSED)
 
 <P><STRONG><a name="[95]"></a>__aeabi_llsr</STRONG> (Thumb, 32 bytes, Stack size 0 bytes, llushr.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2uiz
-<LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dsqrt
+<BR><BR>[Called By]<UL><LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dsqrt
 <LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_epilogue
+<LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2uiz
 </UL>
 
 <P><STRONG><a name="[251]"></a>_ll_ushift_r</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, llushr.o(.text), UNUSED)
@@ -604,10 +604,10 @@ Global Symbols
 <P><STRONG><a name="[8d]"></a>_double_round</STRONG> (Thumb, 30 bytes, Stack size 8 bytes, depilogue.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = _double_round
 </UL>
-<BR>[Called By]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
-<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ddiv
-<LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dsqrt
+<BR>[Called By]<UL><LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dsqrt
 <LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_epilogue
+<LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
+<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ddiv
 </UL>
 
 <P><STRONG><a name="[8c]"></a>_double_epilogue</STRONG> (Thumb, 156 bytes, Stack size 32 bytes, depilogue.o(.text))
@@ -1222,14 +1222,14 @@ Global Symbols
 <P><STRONG><a name="[f6]"></a>Disp_Sys_value</STRONG> (Thumb, 1380 bytes, Stack size 32 bytes, user.o(i.Disp_Sys_value))
 <BR><BR>[Stack]<UL><LI>Max Depth = 160<LI>Call Chain = Disp_Sys_value &rArr; Disp_Button_SysSet &rArr; Disp_Button_value1 &rArr; Disp_Fastbutton &rArr; LCD_DrawFullRect &rArr; DMA2D_Init
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RTC_GetTime
+<BR>[Calls]<UL><LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
+<LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RTC_GetTime
 <LI><a href="#[f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RTC_GetDate
 <LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WriteString_16
 <LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_DrawFullRect
 <LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Hex_Format
 <LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Disp_Fastbutton
 <LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Disp_Button_SysSet
-<LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[206]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Use_SysSetProcess
 </UL>
@@ -1394,11 +1394,11 @@ Global Symbols
 <P><STRONG><a name="[aa]"></a>Disp_dateandtime</STRONG> (Thumb, 140 bytes, Stack size 64 bytes, user.o(i.Disp_dateandtime))
 <BR><BR>[Stack]<UL><LI>Max Depth = 168<LI>Call Chain = Disp_dateandtime &rArr; WriteString_16 &rArr; PutChar &rArr; GetASCIICode
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RTC_GetTime
+<BR>[Calls]<UL><LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
+<LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RTC_GetTime
 <LI><a href="#[f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RTC_GetDate
 <LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WriteString_16
 <LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
-<LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[1a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Test_Process
 <LI><a href="#[13c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;List_Process
@@ -2310,7 +2310,8 @@ Global Symbols
 <P><STRONG><a name="[145]"></a>RTC_CLK_Config</STRONG> (Thumb, 80 bytes, Stack size 16 bytes, bsp_rtc.o(i.RTC_CLK_Config))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = RTC_CLK_Config &rArr; __2printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[14a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWR_BackupAccessCmd
+<BR>[Calls]<UL><LI><a href="#[15c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
+<LI><a href="#[14a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWR_BackupAccessCmd
 <LI><a href="#[14b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RTC_WaitForSynchro
 <LI><a href="#[15b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RTC_Init
 <LI><a href="#[159]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_RTCCLKConfig
@@ -2318,7 +2319,6 @@ Global Symbols
 <LI><a href="#[158]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_LSEConfig
 <LI><a href="#[12d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_GetFlagStatus
 <LI><a href="#[149]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_APB1PeriphClockCmd
-<LI><a href="#[15c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[144]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Power_Process
 </UL>
@@ -2565,10 +2565,10 @@ Global Symbols
 <P><STRONG><a name="[177]"></a>SPI_FLASH_PageWrite</STRONG> (Thumb, 96 bytes, Stack size 16 bytes, bsp_spi_flash.o(i.SPI_FLASH_PageWrite))
 <BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = SPI_FLASH_PageWrite &rArr; SPI_FLASH_WriteEnable &rArr; SPI_FLASH_SendByte &rArr; SPI_TIMEOUT_UserCallback &rArr; __2printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[17a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_FLASH_WriteEnable
+<BR>[Calls]<UL><LI><a href="#[15c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
+<LI><a href="#[17a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_FLASH_WriteEnable
 <LI><a href="#[17b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_FLASH_WaitForWriteEnd
 <LI><a href="#[175]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_FLASH_SendByte
-<LI><a href="#[15c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[176]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_FLASH_BufferWrite
 </UL>
@@ -3880,15 +3880,7 @@ Global Symbols
 <P><STRONG><a name="[106]"></a>__hardfp_pow</STRONG> (Thumb, 3072 bytes, Stack size 192 bytes, pow.o(i.__hardfp_pow))
 <BR><BR>[Stack]<UL><LI>Max Depth = 304<LI>Call Chain = __hardfp_pow &rArr; __kernel_poly &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
 </UL>
-<BR>[Calls]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dsub
-<LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
-<LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_i2d
-<LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
-<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ddiv
-<LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_drsub
-<LI><a href="#[215]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cdrcmple
-<LI><a href="#[216]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__ARM_scalbn
-<LI><a href="#[20d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__set_errno
+<BR>[Calls]<UL><LI><a href="#[20d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__set_errno
 <LI><a href="#[210]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sqrt
 <LI><a href="#[214]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_poly
 <LI><a href="#[217]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__ARM_fpclassify
@@ -3898,6 +3890,14 @@ Global Symbols
 <LI><a href="#[212]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mathlib_dbl_invalid
 <LI><a href="#[20c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mathlib_dbl_infnan2
 <LI><a href="#[20e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mathlib_dbl_divzero
+<LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dsub
+<LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
+<LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_i2d
+<LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
+<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ddiv
+<LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_drsub
+<LI><a href="#[215]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cdrcmple
+<LI><a href="#[216]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__ARM_scalbn
 </UL>
 <BR>[Called By]<UL><LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Encoder_Process
 </UL>
@@ -3958,8 +3958,8 @@ Global Symbols
 <P><STRONG><a name="[25c]"></a>__scatterload_zeroinit</STRONG> (Thumb, 14 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_zeroinit), UNUSED)
 
 <P><STRONG><a name="[20d]"></a>__set_errno</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, errno.o(i.__set_errno))
-<BR><BR>[Called By]<UL><LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_pow
-<LI><a href="#[210]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sqrt
+<BR><BR>[Called By]<UL><LI><a href="#[210]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sqrt
+<LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_pow
 </UL>
 
 <P><STRONG><a name="[22d]"></a>clust2sect</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, ff.o(i.clust2sect))

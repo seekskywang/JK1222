@@ -117,7 +117,7 @@ void READ_COMP(void)
 void Para_Set_Comp(void)
 {
 	u8 i;
-	if(LoadSave.COMM > 1)
+	if(LoadSave.COMM > 2)
 	{
 		LoadSave.COMM=0;
 	}

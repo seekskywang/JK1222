@@ -510,7 +510,7 @@ Section Cross References
     user.o(i.Disp_Sys_value) refers to bsp_lcd.o(.data) for Colour
     user.o(i.Disp_Sys_value) refers to pbdata.o(.bss) for LoadSave
     user.o(i.Disp_Sys_value) refers to user.o(.bss) for DispBuf
-    user.o(i.Disp_Sys_value) refers to user.o(.constdata) for Sys_Buard_Value
+    user.o(i.Disp_Sys_value) refers to user.o(.constdata) for Test_PCTLvalue_E
     user.o(i.Disp_TestScreen) refers to user.o(i.Disp_TopBar_Color) for Disp_TopBar_Color
     user.o(i.Disp_TestScreen) refers to user.o(i.Disp_Fastbutton) for Disp_Fastbutton
     user.o(i.Disp_TestScreen) refers to user.o(i.Disp_MidRect) for Disp_MidRect
@@ -669,12 +669,12 @@ Section Cross References
     user.o(i.Use_SysSetProcess) refers to stm32f4xx_rtc.o(i.RTC_GetTime) for RTC_GetTime
     user.o(i.Use_SysSetProcess) refers to stm32f4xx_rtc.o(i.RTC_GetDate) for RTC_GetDate
     user.o(i.Use_SysSetProcess) refers to keyboard.o(i.Key_Read) for Key_Read
-    user.o(i.Use_SysSetProcess) refers to bsp_debug_usart.o(i.Set_Baudrate) for Set_Baudrate
-    user.o(i.Use_SysSetProcess) refers to flash_eerom.o(i.Store_set_flash) for Store_set_flash
     user.o(i.Use_SysSetProcess) refers to bsp_debug_usart.o(i.Set_Comm) for Set_Comm
+    user.o(i.Use_SysSetProcess) refers to flash_eerom.o(i.Store_set_flash) for Store_set_flash
     user.o(i.Use_SysSetProcess) refers to stm32f4xx_rtc.o(i.RTC_SetDate) for RTC_SetDate
     user.o(i.Use_SysSetProcess) refers to stm32f4xx_rtc.o(i.RTC_WriteBackupRegister) for RTC_WriteBackupRegister
     user.o(i.Use_SysSetProcess) refers to stm32f4xx_rtc.o(i.RTC_SetTime) for RTC_SetTime
+    user.o(i.Use_SysSetProcess) refers to bsp_debug_usart.o(i.Set_Baudrate) for Set_Baudrate
     user.o(i.Use_SysSetProcess) refers to keyboard.o(.data) for spinflag
     user.o(i.Use_SysSetProcess) refers to test.o(.data) for inputtrans
     user.o(i.Use_SysSetProcess) refers to pbdata.o(.data) for SystemStatus
@@ -4149,27 +4149,27 @@ Image Symbol Table
     sync_window                              0x08017c7f   Thumb Code    82  ff.o(i.sync_window)
     i.validate                               0x08017cd0   Section        0  ff.o(i.validate)
     validate                                 0x08017cd1   Thumb Code    54  ff.o(i.validate)
-    .constdata                               0x08017d08   Section     5714  user.o(.constdata)
-    .constdata                               0x0801935a   Section    391680  test.o(.constdata)
-    .constdata                               0x08078d5a   Section    16337  bsp_lcd.o(.constdata)
-    .constdata                               0x0807cd2c   Section    40192  fonts.o(.constdata)
-    AsciiLib                                 0x080863ac   Data        1520  fonts.o(.constdata)
-    .constdata                               0x08086a2c   Section       58  ff.o(.constdata)
-    LfnOfs                                   0x08086a2c   Data          13  ff.o(.constdata)
-    vst                                      0x08086a3a   Data          22  ff.o(.constdata)
-    cst                                      0x08086a50   Data          22  ff.o(.constdata)
-    .constdata                               0x08086a66   Section    175304  cc936.o(.constdata)
-    uni2oem                                  0x08086a66   Data       87172  cc936.o(.constdata)
-    oem2uni                                  0x0809beea   Data       87172  cc936.o(.constdata)
-    tbl_lower                                0x080b136e   Data         480  cc936.o(.constdata)
-    tbl_upper                                0x080b154e   Data         480  cc936.o(.constdata)
-    .constdata                               0x080b1730   Section      136  pow.o(.constdata)
-    bp                                       0x080b1730   Data          16  pow.o(.constdata)
-    dp_h                                     0x080b1740   Data          16  pow.o(.constdata)
-    dp_l                                     0x080b1750   Data          16  pow.o(.constdata)
-    L                                        0x080b1760   Data          48  pow.o(.constdata)
-    P                                        0x080b1790   Data          40  pow.o(.constdata)
-    .constdata                               0x080b17b8   Section        8  qnan.o(.constdata)
+    .constdata                               0x08017d08   Section     5742  user.o(.constdata)
+    .constdata                               0x08019376   Section    391680  test.o(.constdata)
+    .constdata                               0x08078d76   Section    16405  bsp_lcd.o(.constdata)
+    .constdata                               0x0807cd8c   Section    40192  fonts.o(.constdata)
+    AsciiLib                                 0x0808640c   Data        1520  fonts.o(.constdata)
+    .constdata                               0x08086a8c   Section       58  ff.o(.constdata)
+    LfnOfs                                   0x08086a8c   Data          13  ff.o(.constdata)
+    vst                                      0x08086a9a   Data          22  ff.o(.constdata)
+    cst                                      0x08086ab0   Data          22  ff.o(.constdata)
+    .constdata                               0x08086ac6   Section    175304  cc936.o(.constdata)
+    uni2oem                                  0x08086ac6   Data       87172  cc936.o(.constdata)
+    oem2uni                                  0x0809bf4a   Data       87172  cc936.o(.constdata)
+    tbl_lower                                0x080b13ce   Data         480  cc936.o(.constdata)
+    tbl_upper                                0x080b15ae   Data         480  cc936.o(.constdata)
+    .constdata                               0x080b1790   Section      136  pow.o(.constdata)
+    bp                                       0x080b1790   Data          16  pow.o(.constdata)
+    dp_h                                     0x080b17a0   Data          16  pow.o(.constdata)
+    dp_l                                     0x080b17b0   Data          16  pow.o(.constdata)
+    L                                        0x080b17c0   Data          48  pow.o(.constdata)
+    P                                        0x080b17f0   Data          40  pow.o(.constdata)
+    .constdata                               0x080b1818   Section        8  qnan.o(.constdata)
     .data                                    0x20000000   Section       20  system_stm32f4xx.o(.data)
     .data                                    0x20000014   Section       16  stm32f4xx_rcc.o(.data)
     APBAHBPrescTable                         0x20000014   Data          16  stm32f4xx_rcc.o(.data)
@@ -4884,64 +4884,65 @@ Image Symbol Table
     Tran_Mode                                0x08018cc4   Data          21  user.o(.constdata)
     Tran_ModeE                               0x08018cd9   Data          21  user.o(.constdata)
     Test_Compvalue_E                         0x08018cee   Data          14  user.o(.constdata)
-    Test_Commvalue_E                         0x08018cfc   Data          14  user.o(.constdata)
-    Test_Rangevalue                          0x08018d0a   Data          14  user.o(.constdata)
-    Test_Rangevalue_E                        0x08018d18   Data          14  user.o(.constdata)
-    Setup_Beep                               0x08018d26   Data          28  user.o(.constdata)
-    Setup_Beep1                              0x08018d42   Data          32  user.o(.constdata)
-    Setup_Beep_E                             0x08018d62   Data          28  user.o(.constdata)
-    Setup_Beep_E1                            0x08018d7e   Data          32  user.o(.constdata)
-    INPUT                                    0x08018d9e   Data           7  user.o(.constdata)
-    INPUT_E                                  0x08018da5   Data           7  user.o(.constdata)
-    User_Range                               0x08018dac   Data          88  user.o(.constdata)
-    User_Range_E                             0x08018e04   Data          88  user.o(.constdata)
-    DISP_UINT                                0x08018e5c   Data          20  user.o(.constdata)
-    MODE_UINT                                0x08018e70   Data          16  user.o(.constdata)
-    User_Rangeset                            0x08018e80   Data          55  user.o(.constdata)
-    Sys_Setitem                              0x08018eb7   Data          77  user.o(.constdata)
-    Sys_Setitem_E                            0x08018f04   Data          77  user.o(.constdata)
-    Sys_Buard_Value                          0x08018f51   Data          56  user.o(.constdata)
-    Sys_Language_Value                       0x08018f89   Data          16  user.o(.constdata)
-    BiasButton_Tip                           0x08018f99   Data          16  user.o(.constdata)
-    Sys_Sys                                  0x08018fa9   Data          84  user.o(.constdata)
-    Sys_Sys_E                                0x08018ffd   Data          84  user.o(.constdata)
-    Sys_Sys1                                 0x08019051   Data          84  user.o(.constdata)
-    Sys_Sys_E1                               0x080190a5   Data          84  user.o(.constdata)
-    Range_Disp_Test                          0x080190f9   Data         168  user.o(.constdata)
-    Step_Mode                                0x080191a1   Data          21  user.o(.constdata)
-    Step_ModeE                               0x080191b6   Data          21  user.o(.constdata)
-    List_ItemDis                             0x080191cb   Data          35  user.o(.constdata)
-    List_Res                                 0x080191ee   Data          35  user.o(.constdata)
-    List_ResE                                0x08019211   Data          35  user.o(.constdata)
-    List_ItemDisE                            0x08019234   Data          35  user.o(.constdata)
-    List_CompType                            0x08019257   Data          28  user.o(.constdata)
-    List_ResBack                             0x08019273   Data          35  user.o(.constdata)
-    List_ResBackE                            0x08019296   Data          35  user.o(.constdata)
-    List_CompTypeE                           0x080192b9   Data          36  user.o(.constdata)
-    RANG_4094                                0x080192dd   Data           8  user.o(.constdata)
-    POW_NUM                                  0x080192e6   Data           8  user.o(.constdata)
-    RANGE_RATE                               0x080192f0   Data          20  user.o(.constdata)
-    SystemLimit                              0x08019304   Data          16  user.o(.constdata)
-    SystemLimitDot                           0x08019314   Data          10  user.o(.constdata)
-    ParameterLimit                           0x0801931e   Data          12  user.o(.constdata)
-    Debug_Limit                              0x0801932c   Data           8  user.o(.constdata)
-    send_dot                                 0x08019334   Data          11  user.o(.constdata)
-    Send_uint                                0x0801933f   Data          11  user.o(.constdata)
-    Test_Uint                                0x0801934a   Data          16  user.o(.constdata)
-    gImage_open                              0x0801935a   Data       391680  test.o(.constdata)
-    GB_21                                    0x08078d5a   Data        7735  bsp_lcd.o(.constdata)
-    GB_16                                    0x0807ab91   Data        8602  bsp_lcd.o(.constdata)
-    ASCII16x24_Table                         0x0807cd2c   Data        4560  fonts.o(.constdata)
-    Out_1224                                 0x0807defc   Data         624  fonts.o(.constdata)
-    Out_Assic                                0x0807e16c   Data        8000  fonts.o(.constdata)
-    Out_Assic30                              0x080800ac   Data       19200  fonts.o(.constdata)
-    ASCII12x12_Table                         0x08084bac   Data        2304  fonts.o(.constdata)
-    ASCII8x12_Table                          0x080854ac   Data        2304  fonts.o(.constdata)
-    ASCII8x8_Table                           0x08085dac   Data        1536  fonts.o(.constdata)
-    nBitmapDot                               0x0808699c   Data         144  fonts.o(.constdata)
-    __mathlib_zero                           0x080b17b8   Data           8  qnan.o(.constdata)
-    Region$$Table$$Base                      0x080b17c0   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x080b17e0   Number         0  anon$$obj.o(Region$$Table)
+    Test_Commvalue_E                         0x08018cfc   Data          21  user.o(.constdata)
+    Test_PCTLvalue_E                         0x08018d11   Data          21  user.o(.constdata)
+    Test_Rangevalue                          0x08018d26   Data          14  user.o(.constdata)
+    Test_Rangevalue_E                        0x08018d34   Data          14  user.o(.constdata)
+    Setup_Beep                               0x08018d42   Data          28  user.o(.constdata)
+    Setup_Beep1                              0x08018d5e   Data          32  user.o(.constdata)
+    Setup_Beep_E                             0x08018d7e   Data          28  user.o(.constdata)
+    Setup_Beep_E1                            0x08018d9a   Data          32  user.o(.constdata)
+    INPUT                                    0x08018dba   Data           7  user.o(.constdata)
+    INPUT_E                                  0x08018dc1   Data           7  user.o(.constdata)
+    User_Range                               0x08018dc8   Data          88  user.o(.constdata)
+    User_Range_E                             0x08018e20   Data          88  user.o(.constdata)
+    DISP_UINT                                0x08018e78   Data          20  user.o(.constdata)
+    MODE_UINT                                0x08018e8c   Data          16  user.o(.constdata)
+    User_Rangeset                            0x08018e9c   Data          55  user.o(.constdata)
+    Sys_Setitem                              0x08018ed3   Data          77  user.o(.constdata)
+    Sys_Setitem_E                            0x08018f20   Data          77  user.o(.constdata)
+    Sys_Buard_Value                          0x08018f6d   Data          56  user.o(.constdata)
+    Sys_Language_Value                       0x08018fa5   Data          16  user.o(.constdata)
+    BiasButton_Tip                           0x08018fb5   Data          16  user.o(.constdata)
+    Sys_Sys                                  0x08018fc5   Data          84  user.o(.constdata)
+    Sys_Sys_E                                0x08019019   Data          84  user.o(.constdata)
+    Sys_Sys1                                 0x0801906d   Data          84  user.o(.constdata)
+    Sys_Sys_E1                               0x080190c1   Data          84  user.o(.constdata)
+    Range_Disp_Test                          0x08019115   Data         168  user.o(.constdata)
+    Step_Mode                                0x080191bd   Data          21  user.o(.constdata)
+    Step_ModeE                               0x080191d2   Data          21  user.o(.constdata)
+    List_ItemDis                             0x080191e7   Data          35  user.o(.constdata)
+    List_Res                                 0x0801920a   Data          35  user.o(.constdata)
+    List_ResE                                0x0801922d   Data          35  user.o(.constdata)
+    List_ItemDisE                            0x08019250   Data          35  user.o(.constdata)
+    List_CompType                            0x08019273   Data          28  user.o(.constdata)
+    List_ResBack                             0x0801928f   Data          35  user.o(.constdata)
+    List_ResBackE                            0x080192b2   Data          35  user.o(.constdata)
+    List_CompTypeE                           0x080192d5   Data          36  user.o(.constdata)
+    RANG_4094                                0x080192f9   Data           8  user.o(.constdata)
+    POW_NUM                                  0x08019302   Data           8  user.o(.constdata)
+    RANGE_RATE                               0x0801930c   Data          20  user.o(.constdata)
+    SystemLimit                              0x08019320   Data          16  user.o(.constdata)
+    SystemLimitDot                           0x08019330   Data          10  user.o(.constdata)
+    ParameterLimit                           0x0801933a   Data          12  user.o(.constdata)
+    Debug_Limit                              0x08019348   Data           8  user.o(.constdata)
+    send_dot                                 0x08019350   Data          11  user.o(.constdata)
+    Send_uint                                0x0801935b   Data          11  user.o(.constdata)
+    Test_Uint                                0x08019366   Data          16  user.o(.constdata)
+    gImage_open                              0x08019376   Data       391680  test.o(.constdata)
+    GB_21                                    0x08078d76   Data        7735  bsp_lcd.o(.constdata)
+    GB_16                                    0x0807abad   Data        8670  bsp_lcd.o(.constdata)
+    ASCII16x24_Table                         0x0807cd8c   Data        4560  fonts.o(.constdata)
+    Out_1224                                 0x0807df5c   Data         624  fonts.o(.constdata)
+    Out_Assic                                0x0807e1cc   Data        8000  fonts.o(.constdata)
+    Out_Assic30                              0x0808010c   Data       19200  fonts.o(.constdata)
+    ASCII12x12_Table                         0x08084c0c   Data        2304  fonts.o(.constdata)
+    ASCII8x12_Table                          0x0808550c   Data        2304  fonts.o(.constdata)
+    ASCII8x8_Table                           0x08085e0c   Data        1536  fonts.o(.constdata)
+    nBitmapDot                               0x080869fc   Data         144  fonts.o(.constdata)
+    __mathlib_zero                           0x080b1818   Data           8  qnan.o(.constdata)
+    Region$$Table$$Base                      0x080b1820   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x080b1840   Number         0  anon$$obj.o(Region$$Table)
     SystemCoreClock                          0x20000000   Data           4  system_stm32f4xx.o(.data)
     AHBPrescTable                            0x20000004   Data          16  system_stm32f4xx.o(.data)
     g_mods_timeout                           0x20000024   Data           1  stm32f4xx_it.o(.data)
@@ -5104,9 +5105,9 @@ Memory Map of the image
 
   Image Entry point : 0x080001ad
 
-  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x000b1a3c, Max: 0x00100000, ABSOLUTE, COMPRESSED[0x000b18a0])
+  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x000b1a9c, Max: 0x00100000, ABSOLUTE, COMPRESSED[0x000b1900])
 
-    Execution Region ER_IROM1 (Exec base: 0x08000000, Load base: 0x08000000, Size: 0x000b17e0, Max: 0x00100000, ABSOLUTE)
+    Execution Region ER_IROM1 (Exec base: 0x08000000, Load base: 0x08000000, Size: 0x000b1840, Max: 0x00100000, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
@@ -5648,25 +5649,25 @@ Memory Map of the image
     0x08017c7e   0x08017c7e   0x00000052   Code   RO         7866    i.sync_window       ff.o
     0x08017cd0   0x08017cd0   0x00000036   Code   RO         7867    i.validate          ff.o
     0x08017d06   0x08017d06   0x00000002   PAD
-    0x08017d08   0x08017d08   0x00001652   Data   RO         5604    .constdata          user.o
-    0x0801935a   0x0801935a   0x0005fa00   Data   RO         6178    .constdata          test.o
-    0x08078d5a   0x08078d5a   0x00003fd1   Data   RO         6675    .constdata          bsp_lcd.o
-    0x0807cd2b   0x0807cd2b   0x00000001   PAD
-    0x0807cd2c   0x0807cd2c   0x00009d00   Data   RO         7012    .constdata          fonts.o
-    0x08086a2c   0x08086a2c   0x0000003a   Data   RO         7869    .constdata          ff.o
-    0x08086a66   0x08086a66   0x0002acc8   Data   RO         8151    .constdata          cc936.o
-    0x080b172e   0x080b172e   0x00000002   PAD
-    0x080b1730   0x080b1730   0x00000088   Data   RO         9278    .constdata          m_wm.l(pow.o)
-    0x080b17b8   0x080b17b8   0x00000008   Data   RO         9603    .constdata          m_wm.l(qnan.o)
-    0x080b17c0   0x080b17c0   0x00000020   Data   RO         9665    Region$$Table       anon$$obj.o
+    0x08017d08   0x08017d08   0x0000166e   Data   RO         5604    .constdata          user.o
+    0x08019376   0x08019376   0x0005fa00   Data   RO         6178    .constdata          test.o
+    0x08078d76   0x08078d76   0x00004015   Data   RO         6675    .constdata          bsp_lcd.o
+    0x0807cd8b   0x0807cd8b   0x00000001   PAD
+    0x0807cd8c   0x0807cd8c   0x00009d00   Data   RO         7012    .constdata          fonts.o
+    0x08086a8c   0x08086a8c   0x0000003a   Data   RO         7869    .constdata          ff.o
+    0x08086ac6   0x08086ac6   0x0002acc8   Data   RO         8151    .constdata          cc936.o
+    0x080b178e   0x080b178e   0x00000002   PAD
+    0x080b1790   0x080b1790   0x00000088   Data   RO         9278    .constdata          m_wm.l(pow.o)
+    0x080b1818   0x080b1818   0x00000008   Data   RO         9603    .constdata          m_wm.l(qnan.o)
+    0x080b1820   0x080b1820   0x00000020   Data   RO         9665    Region$$Table       anon$$obj.o
 
 
-    Execution Region RW_IRAM2 (Exec base: 0x10000000, Load base: 0x080b18a0, Size: 0x00000000, Max: 0x00010000, ABSOLUTE)
+    Execution Region RW_IRAM2 (Exec base: 0x10000000, Load base: 0x080b1900, Size: 0x00000000, Max: 0x00010000, ABSOLUTE)
 
     **** No section assigned to this execution region ****
 
 
-    Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x080b17e0, Size: 0x0000e3c8, Max: 0x00030000, ABSOLUTE, COMPRESSED[0x000000c0])
+    Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x080b1840, Size: 0x0000e3c8, Max: 0x00030000, ABSOLUTE, COMPRESSED[0x000000c0])
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
@@ -5732,7 +5733,7 @@ Image component sizes
        118          6          0          0          0       1537   bsp_basic_tim.o
        552         68          0          8      20480       2179   bsp_bmp.o
       6280        244          0         89        200      13623   bsp_debug_usart.o
-      3654        190      16337         29          0      27565   bsp_lcd.o
+      3654        190      16405         29          0      27565   bsp_lcd.o
        342         32          0          0          0       2342   bsp_rtc.o
       1272         30          0          0          0       3089   bsp_sdram.o
       1102        148          0          4          0       6615   bsp_spi_flash.o
@@ -5774,10 +5775,10 @@ Image component sizes
       1312         88          0          1       1040       7540   usbh_msc_scsi.o
        942         14          0          3        512      10813   usbh_stdreq.o
        204         24          0         73       1584      10769   usbh_usr.o
-     25092       2580       5714          0        236      57106   user.o
+     25092       2580       5742          0        236      57175   user.o
 
     ----------------------------------------------------------------------
-     90628       6202     629748        596      57708     871524   Object Totals
+     90628       6202     629844        596      57708     871593   Object Totals
          0          0         32          0          0          0   (incl. Generated)
         68          0          3         26         10          0   (incl. Padding)
 
@@ -5848,15 +5849,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     97116       6584     629892        604      57708     829472   Grand Totals
-     97116       6584     629892        192      57708     829472   ELF Image Totals (compressed)
-     97116       6584     629892        192          0          0   ROM Totals
+     97116       6584     629988        604      57708     829541   Grand Totals
+     97116       6584     629988        192      57708     829541   ELF Image Totals (compressed)
+     97116       6584     629988        192          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)               727008 ( 709.97kB)
+    Total RO  Size (Code + RO Data)               727104 ( 710.06kB)
     Total RW  Size (RW Data + ZI Data)             58312 (  56.95kB)
-    Total ROM Size (Code + RO Data + RW Data)     727200 ( 710.16kB)
+    Total ROM Size (Code + RO Data + RW Data)     727296 ( 710.25kB)
 
 ==============================================================================
 
