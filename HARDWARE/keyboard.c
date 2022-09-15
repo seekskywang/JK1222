@@ -98,10 +98,10 @@ uint16_t Encoder_Process(u8 list)
 							case 1:
 							{
 								LoadSave.voltage += pow(10,spinbit-1);
-								if(LoadSave.voltage > MAX_SET_VOLT)
-								{
-									LoadSave.voltage = MAX_SET_VOLT;
-								}
+//								if(LoadSave.voltage > MAX_SET_VOLT)
+//								{
+//									LoadSave.voltage = MAX_SET_VOLT;
+//								}
 							}break;
 							case 2:
 							{

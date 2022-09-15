@@ -608,18 +608,34 @@ void Para_Set_Comp(void)
 			}
 			
 		}else if(LoadSave.listmode[i] == 1){
-			if(LoadSave.listvalue[i] > MAX_SET_VOLT)
-			{
-				LoadSave.listvalue[i] = MAX_SET_VOLT;
+			if(LoadSave.Version == 5){
+				if(LoadSave.listvalue[i] > 1500000)
+				{
+					LoadSave.listvalue[i] = 1500000;
+				}
+				if(LoadSave.listhigh[i] > 1500000)
+				{
+					LoadSave.listhigh[i] = 1500000;
+				}
+				if(LoadSave.listlow[i] > 1500000)
+				{
+					LoadSave.listlow[i] = 1500000;
+				}
+			}else{
+				if(LoadSave.listvalue[i] > MAX_SET_VOLT)
+				{
+					LoadSave.listvalue[i] = MAX_SET_VOLT;
+				}
+				if(LoadSave.listhigh[i] > MAX_SET_VOLT)
+				{
+					LoadSave.listhigh[i] = MAX_SET_VOLT;
+				}
+				if(LoadSave.listlow[i] > MAX_SET_VOLT)
+				{
+					LoadSave.listlow[i] = MAX_SET_VOLT;
+				}
 			}
-			if(LoadSave.listhigh[i] > MAX_SET_VOLT)
-			{
-				LoadSave.listhigh[i] = MAX_SET_VOLT;
-			}
-			if(LoadSave.listlow[i] > MAX_SET_VOLT)
-			{
-				LoadSave.listlow[i] = MAX_SET_VOLT;
-			}
+			
 		}else if(LoadSave.listmode[i] == 2){
 			if(LoadSave.listvalue[i] > MAX_SET_RES)
 			{
@@ -663,13 +679,25 @@ void Para_Set_Comp(void)
 		{
 			LoadSave.Addr = 1;
 		}
-		if(LoadSave.listonvol > MAX_SET_VOLT)
+		if(LoadSave.Version == 5)
 		{
-			LoadSave.listonvol = 0;
-		}
-		if(LoadSave.gatev > MAX_SET_VOLT)
-		{
-			LoadSave.gatev = 0;
+			if(LoadSave.listonvol > 1500000)
+			{
+				LoadSave.listonvol = 0;
+			}
+			if(LoadSave.gatev > 1500000)
+			{
+				LoadSave.gatev = 0;
+			}
+		}else{
+			if(LoadSave.listonvol > MAX_SET_VOLT)
+			{
+				LoadSave.listonvol = 0;
+			}
+			if(LoadSave.gatev > MAX_SET_VOLT)
+			{
+				LoadSave.gatev = 0;
+			}
 		}
 	}
 }

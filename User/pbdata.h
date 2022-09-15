@@ -319,6 +319,7 @@ void Para_Set_Comp(void);
 #define GetSystemMessage() (SystemMessage)
 #define SetSystemMessage(msg) (SystemMessage=msg)
 
+
 #define		MAX_SET_CURRENT       600000    //60.0000A  最大设置电流 (低档 2.00000A  高档 20.0000)
 #define		MAX_SET_VOLT          1200000    //120.000V  最大设置电压 (低档 15.0000V  高档 150.000)
 //#ifdef LOADVER1200
