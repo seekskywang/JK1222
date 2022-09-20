@@ -30,8 +30,8 @@
 #define _7706_CSL GPIO_ResetBits(GPIOD,GPIO_Pin_14)
 #define _7706_CSH GPIO_SetBits(GPIOD,GPIO_Pin_14)
 
-#define _ADS1216_CS_L GPIO_ResetBits(GPIOB,GPIO_Pin_10)
-#define _ADS1216_CS_H GPIO_SetBits(GPIOB,GPIO_Pin_10)
+//#define _ADS1216_CS_L GPIO_ResetBits(GPIOB,GPIO_Pin_10)
+//#define _ADS1216_CS_H GPIO_SetBits(GPIOB,GPIO_Pin_10)
 
 #define _SPI_4094_SCLKL GPIO_ResetBits(GPIOC,GPIO_Pin_3)
 #define _SPI_4094_SCLKH GPIO_SetBits(GPIOC,GPIO_Pin_3)
@@ -119,76 +119,11 @@ void SetSoftTimer(u8 id, u8 ticks);
 u8 GetSoftTimerOut(u8 id);
 void Para_Set_Comp(void);
 
-//版本定义
-#define LOADVER1200
-#define LOADVER800
-#define LOADVER600
-//16bit数据的位操作定义
-#define	SetD0	(0x0001)
-#define	SetD1	(0x0002)
-#define	SetD2	(0x0004)
-#define	SetD3	(0x0008)
-#define	SetD4	(0x0010)
-#define	SetD5	(0x0020)
-#define	SetD6	(0x0040)
-#define	SetD7	(0x0080)
-#define	SetD8	(0x0100)
-#define	SetD9	(0x0200)
-#define	SetD10	(0x0400)
-#define	SetD11	(0x0800)
-#define	SetD12	(0x1000)
-#define	SetD13	(0x2000)
-#define	SetD14	(0x4000)
-#define	SetD15	(0x8000)
 
-#define	ClrD0	(0xfffe)
-#define	ClrD1	(0xfffd)
-#define	ClrD2	(0xfffb)
-#define	ClrD3	(0xfff7)
-#define	ClrD4	(0xffef)
-#define	ClrD5	(0xffdf)
-#define	ClrD6	(0xffbf)
-#define	ClrD7	(0xff7f)
-#define	ClrD8	(0xfeff)
-#define	ClrD9	(0xfdff)
-#define	ClrD10	(0xfbff)
-#define	ClrD11	(0xf7ff)
-#define	ClrD12	(0xefff)
-#define	ClrD13	(0xdfff)
-#define	ClrD14	(0xbfff)
-#define	ClrD15	(0x7fff)
+
 #define PASSWORD  "20185260"
 
-#define HW_HW_PGA_MASK		((u8)((ClrD1&ClrD2&ClrD3&ClrD4&ClrD6&ClrD7)))
-#define HW_PGA_1K 			((u8)(SetD4))
-#define HW_PGA_10K 			((u8)(SetD7))
-#define HW_PGA_100K 		((u8)(SetD3))
-#define HW_PGA_103K			((u8)(SetD6))
-#define HW_PGA_104K			((u8)(SetD2))
-#define HW_PGA_105K			((u8)(SetD1))
-
-#define HW_PRO_TEST			((u8)(SetD1))//测试中信号
-#define HW_PRO_UNTEST		((u8)(ClrD1))
-
-#define HW_FD_TEST			((u8)(SetD5))//测试
-#define HW_FD_NOTEST		((u8)(~SetD5))//放电
-
-
-#define HW_GYB_100V 		((u8)(ClrD3))
-#define HW_GYB_1000V 		((u8)(SetD3))
-
-//#define HW_GYB_1000VFEEDMASK ((u8)(ClrD2&ClrD1))
-#define HW_GYB_1000VFEED	((u8)(SetD0))
-#define HW_GYB_100VFEED		((u8)(ClrD0))
-
-
-#define HW_GYBFD_ON			((u8)(SetD1))
-#define HW_GYBFD_OFF		((u8)(ClrD1))
-//#define HW_HW_GYBDZ_MASK	((u8)((ClrD5&ClrD4)))
-
-//#define HW_GYB_0R			((u8)(SetD4|SetD5))//测试
-//#define HW_GYB_10KR			((u8)(ClrD4&ClrD5))//测试
-//#define HW_GYB_100KR		((u8)(SetD4))//测试
+#define BMP_SWITCH                    0      //截图功能开关
 
 //==========================================================
 
@@ -272,39 +207,10 @@ void Para_Set_Comp(void);
 #define MAX_DOTNUM          (5)//最长的小数点
 
 //==========================================================
-#define OHM 				(0xF4)	//CGROM中有Ω字符，编码为0xF4
-
-//==========================================================
-//显示分区的X坐标
-#define MSG_ADDR_X 			(0)
-#define AUTO_ADDR_X 		(7)
-#define RANGE_ADDR_X 		(9)
-
-//#define FALSE 0
-
-//#define TRUE 0
-
-#define RES_ADDR_X 			(12)
-#define VOL_ADDR_X 			(1)
-#define TIM_ADDR_X 			(12)
-#define RAN_ADDR_X			(7)
-
-//电流量程上下限
-//电流量程上下限
-#define RANGR_LIMIT_HIGH (5600000)
-#define RANGR_LIMIT_LOW  (560000)
-
-// 电压量程上下限
-#define RANGE_LIMIT_VHIGH (120000*45)
-#define RANGE_LIMIT_VLOW (11000*45)
 
 
 #define DEBUG_RANGE 16
-//==========================================================
-//标准电压DA   50V   500V
-//==========================================================
-#define  CAL_50V		(3600)
-#define  CAL_500V		(3600)
+
 
 //软定时器定义
 #define KEYBOARD_SOFTTIMER	(0) //按键延时软定时器
@@ -707,6 +613,10 @@ typedef struct
 	u8 COMM;//0-232;1-485;
 //logo
 	u8 jkflag;
+//仪器模式 0-主机 1-从机
+	u8 devmode;
+//从机数量
+	u8 devnum;
 }SaveData_Typedef;
 extern SaveData_Typedef LoadSave;
 typedef struct
@@ -988,11 +898,13 @@ extern  u8 cpld_buff[2];
 extern u8 open_flag;//开路标志位
 extern vu8 V_Range;
 extern u8 USB_Openflag,Disp_usbflag,Disp_RTCflag;
-extern u8 UART_Buffer_Rece[200];
+extern u8 UART_Buffer_Rece[BUFFSIZEMAX];
+extern u8 UART3_Buffer_Rece[BUFFSIZEMAX];
 extern u8 flag_Tim_USART;
 extern u16 t_USART;
 extern u8 UART_Buffer_Size;
 extern u8 UART_Buffer_Rece_flag;
+extern u8 UART3_Buffer_Rece_flag;
 extern u8 spinbit;
 extern u8 spinbitmax;
 extern u16 spintest,spinnum;
@@ -1012,4 +924,8 @@ extern u8 switchdelay;
 extern u8 inputtrans;
 extern u8 coder_flag;
 extern u16 dacctrl;
+extern u8 usart1rxbuff[BUFFSIZEMAX];
+extern u8 usart1txbuff[BUFFSIZEMAX];
+extern u8 usart3rxbuff[BUFFSIZEMAX];
+extern u8 usart3txbuff[BUFFSIZEMAX];
 #endif

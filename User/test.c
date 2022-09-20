@@ -112,11 +112,17 @@ void READ_COMP(void)
 			LoadSave.listmode[i] = 0;
 		}
 	}
+	if(LoadSave.devmode != 0 && LoadSave.devmode != 1)
+		LoadSave.devmode=0;
 }
 
 void Para_Set_Comp(void)
 {
 	u8 i;
+	if(LoadSave.devmode > 1)
+	{
+		LoadSave.devmode=0;
+	}
 	if(LoadSave.COMM > 2)
 	{
 		LoadSave.COMM=0;
@@ -730,6 +736,7 @@ void LockProcess(void)
 	}
 }
 
+
 void Power_Process(void)
 {
 	u16 i;
@@ -761,6 +768,7 @@ void Power_Process(void)
     
 //    delay_ms(10);
 	 Debug_USART_Config(DEBUG_USART_BAUDRATE);
+	 HS_USART_Config(DEBUG_USART_BAUDRATE);
     Keyboard_Init();//按键初始化
 	Spin_Init();
 
@@ -872,101 +880,6 @@ void Power_Process(void)
 //	BeepOff();
 }
 
-//==========================================================
-//函数名称：Idle_Process
-//函数功能：待测主程序
-//入口参数：无
-//出口参数：无
-//创建日期：2015.10.26
-//修改日期：2015.10.26 08:59
-//备注说明：无
-//==========================================================
-//void Idle_Process(void)
-//{
-//	u8 key;
-//	u8 disp_flag=0;
-//	u8 group;
-
-//	//系统信息更新
-//	SetSystemMessage(MSG_IDLE);//系统信息-待机
-//	Test_value.Test_Time=0;
-
-//	
-//	while(GetSystemStatus()==SYS_STATUS_IDLE)
-//	{
-//		//Uart_Process();//串口处理
-////		Led_Pass_On();
-////		Led_Pass_Off();
-////		Led_Fail_On();
-////		Led_Fail_Off();
-////		Led_HV_On();
-//		//Range_Control(0);
-//		//Range_Control(1);
-//		//Range_Control(2);
-//		//Range_Control(3);
-////		LcdAddr.x=6;//显示地址
-////			LcdAddr.y=0;
-////			Hex_Format(Test_Time,2,4,TRUE);//数值格式化，4位数值
-////			Disp_StrAt(DispBuf);//显示菜单值
-//		if(disp_flag)
-//		{
-//			disp_flag=0;
-////			Read_compvalue(group-1);
-////			Disp_Idle_Menu();//显示待测界面
-//			//Store_set_flash(SaveData.group-1);
-//		
-//		}
-//		key=Key_Read_WithTimeOut(TICKS_PER_SEC_SOFTTIMER/10);//等待按键(100*10ms/10=100ms)
-//		switch(key)
-//		{
-//			case KEY_SET:	//设置键
-//			case L_KEY_SET:	//长按设置键
-//				SetSystemStatus(SYS_STATUS_SETUP);//设置状态
-//				break;
-//	
-//			case KEY_UP:	//上键
-//				group=group<5?++group:1;
-//				SaveData.group=group;
-//				disp_flag=1;
-////			case L_KEY_UP:	//长按上键
-//				break;
-//	
-//			case KEY_DOWN:		//下键
-//				group=group>1?--group:5;
-//				SaveData.group=group;
-//				disp_flag=1;
-////			case L_KEY_DOWN:	//长按下键
-//				break;
-//	
-//			case KEY_LEFT:		//左键
-//			case L_KEY_LEFT:	//长按左键
-//				break;
-
-//			case KEY_RIGHT:		//右键
-//			case L_KEY_RIGHT:	//长按右键
-//				break;
-
-//			case KEY_START:		//启动键
-//			case L_KEY_START:	//长按启动键
-////				if(SaveData.System.Uart!=TRUE)//串口开始时启动键无效
-//					SetSystemStatus(SYS_STATUS_TEST);//启动测试状态
-//				break;
-//	
-//			case KEY_ENTER:		//确认键
-//			case L_KEY_ENTER:	//长按确认键
-//				break;
-//	
-//			case KEY_RESET:		//复位键
-//			case L_KEY_RESET:	//长按复位键
-////				Disp_Clr( );//清屏
-////				Disp_Idle_Menu();//显示待测界面
-//				break;
-//			
-//			default:
-//				break;
-//		}
-//	}
-//}
 
 
 //==========================================================
@@ -1451,7 +1364,9 @@ void Setup_Process(void)
 				case Key_SAVE:
 				{
 					
+#if(BMP_SWITCH)
 					result=Screen_shot(0,0,480,272,(const char *)bmpname);
+#endif				
 				}break;
 				default:
 				break;
@@ -1829,8 +1744,9 @@ void Limit_Process(void)
 				}break;
 				case Key_SAVE:
 				{
-					
+#if(BMP_SWITCH)
 					result=Screen_shot(0,0,480,272,(const char *)bmpname);
+#endif
 				}break;
 				default:
 				break;
@@ -1997,12 +1913,12 @@ void Test_Process(void)
 //	Check_Parameter_Limit();//设置值检查
 	F_100ms=FALSE;//100ms定时	
 	coder_flag = 0;
-    LCD_Clear(LCD_COLOR_TEST_BACK);
+	LCD_Clear(LCD_COLOR_TEST_BACK);
 
 
-    Disp_Test_Item();  
+	Disp_Test_Item();  
 
-    i=0;
+	i=0;
 	Set_Para();
 //    if(Jk516save.Sys_Setvalue.u_flag)
 //    {
@@ -2028,10 +1944,10 @@ void Test_Process(void)
 //		spinvalue = TIM_GetCounter(TIM3);
 		
 		keytrans=Encoder_Process(keynum);
-		USBH_Process(&USB_OTG_Core, &USB_Host);
-							USB_Count=0;
+//		USBH_Process(&USB_OTG_Core, &USB_Host);
+//							USB_Count=0;
 
-							result = f_mount(&fs,"0:",1);
+//							result = f_mount(&fs,"0:",1);
 //		Colour.Fword=White;
 //		Colour.black=LCD_COLOR_TEST_BACK;//User_Check_main
 //		Hex_Format(DispValue.protectflag,0,2,0);
@@ -2055,12 +1971,17 @@ void Test_Process(void)
 			UART_Buffer_Rece_flag=0;
 			Rec_Handle();
 		}
+		if(UART3_Buffer_Rece_flag==1)
+		{
+			UART3_Buffer_Rece_flag=0;
+			Rec_Handle();
+		}
 		if(spinsend == 1)
 		{
 			spinsend = 0;
 			Set_Para();
 		}
-        if(Disp_Flag==1 )//显示设置的值
+    if(Disp_Flag==1 )//显示设置的值
 		{
 			Disp_Test_value(keynum);
             
@@ -2070,7 +1991,11 @@ void Test_Process(void)
 //		ReadData();
 		if(F_100ms == TRUE/* && setflag == 0*/)
 		{
-			ReadData();
+			ReadData();//读本机数据
+			if(LoadSave.devmode==0)//主机模式
+			{
+				ReadSlaveData(1);//读取从机数据
+			}
 			F_100ms=FALSE;
 		}
 		if(setflag != 0)
@@ -2474,12 +2399,14 @@ void Test_Process(void)
 						}break;
 						case Key_SAVE:
 						{
-							
-							result=Screen_shot(0,0,480,272,(const char *)bmpname);
+#if(BMP_SWITCH)
+					result=Screen_shot(0,0,480,272,(const char *)bmpname);
+#endif
 						}break;
 						case Key_ON:
 						{
-							
+							ReadSlaveData(1);
+//							ReadData();
 						}break;
 						default:
 							SetSystemStatus(SYS_STATUS_TEST);
@@ -3337,8 +3264,9 @@ void Battery_Process(void)
 						}break;
 						case Key_SAVE:
 						{
-							
-							result=Screen_shot(0,0,480,272,(const char *)bmpname);
+#if(BMP_SWITCH)
+					result=Screen_shot(0,0,480,272,(const char *)bmpname);
+#endif
 						}break;
 						default:
 //							SetSystemStatus(SYS_STATUS_TEST);
@@ -3766,8 +3694,9 @@ void Dynamic_Process(void)
 						}break;
 						case Key_SAVE:
 						{
-							
-							result=Screen_shot(0,0,480,272,(const char *)bmpname);
+#if(BMP_SWITCH)
+					result=Screen_shot(0,0,480,272,(const char *)bmpname);
+#endif
 						}break;
 						default:
 //							SetSystemStatus(SYS_STATUS_TEST);
@@ -4570,8 +4499,9 @@ void List_Process(void)
 								}break;
 								case Key_SAVE:
 								{
-									
-									result=Screen_shot(0,0,480,272,(const char *)bmpname);
+#if(BMP_SWITCH)
+					result=Screen_shot(0,0,480,272,(const char *)bmpname);
+#endif
 								}break;
 								default:
 //									SetSystemStatus(SYS_STATUS_TEST);
@@ -4626,8 +4556,9 @@ void List_Process(void)
 								}break;
 								case Key_SAVE:
 								{
-									
-									result=Screen_shot(0,0,480,272,(const char *)bmpname);
+#if(BMP_SWITCH)
+					result=Screen_shot(0,0,480,272,(const char *)bmpname);
+#endif
 								}break;
 								default:
 									Disp_Flag = 0;

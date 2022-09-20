@@ -18,7 +18,8 @@
 
 #include "./usart/bsp_debug_usart.h"
 #include "pbdata.h"
-vu8 sendbuff[200];
+u8 sendbuff[BUFFSIZEMAX];
+u8 hostsendbuff[BUFFSIZEMAX];
 u8 setflag;
 vu16 Hardware_CRC(vu8 *p_buffer,vu8 count);
 //u32 dacvalue[10] = {1000,7000,1000,2000,3000,20000,50000,10000,20000,30000};
@@ -28,6 +29,11 @@ u32 dacvalue[17] = {
 5000,10000,30000,50000,//电流低档位
 10000,20000,30000,40000,50000};//电流高档位
 u32 vsum,isum,rsum,psum;
+u8 usart1rxbuff[BUFFSIZEMAX];
+u8 usart1txbuff[BUFFSIZEMAX];
+
+u8 usart3rxbuff[BUFFSIZEMAX];
+u8 usart3txbuff[BUFFSIZEMAX];
 static void NVIC_Configuration(void)
 {
   NVIC_InitTypeDef NVIC_InitStructure;
@@ -47,6 +53,97 @@ static void NVIC_Configuration(void)
   NVIC_Init(&NVIC_InitStructure);
 }
 
+static void HSNVIC_Configuration(void)
+{
+  NVIC_InitTypeDef NVIC_InitStructure;
+  
+  /* 嵌套向量中断控制器组选择 */
+  NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
+  
+  /* 配置USART为中断源 */
+  NVIC_InitStructure.NVIC_IRQChannel = HS_USART_IRQ;
+  /* 抢断优先级为1 */
+  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+  /* 子优先级为1 */
+  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;
+  /* 使能中断 */
+  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+  /* 初始化配置NVIC */
+  NVIC_Init(&NVIC_InitStructure);
+}
+
+//串口1
+//A10(RX1)		DMA2_Stream2		chanel4	
+//A9(TX1)			DMA2_Stream7		chanel4	
+
+static void Debug_USART_DMA_INIT(void)
+{
+	DMA_InitTypeDef  DMA_InitStructure;
+	NVIC_InitTypeDef  NVIC_InitStructure;
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_DMA2,ENABLE);
+
+	//uart1dma发送		DMA2_Stream7
+	DMA_DeInit(DMA2_Stream7);
+	DMA_StructInit(&DMA_InitStructure);
+	while (DMA_GetCmdStatus(DMA2_Stream7) != DISABLE){}
+	/*  DMA Stream */
+	DMA_InitStructure.DMA_Channel = DMA_Channel_4;  
+	DMA_InitStructure.DMA_PeripheralBaseAddr = (u32)(&(DEBUG_USART->DR));
+	DMA_InitStructure.DMA_Memory0BaseAddr = (u32)usart1txbuff;
+	DMA_InitStructure.DMA_DIR = DMA_DIR_MemoryToPeripheral;
+	DMA_InitStructure.DMA_BufferSize = 0;//Uart1TXbuffMax;
+	DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
+	DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;
+	DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Byte;
+	DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_Byte;
+	DMA_InitStructure.DMA_Mode = DMA_Mode_Normal;
+	DMA_InitStructure.DMA_Priority = DMA_Priority_Medium;
+	DMA_InitStructure.DMA_FIFOMode = DMA_FIFOMode_Disable;		   
+	DMA_InitStructure.DMA_FIFOThreshold = DMA_FIFOThreshold_Full;
+	DMA_InitStructure.DMA_MemoryBurst = DMA_MemoryBurst_Single;		
+	DMA_InitStructure.DMA_PeripheralBurst = DMA_PeripheralBurst_Single;	
+	DMA_Init(DMA2_Stream7, &DMA_InitStructure);
+	
+
+	//uart1dma接收		DMA2_Stream2
+	DMA_DeInit(DMA2_Stream2);  
+	while (DMA_GetCmdStatus(DMA2_Stream2) != DISABLE);					//等待DMA可配置	
+	/* DMA Stream */  
+	DMA_InitStructure.DMA_Channel = DMA_Channel_4;						//通道选择	
+	DMA_InitStructure.DMA_PeripheralBaseAddr = (u32)(&(DEBUG_USART->DR));	//DMA外设地址  
+	DMA_InitStructure.DMA_Memory0BaseAddr = (u32)usart1rxbuff;			//DMA 存储器0地址	
+	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralToMemory ;			//外设到存储器模式	
+	DMA_InitStructure.DMA_BufferSize = BUFFSIZEMAX;					//数据传输量   
+	DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;	//外设非增量模式  
+	DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;				//存储器增量模式  
+	DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Byte;		//外设数据长度:8位  
+	DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_Byte;				//存储器数据长度:8位  
+	DMA_InitStructure.DMA_Mode = DMA_Mode_Normal;						// 使用普通模式   
+	DMA_InitStructure.DMA_Priority = DMA_Priority_High;					//中等优先级  
+	DMA_InitStructure.DMA_FIFOMode = DMA_FIFOMode_Disable;			 
+	DMA_InitStructure.DMA_FIFOThreshold = DMA_FIFOThreshold_Full;  
+	DMA_InitStructure.DMA_MemoryBurst = DMA_MemoryBurst_Single;			//存储器突发单次传输  
+	DMA_InitStructure.DMA_PeripheralBurst = DMA_PeripheralBurst_Single;	//外设突发单次传输  
+	DMA_Init(DMA2_Stream2, &DMA_InitStructure);							//初始化DMA Stream  
+	//接收完成中断DMA NVIC	  
+//	DMA_ITConfig(DMA2_Stream2,DMA_IT_TC,ENABLE);
+	NVIC_InitStructure.NVIC_IRQChannel = DMA2_Stream2_IRQn;    
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 13;	 
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;	  
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;    
+	NVIC_Init(&NVIC_InitStructure);   
+	
+	DMA_Cmd(DMA2_Stream2, ENABLE);										//开启DMA传输	
+
+//	ucRTUBuf[9]=0x55;	
+//	modbus_com_send(10);	
+//	delay_10ms(100);
+//	
+//	ucRTUBuf[9]=0xaa;	
+//	modbus_com_send(10);	
+//	delay_10ms(100);
+
+}
 
  /**
   * @brief  DEBUG_USART GPIO 配置,工作模式配置。115200 8-N-1
@@ -94,9 +191,219 @@ void Debug_USART_Config(u32 baud)
   NVIC_Configuration();
   
 	/* 使能串口接收中断 */
-	USART_ITConfig(DEBUG_USART, USART_IT_RXNE, ENABLE);
+	USART_ITConfig(DEBUG_USART, USART_IT_IDLE, ENABLE);
   
-   USART_Cmd(DEBUG_USART, ENABLE);
+  USART_Cmd(DEBUG_USART, ENABLE);
+	 
+	USART_DMACmd(DEBUG_USART,USART_DMAReq_Rx,ENABLE); //使用rx dma   
+	USART_DMACmd(DEBUG_USART,USART_DMAReq_Tx,ENABLE);//使用tx dma
+	Debug_USART_DMA_INIT();
+}
+
+//返回1串口发送成功
+char Uart1SendBuff(u8 *arr,u8 data_len)
+{	
+	u16 wait_count=0;
+
+	while(DMA_GetCurrDataCounter(DMA2_Stream7))//等待上一次传输完成
+	{ 
+		delay_ms(1);
+		++wait_count;
+		if(wait_count>100)//1s
+		{
+			return 0;
+		}
+	}
+	DMA_ClearFlag(DMA2_Stream7,DMA_FLAG_TCIF7);//清除传输完成标志位
+	if(arr) 
+      memcpy(usart1txbuff, arr, data_len);
+	DMA_Cmd(DMA2_Stream7, DISABLE);   	//该函数必须在DMA_SetCurrDataCounter之前调用,否则不传输
+	while (DMA_GetCmdStatus(DMA2_Stream7) != DISABLE)
+	{
+		delay_ms(1);
+	}	
+	
+	DMA_SetCurrDataCounter(DMA2_Stream7,data_len);    //设置传送字节数      
+ 
+	DMA_Cmd(DMA2_Stream7, ENABLE);    
+
+	return 1;
+}
+
+
+
+//串口1
+//B11(RX3)		DMA1_Stream1		chanel4	
+//B10(TX3)		DMA1_Stream3		chanel4	
+
+static void HS_USART_DMA_INIT(void)
+{
+	DMA_InitTypeDef  DMA_InitStructure;
+	NVIC_InitTypeDef  NVIC_InitStructure;
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_DMA1,ENABLE);
+
+	//uart3dma发送		DMA1_Stream3
+	DMA_DeInit(DMA1_Stream3);
+	DMA_StructInit(&DMA_InitStructure);
+	while (DMA_GetCmdStatus(DMA1_Stream3) != DISABLE){}
+	/*  DMA Stream */
+	DMA_InitStructure.DMA_Channel = DMA_Channel_4;  
+	DMA_InitStructure.DMA_PeripheralBaseAddr = (u32)(&(HS_USART->DR));
+	DMA_InitStructure.DMA_Memory0BaseAddr = (u32)usart3txbuff;
+	DMA_InitStructure.DMA_DIR = DMA_DIR_MemoryToPeripheral;
+	DMA_InitStructure.DMA_BufferSize = 0;//Uart1TXbuffMax;
+	DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
+	DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;
+	DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Byte;
+	DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_Byte;
+	DMA_InitStructure.DMA_Mode = DMA_Mode_Normal;
+	DMA_InitStructure.DMA_Priority = DMA_Priority_Medium;
+	DMA_InitStructure.DMA_FIFOMode = DMA_FIFOMode_Disable;		   
+	DMA_InitStructure.DMA_FIFOThreshold = DMA_FIFOThreshold_Full;
+	DMA_InitStructure.DMA_MemoryBurst = DMA_MemoryBurst_Single;		
+	DMA_InitStructure.DMA_PeripheralBurst = DMA_PeripheralBurst_Single;	
+	DMA_Init(DMA1_Stream3, &DMA_InitStructure);
+	
+
+	//uart1dma接收		DMA1_Stream1
+	DMA_DeInit(DMA1_Stream1);  
+	while (DMA_GetCmdStatus(DMA1_Stream1) != DISABLE);					//等待DMA可配置	
+	/* DMA Stream */  
+	DMA_InitStructure.DMA_Channel = DMA_Channel_4;						//通道选择	
+	DMA_InitStructure.DMA_PeripheralBaseAddr = (u32)(&(HS_USART->DR));	//DMA外设地址  
+	DMA_InitStructure.DMA_Memory0BaseAddr = (u32)usart3rxbuff;			//DMA 存储器0地址	
+	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralToMemory ;			//外设到存储器模式	
+	DMA_InitStructure.DMA_BufferSize = BUFFSIZEMAX;					//数据传输量   
+	DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;	//外设非增量模式  
+	DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;				//存储器增量模式  
+	DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Byte;		//外设数据长度:8位  
+	DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_Byte;				//存储器数据长度:8位  
+	DMA_InitStructure.DMA_Mode = DMA_Mode_Normal;						// 使用普通模式   
+	DMA_InitStructure.DMA_Priority = DMA_Priority_High;					//中等优先级  
+	DMA_InitStructure.DMA_FIFOMode = DMA_FIFOMode_Disable;			 
+	DMA_InitStructure.DMA_FIFOThreshold = DMA_FIFOThreshold_Full;  
+	DMA_InitStructure.DMA_MemoryBurst = DMA_MemoryBurst_Single;			//存储器突发单次传输  
+	DMA_InitStructure.DMA_PeripheralBurst = DMA_PeripheralBurst_Single;	//外设突发单次传输  
+	DMA_Init(DMA1_Stream1, &DMA_InitStructure);							//初始化DMA Stream  
+	//接收完成中断DMA NVIC	  
+//	DMA_ITConfig(DMA1_Stream1,DMA_IT_TC,ENABLE);
+	NVIC_InitStructure.NVIC_IRQChannel = DMA1_Stream1_IRQn;    
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 14;	 
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;	  
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;    
+	NVIC_Init(&NVIC_InitStructure);   
+	
+	DMA_Cmd(DMA1_Stream1, ENABLE);										//开启DMA传输	
+
+//	ucRTUBuf[9]=0x55;	
+//	modbus_com_send(10);	
+//	delay_10ms(100);
+//	
+//	ucRTUBuf[9]=0xaa;	
+//	modbus_com_send(10);	
+//	delay_10ms(100);
+
+}
+
+
+ /**
+  * @brief  HS_USART GPIO 配置,工作模式配置。115200 8-N-1
+  * @param  无
+  * @retval 无
+  */
+void HS_USART_Config(u32 baud)
+{
+  GPIO_InitTypeDef GPIO_InitStructure;
+  USART_InitTypeDef USART_InitStructure;
+		
+  RCC_AHB1PeriphClockCmd( HS_USART_RX_GPIO_CLK|HS_USART_TX_GPIO_CLK, ENABLE);
+
+  /* 使能 UART 时钟 */
+  RCC_APB1PeriphClockCmd(HS_USART_CLK, ENABLE);
+  
+  /* 连接 PXx 到 USARTx_Tx*/
+  GPIO_PinAFConfig(HS_USART_RX_GPIO_PORT,HS_USART_RX_SOURCE, HS_USART_RX_AF);
+
+  /*  连接 PXx 到 USARTx__Rx*/
+  GPIO_PinAFConfig(HS_USART_TX_GPIO_PORT,HS_USART_TX_SOURCE,HS_USART_TX_AF);
+
+  /* 配置Tx引脚为复用功能  */
+  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;	
+  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+
+  GPIO_InitStructure.GPIO_Pin = HS_USART_TX_PIN  ;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  GPIO_Init(HS_USART_TX_GPIO_PORT, &GPIO_InitStructure);
+
+  /* 配置Rx引脚为复用功能 */
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+  GPIO_InitStructure.GPIO_Pin = HS_USART_RX_PIN;
+  GPIO_Init(HS_USART_RX_GPIO_PORT, &GPIO_InitStructure);
+			
+  /* 配置串DEBUG_USART 模式 */
+  USART_InitStructure.USART_BaudRate = baud;
+  USART_InitStructure.USART_WordLength = USART_WordLength_8b;
+  USART_InitStructure.USART_StopBits = USART_StopBits_1;
+  USART_InitStructure.USART_Parity = USART_Parity_No ;
+  USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
+  USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
+  USART_Init(HS_USART, &USART_InitStructure); 
+  HSNVIC_Configuration();
+  
+	/* 使能串口接收中断 */
+	USART_ITConfig(HS_USART, USART_IT_IDLE, ENABLE);
+  
+	USART_Cmd(HS_USART, ENABLE);
+	 
+	USART_DMACmd(HS_USART,USART_DMAReq_Rx,ENABLE); //使用rx dma   
+	USART_DMACmd(HS_USART,USART_DMAReq_Tx,ENABLE);//使用tx dma
+	HS_USART_DMA_INIT();
+}
+
+//返回3串口发送成功
+char Uart3SendBuff(u8 *arr,u8 data_len)
+{	
+	u16 wait_count=0;
+
+	while(DMA_GetCurrDataCounter(DMA1_Stream3))//等待上一次传输完成
+	{ 
+		delay_ms(1);
+		++wait_count;
+		if(wait_count>100)//1s
+		{
+			return 0;
+		}
+	}
+	DMA_ClearFlag(DMA1_Stream3,DMA_FLAG_TCIF3);//清除传输完成标志位
+	if(arr) 
+      memcpy(usart3txbuff, arr, data_len);
+	DMA_Cmd(DMA1_Stream3, DISABLE);   	//该函数必须在DMA_SetCurrDataCounter之前调用,否则不传输
+	while (DMA_GetCmdStatus(DMA1_Stream3) != DISABLE)
+	{
+		delay_ms(1);
+	}	
+	
+	DMA_SetCurrDataCounter(DMA1_Stream3,data_len);    //设置传送字节数      
+ 
+	DMA_Cmd(DMA1_Stream3, ENABLE);    
+
+	return 1;
+}
+
+void ReadSlaveData(u8 id)
+{
+	memset((char *)hostsendbuff,0,sizeof(hostsendbuff));
+	hostsendbuff[0] = id;
+	hostsendbuff[1] = 0x03;
+	hostsendbuff[2] = 0x00;
+	hostsendbuff[3] = 0x00;
+	hostsendbuff[4] = 0x00;
+	hostsendbuff[5] = 0x04;
+	hostsendbuff[6] = Hardware_CRC(hostsendbuff,6)>>8;
+	hostsendbuff[7] = Hardware_CRC(hostsendbuff,6);
+	Uart3SendBuff(hostsendbuff,8);
+//	Usart1_Send((char *)hostsendbuff,8);
 }
 
 ///重定向c库函数printf到串口DEBUG_USART，重定向后可使用printf函数
@@ -208,7 +515,8 @@ void CalHandle(u8 step)
 	}
 	sendbuff[7] = Hardware_CRC(sendbuff,7)>>8;
 	sendbuff[8] = Hardware_CRC(sendbuff,7);
-	Usart1_Send((char *)sendbuff,9);
+	Uart1SendBuff(sendbuff,9);
+//	Usart1_Send((char *)sendbuff,9);
 }
 
 //设置DAC
@@ -232,7 +540,8 @@ void Set_Dac(u8 step)
 	}
 	sendbuff[7] = Hardware_CRC(sendbuff,7)>>8;
 	sendbuff[8] = Hardware_CRC(sendbuff,7);
-	Usart1_Send((char *)sendbuff,9);
+	Uart1SendBuff(sendbuff,9);
+//	Usart1_Send((char *)sendbuff,9);
 
 }
 //设置地址
@@ -249,7 +558,8 @@ void Set_Addr(void)
 	sendbuff[7] = 0x01;
 	sendbuff[8] = Hardware_CRC(sendbuff,8)>>8;
 	sendbuff[9] = Hardware_CRC(sendbuff,8);
-	Usart1_Send((char *)sendbuff,10);
+	Uart1SendBuff(sendbuff,10);
+//	Usart1_Send((char *)sendbuff,10);
 	setflag = 1;
 }
 
@@ -267,7 +577,8 @@ void OnOff_SW(u8 value)
 	sendbuff[7] = value;
 	sendbuff[8] = Hardware_CRC(sendbuff,8)>>8;
 	sendbuff[9] = Hardware_CRC(sendbuff,8);
-	Usart1_Send((char *)sendbuff,10);
+	Uart1SendBuff(sendbuff,10);
+//	Usart1_Send((char *)sendbuff,10);
 	setflag = 1;
 }
 
@@ -285,7 +596,8 @@ void Mode_SW(void)
 	sendbuff[7] = LoadSave.mode;
 	sendbuff[8] = Hardware_CRC(sendbuff,8)>>8;
 	sendbuff[9] = Hardware_CRC(sendbuff,8);
-	Usart1_Send((char *)sendbuff,10);
+	Uart1SendBuff(sendbuff,10);
+//	Usart1_Send((char *)sendbuff,10);
 	setflag = 1;
 }
 
@@ -303,7 +615,8 @@ void List_Mode_SW(void)
 	sendbuff[7] = LoadSave.listmode[DispValue.listrunstep];
 	sendbuff[8] = Hardware_CRC(sendbuff,8)>>8;
 	sendbuff[9] = Hardware_CRC(sendbuff,8);
-	Usart1_Send((char *)sendbuff,10);
+	Uart1SendBuff(sendbuff,10);
+//	Usart1_Send((char *)sendbuff,10);
 	setflag = 1;
 }
 
@@ -321,7 +634,8 @@ void BatMode_SW(void)
 	sendbuff[7] = LoadSave.loadmode;
 	sendbuff[8] = Hardware_CRC(sendbuff,8)>>8;
 	sendbuff[9] = Hardware_CRC(sendbuff,8);
-	Usart1_Send((char *)sendbuff,10);
+	Uart1SendBuff(sendbuff,10);
+//	Usart1_Send((char *)sendbuff,10);
 	setflag = 1;
 }
 
@@ -339,7 +653,8 @@ void I_Gear_SW(void)
 	sendbuff[7] = LoadSave.crange;
 	sendbuff[8] = Hardware_CRC(sendbuff,8)>>8;
 	sendbuff[9] = Hardware_CRC(sendbuff,8);
-	Usart1_Send((char *)sendbuff,10);
+	Uart1SendBuff(sendbuff,10);
+//	Usart1_Send((char *)sendbuff,10);
 	setflag = 1;
 }
 
@@ -357,7 +672,8 @@ void V_Gear_SW(void)
 	sendbuff[7] = LoadSave.vrange;
 	sendbuff[8] = Hardware_CRC(sendbuff,8)>>8;
 	sendbuff[9] = Hardware_CRC(sendbuff,8);
-	Usart1_Send((char *)sendbuff,10);
+	Uart1SendBuff(sendbuff,10);
+//	Usart1_Send((char *)sendbuff,10);
 	setflag = 1;
 }
 
@@ -375,7 +691,8 @@ void Sence_SW(void)
 	sendbuff[7] = LoadSave.sence;
 	sendbuff[8] = Hardware_CRC(sendbuff,8)>>8;
 	sendbuff[9] = Hardware_CRC(sendbuff,8);
-	Usart1_Send((char *)sendbuff,10);
+	Uart1SendBuff(sendbuff,10);
+//	Usart1_Send((char *)sendbuff,10);
 	setflag = 1;
 }
 
@@ -393,7 +710,8 @@ void ProtectRst(void)
 	sendbuff[7] = 0x00;
 	sendbuff[8] = Hardware_CRC(sendbuff,8)>>8;
 	sendbuff[9] = Hardware_CRC(sendbuff,8);
-	Usart1_Send((char *)sendbuff,10);
+	Uart1SendBuff(sendbuff,10);
+//	Usart1_Send((char *)sendbuff,10);
 	setflag = 1;
 }
 
@@ -411,7 +729,8 @@ void Set_Baudrate(void)
 	sendbuff[7] = LoadSave.Baudrate;
 	sendbuff[8] = Hardware_CRC(sendbuff,8)>>8;
 	sendbuff[9] = Hardware_CRC(sendbuff,8);
-	Usart1_Send((char *)sendbuff,10);
+	Uart1SendBuff(sendbuff,10);
+//	Usart1_Send((char *)sendbuff,10);
 	setflag = 1;
 }
 
@@ -429,7 +748,8 @@ void Set_Comm(void)
 	sendbuff[7] = LoadSave.COMM;
 	sendbuff[8] = Hardware_CRC(sendbuff,8)>>8;
 	sendbuff[9] = Hardware_CRC(sendbuff,8);
-	Usart1_Send((char *)sendbuff,10);
+	Uart1SendBuff(sendbuff,10);
+//	Usart1_Send((char *)sendbuff,10);
 	setflag = 1;
 }
 
@@ -925,8 +1245,9 @@ void Set_Para(void)
 	sendbuff[130+28] = LoadSave.Class_20;//快充模式选择开关
 	sendbuff[131+28] = Hardware_CRC(sendbuff,131+28)>>8;
 	sendbuff[132+28] = Hardware_CRC(sendbuff,131+28);
-	Usart1_Send((char *)sendbuff,133+28);
-	setflag = 1;
+	Uart1SendBuff(sendbuff,133+28);
+//	Usart1_Send((char *)sendbuff,133+28);
+//	setflag = 1;
 }
 
 ////设置参数
@@ -1170,8 +1491,8 @@ void ReadData(void)
 	sendbuff[5] = 0x13;
 	sendbuff[6] = Hardware_CRC(sendbuff,6)>>8;
 	sendbuff[7] = Hardware_CRC(sendbuff,6);
-	
-	Usart1_Send((char *)sendbuff,8);
+	Uart1SendBuff(sendbuff,8);
+//	Usart1_Send((char *)sendbuff,8);
 }
 
 void Rec_Handle(void)	
@@ -1179,6 +1500,7 @@ void Rec_Handle(void)
 	static u8 sumcount;
 	vu16 crc_result;
 	u32 readbuf;
+	memcpy(UART_Buffer_Rece, usart1rxbuff, 256);
 	if (UART_Buffer_Rece[0] == 0x01)
 	{
 		if(UART_Buffer_Rece[1] == 0x03)
@@ -1308,6 +1630,89 @@ void Rec_Handle(void)
 			setflag = 0;
 		}
 	}
+}
+
+void Rec3_Handle(void)	
+{
+	vu16 crc_result;
+	u32 readbuf;
+	memcpy(UART3_Buffer_Rece, usart3rxbuff, 256);
+	if (UART3_Buffer_Rece[0] == 0x01)
+	{
+		if(UART3_Buffer_Rece[1] == 0x03)
+		{
+			if(LoadSave.devmode==0)//主机模式
+			{
+				crc_result = (UART3_Buffer_Rece[79] << 8) + UART_Buffer_Rece[80];
+				
+				readbuf = 0;
+				readbuf += UART_Buffer_Rece[3] << 24;
+				readbuf += UART_Buffer_Rece[4] << 16;
+				readbuf += UART_Buffer_Rece[5] << 8;
+				readbuf += UART_Buffer_Rece[6];
+//				if(sumcount < DISP_FILTER)
+//				{
+//					vsum += readbuf;
+//				}else{
+//					DispValue.Voltage = vsum/DISP_FILTER;
+//					vsum = 0;
+//				}
+				DispValue.Voltage = readbuf;
+				
+				readbuf = 0;
+				readbuf += UART_Buffer_Rece[7] << 24;
+				readbuf += UART_Buffer_Rece[8] << 16;
+				readbuf += UART_Buffer_Rece[9] << 8;
+				readbuf += UART_Buffer_Rece[10];
+//				if(sumcount < DISP_FILTER)
+//				{
+//					isum += readbuf;
+//				}else{
+//					DispValue.Current = isum/DISP_FILTER;
+//					isum = 0;
+//				}
+				DispValue.Current = readbuf;
+				
+				readbuf = 0;
+				readbuf += UART_Buffer_Rece[11] << 24;
+				readbuf += UART_Buffer_Rece[12] << 16;
+				readbuf += UART_Buffer_Rece[13] << 8;
+				readbuf += UART_Buffer_Rece[14];
+//				if(sumcount < DISP_FILTER)
+//				{
+//					rsum += readbuf;
+//				}else{
+//					DispValue.Rdata = rsum/DISP_FILTER;
+//					rsum = 0;
+//				}
+				DispValue.Rdata = readbuf;
+				
+				
+				readbuf = 0;
+				readbuf += UART_Buffer_Rece[15] << 24;
+				readbuf += UART_Buffer_Rece[16] << 16;
+				readbuf += UART_Buffer_Rece[17] << 8;
+				readbuf += UART_Buffer_Rece[18];			
+//				if(sumcount < DISP_FILTER)
+//				{
+//					psum += readbuf;
+//				}else{
+//					DispValue.Power = psum/DISP_FILTER;
+//					psum = 0;
+//				}
+				DispValue.Power = readbuf;
+			}else{
+				
+			}
+				
+
+		}else if(UART_Buffer_Rece[1] == 0x06){
+			
+		}else if(UART_Buffer_Rece[1] == 0x10){
+			
+		}
+	}
+	
 }
 //-----------------------------CRC检测--------------------------------------------//
 vu16 Hardware_CRC(vu8 *p_buffer,vu8 count)    //CRC16

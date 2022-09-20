@@ -109,35 +109,13 @@ extern Test_ValueTypedef Test_Value;
 extern Test_ValueTypedef Test_Value_V;
 //函数列表
 void Hex_Format(u32 dat , u8 dot , u8 len, u8 dispzero);//格式化Hex到Bcd字符串到DispBuf
-void Disp_SysMessage(void);
-void Disp_PowerOn_Menu(void);
-void Check_Parameter_Limit(void);
-
-void Parameter_Setup(void);
-void Disp_Setup_Menu(u8 index);
-void System_Setup(void);
-void Read_Ad(void);
-void Range_Changecomp(void);
-void VRange_Changecomp(void);
-void Get_FFT(void);
-void Test_Debug(void);
-void _4094_data(void);
 void InitGlobalValue(void);
 void Parameter_valuecomp(void);
 u16 Da_out(u16 v_value,u8 V_range);
-void DispF(float f);
-void Get_Res(void);
-void Comp_test(u16 comp_data);
-Test_ValueTypedef Datacov(s32 value,u8 range);
-Test_ValueTypedef V_Datacov(s32 value ,u8 range);
-void Uart_Process(void);
-void Disp_Testvalue(Test_ValueTypedef value,Test_ValueTypedef value_v,u8 speed);
+void MissConDisp(void);
 void Test_Disp(u8 vsw,u8 isw);
 void Dynamic_Disp(u8 vsw,u8 isw);
 void Bat_Disp(u8 vsw,u8 isw);
-u8 Comp_choice(void);
-void Beep_Out(u8 flag);
-void lvbo_jisu(void);
 void Soft_Turnon(void);
 //u8 Resistance_Setup(NumBox_TypeDef * pt);
 //u8 ListBox_Setup(NumBox_TypeDef * pt);
@@ -151,7 +129,6 @@ void Soft_Turnon(void);
 //void Disp_Frame(void);//显示界面框架
 
 //void Disp_Idle_List(void);//显示待机菜单列表
-void Disp_Idle_Menu(void);//显示待机界面
 //void Disp_Idle_Info(void);//显示待机信息
 
 //void Step_Setup(void);//步骤设置处理
@@ -197,7 +174,6 @@ void Disp_Idle_Menu(void);//显示待机界面
 ////==========================================================
 ////void Disp_SysStatus(void);//显示系统状态
 //void Disp_SysMessage(void);//显示系统信息
-void Disp_xxx(u16 data,u16 pos);
 void Disp_Test_Item(void);
 void Disp_Led_Item(void);
 void Disp_Battery_Item(u8 type);
@@ -235,15 +211,9 @@ vu32 Disp_Set_Addr(Disp_Coordinates_Typedef *Coordinates);
 void DoubHex_Format(u32 dat , u8 Dot , u8 len , u8 dispzero);
 Sort_TypeDef Disp_Set_CompNum(Disp_Coordinates_Typedef *Coordinates);
 void Disp_Range(u8 hand,u8 range);
-void Disp_Open(void);
-void MissConDisp(void);
 void BubbleSort(uint32_t A[], uint16_t n);//
 
-uint8_t R_Comp(void);//电阻比较
-uint8_t V_Comp(void);//电压比较
 void Disp_dateandtime(void);
-uint8_t Jisuan_Range(Sort_TypeDef date);
-uint8_t Jisuan_V_Range(Sort_TypeDef date);
 void Disp_UserCheck_Item(void);
 void Disp_Debug_value(vu8 list);
 vu32 Debug_Set_Num(Disp_Coordinates_Typedef *Coordinates);//频率设置
@@ -252,17 +222,10 @@ void Disp_Debug_Reference( vu8 list,Test_ValueTypedef eee,Test_ValueTypedef ddd)
 vu32 Debug_Set_Res(Disp_Coordinates_Typedef *Coordinates);
 void input_num(Disp_Coordinates_Typedef *Coordinates );
 void input_password(Disp_Coordinates_Typedef *Coordinates );
-void AD_ads2516(uint16_t i);
-void lvbo_pingjun(void);
+
+
 //void V_Range_Control(u8 dat);
-void read_adV_1(void);
-void read_adI_1(void);
-void read_adV_2(void);
-void read_adI_2(void);
-void read_adV_3(void);
-void read_adI_3(void);
-void read_adV_4(void);
-void read_adI_4(void);
+
 //Sort_TypeDef Disp_Set_Num(Disp_Coordinates_Typedef *Coordinates);
 
 //==========================================================

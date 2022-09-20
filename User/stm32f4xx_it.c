@@ -58,16 +58,20 @@ extern void USB_OTG_BSP_TimerIRQ (void);
 static void MODS_03H(void);
 static void MODS_06H(void);
 static void RemTrig(void);
-u8 UART_Buffer_Rece[200];
+u8 UART_Buffer_Rece[BUFFSIZEMAX];
+u8 UART3_Buffer_Rece[BUFFSIZEMAX];
 u8 flag_Tim_USART;
 u8 flag_spin;
 u16 t_USART;
 u16 t_SPIN;
 u8 UART_Buffer_Size;
 u8 UART_Buffer_Rece_flag;
+u8 UART3_Buffer_Rece_flag;
 u8 jumpflag;
 u32 listtime;
 u8 spinsend;
+u16 Uart1RXbuff_len=0;
+u16 Uart3RXbuff_len=0;
 //extern void Read__Convert_read(void);
 /** @addtogroup STM32F429I_DISCOVERY_Examples
   * @{
@@ -203,61 +207,108 @@ void SysTick_Handler(void)
 
 void USART1_IRQHandler(void)
 {
-	flag_Tim_USART=1;
- 	if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)
-	{
-		USART_ClearITPendingBit( USART1, USART_IT_RXNE );
-		UART_Buffer_Rece[UART_Buffer_Size]=USART_ReceiveData(USART1);
+	u16 data;  
+	if(USART_GetITStatus(DEBUG_USART,USART_IT_IDLE) != RESET)  
+	{  
+		DMA_Cmd(DMA2_Stream2, DISABLE); //关闭DMA,防止处理其间有数据 
+		DMA_ClearITPendingBit(DMA2_Stream2, DMA_IT_TCIF2);
+		Uart1RXbuff_len =BUFFSIZEMAX-DMA_GetCurrDataCounter(DMA2_Stream2);  
+		Uart1RXbuff_len|=0x8000;
+		data = DEBUG_USART->SR;
+		data=data;
+		data = DEBUG_USART->DR;  
+		DMA_ClearFlag(DMA2_Stream2,DMA_FLAG_TCIF2 | DMA_FLAG_FEIF2 | DMA_FLAG_DMEIF2 | DMA_FLAG_TEIF2 | DMA_FLAG_HTIF2); 
+		DMA_SetCurrDataCounter(DMA2_Stream2, BUFFSIZEMAX);  
+		DMA_Cmd(DMA2_Stream2, ENABLE);     //打开DMA, 
+		DMA_ClearITPendingBit(DMA2_Stream2, DMA_IT_TCIF2);
+		UART_Buffer_Rece_flag=1;
+	}  
+//	flag_Tim_USART=1;
+// 	if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)
+//	{
+//		USART_ClearITPendingBit( USART1, USART_IT_RXNE );
+//		UART_Buffer_Rece[UART_Buffer_Size]=USART_ReceiveData(USART1);
 
-		if( UART_Buffer_Rece[0]== 0x01)
-		{
-			if(UART_Buffer_Rece[1] == 0x03)
-			{
-				if(UART_Buffer_Size==80)//
-				{
-					UART_Buffer_Size=0;	  	   		   
-					UART_Buffer_Rece_flag=1;
-					flag_Tim_USART=0;
-					t_USART=0;
-					return ;
-				}
-			}else if(UART_Buffer_Rece[1] == 0x06){
-				if(UART_Buffer_Size==9)//
-				{
-					UART_Buffer_Size=0;	  	   		   
-					UART_Buffer_Rece_flag=1;
-					flag_Tim_USART=0;
-					t_USART=0;
-					return ;
-				}
-			}else if(UART_Buffer_Rece[1] == 0x10){
-				if(UART_Buffer_Size==7)//
-				{
-					UART_Buffer_Size=0;	  	   		   
-					UART_Buffer_Rece_flag=1;
-					flag_Tim_USART=0;
-					t_USART=0;
-					return ;
-				}
-			}
-		}
-		
+//		if( UART_Buffer_Rece[0]== 0x01)
+//		{
+//			if(UART_Buffer_Rece[1] == 0x03)
+//			{
+//				if(UART_Buffer_Size==80)//
+//				{
+//					UART_Buffer_Size=0;	  	   		   
+//					UART_Buffer_Rece_flag=1;
+//					flag_Tim_USART=0;
+//					t_USART=0;
+//					return ;
+//				}
+//			}else if(UART_Buffer_Rece[1] == 0x06){
+//				if(UART_Buffer_Size==9)//
+//				{
+//					UART_Buffer_Size=0;	  	   		   
+//					UART_Buffer_Rece_flag=1;
+//					flag_Tim_USART=0;
+//					t_USART=0;
+//					return ;
+//				}
+//			}else if(UART_Buffer_Rece[1] == 0x10){
+//				if(UART_Buffer_Size==7)//
+//				{
+//					UART_Buffer_Size=0;	  	   		   
+//					UART_Buffer_Rece_flag=1;
+//					flag_Tim_USART=0;
+//					t_USART=0;
+//					return ;
+//				}
+//			}
+//		}
+//		
 
-		UART_Buffer_Size++;
-		if(UART_Buffer_Size>200)
-		{
-			UART_Buffer_Size=0;
-			UART_Buffer_Rece_flag=0;
-			t_USART=0;	
-		}		
-	}
+//		UART_Buffer_Size++;
+//		if(UART_Buffer_Size>200)
+//		{
+//			UART_Buffer_Size=0;
+//			UART_Buffer_Rece_flag=0;
+//			t_USART=0;	
+//		}		
+//	}
 }
 
 
 
+////接收完成中断
+//void DMA2_Stream2_IRQHandler(void)  
+//{  
+//    //清除标志  
+//    if(DMA_GetFlagStatus(DMA2_Stream2,DMA_FLAG_TCIF2)!=RESET)//等待DMA1_Steam3传输完成  
+//    {   
+//        DMA_Cmd(DMA2_Stream2, DISABLE); //关闭DMA,防止处理其间有数据  
+//        DMA_ClearFlag(DMA2_Stream2,DMA_FLAG_TCIF2 | DMA_FLAG_FEIF2 | DMA_FLAG_DMEIF2 | DMA_FLAG_TEIF2 | DMA_FLAG_HTIF2);//清除DMA1_Steam3传输完成标志  
+//        DMA_ClearITPendingBit(DMA2_Stream2, DMA_IT_TCIF2); //清中断标志位(跟上一个标志位不一样的)
+//        DMA_SetCurrDataCounter(DMA2_Stream2, 256);  
+//        DMA_Cmd(DMA2_Stream2, ENABLE);     //打开DMA,  
+//    }  
+//} 
 
 
-
+void USART3_IRQHandler(void)
+{
+	u16 data;  
+	if(USART_GetITStatus(HS_USART,USART_IT_IDLE) != RESET)  
+	{  
+		DMA_Cmd(DMA1_Stream1, DISABLE); //关闭DMA,防止处理其间有数据 
+		DMA_ClearITPendingBit(DMA1_Stream1, DMA_IT_TCIF1);
+		Uart3RXbuff_len =BUFFSIZEMAX-DMA_GetCurrDataCounter(DMA1_Stream1);  
+		Uart3RXbuff_len|=0x8000;
+		data = HS_USART->SR;
+		data=data;
+		data = HS_USART->DR;  
+		DMA_ClearFlag(DMA1_Stream1,DMA_FLAG_TCIF1 | DMA_FLAG_FEIF1 | DMA_FLAG_DMEIF1 | DMA_FLAG_TEIF1 | DMA_FLAG_HTIF1); 
+		DMA_SetCurrDataCounter(DMA1_Stream1, BUFFSIZEMAX);  
+		DMA_Cmd(DMA1_Stream1, ENABLE);     //打开DMA, 
+		DMA_ClearITPendingBit(DMA1_Stream1, DMA_IT_TCIF1);
+		UART3_Buffer_Rece_flag=1;
+	} 
+}
 
 void  TIM2_IRQHandler (void)//U盘用了定时器2
 {
