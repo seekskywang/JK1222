@@ -1,66 +1,6 @@
 #ifndef _pbdata_H
 #define _pbdata_H
 
-#define _4094_STBL GPIO_ResetBits(GPIOE,GPIO_Pin_6)
-#define _4094_STBH GPIO_SetBits(GPIOE,GPIO_Pin_6)
-
-#define _5618_CSL GPIO_ResetBits(GPIOC,GPIO_Pin_3)
-#define _5618_CSH GPIO_SetBits(GPIOC,GPIO_Pin_3)
-
-//#define _DS1302_CSL GPIO_ResetBits(GPIOB,GPIO_Pin_4)
-//#define _DS1302_CSH GPIO_SetBits(GPIOB,GPIO_Pin_4)
-
-//#define _CPLD_CSL GPIO_ResetBits(GPIOB,GPIO_Pin_8)
-//#define _CPLD_CSH GPIO_SetBits(GPIOB,GPIO_Pin_8)
-
-//hc595接口定义
-#define _SPI_595_CSL    GPIO_ResetBits(GPIOA,GPIO_Pin_11)
-#define _SPI_595_CSH    GPIO_SetBits(GPIOA,GPIO_Pin_11)
-
-#define _SPI_595_DSL    GPIO_ResetBits(GPIOA,GPIO_Pin_8)
-#define _SPI_595_DSH    GPIO_SetBits(GPIOA,GPIO_Pin_8)
-
-#define _SPI_595_SHCPL  GPIO_ResetBits(GPIOA,GPIO_Pin_9)
-#define _SPI_595_SHCPH  GPIO_SetBits(GPIOA,GPIO_Pin_9)
-
-#define _SPI_595_STCPL  GPIO_ResetBits(GPIOA,GPIO_Pin_10)
-#define _SPI_595_STCPH  GPIO_SetBits(GPIOA,GPIO_Pin_10)
-
-
-#define _7706_CSL GPIO_ResetBits(GPIOD,GPIO_Pin_14)
-#define _7706_CSH GPIO_SetBits(GPIOD,GPIO_Pin_14)
-
-//#define _ADS1216_CS_L GPIO_ResetBits(GPIOB,GPIO_Pin_10)
-//#define _ADS1216_CS_H GPIO_SetBits(GPIOB,GPIO_Pin_10)
-
-#define _SPI_4094_SCLKL GPIO_ResetBits(GPIOC,GPIO_Pin_3)
-#define _SPI_4094_SCLKH GPIO_SetBits(GPIOC,GPIO_Pin_3)
-
-#define _SPI_4094_DATAL GPIO_ResetBits(GPIOC,GPIO_Pin_2)
-#define _SPI_4094_DATAH GPIO_SetBits(GPIOC,GPIO_Pin_2)
-
-#define _SPI_4094_STROL GPIO_ResetBits(GPIOC,GPIO_Pin_1)
-#define _SPI_4094_STROH GPIO_SetBits(GPIOC,GPIO_Pin_1)
-
-
-//#define _SPI_SCLKL GPIO_ResetBits(GPIOB,GPIO_Pin_11)
-//#define _SPI_SCLKH GPIO_SetBits(GPIOB,GPIO_Pin_11)
-#define _SPI_SCLKL GPIO_ResetBits(GPIOI,GPIO_Pin_5)
-#define _SPI_SCLKH GPIO_SetBits(GPIOI,GPIO_Pin_5)
-
-
-#define _SPI_DINL GPIO_ResetBits(GPIOB,GPIO_Pin_12)
-#define _SPI_DINH GPIO_SetBits(GPIOB,GPIO_Pin_12)
-
-#define _SPI_DOUT GPIO_ReadInputDataBit(GPIOB,GPIO_Pin_13)
-//#define _SPI_DOUTH GPIO_SetBits(GPIOC,GPIO_Pin_10)
-
-#define _FMQ_CSL GPIO_ResetBits(GPIOB,GPIO_Pin_5)
-#define _FMQ_CSH GPIO_SetBits(GPIOB,GPIO_Pin_5)
-
-//#define _TESTLED_CSL GPIO_ResetBits(GPIOE,GPIO_Pin_2)
-//#define _TESTLED_CSH GPIO_SetBits(GPIOE,GPIO_Pin_2)
-
 
 #include "stm32f4xx.h"
 #include "./led/bsp_led.h"
@@ -123,41 +63,12 @@ void Para_Set_Comp(void);
 
 #define PASSWORD  "20185260"
 
-#define BMP_SWITCH                    0      //截图功能开关
+#define BMP_SWITCH  0      //截图功能开关
 
 //==========================================================
 
-#define FIT_INUM    12  //滤波次数
-#define STEP_MAX			(4)//最大步骤(0-3)
-
-#define IDLE_MENU_MAX  		(4)//最大待机菜单
-#define IDLE_MENU_PAGE 		(4)//每页待机菜单
-
-#define PARAMETER_MENU_MAX	(6)//最大参数菜单
-#define PARAMETER_MENU_PAGE	(4)//每页参数菜单
-
-#define PARAMETER_ACW_MAX	(8)//ACW参数项(0-7)
-#define PARAMETER_DCW_MAX	(8)//DCW参数项(0-7)
-#define PARAMETER_IR_MAX	(6)//IR参数项(0-5)
-#define PARAMETER_GND_MAX	(7)//ACW参数项(0-6)
-
-#define SYSTEM_MENU_MAX		(4)//最大系统菜单(0-5)
-#define SYSTEM_MENU_PAGE	(4)//每页系统菜单
-
-#define CONFIG_MENU_MAX		(3)//最大配置项(0-2)
-
-#define PW_LENGTH 			(4)//最大密码位数
-
-#define AD_BUF_LENGTH		(8)//A/D值缓冲区长度
-
-
 #define MAXTSOFTTIMER (2)		//软定时器数目
 
-#define UART_BUFF_LENTH         (REC_LEN_MAX)//串口接收数据长度
-
-#define FIT_NUM                 140
-
-#define MAXFITNUM 0xff
 
 //#define BASTARDLY  //定义了以后 要跳动正负三个字才变化的
 //==========================================================
@@ -286,24 +197,10 @@ void Para_Set_Comp(void);
 #define SWITCH_DELAY          (3)//开关之后的读取延时
 //定义变量
 extern uint8_t softswitch;
-extern u8 dt;
 extern vu8 SystemStatus;//系统状态
 extern vu8 SystemMessage;//系统信息
-extern vu8 MenuIndex;//待机菜单项
-extern vu8 Range;//当前量程
-extern vu8 ffit_data1;
-extern vu16	count_ffit;
-extern u8 fft_flag;
 extern u32  g_LcdDirection;
-extern u8 polarity_v,polarity_r;
-extern u8 Readfirst_cpld,Readsecond_cpld;
-extern u8 RangeChange_Flag;
-extern u32 fit_i_buff[MAXFITNUM],fit_v_buff[MAXFITNUM];
-extern u32 scan_V[130],scan_I[800];
-extern u8 range_over;
 extern u8 Int_Pe3flag;
-extern const u8 fit_allnum[4];
-extern u32 last_R_disp,last_V_disp;
 extern u8 buttonpage1;
 extern u8 calpage;
 extern FRESULT result;
@@ -343,180 +240,11 @@ enum SysStatusEnum
 };
 
 //==========================================================
-//系统消息
-enum SysMessageEnum
-{
-	MSG_CLEAR , 
-	MSG_IDLE , 
-	MSG_TEST , 
-	MSG_ABORT , 
-	MSG_PASS ,
-	MSG_FAIL ,
-	MSG_HIGH , 
-	MSG_LOW , 
-};
 
 
 
-//数值框属性定义
-typedef struct
-{
-	vu8 *Title;//标题
-	vu16 Num;//数值
-	vu8  Dot;//小数点(0-3: xxxx xxx.x xx.xx x.xxx)
-	//vu8  Unit;//单位(0-2: MΩ  GΩ  TΩ)
-	vu16 Max;//最大值
-	vu16 Min;//最小值
-}NumBox_TypeDef;
-extern NumBox_TypeDef NumBox;//数值框
 
-//项目值																					   
-enum ItemEnum
-{	
-	ITEM_ACW ,
-	ITEM_DCW ,
-	ITEM_IR ,
-	ITEM_GND ,
-	ITEM_NONE ,
-};
-typedef struct
-{
-    vu8 xpos;
-    vu8 ypos;
-
-}Channel_Pos_Typedef;
-typedef struct
-{
-    vu8 Range;//量程  0 自动
-    vu8 Speed;//速度 0 慢速  1 中速  2 快速
-    vu8 Avg;//平均次数  1-255
-    vu8 Scan;//单次或者扫描 0 单路  1 扫描
-    vu8 Signel;//0 连续测试  1  单次测试
-    vu8 Mode;//测试模式 0 pt100,1 pt500 ,2 0-2v  3 电阻测试
-    vu8 Temp_Channel;//选择温度测试的通道
-
-}UINT8_rec_Typedef;
   
-typedef struct 
-{
-	vu16 value;	//数值
-	vu8 dot;	//小数点 0 1 2 3    xxxx   xxx.x  xx.xx x.xxx
-	vu8 unit;	//单位 0 1 2 3   MΩ    GΩ   TΩ  
-	
-
-}SystemRes_TypeDef;
-typedef struct
-{
-    UINT8_rec_Typedef   UINT8_rec;
-    Channel_Pos_Typedef Channel[CHANNEL_NUM];//测试输入口坐标
-    float Debug_vlaue[RANGE_MAX];//校正值
-    float Clear[CHANNEL_NUM];//清零值
-}Savedata_2516_Typedef;
-extern Savedata_2516_Typedef Savedata_2516;
-//==========================================================
-//浮点数转换  
-typedef struct
-{
-	u8 Sign;//正负号
-	u32 Digit;//尾数
-	s8 Exponent;//阶码
-
-}Float_TypeDef;
-extern Float_TypeDef Float;
-//==========================================================
-//校正值
-typedef struct 
-{
-	vu16 Num;  //输出值
-	vu16 NumAd;//输出A/D值
-}Cal_TypeDef;
-
-//校正项
-typedef struct 
-{
-	Cal_TypeDef IRVol[2];//绝缘电压档  0  50V  1  500V
-	Cal_TypeDef IRCur[8];// 0 1K采样电阻档 1  10K  2  100K  3  1000K   4 10M   5  80M 6 64M   7  128M
-	
-}Calibrate_TypeDef;
-extern Calibrate_TypeDef Calibrate;
-//==========================================================
-//配置项(3项)
-typedef struct 
-{
-	vu16 BootNum;//开机次数(0-9999，默认0)
-	vu16 ProductId;//出厂编号(0-9999，默认0)
-	vu16 Password;//设置密码(0-9999，默认0)
-}Factory_TypeDef;
-//==========================================================
-//系统项(2项)
-
-typedef struct
-{
-    vu8 comp;
-    vu8 mode;//绝对值  百分比  直读SEQ
-    SystemRes_TypeDef Low_limit;//下限
-    
-    vu8 beep;
-    SystemRes_TypeDef criterion;//标称值
-    SystemRes_TypeDef Hi_limit;//上限        
-
-}Compset_TypeDef;
-typedef struct
-{
-    vu8 Temp_equalize;//温度补偿
-    u32 temp_coefficient;//温度系数
-    u32 temp_reference;//参考温度
-    u32 Range_Delay;//量程延时
-    u8 compute;//计算
-    u32 pole_constant;//电极常数
-
-}Setup_TypeDef;
-typedef struct
-{
-    u8 Trip;
-    u8 mode;
-    u8 Range;
-    u8 speed;
-    
-
-}Testset_TypeDef;
-typedef struct
-{
-    u8 name;
-    u32 password;
-
-}accountnum_TypeDef;
-typedef struct
-{
-    u8 language;
-    u8 blacklight;
-    u8 turnoff;
-    u8 buard;
-    accountnum_TypeDef accountnum;//管理员
-    
-
-}Sysconfig_TypeDef;
-
-typedef struct
-{
-	vu8 trip;//触发
-	vu8 speed;//测试速度
-	vu8 Res_comp;
-	Sort_TypeDef Res_low;//电阻下限
-	vu8 V_comp;
-	Sort_TypeDef V_low;
-	vu8 Range;
-    vu8 Range_Set;
-	vu8 beep;
-	vu8 openbeep;
-	Sort_TypeDef Nominal_Res;
-	Sort_TypeDef High_Res;
-	Sort_TypeDef Nominal_V;
-	Sort_TypeDef	V_high;
-	
-
-
-}Set_Data_Typedef;
 
 typedef struct
 {
@@ -617,125 +345,19 @@ typedef struct
 	u8 devmode;
 //从机数量
 	u8 devnum;
+//从机编号
+	u8 slaveNo;
 }SaveData_Typedef;
 extern SaveData_Typedef LoadSave;
-typedef struct
-{
-	vu32 standard;//标准显示值
-	float ad_value;
-
-}Debug_Value_Typedef;
-typedef struct
-{
-	vu8 Res_dot;
-	vu8 V_dot;
-	vu8 V_Neg;
-}Test_UnitTypedef;
-extern Test_UnitTypedef Test_Unit;
-typedef struct
-{
-	vu8 Hour;
-	vu8 Min;
-	vu8 Sec;
-
-}Timer_Value_Typedef;
-typedef struct
-{
-	vu8 Year;
-	vu8 Mon;
-	vu8 data;
-
-}Data_Value_Typedef;
-typedef struct
-{
-	vu8 uart;
-	vu8 buard;
-    vu8 u_flag;
-    vu8 plc;
-	vu8 lanage;
-    vu8 textname[20];
-	//vu8 
-	
-
-}Sys_Setvalue_Typedef;
-
-typedef struct
-{
-//    Compset_TypeDef Compset;//比较设置
-//    Setup_TypeDef   Setup;//设置
-//    Testset_TypeDef Testset;//测试时的设置数据
-//    Sysconfig_TypeDef Sysconfig;//系统设置
-    Set_Data_Typedef Set_Data;
-	Debug_Value_Typedef Debug_Value[DEBUG_RANGE];
-	Debug_Value_Typedef Debug_Value1[DEBUG_RANGE];
-	Debug_Value_Typedef Debug_Value2[DEBUG_RANGE];
-	Debug_Value_Typedef Debug_Value3[DEBUG_RANGE];
-	Sys_Setvalue_Typedef Sys_Setvalue;
-//	float clear;
-//	float V_Clear;
-    float Clear[RANGE_MAX+1];
-     float Clear_V[2];
-    vu8 fac_num[10];
-    vu8 open;
-    
-    
-
-}Jk516save_TypeDef;
 
 
 
-extern Jk516save_TypeDef    Jk516save;
-
-typedef struct//2516上面的测试完的数据存储
-{
-    SystemRes_TypeDef newvalue[16];
-    SystemRes_TypeDef oldvalue[16];
-
-
-}Test_value_buff_Typedef;
 //==========================================================
-//系统项(4项)
-typedef struct 
-{
-	vu16 Vol_Out;	//输出电压(10-1000 V)
-	vu16 Set_Time;	//测试时间(0-999.9s)
-	vu16 Res_Hi;	//上限(xxxx MΩ)
-	vu16 Res_Lo;	//下限(xxxx MΩ)
 
-}System_TypeDef;
-typedef struct 
-{
-	vu32 Test_v;	//测试电压(10-1000 V)
-	vu8 dot;	//小数点位
 
-}Test_VTypeDef;
-typedef struct
-{
-	float v;//温度
-	float i;
-	float r;//电阻值
-	u32 rate;
-
-}Res_countTypeDef;
-extern Res_countTypeDef Res_count;
-typedef struct 
-{
-	vu16 Test_Res;	//测试电压(10-1000 V)
-	vu8 dot;	//小数点位
-	vu8 unit;
-
-}Test_RESTypeDef;
 //==========================================================
 //系统项(2项)
-typedef struct 
-{
-	
-	Test_VTypeDef Test_v;	//测试电压(10-1000 V)
-	vu16 Test_Time;	//测试时间(0-999.9s)
-	Test_RESTypeDef Test_Res;	//测试电阻(xxxx MΩ)
-	vu16 Test_I;
 
-}Test_TypeDef;
 
 typedef struct 
 {	
@@ -789,114 +411,43 @@ typedef struct
 	
 }DispValues_TypeDef;
 
+typedef struct 
+{	
+//从机数据
+	u32 Voltage[15];
+	u32 Current[15];
+	u32 Rdata[15];
+	u32 Power[15];
+	u32 vrange[15];
+	u32 crange[15];
+}SlaveData_TypeDef;
+
+typedef struct 
+{	
+//从机参数
+	u32 SetCurrent;
+	u32 SetRdata;
+	u32 SetPower;
+}SlavePara_TypeDef;
+
+extern SlavePara_TypeDef SlaveSetPara;
+extern SlaveData_TypeDef SlaveValue;
 extern DispValues_TypeDef DispValue;
-extern Test_TypeDef Test_value;
 //==========================================================
 //
 //==========================================================
-//配置项(3项)
-typedef struct 
-{
-	vu16 Password;//设置密码(0-9999，默认0)
-	vu16 BootNum;//开机次数(0-9999，默认0)
-	vu16 ProductId;//出厂编号(0-9999，默认0)
-}Config_TypeDef;
-//==========================================================
-//参数项(5项)
-typedef struct 
-{ 
-	vu8 Range;//量程模式(0-7，默认0自动)
-	vu8 Beep;//讯响模式(0-2，默认开1-PassOn)
-	vu8 ClrOn;//清零开关(0-1，默认关0)
-	
-	vu8 ExTrig;//外部触发开关(0-1，默认关0)
-	vu8 UartOn;//串口开关(0-1，默认关0)
-//	vu8 FastOn;//快速测试(0-1，默认关0)
-}Parameter_TypeDef;
-
-
-typedef struct
-{
-    vu8 send_head;
-    vu8 king;
-    vu8 Range;
-    vu8 send_res[7];
-    vu8 send_V[8];
-    vu8 comp;
-    vu8 sendend;
-    vu8 over;
-
-}Send_ComBuff_Typedef;
-typedef struct
-{
-    vu8 No[20];
-    vu8 Send_res[9];
-    vu8 back;
-    vu8 Send_V[9];
-    vu8 back1;
-    vu8 comp[5];
-    vu8 ret[2];
-
-}Send_To_UTypedef;
-extern Send_To_UTypedef Send_To_U;
-typedef struct 
-{
-   // vu8 Rev_head;
-    vu8 Trip;
-    vu8 Speed;
-    vu8 R_comp;
-    
-    vu8 Rev_LoRes[6];//4字节数据  一个小数点  一个单位
-    vu8 Rev_V_comp;
-    vu8 Rev_V_Lo[6];
-    vu8 Range;
-    vu8 Beep;
-    vu8 Norm_Res[6];
-    vu8 Rev_Hires[6];
-    vu8 Norm_V[6];
-    vu8 Rev_VHi[6];
-
-
-} Rev_Combuff_Typedef;
-extern Rev_Combuff_Typedef Rev_Combuff;
-extern Send_ComBuff_Typedef Send_ComBuff;
 
 //==========================================================
-//保存信息
-typedef struct 
-{
-	u8 group;
-	Parameter_TypeDef Parameter;//参数项
-	//System_TypeDef System;//系统项
-	Config_TypeDef Config;//配置项
-	Calibrate_TypeDef Calibrate;//校准项
-	vu16 Crc16;//校验字
-}Save_TypeDef;
-extern System_TypeDef System;
+
+
+//==========================================================
+
 extern u8 F_Fail;//测试失败标志
 extern u8 F_100ms;//100ms定时标志
 extern u8 F_set;//设置命令定时标志
 extern u8 F_1s;//1s定时标志
-extern u8 F_Password;//密码有效标志
-extern Save_TypeDef SaveData;//保存值
-extern vu32 Voltage;//电压
-extern vu32 Test_Time;//电流
-extern vu32 Resistance;//电阻
 extern u8 SoftTimer[MAXTSOFTTIMER];
-extern float i_buff[FIT_INUM];		   //滤波值
-extern float V_ad,I_ad;
-extern vu32 Ad_value;
-extern vu8 Ad_over;
-extern vu8 Relay_c;
-extern vu8 debug_buff[UART_BUFF_LENTH];
-extern vu8 test_start;
-extern vu8 Set_flag;
-extern vu8 debug_flag;
-extern vu32 Range_value;
-extern vu32 Range_Value_V;
-extern  u8 cpld_buff[2];
-extern u8 open_flag;//开路标志位
-extern vu8 V_Range;
+
 extern u8 USB_Openflag,Disp_usbflag,Disp_RTCflag;
 extern u8 UART_Buffer_Rece[BUFFSIZEMAX];
 extern u8 UART3_Buffer_Rece[BUFFSIZEMAX];
@@ -911,11 +462,13 @@ extern u16 spintest,spinnum;
 extern u8 spinflag;
 extern u32 dacvalue[17];
 extern u8 setflag;
+extern u8 setslaveflag;
+extern u8 slaveonoffflag;
 extern u8 mainswitch;
 extern u8 jumpflag;
 extern u8 flag_spin;
 extern u16 t_SPIN;
-extern u8 spinsend;
+extern u8 spinsend; 
 extern u8 resflag;
 extern u8 resdisp;
 extern u8 batstep;
@@ -928,4 +481,8 @@ extern u8 usart1rxbuff[BUFFSIZEMAX];
 extern u8 usart1txbuff[BUFFSIZEMAX];
 extern u8 usart3rxbuff[BUFFSIZEMAX];
 extern u8 usart3txbuff[BUFFSIZEMAX];
+extern u16 Uart1RXbuff_len;
+extern u16 Uart3RXbuff_len;
+extern u8 spinsetflag;
+extern u8 slaveID;
 #endif

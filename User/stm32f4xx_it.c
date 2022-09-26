@@ -192,16 +192,16 @@ void SysTick_Handler(void)
 		flag_Tim_USART=0;
 		UART_Buffer_Size=0;	
 	}
-	if(flag_spin == 1)
-	{
-		t_SPIN++;
-	}
-	if(t_SPIN>200)
-	{
-		t_SPIN=0;
-		flag_spin=0;
-		spinsend = 1;
-	}
+//	if(flag_spin == 1)
+//	{
+//		t_SPIN++;
+//	}
+//	if(t_SPIN>200)
+//	{
+//		t_SPIN=0;
+//		flag_spin=0;
+//		spinsend = 1;
+//	}
 }
 
 
@@ -213,7 +213,7 @@ void USART1_IRQHandler(void)
 		DMA_Cmd(DMA2_Stream2, DISABLE); //关闭DMA,防止处理其间有数据 
 		DMA_ClearITPendingBit(DMA2_Stream2, DMA_IT_TCIF2);
 		Uart1RXbuff_len =BUFFSIZEMAX-DMA_GetCurrDataCounter(DMA2_Stream2);  
-		Uart1RXbuff_len|=0x8000;
+//		Uart1RXbuff_len|=0x8000;
 		data = DEBUG_USART->SR;
 		data=data;
 		data = DEBUG_USART->DR;  
@@ -298,7 +298,7 @@ void USART3_IRQHandler(void)
 		DMA_Cmd(DMA1_Stream1, DISABLE); //关闭DMA,防止处理其间有数据 
 		DMA_ClearITPendingBit(DMA1_Stream1, DMA_IT_TCIF1);
 		Uart3RXbuff_len =BUFFSIZEMAX-DMA_GetCurrDataCounter(DMA1_Stream1);  
-		Uart3RXbuff_len|=0x8000;
+//		Uart3RXbuff_len|=0x8000;
 		data = HS_USART->SR;
 		data=data;
 		data = HS_USART->DR;  

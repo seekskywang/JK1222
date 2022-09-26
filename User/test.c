@@ -29,6 +29,8 @@ u8 spinbit;
 u8 spinbitmax;
 u8 switchdelay;
 u8 setcount;
+u8 setslavecount;
+u8 slaveonoffcount;
 u8 inputtrans;
 u8 coder_flag=0;
 u8 buttonpage1=1;
@@ -37,6 +39,7 @@ u16 dacctrl=100;
 u32 powermax;
 u8 startdelay;
 u8 bmpname[30];
+u8 slaveID=1;
 //const u8 RANGE_UNIT[11]=
 //{
 //	4,
@@ -791,11 +794,9 @@ void Power_Process(void)
 	}
     SPI_FLASH_Init();
 
-	InitGlobalValue();//初始化全局变量
 	
     TIM6_Configuration();//定时器6定时10ms
 
-	MenuIndex=0;//待机菜单项
 //    EXTI_Ads1251_Config();//中断没有开启
 
 	i=0;//显示延时
@@ -1890,7 +1891,7 @@ void Test_Beep(void)
 //修改日期：2015.10.29 14:18
 //备注说明：x.xx ms(12MHz/12T)
 //==========================================================
-void Test_Process(void)
+ void Test_Process(void)
 {   
 	static u8 skipkey;
 	static u32 oldskip;
@@ -1904,10 +1905,8 @@ void Test_Process(void)
 	u8 keytrans=0;
     
 	vu16 i;
-    Send_To_UTypedef pt; 	
     Disp_Coordinates_Typedef  Coordinates;
 	u8 Disp_Flag=1;//显示标志
-	u8 initset = 15;//每次进入界面后重新设置初始参数
 //    u8 Disp_Testflag=0;
 //    u8 fit_num=0;
 //	Check_Parameter_Limit();//设置值检查
@@ -1920,29 +1919,19 @@ void Test_Process(void)
 
 	i=0;
 	Set_Para();
-//    if(Jk516save.Sys_Setvalue.u_flag)
-//    {
-//        i=200;
-//        while(i--)
-//        {
-//        USBH_Process(&USB_OTG_Core, &USB_Host);
-//            delay_ms(1);
-//            
-//        }
-//    }
 	spinbit = 1;
 	coder_flag = 1;
-	keynum = 2;
+	if(LoadSave.devmode==1)
+		keynum = 0;
+	else
+		keynum = 2;
 	buttonpage1 = 1;
 //	DispValue.protectflag = 2;
 //	DispValue.alertdisp=1;
 	while(GetSystemStatus()==SYS_STATUS_TEST)
 	{
         USB_Count++;
-//        Key_Scan();
-//		spinvalue = Encoder_Process();
-//		spinvalue = TIM_GetCounter(TIM3);
-		
+
 		keytrans=Encoder_Process(keynum);
 //		USBH_Process(&USB_OTG_Core, &USB_Host);
 //							USB_Count=0;
@@ -1974,12 +1963,20 @@ void Test_Process(void)
 		if(UART3_Buffer_Rece_flag==1)
 		{
 			UART3_Buffer_Rece_flag=0;
-			Rec_Handle();
+			Rec3_Handle();
+		}
+		if(flag_spin!=0)
+		{
+			flag_spin--;
+			if(flag_spin==1)
+				spinsend = 1;
 		}
 		if(spinsend == 1)
 		{
 			spinsend = 0;
 			Set_Para();
+			if(LoadSave.devmode==0)
+				setslaveflag=LoadSave.devnum;
 		}
     if(Disp_Flag==1 )//显示设置的值
 		{
@@ -1992,9 +1989,13 @@ void Test_Process(void)
 		if(F_100ms == TRUE/* && setflag == 0*/)
 		{
 			ReadData();//读本机数据
-			if(LoadSave.devmode==0)//主机模式
+			if(LoadSave.devmode==0 && setslaveflag == 0)//主机模式
 			{
-				ReadSlaveData(1);//读取从机数据
+//				ReadSlaveData(slaveID);//读取从机数据
+				if(slaveID<LoadSave.devnum)
+					slaveID++;
+				else
+					slaveID=1;
 			}
 			F_100ms=FALSE;
 		}
@@ -2006,6 +2007,26 @@ void Test_Process(void)
 				setcount = 0;
 			}else{
 				setcount++;
+			}
+		}
+		if(setslaveflag != 0)
+		{
+			if(setslavecount == 3)
+			{
+				SetSlavePara(setslaveflag);
+				setslavecount = 0;
+			}else{
+				setslavecount++;
+			}
+		}
+		if(slaveonoffflag != 0)
+		{
+			if(slaveonoffcount == 3)
+			{
+				SlaveOnOff(slaveonoffflag);
+				slaveonoffcount = 0;
+			}else{
+				slaveonoffcount++;
 			}
 		}
 		if(mainswitch == 0)
@@ -2056,11 +2077,15 @@ void Test_Process(void)
 //								case 1:
 							if(buttonpage1 == 1)
 							{
-								if(mainswitch == 0)
+								if(LoadSave.devmode != 1)
 								{
-									LoadSave.mode=0;
-									Mode_SW();
-									Store_set_flash();
+									if(mainswitch == 0)
+									{
+										LoadSave.mode=0;
+										Mode_SW();
+										Store_set_flash();
+										setslaveflag=LoadSave.devnum;
+									}
 								}
 							}else{
 								if(mainswitch == 0)
@@ -2088,11 +2113,15 @@ void Test_Process(void)
 //								case 1:
 							if(buttonpage1 == 1)
 							{
-								if(mainswitch == 0)
+								if(LoadSave.devmode != 1)
 								{
-									LoadSave.mode=1;
-									Mode_SW();
-									Store_set_flash();
+									if(mainswitch == 0)
+									{
+										LoadSave.mode=1;
+										Mode_SW();
+										Store_set_flash();
+										setslaveflag=LoadSave.devnum;
+									}
 								}
 							}else{
 								SetSystemStatus(SYS_STATUS_BATTERY);
@@ -2117,11 +2146,15 @@ void Test_Process(void)
 //								case 1:
 							if(buttonpage1 == 1)
 							{
-								if(mainswitch == 0)
+								if(LoadSave.devmode != 1)
 								{
-									LoadSave.mode=2;
-									Mode_SW();
-									Store_set_flash();
+									if(mainswitch == 0)
+									{
+										LoadSave.mode=2;
+										Mode_SW();
+										Store_set_flash();
+										setslaveflag=LoadSave.devnum;
+									}
 								}
 							}else{
 								SetSystemStatus(SYS_STATUS_DYNAMIC);
@@ -2141,11 +2174,15 @@ void Test_Process(void)
 //								case 1:
 							if(buttonpage1 == 1)
 							{
-								if(mainswitch == 0)
+								if(LoadSave.devmode != 1)
 								{
-									LoadSave.mode=3;
-									Mode_SW();
-									Store_set_flash();
+									if(mainswitch == 0)
+									{
+										LoadSave.mode=3;
+										Mode_SW();
+										Store_set_flash();
+										setslaveflag=LoadSave.devnum;
+									}
 								}
 							}else{
 								SetSystemStatus(SYS_STATUS_LIST);
@@ -2169,11 +2206,14 @@ void Test_Process(void)
 //								case 1:
 							if(DispValue.alertdisp == 0)
 							{
-								if(buttonpage1 == 1)
+								if(LoadSave.devmode == 2)
 								{
-									buttonpage1=2;
-								}else{
-									buttonpage1=1;
+									if(buttonpage1 == 1)
+									{
+										buttonpage1=2;
+									}else{
+										buttonpage1=1;
+									}
 								}
 							}else{
 								if(DispValue.protectflag == 0)
@@ -2249,41 +2289,45 @@ void Test_Process(void)
 //						{
 //							case 2:
 //							{
-								
-								switch(LoadSave.mode)
+								if(LoadSave.devmode!=1)
 								{
-									case 0:
+									switch(LoadSave.mode)
 									{
-										Coordinates.xpos=LIST2+88;
-										Coordinates.ypos=FIRSTLINE*1;
-										Coordinates.lenth=76;
-										LoadSave.current=Disp_Set_Num(&Coordinates);
+										case 0:
+										{
+											Coordinates.xpos=LIST2+88;
+											Coordinates.ypos=FIRSTLINE*1;
+											Coordinates.lenth=76;
+											LoadSave.current=Disp_Set_Num(&Coordinates);
 
-									}break;
-									case 1:
-									{
-										Coordinates.xpos=LIST2+88;
-										Coordinates.ypos=FIRSTLINE*1;
-										Coordinates.lenth=76;
-										LoadSave.voltage=Disp_Set_Num(&Coordinates);
-									}break;
-									case 2:
-									{
-										Coordinates.xpos=LIST2+88;
-										Coordinates.ypos=FIRSTLINE*1;
-										Coordinates.lenth=76;
-										LoadSave.risistence=Disp_Set_RNum(&Coordinates);
-									}break;
-									case 3:
-									{
-										Coordinates.xpos=LIST2+88-10;
-										Coordinates.ypos=FIRSTLINE*1;
-										Coordinates.lenth=76;
-										LoadSave.power=Disp_Set_Num(&Coordinates);
-									}break;
+										}break;
+										case 1:
+										{
+											Coordinates.xpos=LIST2+88;
+											Coordinates.ypos=FIRSTLINE*1;
+											Coordinates.lenth=76;
+											LoadSave.voltage=Disp_Set_Num(&Coordinates);
+										}break;
+										case 2:
+										{
+											Coordinates.xpos=LIST2+88;
+											Coordinates.ypos=FIRSTLINE*1;
+											Coordinates.lenth=76;
+											LoadSave.risistence=Disp_Set_RNum(&Coordinates);
+										}break;
+										case 3:
+										{
+											Coordinates.xpos=LIST2+88-10;
+											Coordinates.ypos=FIRSTLINE*1;
+											Coordinates.lenth=76;
+											LoadSave.power=Disp_Set_Num(&Coordinates);
+										}break;
+									}
+									Para_Set_Comp();
+									Set_Para();
+									setslaveflag=LoadSave.devnum;
 								}
-								Para_Set_Comp();
-								Set_Para();
+
 //							}
 //							break;
 //							default:
@@ -2302,12 +2346,16 @@ void Test_Process(void)
 								SwitchLedOn();
 //								OnOff_SW(mainswitch);
 								Set_Para();
+								if(LoadSave.devmode==0)
+									slaveonoffflag=LoadSave.devnum;
 							}else{
 								switchdelay = SWITCH_DELAY;
 								mainswitch = 0;
 								SwitchLedOff();
 //								OnOff_SW(mainswitch);
 								Set_Para();
+								if(LoadSave.devmode==0)
+									slaveonoffflag=LoadSave.devnum;
 							}
 						break;
 						case Key_SET1:
@@ -2405,7 +2453,7 @@ void Test_Process(void)
 						}break;
 						case Key_ON:
 						{
-							ReadSlaveData(1);
+//							ReadSlaveData(1);
 //							ReadData();
 						}break;
 						default:
@@ -2436,26 +2484,16 @@ void Led_Process(void)
 	vu8 key;
     vu16 USB_Count=0;
     UINT fnum;
-    vu8 test_Vsorting,test_Rsorting;
     u32 color;
     u8 keynum=0;
 	vu16 i;
-    Send_To_UTypedef pt;
     Disp_Coordinates_Typedef  Coordinates;
 	u8 Disp_Flag=1;//显示标志
 
     LCD_Clear(LCD_COLOR_TEST_BACK);
-    pt=Send_To_U;
 
     Disp_Led_Item();  
-    open_flag=0;    
-    open_flag=1; 
 
-    i=0;
-    range_over=0;
-    Send_ComBuff.send_head=0xaa;
-    Send_ComBuff.sendend=0xbf;
-    Send_ComBuff.over=0;
 //    EXTI_ClearITPendingBit(KEY1_INT_EXTI_LINE); 
 //    NVIC_EnableIRQ(EXTI3_IRQn);
 //    if(Jk516save.Sys_Setvalue.u_flag)
@@ -2698,7 +2736,6 @@ void Battery_Process(void)
     u8 keynum=0;
 	u8 keytrans=0;
 	vu16 i;
-    Send_To_UTypedef pt;
     Disp_Coordinates_Typedef  Coordinates;
 	u8 Disp_Flag=1;//显示标志
 	F_100ms=FALSE;//100ms定时
@@ -3291,12 +3328,10 @@ void Dynamic_Process(void)
     u8 keynum=0;
 	u8 keytrans=0;
 	vu16 i;
-    Send_To_UTypedef pt;
     Disp_Coordinates_Typedef  Coordinates;
 	u8 Disp_Flag=1;//显示标志
 
     LCD_Clear(LCD_COLOR_TEST_BACK);
-    pt=Send_To_U;
 	F_100ms=FALSE;//100ms定时
     Disp_Dynamic_Item();  
 
@@ -3731,10 +3766,8 @@ void List_Process(void)
     u8 keynum=0;
 	u8 keytrans=0;
 	vu16 i;
-    Send_To_UTypedef pt;
     Disp_Coordinates_Typedef  Coordinates;
 	u8 Disp_Flag=1;//显示标志
-	u8 initset = 10;//每次进入界面后重新设置初始参数
 	DispValue.listrunstep = 0;//每次进入列表后步骤复位
 	DispValue.liststep = 0;//每次进入列表后步骤复位
     LCD_Clear(LCD_COLOR_TEST_BACK);
@@ -4259,7 +4292,7 @@ void List_Process(void)
 											{
 												Coordinates.xpos=100;
 												Coordinates.ypos=26+5*22;
-												Coordinates.lenth=76;
+		 										Coordinates.lenth=76;
 												LoadSave.delay[DispValue.liststep]=Disp_List_Delay(&Coordinates);
 												Para_Set_Comp();
 												Store_set_flash();

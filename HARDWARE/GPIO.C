@@ -287,21 +287,7 @@ void Lock_Off(void)
     GPIO_ResetBits(GPIOH,GPIO_Pin_11);
 }
 
-void Trip_On(void)
-{
-    GPIO_SetBits(GPIOH,GPIO_Pin_12);
-}
-void Trip_Off(void)
-{
-    GPIO_ResetBits(GPIOH,GPIO_Pin_12);
-}
-void PGA_20mR(void)//200m
-{
-    cpld_buff[1]=0x10;
-//   _4094_databuff[0]=0x48;
-//   ADS1216_Set_IO(0x02,3);
 
-}
 
 
 //static void NVIC_Configuration_Gpioint(void)
@@ -386,53 +372,6 @@ void EXTI_Ads1251_Config(void)
 
 
 }
-void V_NEG(void)
-{
-	GPIO_ResetBits(GPIOH,GPIO_Pin_4);
-	
-}
-void V_POS(void)
-{
-	GPIO_SetBits(GPIOH,GPIO_Pin_4);
-}
-u8 read_cpld(void)
-{
-	static vu8 watchPA6;
-    u8 flag;
-	watchPA6 = Read_Openflag();
-    if(Readfirst_cpld==1)//上次是开路
-    {
-        if(Read_Openflag()==0)//不再开路
-        {
-            Readfirst_cpld=0;
-            //f_switch=TRUE;
-            //Range=RANGE_MAX;
-            open_flag=1;
-            flag=0;
-        
-        }
-        else
-            open_flag=0;
-            
-    
-    }
-    else//上次不是开路
-    {
-        if(Read_Openflag()==1)//开路
-        {
-            Readfirst_cpld=1;//开路标志位
-            //f_switch=TRUE;//继电器动作
-            open_flag=0;
-            flag=1;
-            //Range=RANGE_MAX;
-        
-        }
-        else
-            open_flag=1;
-        
-    
-    }
-    return flag;
 
-}
+
     

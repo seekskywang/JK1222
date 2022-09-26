@@ -47,7 +47,7 @@
 #else	
 
 #define DEBUG(format,...)
-
+	
 #endif
 
  
@@ -58,6 +58,8 @@ void Send_Uart3str(char *str);
 void Usart1_Send(char *str,u16 num);
 void Set_Addr(void);
 void Set_Para(void);
+void SetSlavePara(u8 id);
+void SlaveOnOff(u8 id);
 void I_Gear_SW(void);
 void V_Gear_SW(void);
 void OnOff_SW(u8 value);

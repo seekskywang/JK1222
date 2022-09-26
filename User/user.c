@@ -35,57 +35,23 @@ u8 DispBuf[DISP_MAX_LEN];//显示缓冲区定义
 extern char scpinum[20],scpinum1[20];
 extern u8 scpidot,scpiunit,scpidot1,scpiunit1;
 extern u8 scpnum,scpnum1;
+typedef struct{
+	u32 Voltage;
+	u32 Current;
+	u32 Rdata;
+	u32 Power;
+}SlaveDataSum;
+static SlaveDataSum SlaveDatas;
 
 //==========================================================
-const u32 Port_Select[16][16]=//pos(x,y)x0-15 y0-15
-{
-    {0x00000000,0X10800000,0X10008000,0X01000080,0X14000000,0X10400000,0X10004000,0X10000040,
-     0X12000000,0X10200000,0X10002000,0X10000020,0X11000000,0X10010000,0X10000100,0X10000001},
-    {0X08020000,0x00000000,0X00028000,0X00020080,0X04020000,0X00420000,0X00024000,0X10000040,
-     0X02020000,0X00220000,0X00022000,0X00020020,0X01020000,0X00030000,0X00020100,0X00020001},
-    {0X08000200,0X00800200,0x00000000,0X00000280,0X04000200,0X00400200,0X00004200,0X00000240,
-     0X02000200,0X00200200,0X00002200,0X00000220,0X01000200,0X00010200,0X00000300,0X00000201},
-    {0X08000002,0X00800002,0X00008002,0x00000000,0X04000002,0X00400002,0X00004002,0X00000042,
-     0X02000002,0X00200002,0X00002002,0X00000022,0X01000002,0X00010002,0X00000102,0X00000003},
-    {0X28000000,0X20800000,0X20008000,0X20000080,0x00000000,0X20400000,0X20004000,0X20000040,
-     0X22000000,0X20200000,0X20002000,0X20000020,0X21000000,0X20010000,0X20000100,0X20000001},
-    {0X08040000,0X00840000,0X00048000,0X00040080,0X04040000,0x00000000,0X00044000,0X00040040,
-     0X02040000,0X00240000,0X00042000,0X00040020,0X01040000,0X00050000,0X00040100,0X00040001},
-    {0X08000400,0X00800400,0X00008400,0X00000480,0X04000400,0X00400400,0x00000000,0X00000440,
-     0X02000400,0X00200400,0X00002400,0X00000420,0X01000400,0X00010400,0X00000500,0X00000401},
-    {0X08000004,0X00800004,0X00008004,0X00000084,0X04000004,0X00400004,0X00004004,0x00000000,
-     0X02000004,0X00200004,0X00002004,0X00000024,0X01000004,0X00010004,0X00000104,0X00000005},
-    {0X48000000,0X40800000,0X40008000,0X40000080,0X44000000,0X40400000,0X40004000,0X40000040,
-     0x00000000,0X40200000,0X40002000,0X40000020,0X41000000,0X40010000,0X40000100,0X40000001},
-    {0X08080000,0X00880000,0X00088000,0X00080080,0X04080000,0X00480000,0X00084000,0X00080040,
-     0X02080000,0X00000000,0X00082000,0X00080020,0X01080000,0X00090000,0X00080100,0X00080001},
-    {0X08000800,0X00800800,0X00008800,0X00000880,0X04000800,0X00400800,0X00004800,0X00000840,
-     0X02000800,0X00200800,0X00000000,0X00000820,0X01000800,0X00010800,0X00000900,0X00000801},
-    {0X08000008,0X00800008,0X00008008,0X00000088,0X04000008,0X00400008,0X00004008,0X00000048,
-     0X02000008,0X00200008,0X00002008,0X00000000,0X01000008,0X00010008,0X00000108,0X00000009},
-    {0X88000000,0X80800000,0X80008000,0X80000080,0X84000000,0X80400000,0X80004000,0X80000040,
-     0X82000000,0X80200000,0X80002000,0X80000020,0X00000000,0X80010000,0X80000100,0X80000001},
-    {0X08100000,0X00900000,0X00108000,0X00100080,0X04100000,0X00500000,0X00104000,0X00100040,
-     0X02100000,0X00300000,0X00102000,0X00100020,0X01100000,0X00000000,0X00100100,0X00100001},
-    {0X08001000,0X00801000,0X00009000,0X00001080,0X04001000,0X00401000,0X00005000,0X00001040,
-     0X02001000,0X00201000,0X00003000,0X00001020,0X01001000,0X00011000,0X00000000,0X00001001},
-    {0X08000010,0X00800010,0X00008010,0X00000090,0X04000010,0X00400010,0X00004010,0X00000050,
-     0X02000010,0X00200010,0X00002010,0X00000030,0X01000010,0X00010010,0X00000110,0X00000000}
 
-};
 const u32 compCcolor[4]={White,Red,White,White};
 const u32 compVcolor[4]={White,White,Red,White};
 const u32 compPcolor[4]={White,White,White,Red};
 
 const u32 testcompcolor[2]={White,Red};
 
-const uint8_t User_Check_main[][12+1]=
-{
-	{"档号    "},
-	{"标称值  "},
-	{"参考值  "},
 
-};
 const uint8_t User_Check_Item[][12+1]=
 {
 	{"电压低档1"},
@@ -411,7 +377,8 @@ const uint8_t Test_Modevalue1[][6+1]=
 	{"LED"},
 	{"短路"},
 	{"更多"},
-
+	{"主机"},
+	{"从机"},
 };
 
 const uint8_t List_Setitem[][14+1]=
@@ -544,15 +511,15 @@ const uint8_t List_Beep[][6+1]=
 const uint8_t DeviceMode_Item[][6+1]=
 {
 	{"主机"},
-	{"从机"}
-
+	{"从机"},
+	{"普通"},
 };
 
 const uint8_t DeviceMode_ItemE[][6+1]=
 {
 	{"HOST"},
-	{"SLAVE"}
-
+	{"SLAVE"},
+	{"NORMAL"}
 };
 
 const uint8_t List_BeepE[][6+1]=
@@ -708,6 +675,7 @@ const uint8_t Sys_Setitem[][10+1]=
 	{"日期"},
   {"时间"},
 	{"从机数量"},
+	{"从机编号"},
 //    {"文件名称"},
 	
 };
@@ -722,6 +690,7 @@ const uint8_t Sys_Setitem_E[][10+1]=
 	{"DATE"},
   {"TIME"},
 	{"DEVNUM"},
+	{"DEVNo"},
 //    {"FILE"},
 	
 };
@@ -992,29 +961,7 @@ enum SYSTEMMenuEnum
 	SYSTEM_MENU_RL	 ,
 	
 };
-//==========================================================
-//函数名称：InitGlobalValue
-//函数功能：初始化全局变量
-//入口参数：无
-//出口参数：无
-//创建日期：2015.10.28
-//修改日期：2015.10.28 15:33
-//备注说明：无
-//==========================================================
-void InitGlobalValue(void)
-{
-	u16 len;
-	u8 * buf;
-						 
-	buf=(u8 *)&Jk516save;//数据首地址
-	len=sizeof(Jk516save_TypeDef);
-	while(len--)
-	{
-		*buf=0;//清空
-		buf++;
-	}
-	F_Password=FALSE;//密码有效标志	
-}
+
 
 
 void Hex_Format(u32 dat , u8 Dot , u8 len , u8 dispzero)
@@ -1176,9 +1123,40 @@ void Disp_Hint(u8 num)
 	}
 }
 
+static void SlaveDataProc(void)
+{
+	u8 i;
+	SlaveDatas.Current=0;
+	SlaveDatas.Rdata=0;
+	SlaveDatas.Power=0;
+	if(LoadSave.devmode==0)
+	{
+		for(i=0;i<LoadSave.devnum;i++)
+		{
+			if(LoadSave.crange==0)
+			{
+				if(SlaveValue.crange[i]==1)
+				{
+					SlaveDatas.Current+=SlaveValue.Current[i]*10;
+				}else{
+					SlaveDatas.Current+=SlaveValue.Current[i];
+				}
+			}else if(LoadSave.crange==1){
+				if(SlaveValue.crange[i]==0)
+				{
+					SlaveDatas.Current+=SlaveValue.Current[i]/10;
+				}else{
+					SlaveDatas.Current+=SlaveValue.Current[i];
+				}
+			}
+			SlaveDatas.Power+=SlaveValue.Power[i];
+		}
+	}
+}
+
 void Test_Disp(u8 vsw,u8 isw)
 {
-	
+	SlaveDataProc();
 	Colour.black=LCD_COLOR_TEST_MID;
 	Colour.Fword = testcompcolor[DispValue.testcomp[0]];
 	if(vsw == 0)
@@ -1205,17 +1183,17 @@ void Test_Disp(u8 vsw,u8 isw)
 	Colour.Fword = testcompcolor[DispValue.testcomp[1]];
 	if(isw == 0)
 	{
-		Hex_Format(DispValue.Current,4,7,0);  
+		Hex_Format(DispValue.Current+SlaveDatas.Current,4,7,0);  
 		Disp_EN40(80-60,80+40,DispBuf);
 		Disp_EN40(310-60,80+40,"A");
 	}else if(isw == 1){
-		Hex_Format(DispValue.Current,3,6,0);  
+		Hex_Format(DispValue.Current+SlaveDatas.Current,3,6,0);  
 		Disp_EN40(80-60+28,80+40,DispBuf);
 		Disp_EN40(310-60,80+40,"A");
 	}
 
 	Colour.Fword = testcompcolor[DispValue.testcomp[2]];
-	Hex_Format(DispValue.Power,3,7,0);  
+	Hex_Format(DispValue.Power+SlaveDatas.Power,3,7,0);  
 	Disp_EN40(80-60,80+80,DispBuf);
 	Disp_EN40(310-60,80+80,"W"); 
 	
@@ -1936,8 +1914,19 @@ void Disp_Test_value(u8 num)
 			{
 				WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
 			}
+			if(LoadSave.devmode == 0)
+			{
+				Colour.Fword=Green;
+				WriteString_16(BUTTOM_X_VALUE+4*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[8],  0);
+			}else if(LoadSave.devmode == 1){
+				Colour.Fword=LCD_COLOR_YELLOW;
+				WriteString_16(BUTTOM_X_VALUE+4*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[9],  0);
+				Hex_Format(LoadSave.slaveNo,0,3,0);
+				WriteString_16(BUTTOM_X_VALUE+4*BUTTOM_MID_VALUE+33, BUTTOM_Y_VALUE, DispBuf,  0);
+			}else if(LoadSave.devmode == 2){
+				WriteString_16(BUTTOM_X_VALUE+4*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[7],  0);
+			}
 			
-			WriteString_16(BUTTOM_X_VALUE+4*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[7],  0);
 		}else if(buttonpage1 == 2){
 			WriteString_16(BUTTOM_X_VALUE, BUTTOM_Y_VALUE, pt[6],  0);
 			WriteString_16(BUTTOM_X_VALUE+4*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[7],  0);
@@ -4143,7 +4132,7 @@ void Disp_Sys_Screen(void)
 void Disp_SysLine(void)
 {
  	uint32_t i;
-	for(i=0;i<8;i++)
+	for(i=0;i<9;i++)
 	{
 		//if(i<=13/2)
 			LCD_DrawFullRect( 90, FIRSTLINE+(i+1)*SPACE1-2, 100,1);
@@ -4419,7 +4408,7 @@ void Disp_Sys_value(u8 keynum)
 	WriteString_16(LIST1+90+30+32, FIRSTLINE+SPACE1*6+2, DispBuf,  0);
 
 
-  //从机数量
+  //从机数量 
 	Black_Select=(keynum==12)?1:0;
 	if(Black_Select)
 	{
@@ -4434,6 +4423,22 @@ void Disp_Sys_value(u8 keynum)
 	LCD_DrawFullRect( LIST1+90, FIRSTLINE+SPACE1*7,SELECT_1END-(LIST1+90) , SPACE1-4 ) ;
 	Hex_Format(LoadSave.devnum,0,3,0);
 	WriteString_16(LIST1+90, FIRSTLINE+SPACE1*7+2, DispBuf,  0);
+	
+	//从机编号
+	Black_Select=(keynum==13)?1:0;
+	if(Black_Select)
+	{
+		Colour.black=LCD_COLOR_SELECT;
+	
+	}
+	else
+	{
+		Colour.black=LCD_COLOR_TEST_BACK;
+	}
+		
+	LCD_DrawFullRect( LIST1+90, FIRSTLINE+SPACE1*8,SELECT_1END-(LIST1+90) , SPACE1-4 ) ;
+	Hex_Format(LoadSave.slaveNo,0,3,0);
+	WriteString_16(LIST1+90, FIRSTLINE+SPACE1*8+2, DispBuf,  0);
 	
 	Disp_Fastbutton();
   Colour.Fword=White;
@@ -4477,7 +4482,7 @@ void Disp_Sys_value(u8 keynum)
                 pt=DeviceMode_Item;
             
             }
-			for(i=0;i<2;i++)
+			for(i=0;i<3;i++)
 			{
 				
 				WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
@@ -4838,7 +4843,10 @@ void Use_SysSetProcess(void)
 							Store_set_flash();
 						}break;
 						case 3:
-							break;
+						{
+							LoadSave.devmode = 2;
+							Store_set_flash();
+						}break;
 						case 4:
 
 							break;
@@ -4965,6 +4973,12 @@ void Use_SysSetProcess(void)
 							Coordinates.lenth=76;
 							LoadSave.devnum=Disp_Set_Addr(&Coordinates);
 							Store_set_flash();
+						break;case 13:
+							Coordinates.xpos=LIST1+88+2;
+							Coordinates.ypos=FIRSTLINE+SPACE1*8;
+							Coordinates.lenth=76;
+							LoadSave.slaveNo=Disp_Set_Addr(&Coordinates);
+							Store_set_flash();
 						break;
 					}
 				break;
@@ -5017,18 +5031,10 @@ void Disp_Sys(void)
 	//WriteString_16(0, 4, All_TopName[10],  0);
 	Colour.Fword=White;
 	Colour.black=LCD_COLOR_TEST_BACK;
-	if(Jk516save.open)
-	{
-		if(LoadSave.language)
-			pt=Sys_Sys_E;
-		else
-			pt=Sys_Sys;
-	}else{
-		if(LoadSave.language)
-			pt=Sys_Sys_E1;
-		else
-			pt=Sys_Sys1;
-	}
+	if(LoadSave.language)
+		pt=Sys_Sys_E;
+	else
+		pt=Sys_Sys;
     
 //	WriteString_16(LIST1, FIRSTLINE, User_ListScan_Item[0],  0);
 
@@ -5038,7 +5044,6 @@ void Disp_Sys(void)
 		WriteString_16(LIST1, FIRSTLINE+SPACE1*i, pt[i],  0);
 
 	}//Save_Res.fac_num
-    WriteString_16(LIST1+82, FIRSTLINE+SPACE1*3, (const uint8_t*)Jk516save.fac_num,  0);
 //	else
 //	{
 //		WriteString_16(LIST2,FIRSTLINE+SPACE1*(i-sizeof(Sys_Setitem)/(sizeof(Sys_Setitem[0]))/2), Sys_Setitem[i],  0);
@@ -6284,8 +6289,7 @@ void Disp_dateandtime(void)
 //    RTC_TimeStructure.RTC_Minutes, 
 //    RTC_TimeStructure.RTC_Seconds);
 //    WriteString_16(SORTING_XDISP-20, LIST1+4, Range_Disp_Test[hand][range],  0);
-    memcpy((void*)Send_To_U.No,LCDTemp,19);
-    Send_To_U.No[19]=9;
+
 		sprintf(bmpname,"0:20%0.2d%0.2d%0.2d%0.2d%0.2d%0.2d.bmp", 
     RTC_DateStructure.RTC_Year,
     RTC_DateStructure.RTC_Month, 

@@ -7,7 +7,6 @@ Key_TypeDef Keyboard;//键码结构体
 static u8 LastKeyVal;//上次键值
 static u8 LastKeyTicks;//按键节拍
 static u8 ContinueKeyTicks;//持续按键节拍
-const u8 Scan_Value[]={0x7f,0xbf,0xdf,0xef,0xf7,0xfb,0xfd,0xfe};
 u8 KekValue;
 u16 g_enc_fast_flag;
 u8 spinflag;
@@ -86,7 +85,7 @@ uint16_t Encoder_Process(u8 list)
 			{
 				if(coder_flag == 1)
 				{
-					flag_spin = 1;
+					flag_spin = 10;
 					if(list == 2)
 					{
 						switch(LoadSave.mode)
@@ -113,6 +112,8 @@ uint16_t Encoder_Process(u8 list)
 							}break;
 						}
 						Para_Set_Comp();
+//						Set_Para();
+//					  setslaveflag=LoadSave.devnum;
 						return list;
 					}
 				}else{
@@ -206,7 +207,7 @@ uint16_t Encoder_Process(u8 list)
 			case SYS_STATUS_SYSSET:
 			{
 				key = list;
-				if(key<12)
+				if(key<13)
 				{
 					key++;
 				}else{
@@ -238,7 +239,7 @@ uint16_t Encoder_Process(u8 list)
 					case SYS_STATUS_TEST:
 						if(coder_flag == 1)
 						{
-							flag_spin = 1;
+							flag_spin = 10;
 							if(list == 2)
 							{
 								switch(LoadSave.mode)
@@ -303,6 +304,9 @@ uint16_t Encoder_Process(u8 list)
 										
 									}break;
 								}
+								Para_Set_Comp();
+//								Set_Para();
+//								setslaveflag=LoadSave.devnum;
 								return list;
 							}
 						}else{
@@ -402,7 +406,7 @@ uint16_t Encoder_Process(u8 list)
 				{
 					key--;
 				}else{
-					key = 12;
+					key = 13;
 				}
 			}break;
 			case SYS_STATUS_DYNAMIC:
@@ -816,87 +820,7 @@ u8 Key_Read_WithTimeOut(u8 ticks)
 //		}
 	return Key_Read();//按键更新
 }
-////==========================================================
-////函数名称：Key_Scan
-////函数功能：按键扫描
-////入口参数：无
-////出口参数：无
-////创建日期：2014.09.28 
-////修改日期：2014.09.28 11:01
-////备注说明：由10mS中断调用
-////==========================================================
-// u8 Key_Identiry(void)
-//{
-//    u8 row,i;
-////	u8 scanvalue=0;
-//	u8 key_value=0xff;
-//	u8 value=0xff;
-//	HW_Sendvalueto164(0);
-//	if(GPIO_ReadInputDataBit(GPIOI, GPIO_Pin_11)==0)
-//		row=0;
-//	else if(GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_10)==0)
-//		row=1;
-//	else if(GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_11)==0)
-//		row=2;
-//	else if(GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_2)==0)
-//		row=3;
-//	else 
-//        row=4;
-//    if(row<4)
-//	{
-//		
-//		for(i=0;i<8;i++)
-//		{
-//			HW_Sendvalueto164(Scan_Value[i]);
-//            _164Delaay();
-//			switch(row)
-//			{
-//				case 0:
-//						
-//						if(GPIO_ReadInputDataBit(GPIOI, GPIO_Pin_11)==0)
-//						{
-//							
-//							value=i;
-//						}
-//						
-//					break;
-//				case 1:
-//					if(GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_10)==0)
-//						value=i;
-//					break;
-//				case 2:
-//					if(GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_11)==0)
-//						value=i;
-//					break;
-//				case 3:
-//					if(GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_2)==0)
-//						value=i;
-//					break;
-//				default:
-//					break;
-//			}
-//            if(value!=0xff)
-//			break;
-//		}
-//        if(value==0xff)
-//            return  KEY_NONE;
-//		key_value=row*8+value;
-//        return key_value;
-//	
-//	
-//	}
-//    else
-//        if(GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_13)==0)
-//        {
-////            return 116;
-//        
-//        
-//        }
-//    return  KEY_NONE;
-//    
-//	
-//    
-//}
+
 
 void Key_Scan(void)
 {

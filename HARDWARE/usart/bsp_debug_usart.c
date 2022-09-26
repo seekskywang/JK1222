@@ -19,8 +19,10 @@
 #include "./usart/bsp_debug_usart.h"
 #include "pbdata.h"
 u8 sendbuff[BUFFSIZEMAX];
-u8 hostsendbuff[BUFFSIZEMAX];
+u8 u3sendbuff[BUFFSIZEMAX];
 u8 setflag;
+u8 setslaveflag;
+u8 slaveonoffflag;
 vu16 Hardware_CRC(vu8 *p_buffer,vu8 count);
 //u32 dacvalue[10] = {1000,7000,1000,2000,3000,20000,50000,10000,20000,30000};
 u32 dacvalue[17] = {
@@ -391,18 +393,76 @@ char Uart3SendBuff(u8 *arr,u8 data_len)
 	return 1;
 }
 
+//读取从机数据
 void ReadSlaveData(u8 id)
 {
-	memset((char *)hostsendbuff,0,sizeof(hostsendbuff));
-	hostsendbuff[0] = id;
-	hostsendbuff[1] = 0x03;
-	hostsendbuff[2] = 0x00;
-	hostsendbuff[3] = 0x00;
-	hostsendbuff[4] = 0x00;
-	hostsendbuff[5] = 0x04;
-	hostsendbuff[6] = Hardware_CRC(hostsendbuff,6)>>8;
-	hostsendbuff[7] = Hardware_CRC(hostsendbuff,6);
-	Uart3SendBuff(hostsendbuff,8);
+	memset((char *)u3sendbuff,0,sizeof(u3sendbuff));
+	u3sendbuff[0] = id;
+	u3sendbuff[1] = 0x03;
+	u3sendbuff[2] = 0x00;
+	u3sendbuff[3] = 0x00;
+	u3sendbuff[4] = 0x00;
+	u3sendbuff[5] = 0x06;
+	u3sendbuff[6] = Hardware_CRC(u3sendbuff,6)>>8;
+	u3sendbuff[7] = Hardware_CRC(u3sendbuff,6);
+	Uart3SendBuff(u3sendbuff,8);
+//	Usart1_Send((char *)hostsendbuff,8);
+}
+
+//设置从机参数
+void SetSlavePara(u8 id)
+{
+	u8 sendsetnum=0;
+	memset((char *)u3sendbuff,0,sizeof(u3sendbuff));
+	u3sendbuff[sendsetnum++] = id;
+	u3sendbuff[sendsetnum++] = 0x10;
+	u3sendbuff[sendsetnum++] = 0x00;
+	u3sendbuff[sendsetnum++] = 0x00;
+	u3sendbuff[sendsetnum++] = 0x00;
+	u3sendbuff[sendsetnum++] = 0x04;//5
+	
+	u3sendbuff[sendsetnum++] = 0x00;
+	u3sendbuff[sendsetnum++] = 0x00;
+	u3sendbuff[sendsetnum++] = 0x00;
+	u3sendbuff[sendsetnum++] = LoadSave.mode;//9
+	
+	u3sendbuff[sendsetnum++] = SlaveSetPara.SetCurrent>>24;
+	u3sendbuff[sendsetnum++] = SlaveSetPara.SetCurrent>>16;
+	u3sendbuff[sendsetnum++] = SlaveSetPara.SetCurrent>>8;
+	u3sendbuff[sendsetnum++] = SlaveSetPara.SetCurrent;//13
+	
+	u3sendbuff[sendsetnum++] = SlaveSetPara.SetRdata>>24;
+	u3sendbuff[sendsetnum++] = SlaveSetPara.SetRdata>>16;
+	u3sendbuff[sendsetnum++] = SlaveSetPara.SetRdata>>8;
+	u3sendbuff[sendsetnum++] = SlaveSetPara.SetRdata;//17
+	
+	u3sendbuff[sendsetnum++] = SlaveSetPara.SetPower>>24;
+	u3sendbuff[sendsetnum++] = SlaveSetPara.SetPower>>16;
+	u3sendbuff[sendsetnum++] = SlaveSetPara.SetPower>>8;
+	u3sendbuff[sendsetnum++] = SlaveSetPara.SetPower;//21
+	
+	u3sendbuff[sendsetnum++] = Hardware_CRC(u3sendbuff,u3sendbuff[5]*4+6)>>8;
+	u3sendbuff[sendsetnum++] = Hardware_CRC(u3sendbuff,u3sendbuff[5]*4+6);
+	Uart3SendBuff(u3sendbuff,sendsetnum);
+//	Usart1_Send((char *)hostsendbuff,8);
+}
+
+
+//设置从机开关
+void SlaveOnOff(u8 id)
+{
+	u8 sendsetnum=0;
+	memset((char *)u3sendbuff,0,sizeof(u3sendbuff));
+	u3sendbuff[sendsetnum++] = id;
+	u3sendbuff[sendsetnum++] = 0x06;
+	u3sendbuff[sendsetnum++] = 0x00;
+	u3sendbuff[sendsetnum++] = 0x00;
+	u3sendbuff[sendsetnum++] = 0x00;
+	u3sendbuff[sendsetnum++] = mainswitch;//5
+	
+	u3sendbuff[sendsetnum++] = Hardware_CRC(u3sendbuff,6)>>8;
+	u3sendbuff[sendsetnum++] = Hardware_CRC(u3sendbuff,6);
+	Uart3SendBuff(u3sendbuff,sendsetnum);
 //	Usart1_Send((char *)hostsendbuff,8);
 }
 
@@ -753,6 +813,20 @@ void Set_Comm(void)
 	setflag = 1;
 }
 
+static void HostParaProc(void)
+{
+	double para;
+	
+	para=((double)LoadSave.current)/((double)LoadSave.devnum+1);
+	SlaveSetPara.SetCurrent=(u32)para;
+	
+	para=((double)LoadSave.risistence)*((double)LoadSave.devnum+1);
+	SlaveSetPara.SetRdata=(u32)para;
+	
+	para=((double)LoadSave.power)/((double)LoadSave.devnum+1);
+	SlaveSetPara.SetPower=(u32)para;
+}
+
 //设置参数
 void Set_Para(void)
 {
@@ -858,52 +932,75 @@ void Set_Para(void)
 		sendbuff[12] = 0x00;
 		sendbuff[13] = 0x00;
 		sendbuff[14] = LoadSave.mode;//模式
-		
-		
-		if(LoadSave.vrange == 1)
+		if(LoadSave.devmode==0)//主机模式
 		{
+			HostParaProc();
 			sendbuff[7+28] = LoadSave.voltage>>24;
 			sendbuff[8+28] = LoadSave.voltage>>16;
 			sendbuff[9+28] = LoadSave.voltage>>8;
 			sendbuff[10+28] = LoadSave.voltage;//设置电压值
-//			sendbuff[7+28] = LoadSave.voltage/10>>24;
-//			sendbuff[8+28] = LoadSave.voltage/10>>16;
-//			sendbuff[9+28] = LoadSave.voltage/10>>8;
-//			sendbuff[10+28] = LoadSave.voltage/10;//设置电压值
+			
+			sendbuff[11+28] = SlaveSetPara.SetCurrent>>24;
+			sendbuff[12+28] = SlaveSetPara.SetCurrent>>16;
+			sendbuff[13+28] = SlaveSetPara.SetCurrent>>8;
+			sendbuff[14+28] = SlaveSetPara.SetCurrent;//设置电流值
+			
+			sendbuff[15+28] = SlaveSetPara.SetRdata>>24;
+			sendbuff[16+28] = SlaveSetPara.SetRdata>>16;
+			sendbuff[17+28] = SlaveSetPara.SetRdata>>8;
+			sendbuff[18+28] = SlaveSetPara.SetRdata;//设置电阻值
+			
+			sendbuff[19+28] = SlaveSetPara.SetPower/10>>24;
+			sendbuff[20+28] = SlaveSetPara.SetPower/10>>16;
+			sendbuff[21+28] = SlaveSetPara.SetPower/10>>8; 
+			sendbuff[22+28] = SlaveSetPara.SetPower/10;//设置功率值
 		}else{
-			sendbuff[7+28] = LoadSave.voltage>>24;
-			sendbuff[8+28] = LoadSave.voltage>>16;
-			sendbuff[9+28] = LoadSave.voltage>>8;
-			sendbuff[10+28] = LoadSave.voltage;//设置电压值
+		
+			if(LoadSave.vrange == 1)
+			{
+				sendbuff[7+28] = LoadSave.voltage>>24;
+				sendbuff[8+28] = LoadSave.voltage>>16;
+				sendbuff[9+28] = LoadSave.voltage>>8;
+				sendbuff[10+28] = LoadSave.voltage;//设置电压值
+	//			sendbuff[7+28] = LoadSave.voltage/10>>24;
+	//			sendbuff[8+28] = LoadSave.voltage/10>>16;
+	//			sendbuff[9+28] = LoadSave.voltage/10>>8;
+	//			sendbuff[10+28] = LoadSave.voltage/10;//设置电压值
+			}else{
+				sendbuff[7+28] = LoadSave.voltage>>24;
+				sendbuff[8+28] = LoadSave.voltage>>16;
+				sendbuff[9+28] = LoadSave.voltage>>8;
+				sendbuff[10+28] = LoadSave.voltage;//设置电压值
+			}
+			
+			if(LoadSave.crange == 1)
+			{
+				sendbuff[11+28] = LoadSave.current>>24;
+				sendbuff[12+28] = LoadSave.current>>16;
+				sendbuff[13+28] = LoadSave.current>>8;
+				sendbuff[14+28] = LoadSave.current;//设置电流值
+	//			sendbuff[11+28] = LoadSave.current/10>>24;
+	//			sendbuff[12+28] = LoadSave.current/10>>16;
+	//			sendbuff[13+28] = LoadSave.current/10>>8;
+	//			sendbuff[14+28] = LoadSave.current/10;//设置电流值
+			}else{
+				sendbuff[11+28] = LoadSave.current>>24;
+				sendbuff[12+28] = LoadSave.current>>16;
+				sendbuff[13+28] = LoadSave.current>>8;
+				sendbuff[14+28] = LoadSave.current;//设置电流值
+			}
+			
+			
+			sendbuff[15+28] = LoadSave.risistence>>24;
+			sendbuff[16+28] = LoadSave.risistence>>16;
+			sendbuff[17+28] = LoadSave.risistence>>8;
+			sendbuff[18+28] = LoadSave.risistence;//设置电阻值
+			
+			sendbuff[19+28] = LoadSave.power/10>>24;
+			sendbuff[20+28] = LoadSave.power/10>>16;
+			sendbuff[21+28] = LoadSave.power/10>>8; 
+			sendbuff[22+28] = LoadSave.power/10;//设置功率值
 		}
-		
-		if(LoadSave.crange == 1)
-		{
-			sendbuff[11+28] = LoadSave.current>>24;
-			sendbuff[12+28] = LoadSave.current>>16;
-			sendbuff[13+28] = LoadSave.current>>8;
-			sendbuff[14+28] = LoadSave.current;//设置电流值
-//			sendbuff[11+28] = LoadSave.current/10>>24;
-//			sendbuff[12+28] = LoadSave.current/10>>16;
-//			sendbuff[13+28] = LoadSave.current/10>>8;
-//			sendbuff[14+28] = LoadSave.current/10;//设置电流值
-		}else{
-			sendbuff[11+28] = LoadSave.current>>24;
-			sendbuff[12+28] = LoadSave.current>>16;
-			sendbuff[13+28] = LoadSave.current>>8;
-			sendbuff[14+28] = LoadSave.current;//设置电流值
-		}
-		
-		
-		sendbuff[15+28] = LoadSave.risistence>>24;
-		sendbuff[16+28] = LoadSave.risistence>>16;
-		sendbuff[17+28] = LoadSave.risistence>>8;
-		sendbuff[18+28] = LoadSave.risistence;//设置电阻值
-		
-		sendbuff[19+28] = LoadSave.power/10>>24;
-		sendbuff[20+28] = LoadSave.power/10>>16;
-		sendbuff[21+28] = LoadSave.power/10>>8; 
-		sendbuff[22+28] = LoadSave.power/10;//设置功率值
 	}else if(GetSystemStatus()==SYS_STATUS_BATTERY){//电池模式设置参数
 		sendbuff[11] = 0x00;
 		sendbuff[12] = 0x00;
@@ -1636,82 +1733,286 @@ void Rec3_Handle(void)
 {
 	vu16 crc_result;
 	u32 readbuf;
+	u8 sendnum=0;
 	memcpy(UART3_Buffer_Rece, usart3rxbuff, 256);
-	if (UART3_Buffer_Rece[0] == 0x01)
+	
+	crc_result = (UART3_Buffer_Rece[Uart3RXbuff_len-2] << 8) + UART3_Buffer_Rece[Uart3RXbuff_len-1];
+	if(crc_result == Hardware_CRC(UART3_Buffer_Rece,Uart3RXbuff_len-2))//
 	{
-		if(UART3_Buffer_Rece[1] == 0x03)
+		if(UART3_Buffer_Rece[1] == 0x03)//判断功能码
 		{
 			if(LoadSave.devmode==0)//主机模式
 			{
-				crc_result = (UART3_Buffer_Rece[79] << 8) + UART_Buffer_Rece[80];
+				readbuf = 0;
+				readbuf += UART3_Buffer_Rece[3] << 24;
+				readbuf += UART3_Buffer_Rece[4] << 16;
+				readbuf += UART3_Buffer_Rece[5] << 8;
+				readbuf += UART3_Buffer_Rece[6];
+				SlaveValue.Voltage[UART3_Buffer_Rece[0]-1] = readbuf;
 				
 				readbuf = 0;
-				readbuf += UART_Buffer_Rece[3] << 24;
-				readbuf += UART_Buffer_Rece[4] << 16;
-				readbuf += UART_Buffer_Rece[5] << 8;
-				readbuf += UART_Buffer_Rece[6];
-//				if(sumcount < DISP_FILTER)
-//				{
-//					vsum += readbuf;
-//				}else{
-//					DispValue.Voltage = vsum/DISP_FILTER;
-//					vsum = 0;
-//				}
-				DispValue.Voltage = readbuf;
+				readbuf += UART3_Buffer_Rece[7] << 24;
+				readbuf += UART3_Buffer_Rece[8] << 16;
+				readbuf += UART3_Buffer_Rece[9] << 8;
+				readbuf += UART3_Buffer_Rece[10];
+				SlaveValue.Current[UART3_Buffer_Rece[0]-1] = readbuf;
 				
 				readbuf = 0;
-				readbuf += UART_Buffer_Rece[7] << 24;
-				readbuf += UART_Buffer_Rece[8] << 16;
-				readbuf += UART_Buffer_Rece[9] << 8;
-				readbuf += UART_Buffer_Rece[10];
-//				if(sumcount < DISP_FILTER)
-//				{
-//					isum += readbuf;
-//				}else{
-//					DispValue.Current = isum/DISP_FILTER;
-//					isum = 0;
-//				}
-				DispValue.Current = readbuf;
-				
-				readbuf = 0;
-				readbuf += UART_Buffer_Rece[11] << 24;
-				readbuf += UART_Buffer_Rece[12] << 16;
-				readbuf += UART_Buffer_Rece[13] << 8;
-				readbuf += UART_Buffer_Rece[14];
-//				if(sumcount < DISP_FILTER)
-//				{
-//					rsum += readbuf;
-//				}else{
-//					DispValue.Rdata = rsum/DISP_FILTER;
-//					rsum = 0;
-//				}
-				DispValue.Rdata = readbuf;
+				readbuf += UART3_Buffer_Rece[11] << 24;
+				readbuf += UART3_Buffer_Rece[12] << 16;
+				readbuf += UART3_Buffer_Rece[13] << 8;
+				readbuf += UART3_Buffer_Rece[14];
+				SlaveValue.Rdata[UART3_Buffer_Rece[0]-1] = readbuf;
 				
 				
 				readbuf = 0;
-				readbuf += UART_Buffer_Rece[15] << 24;
-				readbuf += UART_Buffer_Rece[16] << 16;
-				readbuf += UART_Buffer_Rece[17] << 8;
-				readbuf += UART_Buffer_Rece[18];			
-//				if(sumcount < DISP_FILTER)
-//				{
-//					psum += readbuf;
-//				}else{
-//					DispValue.Power = psum/DISP_FILTER;
-//					psum = 0;
-//				}
-				DispValue.Power = readbuf;
-			}else{
+				readbuf += UART3_Buffer_Rece[15] << 24;
+				readbuf += UART3_Buffer_Rece[16] << 16;
+				readbuf += UART3_Buffer_Rece[17] << 8;
+				readbuf += UART3_Buffer_Rece[18];			
+				SlaveValue.Power[UART3_Buffer_Rece[0]-1] = readbuf;
 				
+				readbuf = 0;
+				readbuf += UART3_Buffer_Rece[19] << 24;
+				readbuf += UART3_Buffer_Rece[20] << 16;
+				readbuf += UART3_Buffer_Rece[21] << 8;
+				readbuf += UART3_Buffer_Rece[22];
+				SlaveValue.vrange[UART3_Buffer_Rece[0]-1] = readbuf;
+				
+				
+				readbuf = 0;
+				readbuf += UART3_Buffer_Rece[23] << 24;
+				readbuf += UART3_Buffer_Rece[24] << 16;
+				readbuf += UART3_Buffer_Rece[25] << 8;
+				readbuf += UART3_Buffer_Rece[26];			
+				SlaveValue.crange[UART3_Buffer_Rece[0]-1] = readbuf;
+			}else if(LoadSave.devmode==1){//从机模式
+				if(UART3_Buffer_Rece[0] == LoadSave.slaveNo)
+				{
+					memset((char *)u3sendbuff,0,sizeof(u3sendbuff));
+					u3sendbuff[sendnum++] = UART3_Buffer_Rece[0];
+					u3sendbuff[sendnum++] = UART3_Buffer_Rece[1];;
+					u3sendbuff[sendnum++] = UART3_Buffer_Rece[5]*4;
+					u3sendbuff[sendnum++] = (u8)(DispValue.Voltage>>24);
+					u3sendbuff[sendnum++] = (u8)(DispValue.Voltage>>16);
+					u3sendbuff[sendnum++] = (u8)(DispValue.Voltage>>8);
+					u3sendbuff[sendnum++] = (u8)DispValue.Voltage;
+					u3sendbuff[sendnum++] = (u8)(DispValue.Current>>24);
+					u3sendbuff[sendnum++] = (u8)(DispValue.Current>>16);
+					u3sendbuff[sendnum++] = (u8)(DispValue.Current>>8);
+					u3sendbuff[sendnum++] = (u8)DispValue.Current;
+					u3sendbuff[sendnum++] = (u8)(DispValue.Rdata>>24);
+					u3sendbuff[sendnum++] = (u8)(DispValue.Rdata>>16);
+					u3sendbuff[sendnum++] = (u8)(DispValue.Rdata>>8);
+					u3sendbuff[sendnum++] = (u8)DispValue.Rdata;
+					u3sendbuff[sendnum++] = (u8)(DispValue.Power>>24);
+					u3sendbuff[sendnum++] = (u8)(DispValue.Power>>16);
+					u3sendbuff[sendnum++] = (u8)(DispValue.Power>>8);
+					u3sendbuff[sendnum++] = (u8)DispValue.Power;
+					u3sendbuff[sendnum++] = (u8)(LoadSave.vrange>>24);
+					u3sendbuff[sendnum++] = (u8)(LoadSave.vrange>>16);
+					u3sendbuff[sendnum++] = (u8)(LoadSave.vrange>>8);
+					u3sendbuff[sendnum++] = (u8)LoadSave.vrange;
+					u3sendbuff[sendnum++] = (u8)(LoadSave.crange>>24);
+					u3sendbuff[sendnum++] = (u8)(LoadSave.crange>>16);
+					u3sendbuff[sendnum++] = (u8)(LoadSave.crange>>8);
+					u3sendbuff[sendnum++] = (u8)LoadSave.crange;
+					u3sendbuff[sendnum++] = Hardware_CRC(u3sendbuff,UART3_Buffer_Rece[5]*4+3)>>8;
+					u3sendbuff[sendnum++] = Hardware_CRC(u3sendbuff,UART3_Buffer_Rece[5]*4+3);
+					Uart3SendBuff(u3sendbuff,sendnum);
+				}
 			}
-				
-
-		}else if(UART_Buffer_Rece[1] == 0x06){
-			
-		}else if(UART_Buffer_Rece[1] == 0x10){
-			
+		}else if(UART3_Buffer_Rece[1] == 0x10){
+			if(LoadSave.devmode==0)//主机模式
+			{
+				setslaveflag--;
+			}else if(LoadSave.devmode==1){//从机模式
+				if(UART3_Buffer_Rece[0] == LoadSave.slaveNo)
+				{
+					LoadSave.mode=UART3_Buffer_Rece[9];
+					
+					readbuf = 0;
+					readbuf += UART3_Buffer_Rece[10] << 24;
+					readbuf += UART3_Buffer_Rece[11] << 16;
+					readbuf += UART3_Buffer_Rece[12] << 8;
+					readbuf += UART3_Buffer_Rece[13];
+					LoadSave.current = readbuf;
+					
+					readbuf = 0;
+					readbuf += UART3_Buffer_Rece[14] << 24;
+					readbuf += UART3_Buffer_Rece[15] << 16;
+					readbuf += UART3_Buffer_Rece[16] << 8;
+					readbuf += UART3_Buffer_Rece[17];
+					LoadSave.risistence = readbuf;
+					
+					readbuf = 0;
+					readbuf += UART3_Buffer_Rece[18] << 24;
+					readbuf += UART3_Buffer_Rece[19] << 16;
+					readbuf += UART3_Buffer_Rece[20] << 8;
+					readbuf += UART3_Buffer_Rece[21];
+					LoadSave.power = readbuf;
+					
+					Uart3SendBuff(UART3_Buffer_Rece,Uart3RXbuff_len);
+					Set_Para();
+					Store_set_flash();
+					Test_Process();
+				}
+			}
+		}else if(UART3_Buffer_Rece[1] == 0x06){
+			if(LoadSave.devmode==0)//主机模式
+			{
+				slaveonoffflag--;
+			}else if(LoadSave.devmode==1){//从机模式
+				if(UART3_Buffer_Rece[0] == LoadSave.slaveNo)
+				{
+					switchdelay = SWITCH_DELAY;
+					mainswitch = UART3_Buffer_Rece[5];
+					if(mainswitch==1)
+						SwitchLedOn();
+					else
+						SwitchLedOff();
+					
+					Uart3SendBuff(UART3_Buffer_Rece,Uart3RXbuff_len);
+					Set_Para();
+				}
+			}
 		}
+		
 	}
+//	if (UART3_Buffer_Rece[0] == 0x01)
+//	{
+//		if(UART3_Buffer_Rece[1] == 0x03)
+//		{
+//			if(LoadSave.devmode==0)//主机模式
+//			{
+//				crc_result = (UART3_Buffer_Rece[Uart3RXbuff_len-2] << 8) + UART3_Buffer_Rece[Uart3RXbuff_len-1];
+//				if(crc_result == Hardware_CRC(UART3_Buffer_Rece,Uart3RXbuff_len-2))
+//				{
+//					readbuf = 0;
+//					readbuf += UART3_Buffer_Rece[3] << 24;
+//					readbuf += UART3_Buffer_Rece[4] << 16;
+//					readbuf += UART3_Buffer_Rece[5] << 8;
+//					readbuf += UART3_Buffer_Rece[6];
+//					SlaveValue.Voltage[UART3_Buffer_Rece[0]-1] = readbuf;
+//					
+//					readbuf = 0;
+//					readbuf += UART3_Buffer_Rece[7] << 24;
+//					readbuf += UART3_Buffer_Rece[8] << 16;
+//					readbuf += UART3_Buffer_Rece[9] << 8;
+//					readbuf += UART3_Buffer_Rece[10];
+//					SlaveValue.Current[UART3_Buffer_Rece[0]-1] = readbuf;
+//					
+//					readbuf = 0;
+//					readbuf += UART3_Buffer_Rece[11] << 24;
+//					readbuf += UART3_Buffer_Rece[12] << 16;
+//					readbuf += UART3_Buffer_Rece[13] << 8;
+//					readbuf += UART3_Buffer_Rece[14];
+//					SlaveValue.Rdata[UART3_Buffer_Rece[0]-1] = readbuf;
+//					
+//					
+//					readbuf = 0;
+//					readbuf += UART3_Buffer_Rece[15] << 24;
+//					readbuf += UART3_Buffer_Rece[16] << 16;
+//					readbuf += UART3_Buffer_Rece[17] << 8;
+//					readbuf += UART3_Buffer_Rece[18];			
+//					SlaveValue.Power[UART3_Buffer_Rece[0]-1] = readbuf;
+//					
+//					readbuf = 0;
+//					readbuf += UART3_Buffer_Rece[19] << 24;
+//					readbuf += UART3_Buffer_Rece[20] << 16;
+//					readbuf += UART3_Buffer_Rece[21] << 8;
+//					readbuf += UART3_Buffer_Rece[22];
+//					SlaveValue.vrange[UART3_Buffer_Rece[0]-1] = readbuf;
+//					
+//					
+//					readbuf = 0;
+//					readbuf += UART3_Buffer_Rece[23] << 24;
+//					readbuf += UART3_Buffer_Rece[24] << 16;
+//					readbuf += UART3_Buffer_Rece[25] << 8;
+//					readbuf += UART3_Buffer_Rece[26];			
+//					SlaveValue.crange[UART3_Buffer_Rece[0]-1] = readbuf;
+//				}
+//				
+//			}else if(LoadSave.devmode==1){//从机模式
+//				crc_result = (UART3_Buffer_Rece[6] << 8) + UART3_Buffer_Rece[7];
+//				if(crc_result == Hardware_CRC(UART3_Buffer_Rece,6))
+//				{
+//					memset((char *)u3sendbuff,0,sizeof(u3sendbuff));
+//					u3sendbuff[sendnum++] = UART3_Buffer_Rece[0];
+//					u3sendbuff[sendnum++] = UART3_Buffer_Rece[1];;
+//					u3sendbuff[sendnum++] = UART3_Buffer_Rece[5]*4;
+//					u3sendbuff[sendnum++] = (u8)(DispValue.Voltage>>24);
+//					u3sendbuff[sendnum++] = (u8)(DispValue.Voltage>>16);
+//					u3sendbuff[sendnum++] = (u8)(DispValue.Voltage>>8);
+//					u3sendbuff[sendnum++] = (u8)DispValue.Voltage;
+//					u3sendbuff[sendnum++] = (u8)(DispValue.Current>>24);
+//					u3sendbuff[sendnum++] = (u8)(DispValue.Current>>16);
+//					u3sendbuff[sendnum++] = (u8)(DispValue.Current>>8);
+//					u3sendbuff[sendnum++] = (u8)DispValue.Current;
+//					u3sendbuff[sendnum++] = (u8)(DispValue.Rdata>>24);
+//					u3sendbuff[sendnum++] = (u8)(DispValue.Rdata>>16);
+//					u3sendbuff[sendnum++] = (u8)(DispValue.Rdata>>8);
+//					u3sendbuff[sendnum++] = (u8)DispValue.Rdata;
+//					u3sendbuff[sendnum++] = (u8)(DispValue.Power>>24);
+//					u3sendbuff[sendnum++] = (u8)(DispValue.Power>>16);
+//					u3sendbuff[sendnum++] = (u8)(DispValue.Power>>8);
+//					u3sendbuff[sendnum++] = (u8)DispValue.Power;
+//					u3sendbuff[sendnum++] = (u8)(LoadSave.vrange>>24);
+//					u3sendbuff[sendnum++] = (u8)(LoadSave.vrange>>16);
+//					u3sendbuff[sendnum++] = (u8)(LoadSave.vrange>>8);
+//					u3sendbuff[sendnum++] = (u8)LoadSave.vrange;
+//					u3sendbuff[sendnum++] = (u8)(LoadSave.crange>>24);
+//					u3sendbuff[sendnum++] = (u8)(LoadSave.crange>>16);
+//					u3sendbuff[sendnum++] = (u8)(LoadSave.crange>>8);
+//					u3sendbuff[sendnum++] = (u8)LoadSave.crange;
+//					u3sendbuff[sendnum++] = Hardware_CRC(u3sendbuff,UART3_Buffer_Rece[5]*4+3)>>8;
+//					u3sendbuff[sendnum++] = Hardware_CRC(u3sendbuff,UART3_Buffer_Rece[5]*4+3);
+//					Uart3SendBuff(u3sendbuff,sendnum);
+//				}
+//			}
+//		}else if(UART3_Buffer_Rece[1] == 0x10){
+//			if(LoadSave.devmode==0)//主机模式
+//			{
+//				crc_result = (UART3_Buffer_Rece[Uart3RXbuff_len-2] << 8) + UART3_Buffer_Rece[Uart3RXbuff_len-1];
+//				if(crc_result == Hardware_CRC(UART3_Buffer_Rece,Uart3RXbuff_len-2))
+//				{
+//					setslaveflag--;
+//				}
+//			}else if(LoadSave.devmode==1){//从机模式
+//				crc_result = (UART3_Buffer_Rece[Uart3RXbuff_len-2] << 8) + UART3_Buffer_Rece[Uart3RXbuff_len-1];
+//				if(crc_result == Hardware_CRC(UART3_Buffer_Rece,Uart3RXbuff_len-2))
+//				{
+//					LoadSave.mode=UART3_Buffer_Rece[9];
+//					
+//					readbuf = 0;
+//					readbuf += UART3_Buffer_Rece[10] << 24;
+//					readbuf += UART3_Buffer_Rece[11] << 16;
+//					readbuf += UART3_Buffer_Rece[12] << 8;
+//					readbuf += UART3_Buffer_Rece[13];
+//					LoadSave.current = readbuf;
+//					
+//					readbuf = 0;
+//					readbuf += UART3_Buffer_Rece[14] << 24;
+//					readbuf += UART3_Buffer_Rece[15] << 16;
+//					readbuf += UART3_Buffer_Rece[16] << 8;
+//					readbuf += UART3_Buffer_Rece[17];
+//					LoadSave.risistence = readbuf;
+//					
+//					readbuf = 0;
+//					readbuf += UART3_Buffer_Rece[18] << 24;
+//					readbuf += UART3_Buffer_Rece[19] << 16;
+//					readbuf += UART3_Buffer_Rece[20] << 8;
+//					readbuf += UART3_Buffer_Rece[21];
+//					LoadSave.power = readbuf;
+//					
+//					Uart3SendBuff(UART3_Buffer_Rece,Uart3RXbuff_len);
+//					Set_Para();
+//					Store_set_flash();
+//					Test_Process();
+//				}
+//			}
+//		}
+//	}
 	
 }
 //-----------------------------CRC检测--------------------------------------------//
