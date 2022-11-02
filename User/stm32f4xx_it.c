@@ -52,7 +52,6 @@ u8 resflag;
 u8 resdisp;
 u8 batstep;
 u8 listbeep;
-extern Sort_TypeDef SCPI_SET_R(void),SCPI_SET_V(void),SCPI_SET_R1(void),SCPI_SET_V1(void);
 /* Private function prototypes -----------------------------------------------*/
 extern void USB_OTG_BSP_TimerIRQ (void);
 static void MODS_03H(void);
@@ -444,7 +443,7 @@ void  BASIC_TIM_IRQHandler (void)
 		
 		if(SystemStatus==SYS_STATUS_LIST)
 		{
-			if(mainswitch == 1)
+			if(mainswitch == 1 && resdisp==0)
 			{
 				if(DispValue.listdelay == 1)//列表分选和结果
 				{
@@ -475,14 +474,22 @@ void  BASIC_TIM_IRQHandler (void)
 							DispValue.listdelay = LoadSave.delay[DispValue.listrunstep];
 							Set_Para();	
 						}else{
-							startdelay=STARTDELAY;
-							listtime = 0;
-							DispValue.listrunstep = 0;
-							mainswitch = 0;
-							OnOff_SW(mainswitch);
-							SwitchLedOff();
-							resflag = 1;
-							listbeep = ListBeep();
+							if(LoadSave.LoopTest == 0)//循环测试关
+							{
+								startdelay=STARTDELAY;
+								listtime = 0;
+								DispValue.listrunstep = 0;
+								mainswitch = 0;
+								OnOff_SW(mainswitch);
+								SwitchLedOff();
+								resflag = 1;
+								listbeep = ListBeep();
+							}else{//循环测试开
+								listtime = 0;
+								DispValue.listrunstep = 0;
+								DispValue.listdelay = LoadSave.delay[DispValue.listrunstep];
+								Set_Para();
+							}
 						}
 					}else if(LoadSave.StepMode == 1){
 						if(DispValue.listrunstep < LoadSave.ListNum-1)
@@ -494,13 +501,21 @@ void  BASIC_TIM_IRQHandler (void)
 							DispValue.listdelay = LoadSave.delay[DispValue.listrunstep];
 							Set_Para();	
 						}else{
-							listtime = 0;
-							DispValue.listrunstep = 0;
-							mainswitch = 0;
-							OnOff_SW(mainswitch);
-							SwitchLedOff();
-							resflag = 1;
-							listbeep = ListBeep();
+							if(LoadSave.LoopTest == 0)//循环测试关
+							{
+								listtime = 0;
+								DispValue.listrunstep = 0;
+								mainswitch = 0;
+								OnOff_SW(mainswitch);
+								SwitchLedOff();
+								resflag = 1;
+								listbeep = ListBeep();
+							}else{//循环测试开
+								listtime = 0;
+								DispValue.listrunstep = 0;
+								DispValue.listdelay = LoadSave.delay[DispValue.listrunstep];
+								Set_Para();
+							}
 						}
 					}
 				}

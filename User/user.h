@@ -179,6 +179,7 @@ void Disp_Led_Item(void);
 void Disp_Battery_Item(u8 type);
 void Disp_Dynamic_Item(void);
 void Disp_List_Item(void);
+void Disp_Button_value1(uint32_t value);
 
 void Disp_Test_value(u8 num);
 void Disp_Led_value(u8 num);
@@ -193,6 +194,7 @@ void Disp_Limit_Item(void);
 void DispSet_value(u8 keynum);
 void DispLimit_value(u8 keynum);
 void Disp_Res_Sheet(u8 num,u8 page);
+void Disp_Up_Item(void);
 
 void Use_SysSetProcess(void);
 
@@ -210,7 +212,6 @@ vu32 Disp_Set_Addr(Disp_Coordinates_Typedef *Coordinates);
 
 void DoubHex_Format(u32 dat , u8 Dot , u8 len , u8 dispzero);
 Sort_TypeDef Disp_Set_CompNum(Disp_Coordinates_Typedef *Coordinates);
-void Disp_Range(u8 hand,u8 range);
 void BubbleSort(uint32_t A[], uint16_t n);//
 
 void Disp_dateandtime(void);

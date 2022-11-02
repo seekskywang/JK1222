@@ -189,18 +189,21 @@ uint16_t Encoder_Process(u8 list)
 			case SYS_STATUS_LIST:
 			{
 				key = list;
-				if(key>11)
+				if(key==12)
 				{
 					key=0;
 				}
 				else
 				{
-//					if(key == 2)
-//					{
-//						key+=2;
-//					}else{
+					if(key == 5)
+					{
+						key=13;
+					}else if(key == 13){
+						key=6;
+					}
+					else{
 						key++;
-//					}
+					}
 				}
 				return key;
 			}break;
@@ -389,14 +392,30 @@ uint16_t Encoder_Process(u8 list)
 				{
 					key=12;
 				}
-				else{
-//					if(key ==4)
-//					{
-//						key-=2;
-//					}else{
+				else
+				{
+					if(key == 6)
+					{
+						key=13;
+					}else if(key == 13){
+						key=5;
+					}
+					else{
 						key--;
-//					}
+					}
 				}
+//				if(key<1)
+//				{
+//					key=12;
+//				}
+//				else{
+////					if(key ==4)
+////					{
+////						key-=2;
+////					}else{
+//						key--;
+////					}
+//				}
 				return key;
 			}break;
 			case SYS_STATUS_SYSSET:

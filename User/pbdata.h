@@ -236,7 +236,8 @@ enum SysStatusEnum
 	SYS_STATUS_BATTERY,
 	SYS_STATUS_DYNAMIC,
 	SYS_STATUS_LIST,		//¡–±Ì≤‚ ‘
-	SYS_STATUS_LOCK
+	SYS_STATUS_LOCK,
+	SYS_STATUS_UPDATE
 };
 
 //==========================================================
@@ -485,4 +486,5 @@ extern u16 Uart1RXbuff_len;
 extern u16 Uart3RXbuff_len;
 extern u8 spinsetflag;
 extern u8 slaveID;
+extern u32 listtime;
 #endif

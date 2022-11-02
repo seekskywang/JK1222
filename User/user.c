@@ -388,6 +388,7 @@ const uint8_t List_Setitem[][14+1]=
 	{"门槛电压  :"},
 	{"列表讯响  :"},
 	{"启动电压  :"},
+	{"循环测试  :"},
 };
 
 const uint8_t List_Setitem_E[][14+1]=
@@ -397,7 +398,7 @@ const uint8_t List_Setitem_E[][14+1]=
 	{"THRESHOLD  :"},
 	{"LIST BEEP  :"},
 	{"START V    :"},
-	
+	{"LOOP TEST  :"},
 };
 
 const uint8_t Test_Modevalue_E1[][6+1]=
@@ -1363,7 +1364,7 @@ void Disp_Button_value1(uint32_t value)
             WriteString_16(10+98+94+18, 271-20, "TEST",  0);
             WriteString_16(10+98+94+94+18, 271-40, "LIST",  0);
             WriteString_16(10+98+94+94+18, 271-20, "TEST",  0);
-			WriteString_16(10+98+94+94+94+18, 271-40, "LIMIT",  0);
+						WriteString_16(10+98+94+94+94+18, 271-40, "LIMIT",  0);
             WriteString_16(10+98+94+94+94+18, 271-20, "SET",  0);
         
         }
@@ -1393,6 +1394,7 @@ void Disp_Button_value1(uint32_t value)
 		WriteString_16(84+80+80+80+80+18, 271-20, " 2/2",  0);
     
     }else if(value==2){
+			Colour.black=LCD_COLOR_TEST_BUTON;
 		if(LoadSave.language)
         {
             WriteString_16(10+18, 271-40, "MEAS",  0);
@@ -1419,6 +1421,7 @@ void Disp_Button_value1(uint32_t value)
 //			WriteString_16(10+98+94+94+94+94+18, 271-20, "升级",  0);
         }
 	}else if(value==3){
+		Colour.black=LCD_COLOR_TEST_BUTON;
 		if(LoadSave.language)
         {
             WriteString_16(10+18, 271-40, "MEAS",  0);
@@ -1443,6 +1446,59 @@ void Disp_Button_value1(uint32_t value)
 //            WriteString_16(10+98+94+94+18, 271-20, "信息",  0);
 //			WriteString_16(10+98+94+94+94+94+18, 271-40, "固件",  0);
 //			WriteString_16(10+98+94+94+94+94+18, 271-20, "升级",  0);
+        }
+	}else if(value==4){
+		Colour.black=LCD_COLOR_TEST_BUTON;
+		if(LoadSave.language)
+        {
+            WriteString_16(10+18, 271-40, "MEAS",  0);
+            WriteString_16(10+18, 271-20, "DISP",  0);
+            WriteString_16(10+98+18, 271-40, "MEAS",  0);
+            WriteString_16(10+98+18, 271-20, "SETUP",  0);
+            WriteString_16(10+98+94+18, 271-40, " SYS",  0);
+            WriteString_16(10+98+94+18, 271-20, "SETUP",  0);
+//            WriteString_16(10+98+94+94+94+18, 271-40, "SYS",  0);
+//            WriteString_16(10+98+94+94+94+18, 271-20, "INFO",  0);
+        
+        }
+        else
+        {
+						WriteString_16(10+18, 271-40, "跳转",  0);
+            WriteString_16(10+18, 271-20, "升级",  0);
+            WriteString_16(10+98+18, 271-40, "发送",  0);
+            WriteString_16(10+98+18, 271-20, "升级",  0);
+
+//            WriteString_16(10+98+94+94+18, 271-40, "系统",  0);
+//            WriteString_16(10+98+94+94+18, 271-20, "信息",  0);
+//			WriteString_16(10+98+94+94+94+94+18, 271-40, "固件",  0);
+//			WriteString_16(10+98+94+94+94+94+18, 271-20, "升级",  0);
+        }
+	}else if(value==5){
+		Colour.black=LCD_COLOR_TEST_BUTON;
+		if(LoadSave.language)
+        {
+//            WriteString_16(10+18, 271-40, "MEAS",  0);
+//						WriteString_16(10+18, 271-20, "DISP",  0);
+//						WriteString_16(10+98+18, 271-40, "BAT",  0);
+//						WriteString_16(10+98+18, 271-20, "TEST",  0);
+//						WriteString_16(10+98+94+18, 271-40, "DYNA",  0);
+//						WriteString_16(10+98+94+18, 271-20, "TEST",  0);
+//						WriteString_16(10+98+94+94+18, 271-40, "LIST",  0);
+//						WriteString_16(10+98+94+94+18, 271-20, "TEST",  0);
+						WriteString_16(BUTTOM_X_VALUE+3*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE,"RES",  0);
+            WriteString_16(BUTTOM_X_VALUE+4*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE,"BACK",  0);
+        
+        }
+        else
+        {
+//						WriteString_16(10+18, 271-40, "跳转",  0);
+//            WriteString_16(10+18, 271-20, "升级",  0);
+//            WriteString_16(10+98+18, 271-40, "发送",  0);
+//            WriteString_16(10+98+18, 271-20, "升级",  0);
+						 WriteString_16(BUTTOM_X_VALUE+3*BUTTOM_MID_VALUE-10, BUTTOM_Y_VALUE,"测试结果",  0);
+            WriteString_16(BUTTOM_X_VALUE+4*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE,"返回",  0);
+//					WriteString_16(10+98+94+94+94+18, 271-40, "测试",  0);
+//						WriteString_16(10+98+94+94+94+18, 271-20, "结果",  0);
         }
 	}
 
@@ -1475,7 +1531,7 @@ void Disp_Button_TestSet(uint32_t value)
 		WriteString_16(84+80+18, 271-20, "设置",  0);
         WriteString_16(84+80+80+18, 271-30, "工具",  0);
 //		WriteString_16(84+80+80, 271-20, "设置",  0);
-        WriteString_16(84+80+80+80+80+18, 271-40, "更多",  0);
+    WriteString_16(84+80+80+80+80+18, 271-40, "更多",  0);
 		WriteString_16(84+80+80+80+80+18, 271-20, " 2/2",  0);
     
     
@@ -1685,7 +1741,7 @@ void Disp_List_Item(void)
 	
 	Colour.Fword=White;
 	Colour.black=LCD_COLOR_TEST_BACK;
-	for(i=0;i<5;i++)
+	for(i=0;i<6;i++)
 	{
 		if(i<3)
 		{
@@ -1709,7 +1765,7 @@ void Disp_List_Item(void)
 
 	}
 	//	LCD_DrawRect(0,26+2*22,479,16,LCD_COLOR_TEST_BACK);
-	Disp_Button_value1(0);
+	Disp_Button_value1(5);
 
 }
 
@@ -2863,9 +2919,29 @@ void Disp_List_value(u8 num)
 	WriteString_16(LIST2+118, FIRSTLINE+SPACE1, DispBuf,  0);//增加算法  把顺序改过来
 	WriteString_16(LIST2+118+82, FIRSTLINE+SPACE1, Unit_Setitem[1],  0);
 	
+	
+	Black_Select=(num==13)?1:0;//循环测试
+	if(Black_Select)
+	{
+		Colour.black=LCD_COLOR_SELECT;
+	
+	}
+	else
+	{
+		Colour.black=LCD_COLOR_TEST_BACK;
+	}	
+	LCD_DrawFullRect( LIST2+118, FIRSTLINE+SPACE1*2-2,88+4 , SPACE1-2  ) ;//SPACE1
+  Colour.Fword=White;
+	if(LoadSave.language == 0)
+		WriteString_16(LIST2+118, FIRSTLINE+SPACE1*2, Test_Compvalue[LoadSave.LoopTest],  0);//增加算法  把顺序改过来
+	else
+		WriteString_16(LIST2+118, FIRSTLINE+SPACE1*2, Test_Compvalue_E[LoadSave.LoopTest],  0);
+	
+	
 	//步骤和项目
 	Black_Select=(num==6)?1:0;
-	if(Black_Select)
+	if(
+		Black_Select)
 	{
 		Colour.black=LCD_COLOR_SELECT;
 	
@@ -3165,7 +3241,7 @@ void Disp_List_value(u8 num)
 			switch(num)
 			{
 				case 0:
-						Disp_Button_value1(0);
+						Disp_Button_value1(5);
 					break;
 	//			case 1:
 	//			case 5:
@@ -3262,6 +3338,27 @@ void Disp_List_value(u8 num)
 						{
 							for(i=0;i<4;i++)
 								WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, List_CompType[i],  0);
+//							pt=List_CompType;
+						
+						}
+						
+				
+				break;
+				case 13:
+						Disp_Fastbutton();
+						Colour.Fword=White;//
+						Colour.black=LCD_COLOR_TEST_BUTON;
+						
+						if(LoadSave.language)
+						{
+							for(i=0;i<2;i++)
+								WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, Test_Compvalue_E[i],  0);
+//							pt=List_CompTypeE;
+						}
+						else
+						{
+							for(i=0;i<2;i++)
+								WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, Test_Compvalue[i],  0);
 //							pt=List_CompType;
 						
 						}
@@ -4122,6 +4219,14 @@ void DispLimit_value(u8 keynum)
 
 }
 
+void Disp_Up_Item(void)
+{
+	uint32_t i;
+
+	Disp_Fastbutton();
+	Disp_Button_value1(4);
+}
+
 void Disp_Sys_Screen(void)
 {
 	Disp_TopBar_Color();
@@ -4912,7 +5017,11 @@ void Use_SysSetProcess(void)
 					switch(keynum)
 					{
 						case 0:
-//							JumpBoot(55);
+							LCD_Clear(LCD_COLOR_TEST_BACK);
+							Coordinates.xpos=180;
+							Coordinates.ypos =120;
+							Coordinates.lenth=120;
+							input_password(&Coordinates);
 						break;
 						case 2:
 						{
@@ -6079,167 +6188,8 @@ void Disp_button_Num_Freq(void)
 
 
 }
-//电压设置
-Sort_TypeDef Disp_Set_CompNum(Disp_Coordinates_Typedef *Coordinates)
-{
-
-        
-    Sort_TypeDef Sort_num,Sort_num1;
-	Disp_button_Num_Freq();
-	Sort_num=Disp_NumKeyboard_Set(Coordinates,1);
-	Sort_num1=Input_Set_Cov(&Sort_num);
-	if(Sort_num1.Updata_flag==0)
-	{
-		Sort_num1.Dot=0;
-		Sort_num1.Num=0;
-		Sort_num1.Unit=0;
-	
-	}
-		
-	return Sort_num1;
-
-}
-
-//电压设置
-Sort_TypeDef SCPI_SET_V(void)
-{
-	u8 i;
-	static Sort_TypeDef ScpiV_num,ScpiV_num1;
-	ScpiV_num.Dot=0;
-	ScpiV_num.Num=0;
-	ScpiV_num.Unit=0;
-	
-	ScpiV_num1.Dot=0;
-	ScpiV_num1.Num=0;
-	ScpiV_num1.Unit=0;
-	
-	
-	ScpiV_num.Unit=0;
-	if(scpidot == 0)
-	{
-		scpinum[scpnum]='.';
-		scpidot = scpnum;
-		for(i=scpnum+1;i<7;i++)
-		scpinum[i]='0';
-	}else{
-		for(i=scpnum;i<7;i++)
-		scpinum[i]='0';
-	}
-	
-	
-	for(i=0;i<7;i++)
-	{
-		if(scpinum[0]>='0'&&(scpinum[0]<='9'))
-		{
-			if(scpinum[i]>='0'&&(scpinum[i]<='9'))
-			{
-			
-				if(scpidot>i)
-				{
-					ScpiV_num.Num*=10;
-					ScpiV_num.Num+=scpinum[i]-'0';
-				
-				}
-				else
-				{
-					ScpiV_num.Num*=10;
-					ScpiV_num.Num+=scpinum[i]-'0';
-				
-				
-				}
-			}
-			
-			
-			//Sort_set.Num+=(Disp_buff[key_count-1]-'0');
-		
-		
-		}			
-	}
-	ScpiV_num.Dot=scpidot;
-	ScpiV_num1=Input_Set_Cov(&ScpiV_num);
-	scpidot = 0;	
-		
-	return ScpiV_num1;
-
-}
-
-//电压设置
-Sort_TypeDef SCPI_SET_V1(void)
-{
-	u8 i;
-	static Sort_TypeDef ScpiV_num,ScpiV_num1;
-	ScpiV_num.Dot=0;
-	ScpiV_num.Num=0;
-	ScpiV_num.Unit=0;
-	
-	ScpiV_num1.Dot=0;
-	ScpiV_num1.Num=0;
-	ScpiV_num1.Unit=0;
-	
-	
-	ScpiV_num.Unit=0;
-	if(scpidot1 == 0)
-	{
-		scpinum1[scpnum1]='.';
-		scpidot1 = scpnum1;
-		for(i=scpnum1+1;i<7;i++)
-		scpinum1[i]='0';
-	}else{
-		for(i=scpnum1;i<7;i++)
-		scpinum1[i]='0';
-	}
-	
-	
-	for(i=0;i<7;i++)
-	{
-		if(scpinum1[0]>='0'&&(scpinum1[0]<='9'))
-		{
-			if(scpinum1[i]>='0'&&(scpinum1[i]<='9'))
-			{
-			
-				if(scpidot1>i)
-				{
-					ScpiV_num.Num*=10;
-					ScpiV_num.Num+=scpinum1[i]-'0';
-				
-				}
-				else
-				{
-					ScpiV_num.Num*=10;
-					ScpiV_num.Num+=scpinum1[i]-'0';
-				
-				
-				}
-			}
-			
-			
-			//Sort_set.Num+=(Disp_buff[key_count-1]-'0');
-		
-		
-		}			
-	}
-	ScpiV_num.Dot=scpidot1;
-	ScpiV_num1=Input_Set_Cov(&ScpiV_num);
-	scpidot1 = 0;	
-		
-	return ScpiV_num1;
-
-}
-void Disp_Range(u8 hand,u8 range)
-{//Range_Disp_Test
-//    if(hand==1)
-//        hand=0;
-//    else
-//        hand=1;
-    if(hand>1)
-        hand=1;
-    if(range>6)
-        range=6;
-    Colour.black =LCD_COLOR_TEST_BACK;
-    WriteString_16(SORTING_XDISP-20, SORTING_Y_DISP+30, Range_Disp_Test[hand][range],  0);
 
 
-}
 
 void Swap(uint32_t A[], uint16_t i, uint16_t j)
 {
@@ -6705,22 +6655,24 @@ void input_password(Disp_Coordinates_Typedef *Coordinates )
 					
 				break;
 				case Key_F2://确认
-                   if(strcmp(PASSWORD,Disp_buff))//比较函数  当相等时  返回0
-                   {//密码错误
-                       key_count=0;
-                       for(i=0;i<8;i++)
-                        Disp_buff[i]=' ';
-                       password_flag=1;
-                       
-                   
-                   
-                   }
-                   else //密码正确
-                   {
-                        While_flag=0;
-                       SetSystemStatus(SYS_STATUS_DEBUG);
-                   
-                   }
+						 if(strcmp(PASSWORD,Disp_buff))//比较函数  当相等时  返回0
+						 {//密码错误
+								 key_count=0;
+								 for(i=0;i<8;i++)
+									Disp_buff[i]=' ';
+								 password_flag=1;
+								 
+						 
+						 
+						 }
+						 else //密码正确
+						 {
+									While_flag=0;
+							 if(GetSystemStatus() == SYS_STATUS_POWER)
+								 SetSystemStatus(SYS_STATUS_DEBUG);
+							 else if(GetSystemStatus() == SYS_STATUS_SYSSET)
+								 SetSystemStatus(SYS_STATUS_UPDATE);
+						 }
                        
 					
 				break;

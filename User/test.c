@@ -122,7 +122,7 @@ void READ_COMP(void)
 void Para_Set_Comp(void)
 {
 	u8 i;
-	if(LoadSave.devmode > 1)
+	if(LoadSave.devmode > 2)
 	{
 		LoadSave.devmode=0;
 	}
@@ -720,6 +720,26 @@ void lockcheck(void)
 	}
 }
 
+void UpdateProcess(void)
+{
+
+	uint8_t Disp_flag=1;
+  LCD_Clear(LCD_COLOR_TEST_BACK);
+	Disp_Up_Item();
+ 	while(GetSystemStatus()==SYS_STATUS_UPDATE)
+	{
+		if(Disp_flag == 1)
+		{
+			Disp_flag = 0;
+			WriteString_16(LIST1, FIRSTLINE+2, "与上位机通信中 为防止误操作 下位机暂时不可操作",0);//	
+			WriteString_16(LIST1, FIRSTLINE+SPACE1+2, "如需恢复下位机 请关机后重启",0);//
+		}
+		
+	}
+}
+
+
+
 void LockProcess(void)
 {
 
@@ -727,6 +747,7 @@ void LockProcess(void)
     LCD_Clear(LCD_COLOR_TEST_BACK);
 	Colour.black=LCD_COLOR_TEST_BACK;
 	Colour.Fword=LCD_COLOR_SELECT;
+	
  	while(GetSystemStatus()==SYS_STATUS_LOCK)
 	{
 		if(Disp_flag == 1)
@@ -2084,7 +2105,8 @@ void Test_Beep(void)
 										LoadSave.mode=0;
 										Mode_SW();
 										Store_set_flash();
-										setslaveflag=LoadSave.devnum;
+										if(LoadSave.devmode == 0)
+											setslaveflag=LoadSave.devnum;
 									}
 								}
 							}else{
@@ -2120,7 +2142,8 @@ void Test_Beep(void)
 										LoadSave.mode=1;
 										Mode_SW();
 										Store_set_flash();
-										setslaveflag=LoadSave.devnum;
+										if(LoadSave.devmode == 0)
+											setslaveflag=LoadSave.devnum;
 									}
 								}
 							}else{
@@ -2153,7 +2176,8 @@ void Test_Beep(void)
 										LoadSave.mode=2;
 										Mode_SW();
 										Store_set_flash();
-										setslaveflag=LoadSave.devnum;
+										if(LoadSave.devmode == 0)
+											setslaveflag=LoadSave.devnum;
 									}
 								}
 							}else{
@@ -2181,7 +2205,8 @@ void Test_Beep(void)
 										LoadSave.mode=3;
 										Mode_SW();
 										Store_set_flash();
-										setslaveflag=LoadSave.devnum;
+										if(LoadSave.devmode == 0)
+											setslaveflag=LoadSave.devnum;
 									}
 								}
 							}else{
@@ -2325,7 +2350,8 @@ void Test_Beep(void)
 									}
 									Para_Set_Comp();
 									Set_Para();
-									setslaveflag=LoadSave.devnum;
+									if(LoadSave.devmode == 0)
+										setslaveflag=LoadSave.devnum;
 								}
 
 //							}
@@ -3759,21 +3785,21 @@ void List_Process(void)
 	static u32 oldskip;
 	char sendbuf[24];
 	vu8 key;
-    vu16 USB_Count=0;
-    UINT fnum;
-    vu8 test_Vsorting,test_Rsorting;
-    u32 color;
-    u8 keynum=0;
+	vu16 USB_Count=0;
+	UINT fnum;
+	vu8 test_Vsorting,test_Rsorting;
+	u32 color;
+	u8 keynum=0;
 	u8 keytrans=0;
 	vu16 i;
-    Disp_Coordinates_Typedef  Coordinates;
+  Disp_Coordinates_Typedef  Coordinates;
 	u8 Disp_Flag=1;//显示标志
 	DispValue.listrunstep = 0;//每次进入列表后步骤复位
 	DispValue.liststep = 0;//每次进入列表后步骤复位
-    LCD_Clear(LCD_COLOR_TEST_BACK);
+  LCD_Clear(LCD_COLOR_TEST_BACK);
 
 
-    Disp_List_Item();  
+  Disp_List_Item();  
 
 
     i=0;
@@ -3808,7 +3834,7 @@ void List_Process(void)
 			UART_Buffer_Rece_flag=0;
 			Rec_Handle();
 		}
-         if(Disp_Flag==1 )//显示设置的值
+    if(Disp_Flag==1 )//显示设置的值
 		{
 			Disp_List_value(keynum);
 			Disp_Flag = 0;
@@ -3953,8 +3979,8 @@ void List_Process(void)
 									switch(keynum)
 									{
 										case 0:
-											if(mainswitch == 0)
-												SetSystemStatus(SYS_STATUS_TEST);
+//											if(mainswitch == 0)
+//												SetSystemStatus(SYS_STATUS_TEST);
 											break;
 
 										case 2:
@@ -3966,7 +3992,7 @@ void List_Process(void)
 											}
 										}
 										break;
-										case 3:
+										case 13:
 										{
 											if(mainswitch == 0)
 											{
@@ -4013,8 +4039,8 @@ void List_Process(void)
 									switch(keynum)
 									{
 										case 0:
-											if(mainswitch == 0)
-												SetSystemStatus(SYS_STATUS_BATTERY);
+//											if(mainswitch == 0)
+//												SetSystemStatus(SYS_STATUS_BATTERY);
 										break;
 										case 1:
 										{
@@ -4036,7 +4062,7 @@ void List_Process(void)
 											}
 										}
 										break;
-										case 3:
+										case 13:
 										{
 											if(mainswitch == 0)
 											{
@@ -4081,10 +4107,10 @@ void List_Process(void)
 									switch(keynum)
 									{
 										case 0:
-											if(mainswitch == 0)
-											{
-												SetSystemStatus(SYS_STATUS_DYNAMIC);
-											}
+//											if(mainswitch == 0)
+//											{
+//												SetSystemStatus(SYS_STATUS_DYNAMIC);
+//											}
 										break;
 										case 2:
 										{
@@ -4118,7 +4144,7 @@ void List_Process(void)
 									switch(keynum)//
 									{
 									   case 0:
-												
+												resflag=1;
 											break;
 										case 7:
 										{
@@ -4151,7 +4177,7 @@ void List_Process(void)
 											case 0:
 											{
 												if(mainswitch == 0)
-													SetSystemStatus(SYS_STATUS_LIMITSET);
+													SetSystemStatus(SYS_STATUS_TEST);
 											}
 											case 1:
 	//											LoadSave.mode=4;
@@ -4361,6 +4387,7 @@ void List_Process(void)
 											Set_Para();
 			//								OnOff_SW(mainswitch);
 											DispValue.listdelay = LoadSave.delay[0];
+											keynum=0;
 										}else{
 											if(DispValue.listrunstep != 0)
 											{
@@ -4378,8 +4405,9 @@ void List_Process(void)
 											}
 										}
 									}else{
-										switchdelay = SWITCH_DELAY;
-										DispValue.liststep = 0;//每次进入列表后步骤复位
+										startdelay=STARTDELAY;
+										DispValue.listrunstep = 0;
+										listtime=0;
 										mainswitch = 0;
 										SwitchLedOff();
 										Set_Para();

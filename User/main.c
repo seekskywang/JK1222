@@ -60,6 +60,10 @@ int main(void)
 			case SYS_STATUS_LOCK:
 				LockProcess();
 			break;
+			case SYS_STATUS_UPDATE:
+				
+			break;
+			
 			
 //            
 //            case SYS_STATUS_SYS://系统信息显示

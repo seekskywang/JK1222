@@ -32,6 +32,7 @@ extern u8 U15_4094,U16_4094;
 void Internal_ResChange(u8 dat);
 void V_Samping(u8 dat);
 void Feedback_RY(u8 dat);
+void UpdateProcess(void);
 void Power_Process(void);
 void LockProcess(void);
 void Idle_Process(void);
