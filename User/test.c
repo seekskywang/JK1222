@@ -115,7 +115,7 @@ void READ_COMP(void)
 			LoadSave.listmode[i] = 0;
 		}
 	}
-	if(LoadSave.devmode != 0 && LoadSave.devmode != 1)
+	if(LoadSave.devmode != 0 && LoadSave.devmode != 1 && LoadSave.devmode != 2)
 		LoadSave.devmode=0;
 }
 
