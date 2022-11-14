@@ -254,7 +254,7 @@ const uint8_t All_TopName[][21+1]=
 	{"< 极限设置 >"},
 	{"< 列表扫描设置 >"},
 	{"< 系统设置 >    "},
-	{"[ LCR文件列表 ] "},
+	{"< 固件升级 >    "},
 	{"< 系统显示 >    "},
 
 };
@@ -270,7 +270,7 @@ const uint8_t All_TopName_E[][21+1]=
 	{"< LIMIT DISP >"},
 	{"< 列表扫描设置 >"},
 	{"< SYS SETUP >   "},
-	{"[ LCR文件列表 ] "},
+	{"< UPDATE >   "},
 	{"< SYS DISP >    "},
 
 };
@@ -1432,7 +1432,8 @@ void Disp_Button_value1(uint32_t value)
             WriteString_16(10+98+94+18, 271-20, "SETUP",  0);
 //            WriteString_16(10+98+94+94+94+18, 271-40, "SYS",  0);
 //            WriteString_16(10+98+94+94+94+18, 271-20, "INFO",  0);
-        
+						WriteString_16(10+98+94+94+94+94+18, 271-40, "FIRM",  0);
+						WriteString_16(10+98+94+94+94+94+18, 271-20, "UPDATE",  0);
         }
         else
         {
@@ -1444,8 +1445,8 @@ void Disp_Button_value1(uint32_t value)
             WriteString_16(10+98+94+18, 271-20, "设置",  0);
 //            WriteString_16(10+98+94+94+18, 271-40, "系统",  0);
 //            WriteString_16(10+98+94+94+18, 271-20, "信息",  0);
-//			WriteString_16(10+98+94+94+94+94+18, 271-40, "固件",  0);
-//			WriteString_16(10+98+94+94+94+94+18, 271-20, "升级",  0);
+			WriteString_16(10+98+94+94+94+18, 271-40, "固件",  0);
+			WriteString_16(10+98+94+94+94+18, 271-20, "升级",  0);
         }
 	}else if(value==4){
 		Colour.black=LCD_COLOR_TEST_BUTON;
@@ -1465,11 +1466,11 @@ void Disp_Button_value1(uint32_t value)
         {
 						WriteString_16(10+18, 271-40, "跳转",  0);
             WriteString_16(10+18, 271-20, "升级",  0);
-            WriteString_16(10+98+18, 271-40, "发送",  0);
-            WriteString_16(10+98+18, 271-20, "升级",  0);
+            WriteString_16(10+98+18, 271-40, "读取",  0);
+            WriteString_16(10+98+18, 271-20, "文件",  0);
 
-//            WriteString_16(10+98+94+94+18, 271-40, "系统",  0);
-//            WriteString_16(10+98+94+94+18, 271-20, "信息",  0);
+            WriteString_16(10+98+94+18, 271-40, "发送",  0);
+            WriteString_16(10+98+94+18, 271-20, "文件",  0);
 //			WriteString_16(10+98+94+94+94+94+18, 271-40, "固件",  0);
 //			WriteString_16(10+98+94+94+94+94+18, 271-20, "升级",  0);
         }
@@ -1500,6 +1501,19 @@ void Disp_Button_value1(uint32_t value)
 //					WriteString_16(10+98+94+94+94+18, 271-40, "测试",  0);
 //						WriteString_16(10+98+94+94+94+18, 271-20, "结果",  0);
         }
+	}else if(value == 6){
+		Colour.Fword=White;
+		Colour.black=LCD_COLOR_TEST_BUTON;
+//        WriteString_16(83, 271-29, "  取消 ",  0);
+//		WriteString_16(83+80,271-29, "  确认 ",  0);
+		if(LoadSave.language == 1)
+		{
+			 WriteString_16(10+18, 271-29, "CANCEL ",  0);
+			WriteString_16(10+98+18,271-29, "CONFIRM",  0);
+		}else if(LoadSave.language == 0){
+			WriteString_16(10+18, 271-29, "  取消 ",  0);
+			WriteString_16(10+98+18,271-29, "  确认 ",  0);
+		}
 	}
 
 }
@@ -4221,8 +4235,16 @@ void DispLimit_value(u8 keynum)
 
 void Disp_Up_Item(void)
 {
-	uint32_t i;
-
+//	uint32_t i;
+	const u8 (*ppt)[sizeof(All_TopName[0])];
+	Disp_TopBar_Color();
+	Colour.Fword=White;
+	Colour.black=LCD_COLOR_TEST_BAR;
+    if(LoadSave.language)
+        ppt=All_TopName_E;
+    else
+        ppt=All_TopName;
+	WriteString_16(0, 4, ppt[9],  0);
 	Disp_Fastbutton();
 	Disp_Button_value1(4);
 }
@@ -6632,7 +6654,7 @@ void input_password(Disp_Coordinates_Typedef *Coordinates )
 	char  key_count=0;
 	for(i=0;i<9;i++)
 	Disp_buff[i]=0;
-	Disp_Button_value1(2);
+	Disp_Button_value1(6);
 	while(While_flag)
 	{
 		key=Key_Read_WithTimeOut(TICKS_PER_SEC_SOFTTIMER/10);
@@ -6655,6 +6677,8 @@ void input_password(Disp_Coordinates_Typedef *Coordinates )
 					
 				break;
 				case Key_F2://确认
+					if(GetSystemStatus() == SYS_STATUS_POWER)
+					{
 						 if(strcmp(PASSWORD,Disp_buff))//比较函数  当相等时  返回0
 						 {//密码错误
 								 key_count=0;
@@ -6664,15 +6688,32 @@ void input_password(Disp_Coordinates_Typedef *Coordinates )
 								 
 						 
 						 
+						 }else{
+							 While_flag=0;
+							 SetSystemStatus(SYS_STATUS_DEBUG);
 						 }
-						 else //密码正确
-						 {
-									While_flag=0;
-							 if(GetSystemStatus() == SYS_STATUS_POWER)
-								 SetSystemStatus(SYS_STATUS_DEBUG);
-							 else if(GetSystemStatus() == SYS_STATUS_SYSSET)
-								 SetSystemStatus(SYS_STATUS_UPDATE);
+					 }else if(GetSystemStatus() == SYS_STATUS_SYSSET){
+						 if(strcmp(UPPASS,Disp_buff))//比较函数  当相等时  返回0
+						 {//密码错误
+								 key_count=0;
+								 for(i=0;i<8;i++)
+									Disp_buff[i]=' ';
+								 password_flag=1;
+								 
+						 
+						 }else{
+							 While_flag=0;
+							 SetSystemStatus(SYS_STATUS_UPDATE);
 						 }
+					 }
+//						 else //密码正确
+//						 {
+//									While_flag=0;
+//							 if(GetSystemStatus() == SYS_STATUS_POWER)
+//								 SetSystemStatus(SYS_STATUS_DEBUG);
+//							 else if(GetSystemStatus() == SYS_STATUS_SYSSET)
+//								 SetSystemStatus(SYS_STATUS_UPDATE);
+//						 }
                        
 					
 				break;

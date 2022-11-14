@@ -16,6 +16,7 @@ DispValues_TypeDef DispValue;
 SlaveData_TypeDef SlaveValue;
 SlavePara_TypeDef SlaveSetPara;
 SaveData_Typedef LoadSave;
+UpdatePara_TypeDef UpPara;
 
 Com_TypeDef ComBuf;
 u8 SoftTimer[MAXTSOFTTIMER];//Èí¶¨Ê±Æ÷

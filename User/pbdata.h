@@ -59,9 +59,10 @@ void SetSoftTimer(u8 id, u8 ticks);
 u8 GetSoftTimerOut(u8 id);
 void Para_Set_Comp(void);
 
-
+#define PACKAGE_SIZE  1024
 
 #define PASSWORD  "20185260"
+#define UPPASS    "9904"
 
 #define BMP_SWITCH  0      //截图功能开关
 
@@ -431,9 +432,19 @@ typedef struct
 	u32 SetPower;
 }SlavePara_TypeDef;
 
+typedef struct 
+{	
+	u8 updatestep;//升级步骤
+	u32 package;//数据包计数
+	u8 filesendflag;//发送升级包标志
+	u8 sendresflag;//数据包发送成功回应标志
+	u8 sendprog;//发送进度
+}UpdatePara_TypeDef;
+
 extern SlavePara_TypeDef SlaveSetPara;
 extern SlaveData_TypeDef SlaveValue;
 extern DispValues_TypeDef DispValue;
+extern UpdatePara_TypeDef UpPara;
 //==========================================================
 //
 //==========================================================
@@ -487,4 +498,5 @@ extern u16 Uart3RXbuff_len;
 extern u8 spinsetflag;
 extern u8 slaveID;
 extern u32 listtime;
+extern u32 upfilesize;
 #endif

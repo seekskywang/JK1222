@@ -239,6 +239,12 @@ void USBH_Process(USB_OTG_CORE_HANDLE *pdev , USBH_HOST *phost)
     {
       phost->gState = HOST_DEV_ATTACHED;
       USB_OTG_BSP_mDelay(100);
+			
+			 /* Apply a port RESET */
+      HCD_ResetPort(pdev);
+      
+      /* User RESET callback*/
+      phost->usr_cb->ResetDevice();
     }
     break;
    
@@ -396,7 +402,7 @@ void USBH_ErrorHandle(USBH_HOST *phost, USBH_Status errType)
 static USBH_Status USBH_HandleEnum(USB_OTG_CORE_HANDLE *pdev, USBH_HOST *phost)
 {
   USBH_Status Status = USBH_BUSY;  
-  uint8_t Local_Buffer[64];
+  uint8_t Local_Buffer[256];
   
   switch (phost->EnumState)
   {
@@ -728,7 +734,7 @@ USBH_Status USBH_HandleControl (USB_OTG_CORE_HANDLE *pdev, USBH_HOST *phost)
       /* Nack received from device */
       phost->Control.state = CTRL_DATA_OUT;
     }    
-    else if (URB_Status == URB_ERROR)
+    else if (URB_Status == URB_ERROR)	
     {
       /* device error */
       phost->Control.state = CTRL_ERROR;      

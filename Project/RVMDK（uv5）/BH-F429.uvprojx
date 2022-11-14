@@ -339,7 +339,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>STM32F429_439xx,USE_STDPERIPH_DRIVER,USE_USB_OTG_HS,USE_EMBEDDED_PHY</Define>
+              <Define>STM32F429_439xx,USE_STDPERIPH_DRIVER,USE_USB_OTG_FS,USE_EMBEDDED_PHY</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include;..\..\Libraries\CMSIS\Include;..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\User;..\..\HARDWARE;..\..\User\lcd;..\..\FATFS;..\..\Libraries\STM32_USB_HOST_Library\Class\MSC\inc;..\..\Libraries\STM32_USB_HOST_Library\Core\inc;..\..\Libraries\STM32_USB_OTG_Driver\inc;..\..\User\flash;..\..\HARDWARE\font;..\..\User\APP;..\..\User\RTC;..\..\Output;..\..\HARDWARE\1650</IncludePath>
             </VariousControls>
@@ -815,6 +815,11 @@
               <FileName>flash_if.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\User\flash_if.c</FilePath>
+            </File>
+            <File>
+              <FileName>usbh_it.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\APP\usbh_it.c</FilePath>
             </File>
           </Files>
         </Group>

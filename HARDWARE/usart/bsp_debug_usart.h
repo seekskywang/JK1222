@@ -70,8 +70,11 @@ void Sence_SW(void);
 void ProtectRst(void);
 void Set_Baudrate(void);
 void Set_Comm(void);
+void Set_Boot(void);
+void UP_FILESIZE(void);
 void CalHandle(u8 step);
 void ReadData(void);
+void ReadBootMode(void);
 void Rec_Handle(void);
 void Rec3_Handle(void);
 void Set_Dac(u8 step);
@@ -79,4 +82,5 @@ void USART1_IRQHandler(void);
 char Uart1SendBuff(u8 *arr,u8 data_len);
 char Uart3SendBuff(u8 *arr,u8 data_len);
 void ReadSlaveData(u8 id);
+vu16 Hardware_CRC(vu8 *p_buffer,vu8 count);
 #endif /* __USART1_H */

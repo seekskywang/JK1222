@@ -19,9 +19,12 @@
 #define POWERON_DISP_TIME (100)	//开机显示界面延时20*100mS=2s
 u8 U15_4094,U16_4094;
 
-FRESULT result;
+u8 filedatabuf[256];
+FRESULT result=FR_NOT_READY;
 FATFS fs;
 FIL file;
+UINT readcount;
+
 u8 keyvalue;
 u16 spinvalue;
 u8 mainswitch;
@@ -40,6 +43,7 @@ u32 powermax;
 u8 startdelay;
 u8 bmpname[30];
 u8 slaveID=1;
+u32 upfilesize;
 //const u8 RANGE_UNIT[11]=
 //{
 //	4,
@@ -720,21 +724,201 @@ void lockcheck(void)
 	}
 }
 
+void UpError(u8 code)
+{
+	u8 textbuf[50];
+//	filesendflag=0;
+	UpPara.updatestep=0;
+//	sendresflag=0;
+	UpPara.package=0;
+	Colour.black=LCD_COLOR_TEST_BACK;
+//	LCD_DrawRect( 2, 30, 479, 130 , LCD_COLOR_TEST_BACK);
+	LCD_DrawFullRect( 2, 30, 477, 100   ) ;
+
+	Colour.Fword=Red;
+	if(code == 1)
+		WriteString_16(2,110,"升级出错,请检查U盘文件并重启仪器",  0);
+	else if(code == 2)
+		WriteString_16(2,110,"读取文件出错,请检查U盘文件并重启仪器",  0);
+	
+}
+
+void Bin_Send(u16 size)
+{
+	result=f_read(&file,filedatabuf,size-2, &readcount);
+	filedatabuf[size-2]=Hardware_CRC(filedatabuf,size-2)>>8;
+	filedatabuf[size-1]=Hardware_CRC(filedatabuf,size-2);
+	Uart1SendBuff(filedatabuf,size);
+}
+
+
+
 void UpdateProcess(void)
 {
 
 	uint8_t Disp_flag=1;
+	u8 key;
   LCD_Clear(LCD_COLOR_TEST_BACK);
 	Disp_Up_Item();
+	USBH_Init(&USB_OTG_Core,
+	USB_OTG_FS_CORE_ID,
+				&USB_Host,
+				&USBH_MSC_cb,
+				&USR_cb);
+ USBH_Process(&USB_OTG_Core, &USB_Host);
  	while(GetSystemStatus()==SYS_STATUS_UPDATE)
 	{
-		if(Disp_flag == 1)
+		USBH_Process(&USB_OTG_Core, &USB_Host);
+		if(UART_Buffer_Rece_flag==1)
 		{
-			Disp_flag = 0;
-			WriteString_16(LIST1, FIRSTLINE+2, "与上位机通信中 为防止误操作 下位机暂时不可操作",0);//	
-			WriteString_16(LIST1, FIRSTLINE+SPACE1+2, "如需恢复下位机 请关机后重启",0);//
+			UART_Buffer_Rece_flag=0;
+			Rec_Handle();
 		}
-		
+		if(Disp_flag == 1)
+		{  
+			Disp_flag = 0;
+			if(result == FR_OK/* && usbcount > 20*/)
+			{
+				Disp_Usbflag(1);
+//				WriteString_16(50,70,pt[1],0);
+//				WriteString_16(50,90,pt[2],0);
+//				WriteString_16(50,110,pt[3],0);
+//				File_IAP();			
+			}else{
+				Disp_Usbflag(2);
+			}
+//			WriteString_16(LIST1, FIRSTLINE+2, "与上位机通信中 为防止误操作 下位机暂时不可操作",0);//	
+//			WriteString_16(LIST1, FIRSTLINE+SPACE1+2, "如需恢复下位机 请关机后重启",0);//
+		}
+		if(UpPara.filesendflag == 1)
+		{
+			
+			if(UpPara.sendresflag == 0)
+			{
+				Colour.black=LCD_COLOR_TEST_BACK;
+				UpPara.sendprog=(u8)(((float)UpPara.package/(float)(upfilesize/254))*100);
+				
+				Hex_Format(UpPara.sendprog,0,3,0);
+				WriteString_16(2,70,DispBuf,  0);
+				if(UpPara.package == upfilesize/PACKAGE_SIZE)
+				{
+					Bin_Send((upfilesize%PACKAGE_SIZE)+2);
+					UpPara.filesendflag=0;
+				}else{
+					Bin_Send(PACKAGE_SIZE+2);
+				}
+				UpPara.sendresflag=1;
+				UpPara.package++;
+				if(UpPara.sendprog == 100)
+				{
+					UpPara.package=0;
+					WriteString_16(2,90,"发送完成,请等待升级完成",  0);
+					UpPara.updatestep=0;
+//					updatefinishflag=1;
+				}
+				
+			}
+		}
+		key=Key_Read();
+ 		inputtrans = key;
+        if(key!=KEY_NONE)
+		{	
+			Disp_flag=1;
+			switch(key)
+			{
+				case Key_F1:
+					if(UpPara.updatestep == 1)
+						Set_Boot();
+				break;
+				case Key_F2:
+					if(UpPara.updatestep == 2)
+					{
+						result=f_open(&file, "0:99XXUP103.bin",FA_OPEN_EXISTING | FA_READ);
+						if(result==FR_OK)
+						{
+							upfilesize=file.fsize;
+							UP_FILESIZE();
+							
+						}else{
+							UpError(2);
+						}
+					}
+				break;
+				case Key_F3:
+					if(UpPara.updatestep == 3)
+					{
+						UpPara.filesendflag=1;
+						UpPara.package=0;
+					}
+				break;
+				case Key_F4:
+
+				
+				break;
+				case Key_F5:
+					result = f_mount(&fs,"0:",1);
+					if(result == FR_OK)
+					{
+						UpPara.updatestep=1;
+					}else{
+						UpPara.updatestep=0;
+					}
+				break;
+
+				
+				case Key_LEFT:
+
+				break;
+				case Key_RIGHT:
+
+				break;
+
+				case Key_DOT:
+
+				case Key_NUM1:
+				//break;
+				case Key_NUM2:
+				//break;
+				case Key_NUM3:
+				//break;
+				case Key_NUM4:
+				//break;
+				case Key_NUM5:
+				//break;
+				case Key_NUM6:
+				//break;
+				case Key_NUM7:
+				//break;
+				case Key_NUM8:
+				//break;
+				case Key_NUM9:
+				//break;
+				case Key_NUM0:
+				break;
+				case Key_REST:
+				break;
+				case Key_TRIG:
+				break;
+				case PRESS_SPIN:
+				{
+
+				}break;
+				case Key_Ent:
+				{
+					
+				}break;
+				case Key_ESC:
+				{
+					if(mainswitch == 0)
+						SetSystemStatus(SYS_STATUS_TEST);
+				}break;
+
+				default:
+				break;
+					
+			}
+			
+		}
 	}
 }
 
@@ -822,12 +1006,12 @@ void Power_Process(void)
 
 	i=0;//显示延时
 	Read_set_flash();
-     USBH_Init(&USB_OTG_Core,
-			USB_OTG_HS_CORE_ID,
-            &USB_Host,
-            &USBH_MSC_cb,
-            &USR_cb);
-     USBH_Process(&USB_OTG_Core, &USB_Host);
+// USBH_Init(&USB_OTG_Core,
+//	USB_OTG_FS_CORE_ID,
+//				&USB_Host,
+//				&USBH_MSC_cb,
+//				&USR_cb);
+// USBH_Process(&USB_OTG_Core, &USB_Host);
 	Beep_Off();
 	READ_COMP();
 	while(GetSystemStatus()==SYS_STATUS_POWER)
@@ -961,7 +1145,7 @@ void Setup_Process(void)
 			}
 		}
         key=Key_Read();
-		inputtrans = key;
+ 		inputtrans = key;
         if(key!=KEY_NONE)
 		{	
 			Disp_Flag=1;
@@ -1952,7 +2136,6 @@ void Test_Beep(void)
 	while(GetSystemStatus()==SYS_STATUS_TEST)
 	{
         USB_Count++;
-
 		keytrans=Encoder_Process(keynum);
 //		USBH_Process(&USB_OTG_Core, &USB_Host);
 //							USB_Count=0;

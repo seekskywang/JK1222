@@ -66,6 +66,7 @@
 "..\..\output\usb_bsp.o"
 "..\..\output\usbh_usr.o"
 "..\..\output\flash_if.o"
+"..\..\output\usbh_it.o"
 "..\..\output\usb_hcd_int.o"
 "..\..\output\usb_hcd.o"
 "..\..\output\usb_core.o"

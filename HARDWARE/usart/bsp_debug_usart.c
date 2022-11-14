@@ -813,6 +813,46 @@ void Set_Comm(void)
 	setflag = 1;
 }
 
+
+//发送跳转boot命令
+void Set_Boot(void)
+{
+	memset((char *)sendbuff,0,sizeof(sendbuff));
+	sendbuff[0] = 0x01;
+	sendbuff[1] = 0x06;
+	sendbuff[2] = 0x00;
+	sendbuff[3] = 0x32;
+	sendbuff[4] = 0x00;
+	sendbuff[5] = 0x00;
+	sendbuff[6] = 0x00;
+	sendbuff[7] = 0x01;
+	sendbuff[8] = Hardware_CRC(sendbuff,8)>>8;
+	sendbuff[9] = Hardware_CRC(sendbuff,8);
+	Uart1SendBuff(sendbuff,10);
+//	Usart1_Send((char *)sendbuff,10);
+	setflag = 1;
+}
+
+//发送升级文件大小信息
+void UP_FILESIZE(void)
+{
+	memset((char *)sendbuff,0,sizeof(sendbuff));
+	sendbuff[0] = 0x01;
+	sendbuff[1] = 0x06;
+	sendbuff[2] = 0x00;
+	sendbuff[3] = 0x33;
+	sendbuff[4] = upfilesize>>24;
+	sendbuff[5] = upfilesize>>16;
+	sendbuff[6] = upfilesize>>8;
+	sendbuff[7] = upfilesize;
+	sendbuff[8] = Hardware_CRC(sendbuff,8)>>8;
+	sendbuff[9] = Hardware_CRC(sendbuff,8);
+	Uart1SendBuff(sendbuff,10);
+//	Usart1_Send((char *)sendbuff,10);
+	setflag = 1;
+}
+
+//根据主机参数和从机数量算出从机参数
 static void HostParaProc(void)
 {
 	double para;
@@ -931,7 +971,7 @@ void Set_Para(void)
 		sendbuff[11] = 0x00;
 		sendbuff[12] = 0x00;
 		sendbuff[13] = 0x00;
-		sendbuff[14] = LoadSave.mode;//模式
+		sendbuff[14] = LoadSave.mode;//模式-
 		if(LoadSave.devmode==0)//主机模式
 		{
 			HostParaProc();
@@ -1576,7 +1616,7 @@ void Set_Para(void)
 //	Usart1_Send((char *)sendbuff,133);
 //	setflag = 1;
 //}
-
+//读取数据
 void ReadData(void)
 {
 	memset((char *)sendbuff,0,sizeof(sendbuff));
@@ -1592,6 +1632,30 @@ void ReadData(void)
 //	Usart1_Send((char *)sendbuff,8);
 }
 
+//读取启动模式
+void ReadBootMode(void)
+{
+	memset((char *)sendbuff,0,sizeof(sendbuff));
+	sendbuff[0] = 0x01;
+	sendbuff[1] = 0x03;
+	sendbuff[2] = 0x00;
+	sendbuff[3] = 0x34;
+	sendbuff[4] = 0x00;
+	sendbuff[5] = 0x01;
+	sendbuff[6] = Hardware_CRC(sendbuff,6)>>8;
+	sendbuff[7] = Hardware_CRC(sendbuff,6);
+	Uart1SendBuff(sendbuff,8);
+//	Usart1_Send((char *)sendbuff,8);
+}
+
+void DispRead(void)
+{
+	u8 textbuf[50];
+	Colour.black=LCD_COLOR_TEST_BACK;
+	sprintf((char *)textbuf,"读取成功,文件大小为%d字节,请按发送文件",upfilesize);
+	WriteString_16(2,50,textbuf,  0);
+}
+
 void Rec_Handle(void)	
 {
 	static u8 sumcount;
@@ -1600,7 +1664,7 @@ void Rec_Handle(void)
 	memcpy(UART_Buffer_Rece, usart1rxbuff, 256);
 	if (UART_Buffer_Rece[0] == 0x01)
 	{
-		if(UART_Buffer_Rece[1] == 0x03)
+		if(UART_Buffer_Rece[1] == 0x03)//读取采集板数据响应
 		{
 			crc_result = (UART_Buffer_Rece[79] << 8) + UART_Buffer_Rece[80];
 			if ((crc_result == Hardware_CRC(UART_Buffer_Rece,79)) ||(crc_result == 0) )
@@ -1720,11 +1784,23 @@ void Rec_Handle(void)
 				}else{
 					sumcount = 0;
 				}
+			}  
+		}else if(UART_Buffer_Rece[1] == 0x06){//采集板设置单个寄存器响应
+			setflag = 0;
+			if(sendbuff[3] == 0x32)
+			{
+				UpPara.updatestep=2;
+				Colour.Fword=Red;
+				Colour.black=LCD_COLOR_TEST_BACK;
+				WriteString_16(2, 30, "跳转成功,请按读取文件",  0);
+			}else if(sendbuff[3] == 0x33){
+				UpPara.updatestep=3;
+				DispRead();
 			}
-		}else if(UART_Buffer_Rece[1] == 0x06){
+		}else if(UART_Buffer_Rece[1] == 0x10){//采集板设置多个寄存器响应
 			setflag = 0;
-		}else if(UART_Buffer_Rece[1] == 0x10){
-			setflag = 0;
+		}else if(UART_Buffer_Rece[1] == 0x20){//采集板接收升级包数据成功响应
+			UpPara.sendresflag = 0;
 		}
 	}
 }

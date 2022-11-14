@@ -53,7 +53,7 @@ u8 resdisp;
 u8 batstep;
 u8 listbeep;
 /* Private function prototypes -----------------------------------------------*/
-extern void USB_OTG_BSP_TimerIRQ (void);
+//extern void USB_OTG_BSP_TimerIRQ (void);
 static void MODS_03H(void);
 static void MODS_06H(void);
 static void RemTrig(void);
@@ -309,11 +309,11 @@ void USART3_IRQHandler(void)
 	} 
 }
 
-void  TIM2_IRQHandler (void)//U盘用了定时器2
-{
-    USB_OTG_BSP_TimerIRQ();
-	 	
-}
+//void  TIM2_IRQHandler (void)//U盘用了定时器2
+//{
+//    USB_OTG_BSP_TimerIRQ();
+//	 	
+//}
 
 void ListComp(void)
 {
@@ -698,15 +698,15 @@ void EXTI15_10_IRQHandler(void)
 		EXTI_ClearITPendingBit(EXTI_Line13);     
 	}  
 }
-#ifdef USE_USB_OTG_FS  
-void OTG_FS_IRQHandler(void)
-#else
-void OTG_HS_IRQHandler(void)
-    
-#endif
-{
-  USBH_OTG_ISR_Handler(&USB_OTG_Core);
-}
+//#ifdef USE_USB_OTG_FS  
+//void OTG_FS_IRQHandler(void)
+//#else
+//void OTG_HS_IRQHandler(void)
+//    
+//#endif
+//{
+//  USBH_OTG_ISR_Handler(&USB_OTG_Core);
+//}
 
 /**	过流检测，硬件不支持
   * @brief  EXTI1_IRQHandler
