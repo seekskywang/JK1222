@@ -227,6 +227,16 @@ uint16_t Encoder_Process(u8 list)
 					key = 0;
 				}
 			}break;
+			case SYS_STATUS_LED:
+			{
+				key = list;
+				if(key<3)
+				{
+					key++;
+				}else{
+					key = 0;
+				}
+			}break;
 			default:
 			break;
 		}
@@ -436,6 +446,16 @@ uint16_t Encoder_Process(u8 list)
 					key--;
 				}else{
 					key = 8;
+				}
+			}break;
+			case SYS_STATUS_LED:
+			{
+				key = list;
+				if(key>0)
+				{
+					key--;
+				}else{
+					key = 3;
 				}
 			}break;
 			default:

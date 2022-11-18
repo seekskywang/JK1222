@@ -412,7 +412,8 @@ void  BASIC_TIM_IRQHandler (void)
 			}
 		}
         if(SystemStatus==SYS_STATUS_TEST || SystemStatus==SYS_STATUS_BATTERY
-			|| SystemStatus==SYS_STATUS_LIST || SystemStatus==SYS_STATUS_DYNAMIC)
+			|| SystemStatus==SYS_STATUS_LIST || SystemStatus==SYS_STATUS_DYNAMIC
+				|| SystemStatus==SYS_STATUS_LED)
         {
             num++;
             if(num>9)//10mS??

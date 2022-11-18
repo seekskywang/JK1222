@@ -1325,6 +1325,47 @@ void Bat_Disp(u8 vsw,u8 isw)
 	WriteString_16(160+200,100+60,"mAH",0);
 }
 
+void Led_Disp(u8 vsw,u8 isw)
+{
+	Colour.black=LCD_COLOR_TEST_MID;
+	if(vsw == 0)
+	{
+		if(DispValue.Voltage<100)
+		{
+			Hex_Format(0,4,7,0);  
+		}else{
+			Hex_Format(DispValue.Voltage,4,7,0);    
+		}
+		Hex_Format(DispValue.Voltage,4,7,0);       
+		WriteString_16(80,100,DispBuf,0);
+		WriteString_16(160,100,"V",0);
+	}else if(vsw == 1){
+		if(DispValue.Voltage<100)
+		{
+			Hex_Format(0,3,6,0);  
+		}else{
+			Hex_Format(DispValue.Voltage,3,6,0);    
+		}
+//		Hex_Format(DispValue.Voltage,3,6,0);       
+		WriteString_16(80,100,DispBuf,0);
+		WriteString_16(160,100,"V",0);
+	}
+	if(isw == 0)
+	{
+		Hex_Format(DispValue.Current,4,7,0);  
+		WriteString_16(80,100+30,DispBuf,0);
+		WriteString_16(160,100+30,"A",0);
+	}else if(isw == 1){
+		Hex_Format(DispValue.Current,3,6,0);  
+		WriteString_16(80,100+30,DispBuf,0);
+		WriteString_16(160,100+30,"A",0);
+	}
+	Hex_Format(DispValue.Power,3,6,0);  
+	WriteString_16(80,100+60,DispBuf,0);
+	WriteString_16(160,100+60,"W",0);
+
+}
+
 
 //显示 下面的快捷键按键  画矩形的底层函数要移植
 void Disp_Fastbutton(void)
@@ -2017,6 +2058,10 @@ void Disp_Test_value(u8 num)
 				WriteString_16(10+98+94+94+18, 271-20, "TEST",  0);
 			}
 			
+		}else if(buttonpage1 == 3){
+			WriteString_16(BUTTOM_X_VALUE, BUTTOM_Y_VALUE, pt[5],  0);
+			WriteString_16(BUTTOM_X_VALUE+4*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[7],  0);
+			
 		}
 	}else{
 		Disp_Fastbutton();
@@ -2063,10 +2108,11 @@ void Disp_Led_value(u8 num)
 	{
 		Colour.black=LCD_COLOR_TEST_BACK;
 	}	
-	LCD_DrawFullRect( LIST1+88, FIRSTLINE-2,88+4 , SPACE1-2  ) ;//SPACE1
+	LCD_DrawFullRect( LIST1+88, FIRSTLINE-2,126 , SPACE1-2  ) ;//SPACE1
     Colour.Fword=White;
-	Hex_Format(LoadSave.ledvo,3,5,0);
+	Hex_Format(LoadSave.ledvo,4,7,0);
 	WriteString_16(LIST1+88, FIRSTLINE, DispBuf,  0);//增加算法  把顺序改过来
+	WriteString_16(LIST1+118+82, FIRSTLINE, Unit_Setitem[1],  0);
 	
 	Black_Select=(num==2)?1:0;//参数
 	if(Black_Select)
@@ -2080,8 +2126,9 @@ void Disp_Led_value(u8 num)
 	}
 	LCD_DrawFullRect( LIST2+88, FIRSTLINE-2,SELECT_2END-LIST2-88 , SPACE1-2  ) ;//SPACE1
     Colour.Fword=White;
-	Hex_Format(LoadSave.ledrd,3,5,0);
+	Hex_Format(LoadSave.ledrd,4,7,0);
 	WriteString_16(LIST2+88, FIRSTLINE, DispBuf,  0);//增加算法  把顺序改过来
+	
 	
 	Black_Select=(num==3)?1:0;//参数
 	if(Black_Select)
@@ -2093,54 +2140,18 @@ void Disp_Led_value(u8 num)
 	{
 		Colour.black=LCD_COLOR_TEST_BACK;
 	}
-	LCD_DrawFullRect( LIST1+88, FIRSTLINE+SPACE1-2,88+4 , SPACE1-2  ) ;//SPACE1
+	LCD_DrawFullRect( LIST1+88, FIRSTLINE+SPACE1-2,126 , SPACE1-2  ) ;//SPACE1
     Colour.Fword=White;
-	Hex_Format(LoadSave.ledio,3,5,0);
+	Hex_Format(LoadSave.ledio,4,7,0);
 	WriteString_16(LIST1+88, FIRSTLINE+SPACE1, DispBuf,  0);//增加算法  把顺序改过来
-
+	WriteString_16(LIST1+118+82, FIRSTLINE+SPACE1, Unit_Setitem[0],  0);
 	
 	switch(num)
 	{
 		case 0:
 				Disp_Button_value1(0);
 			break;
-		case 1:
-				Disp_Fastbutton();
-				Colour.Fword=White;//
-				Colour.black=LCD_COLOR_TEST_BUTON;
-				
-				if(LoadSave.language)
-                {
-                    pt=Test_Modevalue_E1;
-                }
-                else
-                {
-                    pt=Test_Modevalue1;
-                
-                }
-				for(i=0;i<5;i++)
-				WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
-		
-		break;
-		case 2:
-			Disp_Fastbutton();
-			Colour.Fword=White;
-			Colour.black=LCD_COLOR_TEST_BUTON;
-            if(LoadSave.language)
-            {
-                pt=INPUT_E;
-            }
-            else
-            {
-                pt=INPUT;
-            
-            }
-			for(i=0;i<1;i++)
-			{
-				
-				WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, pt[i],  0);
-			}
-		break;
+
 
 		default:
 			

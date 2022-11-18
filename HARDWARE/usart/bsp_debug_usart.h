@@ -79,7 +79,7 @@ void Rec_Handle(void);
 void Rec3_Handle(void);
 void Set_Dac(u8 step);
 void USART1_IRQHandler(void);
-char Uart1SendBuff(u8 *arr,u8 data_len);
+char Uart1SendBuff(u8 *arr,u16 data_len);
 char Uart3SendBuff(u8 *arr,u8 data_len);
 void ReadSlaveData(u8 id);
 vu16 Hardware_CRC(vu8 *p_buffer,vu8 count);

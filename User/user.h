@@ -116,6 +116,7 @@ void MissConDisp(void);
 void Test_Disp(u8 vsw,u8 isw);
 void Dynamic_Disp(u8 vsw,u8 isw);
 void Bat_Disp(u8 vsw,u8 isw);
+void Led_Disp(u8 vsw,u8 isw);
 void Soft_Turnon(void);
 //u8 Resistance_Setup(NumBox_TypeDef * pt);
 //u8 ListBox_Setup(NumBox_TypeDef * pt);

@@ -210,10 +210,18 @@ void Para_Set_Comp(void)
 		{
 			LoadSave.voltage = 1500000;
 		}
+		if(LoadSave.ledvo > 1500000)
+		{
+			LoadSave.ledvo = 1500000;
+		}
 	}else{
 		if(LoadSave.voltage > MAX_SET_VOLT)
 		{
 			LoadSave.voltage = MAX_SET_VOLT;
+		}
+		if(LoadSave.ledvo > MAX_SET_VOLT)
+		{
+			LoadSave.ledvo = MAX_SET_VOLT;
 		}
 	}
 	if(LoadSave.Version == 3)
@@ -279,15 +287,27 @@ void Para_Set_Comp(void)
 		{
 			LoadSave.maxc = 400000;
 		}
+		if(LoadSave.ledio > 400000)
+		{
+			LoadSave.ledio = 400000;
+		}
 	}else if(LoadSave.Version == 4 || LoadSave.Version == 5){
 		if(LoadSave.maxc > 2400000)
 		{
 			LoadSave.maxc = 2400000;
 		}
+		if(LoadSave.ledio > 2400000)
+		{
+			LoadSave.ledio = 2400000;
+		}
 	}else{
 		if(LoadSave.maxc > MAX_SET_CURRENT)
 		{
 			LoadSave.maxc = MAX_SET_CURRENT;
+		}
+		if(LoadSave.ledio > MAX_SET_CURRENT)
+		{
+			LoadSave.ledio = MAX_SET_CURRENT;
 		}
 	}
 	if(LoadSave.maxp > powermax)
@@ -847,8 +867,9 @@ void UpdateProcess(void)
 				case Key_F3:
 					if(UpPara.updatestep == 3)
 					{
-						UpPara.filesendflag=1;
-						UpPara.package=0;
+						Bin_Send(PACKAGE_SIZE+2);
+//						UpPara.filesendflag=1;
+//						UpPara.package=0;
 					}
 				break;
 				case Key_F4:
@@ -2292,12 +2313,17 @@ void Test_Beep(void)
 											setslaveflag=LoadSave.devnum;
 									}
 								}
-							}else{
+							}else if(buttonpage1 == 2){
 								if(mainswitch == 0)
 								{
 									LoadSave.mode=6;
 									Mode_SW();
 									Store_set_flash();
+								}
+							}else if(buttonpage1 == 3){
+								if(mainswitch == 0)
+								{
+									SetSystemStatus(SYS_STATUS_LED);
 								}
 							}
 //								break;
@@ -2416,12 +2442,15 @@ void Test_Beep(void)
 							{
 								if(LoadSave.devmode == 2)
 								{
-									if(buttonpage1 == 1)
-									{
-										buttonpage1=2;
-									}else{
-										buttonpage1=1;
-									}
+									buttonpage1++;
+									if(buttonpage1 > 3)
+										buttonpage1 = 1;
+//									if(buttonpage1 == 1)
+//									{
+//										buttonpage1=2;
+//									}else{
+//										buttonpage1=1;
+//									}
 								}
 							}else{
 								if(DispValue.protectflag == 0)
@@ -2691,6 +2720,7 @@ void Led_Process(void)
 	static u32 oldskip;
 	char sendbuf[24];
 	vu8 key;
+	u8 keytrans=0;
     vu16 USB_Count=0;
     UINT fnum;
     u32 color;
@@ -2702,7 +2732,7 @@ void Led_Process(void)
     LCD_Clear(LCD_COLOR_TEST_BACK);
 
     Disp_Led_Item();  
-
+		Set_Para();
 //    EXTI_ClearITPendingBit(KEY1_INT_EXTI_LINE); 
 //    NVIC_EnableIRQ(EXTI3_IRQn);
 //    if(Jk516save.Sys_Setvalue.u_flag)
@@ -2719,7 +2749,12 @@ void Led_Process(void)
 	{
         USB_Count++;
 //        Key_Scan();
-		Encoder_Process(keynum);
+		keytrans=Encoder_Process(keynum);
+		if(spinflag == 1)
+		{
+			Disp_Flag = 1;
+			keynum = keytrans;
+		}
 //		spinvalue = TIM_GetCounter(TIM3);
         Colour.Fword=White;
         if(Disp_RTCflag)
@@ -2729,24 +2764,35 @@ void Led_Process(void)
             Int_Pe3flag=0;
             
         }
-         if(Disp_Flag==1 )//显示设置的值
+				if(UART_Buffer_Rece_flag==1)
+		{
+			UART_Buffer_Rece_flag=0;
+			Rec_Handle();
+		}
+    if(Disp_Flag==1 )//显示设置的值
 		{
 			Disp_Led_value(keynum);
-            Colour.black=LCD_COLOR_TEST_MID;
-			Hex_Format(DispValue.Voltage,3,5,0);       
-			WriteString_16(80,100,DispBuf,0);
-			WriteString_16(180,100,"V",0);
-			Hex_Format(DispValue.Voltage,3,5,0);  
-			WriteString_16(80,100+30,DispBuf,0);
-			WriteString_16(180,100+30,"A",0);
-			Hex_Format(DispValue.Voltage,3,5,0);  
-			WriteString_16(80,100+60,DispBuf,0);
-			WriteString_16(180,100+60,"W",0);
-//			Disp_R_V("V");
 			Disp_Flag = 0;
 		}  
+		if(F_100ms == TRUE/* && setflag == 0*/)
+		{
+			ReadData();
+			F_100ms=FALSE;
+		}
+		if(DispValue.alertdisp == 0)
+		{
+			Led_Disp(LoadSave.vrange,LoadSave.crange);
+		}else if(DispValue.alertdisp == 1){
+			MissConDisp();
+			Disp_Fastbutton();
+			Colour.Fword=White;//
+			Colour.black=LCD_COLOR_TEST_BUTON;
+			WriteString_16(BUTTOM_X_VALUE+4*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, "确认",  0);
+			DispValue.alertdisp = 2;
+			LoadSave.ErrCnt[0]++;
+			Store_set_flash();
+		}
 
-             
 //		Uart_Process();//串口处理
         if(Keyboard.state==TRUE)
         {
@@ -2754,6 +2800,7 @@ void Led_Process(void)
 			{
 				Disp_Flag=1;
 				key=Key_Read();
+				inputtrans = key;
 				if(key!=KEY_NONE)
 				switch(key)
 				{
@@ -2762,20 +2809,12 @@ void Led_Process(void)
 							switch(keynum)
 							{
 								case 0:
-									keynum=0;
-										//SetSystemStatus(SYS_STATUS_TEST);
-									break;
-								case 1:
-									LoadSave.mode=0;
+									if(mainswitch == 0)
+									{
+										SetSystemStatus(SYS_STATUS_TEST);
+									}
 								break;
-								case 2:
-								{
-									Coordinates.xpos=LIST2+88;
-									Coordinates.ypos=FIRSTLINE*1;
-									Coordinates.lenth=76;
-									LoadSave.voltage=Disp_Set_Num(&Coordinates);
-								}
-								break;
+
 
 								default:
 									break;
@@ -2801,7 +2840,10 @@ void Led_Process(void)
 							switch(keynum)
 							{
 								case 0:
-									SetSystemStatus(SYS_STATUS_BATTERY);
+									if(mainswitch == 0)
+									{
+										SetSystemStatus(SYS_STATUS_DYNAMIC);
+									}
 								break;
 							
 							
@@ -2812,7 +2854,10 @@ void Led_Process(void)
 							switch(keynum)//
 							{
 							   case 0:
-										SetSystemStatus(SYS_STATUS_DYNAMIC);
+										if(mainswitch == 0)
+										{
+											SetSystemStatus(SYS_STATUS_LIST);
+										}	
 									break;
 	  
 								default:
@@ -2825,8 +2870,9 @@ void Led_Process(void)
 						case Key_F5:
 							switch(keynum)
 							{
-								case 1:
-									LoadSave.mode=4;
+								case 0:
+									if(mainswitch == 0)
+											SetSystemStatus(SYS_STATUS_LIMITSET);
 								break;
 								default:
 									break;
@@ -2836,13 +2882,13 @@ void Led_Process(void)
 
 						case Key_LEFT:
 							if(keynum<1)
-								keynum=6;
+								keynum=3;
 							else
 								keynum--;
 						  
 						break;
 						case Key_RIGHT:
-							if(keynum>5)
+							if(keynum>2)
 								keynum=0;
 							else
 								keynum++;
@@ -2876,15 +2922,34 @@ void Led_Process(void)
 						case Key_DOT:
 							switch(keynum)
 							{
+								case 1:
+								{
+									Coordinates.xpos=LIST1+88;
+									Coordinates.ypos=FIRSTLINE*1;
+									Coordinates.lenth=76;
+									LoadSave.ledvo=Disp_Set_VNum(&Coordinates);
+								}
+								break;
 								case 2:
 								{
 									Coordinates.xpos=LIST2+88;
-									Coordinates.ypos=FIRSTLINE*1;
+									Coordinates.ypos=FIRSTLINE;
 									Coordinates.lenth=76;
-									LoadSave.voltage=Disp_Set_Num(&Coordinates);
+									LoadSave.ledrd=Disp_Set_Num(&Coordinates);
+								}
+								break;
+								case 3:
+								{
+									Coordinates.xpos=LIST1+88;
+									Coordinates.ypos=FIRSTLINE+SPACE1*1;
+									Coordinates.lenth=76;
+									LoadSave.ledio=Disp_Set_CNum(&Coordinates);
 								}
 								break;
 							}
+							Para_Set_Comp();
+							Set_Para();
+							Store_set_flash();
 						break;
 
 						case Key_REST:
@@ -2894,32 +2959,33 @@ void Led_Process(void)
 						break;
 						case Key_SET1:
 						{
+							if(mainswitch == 0)
 							SetSystemStatus(SYS_STATUS_SETUP);
+						}break;
+						case Key_ESC:
+						{
+							if(mainswitch == 0)
+								SetSystemStatus(SYS_STATUS_TEST);
 						}break;
 						case Key_Ent:
 						{
-							switch(keynum)
+							
+						}break;
+						case Key_ONOFF:
+						{
+							if(mainswitch == 0)
 							{
-								case 0:
-									keynum=0;
-										//SetSystemStatus(SYS_STATUS_TEST);
-									break;
-								case 1:
-									LoadSave.mode=0;
-								break;
-								case 2:
-								{
-									Coordinates.xpos=LIST2+88;
-									Coordinates.ypos=FIRSTLINE*1;
-									Coordinates.lenth=76;
-									LoadSave.voltage=Disp_Set_Num(&Coordinates);
-								}
-								break;
-
-								default:
-									break;
-							
-							
+								switchdelay = SWITCH_DELAY;
+								SwitchLedOn();
+								batstep = 1;
+								DispValue.Capraw = 0;
+								mainswitch = 1;
+								Set_Para();
+							}else{
+								switchdelay = SWITCH_DELAY;
+								mainswitch = 0;
+								Set_Para();
+								SwitchLedOff();
 							}
 						}break;
 						default:

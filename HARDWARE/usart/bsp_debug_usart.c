@@ -203,7 +203,7 @@ void Debug_USART_Config(u32 baud)
 }
 
 //返回1串口发送成功
-char Uart1SendBuff(u8 *arr,u8 data_len)
+char Uart1SendBuff(u8 *arr,u16 data_len)
 {	
 	u16 wait_count=0;
 
@@ -1177,6 +1177,57 @@ void Set_Para(void)
 		sendbuff[20+28] = LoadSave.power/10>>16;
 		sendbuff[21+28] = LoadSave.power/10>>8; 
 		sendbuff[22+28] = LoadSave.power/10;//设置功率值
+	}else if(GetSystemStatus()==SYS_STATUS_LED){//动态模式设置参数
+		sendbuff[11] = 0x00;
+		sendbuff[12] = 0x00;
+		sendbuff[13] = 0x00;
+		sendbuff[14] = 5;//模式
+		
+		
+		if(LoadSave.vrange == 1)
+		{
+			sendbuff[7+28] = LoadSave.voltage>>24;
+			sendbuff[8+28] = LoadSave.voltage>>16;
+			sendbuff[9+28] = LoadSave.voltage>>8;
+			sendbuff[10+28] = LoadSave.voltage;//设置电压值
+//			sendbuff[7+28] = LoadSave.voltage/10>>24;
+//			sendbuff[8+28] = LoadSave.voltage/10>>16;
+//			sendbuff[9+28] = LoadSave.voltage/10>>8;
+//			sendbuff[10+28] = LoadSave.voltage/10;//设置电压值
+		}else{
+			sendbuff[7+28] = LoadSave.voltage>>24;
+			sendbuff[8+28] = LoadSave.voltage>>16;
+			sendbuff[9+28] = LoadSave.voltage>>8;
+			sendbuff[10+28] = LoadSave.voltage;//设置电压值
+		}
+		
+		if(LoadSave.crange == 1)
+		{
+			sendbuff[11+28] = LoadSave.current>>24;
+			sendbuff[12+28] = LoadSave.current>>16;
+			sendbuff[13+28] = LoadSave.current>>8;
+			sendbuff[14+28] = LoadSave.current;//设置电流值
+//			sendbuff[11+28] = LoadSave.current/10>>24;
+//			sendbuff[12+28] = LoadSave.current/10>>16;
+//			sendbuff[13+28] = LoadSave.current/10>>8;
+//			sendbuff[14+28] = LoadSave.current/10;//设置电流值
+		}else{
+			sendbuff[11+28] = LoadSave.current>>24;
+			sendbuff[12+28] = LoadSave.current>>16;
+			sendbuff[13+28] = LoadSave.current>>8;
+			sendbuff[14+28] = LoadSave.current;//设置电流值
+		}
+		
+		
+		sendbuff[15+28] = LoadSave.risistence>>24;
+		sendbuff[16+28] = LoadSave.risistence>>16;
+		sendbuff[17+28] = LoadSave.risistence>>8;
+		sendbuff[18+28] = LoadSave.risistence;//设置电阻值
+		
+		sendbuff[19+28] = LoadSave.power/10>>24;
+		sendbuff[20+28] = LoadSave.power/10>>16;
+		sendbuff[21+28] = LoadSave.power/10>>8; 
+		sendbuff[22+28] = LoadSave.power/10;//设置功率值
 	}
 	
 	sendbuff[23+28] = LoadSave.ovp>>24;
@@ -1641,7 +1692,7 @@ void ReadBootMode(void)
 	sendbuff[2] = 0x00;
 	sendbuff[3] = 0x34;
 	sendbuff[4] = 0x00;
-	sendbuff[5] = 0x01;
+	sendbuff[5] = 0x13;
 	sendbuff[6] = Hardware_CRC(sendbuff,6)>>8;
 	sendbuff[7] = Hardware_CRC(sendbuff,6);
 	Uart1SendBuff(sendbuff,8);
