@@ -4279,8 +4279,28 @@ void Disp_SysLine(void)
 	}
 
 }
+
+void insert_element(char arr[],int n) //n为数组的元素个数
+{
+	int pos=3;
+	char insertion='A'; 
+	u8 i,j;
+	for(i = 0;i<n-1;i++)
+	{
+		if(pos-1==i)
+		{
+			for(j = n-1;j>=pos;j--)
+			{
+				arr[j] = arr[j-1];
+			}
+			arr[i] = insertion;
+		}
+	}
+}
+
 void Disp_Sys_Item(void)
 {
+	char snbuf[10];
 	uint32_t i;
     const u8 (*pt)[sizeof(Sys_Setitem[0])];
     const u8 (*ppt)[sizeof(All_TopName[0])];
@@ -4307,6 +4327,15 @@ void Disp_Sys_Item(void)
 		WriteString_16(LIST1, FIRSTLINE+SPACE1*i, pt[i],  0);
         
 	}
+	Colour.Fword=LCD_COLOR_GREY;
+	WriteString_16(LIST2+90, FIRSTLINE+SPACE1*6, "SoftVer :2.4",  0);
+	Hex_Format(DispValue.version,1,2,0);
+	WriteString_16(LIST2+90, FIRSTLINE+SPACE1*7, "BoardVer:",  0);
+	WriteString_16(LIST2+90+90, FIRSTLINE+SPACE1*7, DispBuf,  0);
+	WriteString_16(LIST2+90, FIRSTLINE+SPACE1*8, "S/N:",  0);
+	memcpy(snbuf,LoadSave.serialnumber,sizeof(LoadSave.serialnumber));
+	insert_element(snbuf,9);
+	WriteString_16(LIST2+90+40, FIRSTLINE+SPACE1*8, snbuf,  0);
 //	else
 //	{
 //		WriteString_16(LIST2,FIRSTLINE+SPACE1*(i-sizeof(Sys_Setitem)/(sizeof(Sys_Setitem[0]))/2), Sys_Setitem[i],  0);
@@ -6531,6 +6560,17 @@ void input_num(Disp_Coordinates_Typedef *Coordinates )
 				break;
 				case Key_RIGHT:
 				break;
+				case Key_Ent:
+					While_flag=0;//保存
+					dispflag=0;
+					for(i=0;i<8;i++)
+					{
+						LoadSave.serialnumber[i]=Disp_buff[i];
+					
+					}
+					Store_set_flash();
+					Colour.black=LCD_COLOR_TEST_BACK;
+				  LCD_DrawFullRect( 0, Coordinates->ypos-20,Coordinates->xpos+200 , 40 );
 
 				case Key_NUM1:
 					if(key_count<PASSWORD_LENTH)

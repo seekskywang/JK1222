@@ -23,7 +23,7 @@
 #define		Key_ONOFF	(15)
 #define		Key_LEFT	(25)
 #define		Key_RIGHT  	(26)
-#define		Key_SET2	(22)
+#define		Key_SET2	(23)
 #define		Key_SHIFT	(21)
 #define		Key_NUM7	(9)
 #define		Key_NUM8	(10)
@@ -40,7 +40,7 @@
 #define		Key_SAVE	(24)//
 #define		Key_ON	    (22)
 #define		PRESS_SPIN	(28)
-#define		Key_REST	(23)
+#define		Key_REST	(66)
 #define		Key_TRIG	(31)
 #define		Key_POWER	(55)//
 

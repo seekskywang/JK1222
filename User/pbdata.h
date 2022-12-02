@@ -58,8 +58,9 @@ void delay(u32 nCount);
 void SetSoftTimer(u8 id, u8 ticks);
 u8 GetSoftTimerOut(u8 id);
 void Para_Set_Comp(void);
+void UpError(u8 code);
 
-#define PACKAGE_SIZE  1024
+#define PACKAGE_SIZE  256
 
 #define PASSWORD  "20185260"
 #define UPPASS    "9904"
@@ -349,6 +350,8 @@ typedef struct
 	u8 devnum;
 //从机编号
 	u8 slaveNo;
+//序列号
+	u8 serialnumber[8];
 }SaveData_Typedef;
 extern SaveData_Typedef LoadSave;
 
@@ -386,6 +389,7 @@ typedef struct
 	u8 respage;
 	u8 protectflag;
 	u8 alertdisp;
+	u8 version;
 ////校准测量控制电压低档
 //	u32 VLOW1;
 //	u32 SETVLOW1;

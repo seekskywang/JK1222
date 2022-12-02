@@ -1692,7 +1692,23 @@ void ReadBootMode(void)
 	sendbuff[2] = 0x00;
 	sendbuff[3] = 0x34;
 	sendbuff[4] = 0x00;
-	sendbuff[5] = 0x13;
+	sendbuff[5] = 0x01;
+	sendbuff[6] = Hardware_CRC(sendbuff,6)>>8;
+	sendbuff[7] = Hardware_CRC(sendbuff,6);
+	Uart1SendBuff(sendbuff,8);
+//	Usart1_Send((char *)sendbuff,8);
+}
+
+//读取采集板版本
+void ReadVersoin(void)
+{
+	memset((char *)sendbuff,0,sizeof(sendbuff));
+	sendbuff[0] = 0x01;
+	sendbuff[1] = 0x03;
+	sendbuff[2] = 0x00;
+	sendbuff[3] = 0x35;
+	sendbuff[4] = 0x00;
+	sendbuff[5] = 0x01;
 	sendbuff[6] = Hardware_CRC(sendbuff,6)>>8;
 	sendbuff[7] = Hardware_CRC(sendbuff,6);
 	Uart1SendBuff(sendbuff,8);
@@ -1778,6 +1794,13 @@ void Rec_Handle(void)
 				DispValue.Power = readbuf;
 				
 				readbuf = 0;
+				readbuf += UART_Buffer_Rece[19] << 24;
+				readbuf += UART_Buffer_Rece[20] << 16;
+				readbuf += UART_Buffer_Rece[21] << 8;
+				readbuf += UART_Buffer_Rece[22];	
+				DispValue.version = readbuf;
+				
+				readbuf = 0;
 				readbuf += UART_Buffer_Rece[43] << 24;
 				readbuf += UART_Buffer_Rece[44] << 16;
 				readbuf += UART_Buffer_Rece[45] << 8;
@@ -1850,8 +1873,15 @@ void Rec_Handle(void)
 			}
 		}else if(UART_Buffer_Rece[1] == 0x10){//采集板设置多个寄存器响应
 			setflag = 0;
-		}else if(UART_Buffer_Rece[1] == 0x20){//采集板接收升级包数据成功响应
-			UpPara.sendresflag = 0;
+		}else if(UART_Buffer_Rece[1] == 0x50){//采集板接收升级包数据校验结果响应
+			if(UART_Buffer_Rece[7] == 0x01)
+			{
+				UpPara.sendresflag = 0;
+			}else if(UART_Buffer_Rece[7] == 0xFF){
+				UpError(1);
+			}
+		}else if(UART_Buffer_Rece[1] == 0x51){//采集板升级完成响应
+			WriteString_16(2, 120, "升级成功",  0);
 		}
 	}
 }

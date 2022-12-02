@@ -75,6 +75,7 @@ void UP_FILESIZE(void);
 void CalHandle(u8 step);
 void ReadData(void);
 void ReadBootMode(void);
+void ReadVersoin(void);
 void Rec_Handle(void);
 void Rec3_Handle(void);
 void Set_Dac(u8 step);

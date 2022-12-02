@@ -19,7 +19,9 @@
 #define POWERON_DISP_TIME (100)	//开机显示界面延时20*100mS=2s
 u8 U15_4094,U16_4094;
 
-u8 filedatabuf[256];
+static u8 filesendbuf[PACKAGE_SIZE+2];//升级文件发送分包缓存，256字节+2字节CRC
+static u8 filedatabuf[64*1024];//升级文件数据缓存，最大64K
+static u32 sendcount;//升级文件发送计数
 FRESULT result=FR_NOT_READY;
 FATFS fs;
 FIL file;
@@ -749,6 +751,7 @@ void UpError(u8 code)
 	u8 textbuf[50];
 //	filesendflag=0;
 	UpPara.updatestep=0;
+	UpPara.filesendflag=0;
 //	sendresflag=0;
 	UpPara.package=0;
 	Colour.black=LCD_COLOR_TEST_BACK;
@@ -757,7 +760,7 @@ void UpError(u8 code)
 
 	Colour.Fword=Red;
 	if(code == 1)
-		WriteString_16(2,110,"升级出错,请检查U盘文件并重启仪器",  0);
+		WriteString_16(2,110,"升级出错,请重启仪器",  0);
 	else if(code == 2)
 		WriteString_16(2,110,"读取文件出错,请检查U盘文件并重启仪器",  0);
 	
@@ -765,10 +768,17 @@ void UpError(u8 code)
 
 void Bin_Send(u16 size)
 {
-	result=f_read(&file,filedatabuf,size-2, &readcount);
-	filedatabuf[size-2]=Hardware_CRC(filedatabuf,size-2)>>8;
-	filedatabuf[size-1]=Hardware_CRC(filedatabuf,size-2);
-	Uart1SendBuff(filedatabuf,size);
+//	result=f_read(&file,filedatabuf,size-2, &readcount);
+//	if(result == FR_OK)
+//	{
+		memcpy(filesendbuf,&filedatabuf[sendcount],size-2);
+		filesendbuf[size-2]=Hardware_CRC(filesendbuf,size-2)>>8;
+		filesendbuf[size-1]=Hardware_CRC(filesendbuf,size-2);
+	//	delay_ms(100);
+		Uart1SendBuff(filesendbuf,size);
+//	}else{
+//		UpError(1);
+//	}
 }
 
 
@@ -788,7 +798,8 @@ void UpdateProcess(void)
  USBH_Process(&USB_OTG_Core, &USB_Host);
  	while(GetSystemStatus()==SYS_STATUS_UPDATE)
 	{
-		USBH_Process(&USB_OTG_Core, &USB_Host);
+		if(result != FR_OK)
+			USBH_Process(&USB_OTG_Core, &USB_Host);
 		if(UART_Buffer_Rece_flag==1)
 		{
 			UART_Buffer_Rece_flag=0;
@@ -816,7 +827,7 @@ void UpdateProcess(void)
 			if(UpPara.sendresflag == 0)
 			{
 				Colour.black=LCD_COLOR_TEST_BACK;
-				UpPara.sendprog=(u8)(((float)UpPara.package/(float)(upfilesize/254))*100);
+				UpPara.sendprog=(u8)(((float)UpPara.package/(float)(upfilesize/PACKAGE_SIZE))*100);
 				
 				Hex_Format(UpPara.sendprog,0,3,0);
 				WriteString_16(2,70,DispBuf,  0);
@@ -824,8 +835,10 @@ void UpdateProcess(void)
 				{
 					Bin_Send((upfilesize%PACKAGE_SIZE)+2);
 					UpPara.filesendflag=0;
+					sendcount=0;
 				}else{
 					Bin_Send(PACKAGE_SIZE+2);
+					sendcount+=PACKAGE_SIZE;
 				}
 				UpPara.sendresflag=1;
 				UpPara.package++;
@@ -856,9 +869,15 @@ void UpdateProcess(void)
 						result=f_open(&file, "0:99XXUP103.bin",FA_OPEN_EXISTING | FA_READ);
 						if(result==FR_OK)
 						{
-							upfilesize=file.fsize;
-							UP_FILESIZE();
 							
+							upfilesize=file.fsize;
+							result=f_read(&file,filedatabuf,upfilesize, &readcount);
+							if(result==FR_OK)
+							{
+								UP_FILESIZE();
+							}else{
+								UpError(2);
+							}
 						}else{
 							UpError(2);
 						}
@@ -867,9 +886,9 @@ void UpdateProcess(void)
 				case Key_F3:
 					if(UpPara.updatestep == 3)
 					{
-						Bin_Send(PACKAGE_SIZE+2);
-//						UpPara.filesendflag=1;
-//						UpPara.package=0;
+//						Bin_Send(1024+2);
+						UpPara.filesendflag=1;
+						UpPara.package=0;
 					}
 				break;
 				case Key_F4:
@@ -922,7 +941,7 @@ void UpdateProcess(void)
 				break;
 				case PRESS_SPIN:
 				{
-
+					Uart1SendBuff(filedatabuf,1026);
 				}break;
 				case Key_Ent:
 				{
@@ -2443,7 +2462,7 @@ void Test_Beep(void)
 								if(LoadSave.devmode == 2)
 								{
 									buttonpage1++;
-									if(buttonpage1 > 3)
+									if(buttonpage1 > 2)
 										buttonpage1 = 1;
 //									if(buttonpage1 == 1)
 //									{
@@ -5217,10 +5236,17 @@ void Use_DebugProcess(void)
 				}break;
 				case Key_SET1:
 				{
-					LoadSave.ErrCnt[0] = 0;
+					LoadSave.ErrCnt[0] = 0;//超功率报警计数
 					Store_set_flash();
 					LCD_Clear(LCD_COLOR_TEST_BACK);
 					Disp_UserCheck_Item();
+				}break;
+				case Key_SET2:
+				{
+					Debug_Cood.xpos=70;
+					Debug_Cood.ypos =272-70;
+					Debug_Cood.lenth=120;
+					input_num(&Debug_Cood);
 				}break;
 				case PRESS_SPIN:
 				{
