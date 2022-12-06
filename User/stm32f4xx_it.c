@@ -416,11 +416,20 @@ void  BASIC_TIM_IRQHandler (void)
 				|| SystemStatus==SYS_STATUS_LED)
         {
             num++;
-            if(num>9)//10mS??
-            {
-                num=0;
-                F_100ms=TRUE;//100ms????
-            }
+						if(SystemStatus==SYS_STATUS_LIST)
+						{
+							if(num>24)//10mS??
+							{
+									num=0;
+									F_100ms=TRUE;//200ms????
+							}
+						}else{
+							if(num>9)//10mS??
+							{
+									num=0;
+									F_100ms=TRUE;//100ms????
+							}
+						}
 
         }
         else
@@ -473,7 +482,7 @@ void  BASIC_TIM_IRQHandler (void)
 							listtime = 0;
 							DispValue.listrunstep ++;
 							DispValue.listdelay = LoadSave.delay[DispValue.listrunstep];
-							Set_Para();	
+							setflag=1;//Set_Para();	
 						}else{
 							if(LoadSave.LoopTest == 0)//循环测试关
 							{
@@ -481,7 +490,8 @@ void  BASIC_TIM_IRQHandler (void)
 								listtime = 0;
 								DispValue.listrunstep = 0;
 								mainswitch = 0;
-								OnOff_SW(mainswitch);
+								setflag=2;//Set_Para();
+//								OnOff_SW(mainswitch);
 								SwitchLedOff();
 								resflag = 1;
 								listbeep = ListBeep();
@@ -489,7 +499,7 @@ void  BASIC_TIM_IRQHandler (void)
 								listtime = 0;
 								DispValue.listrunstep = 0;
 								DispValue.listdelay = LoadSave.delay[DispValue.listrunstep];
-								Set_Para();
+								setflag=1;//Set_Para();
 							}
 						}
 					}else if(LoadSave.StepMode == 1){
@@ -498,16 +508,17 @@ void  BASIC_TIM_IRQHandler (void)
 							listtime = 0;
 							DispValue.listrunstep ++;
 							mainswitch = 0;
+							setflag=2;//Set_Para();	
 							SwitchLedOff();
 							DispValue.listdelay = LoadSave.delay[DispValue.listrunstep];
-							Set_Para();	
+							
 						}else{
 							if(LoadSave.LoopTest == 0)//循环测试关
 							{
 								listtime = 0;
 								DispValue.listrunstep = 0;
 								mainswitch = 0;
-								OnOff_SW(mainswitch);
+								setflag=2;//Set_Para();	
 								SwitchLedOff();
 								resflag = 1;
 								listbeep = ListBeep();
@@ -515,7 +526,7 @@ void  BASIC_TIM_IRQHandler (void)
 								listtime = 0;
 								DispValue.listrunstep = 0;
 								DispValue.listdelay = LoadSave.delay[DispValue.listrunstep];
-								Set_Para();
+								setflag=1;//Set_Para();
 							}
 						}
 					}

@@ -478,6 +478,7 @@ extern u16 spintest,spinnum;
 extern u8 spinflag;
 extern u32 dacvalue[17];
 extern u8 setflag;
+extern u8 readflag;
 extern u8 setslaveflag;
 extern u8 slaveonoffflag;
 extern u8 mainswitch;

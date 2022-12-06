@@ -21,6 +21,7 @@
 u8 sendbuff[BUFFSIZEMAX];
 u8 u3sendbuff[BUFFSIZEMAX];
 u8 setflag;
+u8 readflag;
 u8 setslaveflag;
 u8 slaveonoffflag;
 vu16 Hardware_CRC(vu8 *p_buffer,vu8 count);
@@ -639,7 +640,7 @@ void OnOff_SW(u8 value)
 	sendbuff[9] = Hardware_CRC(sendbuff,8);
 	Uart1SendBuff(sendbuff,10);
 //	Usart1_Send((char *)sendbuff,10);
-	setflag = 1;
+	setflag = value+2;
 }
 
 //模式设置
@@ -1435,7 +1436,7 @@ void Set_Para(void)
 	sendbuff[132+28] = Hardware_CRC(sendbuff,131+28);
 	Uart1SendBuff(sendbuff,133+28);
 //	Usart1_Send((char *)sendbuff,133+28);
-//	setflag = 1;
+	setflag = 1;
 }
 
 ////设置参数
@@ -1859,6 +1860,7 @@ void Rec_Handle(void)
 					sumcount = 0;
 				}
 			}  
+			readflag=0;
 		}else if(UART_Buffer_Rece[1] == 0x06){//采集板设置单个寄存器响应
 			setflag = 0;
 			if(sendbuff[3] == 0x32)

@@ -3066,7 +3066,7 @@ void Disp_List_value(u8 num)
 		}
 		LCD_DrawFullRect(100,26+5*22-2,92,20);
 		Colour.Fword=White;
-		Hex_Format(LoadSave.delay[DispValue.liststep],1,4,0);
+		Hex_Format(LoadSave.delay[DispValue.liststep],1,5,0);
 		WriteString_16(100,26+5*22,DispBuf,0);
 		
 		Black_Select=(num==10)?1:0;
@@ -3182,7 +3182,7 @@ void Disp_List_value(u8 num)
 		}
 		LCD_DrawFullRect(100,26+5*22-2,92,20);
 		Colour.Fword=White;
-		Hex_Format(LoadSave.delay[DispValue.liststep],1,4,0);
+		Hex_Format(LoadSave.delay[DispValue.liststep],1,5,0);
 		WriteString_16(100,26+5*22,DispBuf,0);
 		
 		Black_Select=(num==10)?1:0;
@@ -6435,6 +6435,8 @@ void Disp_UserCheck_Item(void)
 		WriteString_16(360, 4,"2400W" ,  0);
 	}else if(LoadSave.Version == 5){
 		WriteString_16(360, 4,"3200W" ,  0);
+	}else if(LoadSave.Version == 6){
+		WriteString_16(360, 4," 500V" ,  0);
 	}
 //	for(i=0;i<(sizeof(User_Check_main)/(sizeof(User_Check_main[0])));i++)
 //	{

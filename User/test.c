@@ -46,6 +46,7 @@ u8 startdelay;
 u8 bmpname[30];
 u8 slaveID=1;
 u32 upfilesize;
+u16 resendcount;
 //const u8 RANGE_UNIT[11]=
 //{
 //	4,
@@ -136,7 +137,7 @@ void Para_Set_Comp(void)
 	{
 		LoadSave.COMM=0;
 	}
-	if(LoadSave.Version > 5)
+	if(LoadSave.Version > 6)
 	{
 		LoadSave.Version=0;
 	}
@@ -153,6 +154,8 @@ void Para_Set_Comp(void)
 		powermax = 24000000;
 	}else if(LoadSave.Version == 5){
 		powermax = 32000000;
+	}else if(LoadSave.Version == 5){
+		powermax = 2000000;
 	}
 	if(LoadSave.sence > 1)
 	{
@@ -216,6 +219,15 @@ void Para_Set_Comp(void)
 		{
 			LoadSave.ledvo = 1500000;
 		}
+	}else if(LoadSave.Version == 6){
+		if(LoadSave.voltage > 5000000)
+		{
+			LoadSave.voltage = 5000000;
+		}
+		if(LoadSave.ledvo > 5000000)
+		{
+			LoadSave.ledvo = 5000000;
+		}
 	}else{
 		if(LoadSave.voltage > MAX_SET_VOLT)
 		{
@@ -271,6 +283,11 @@ void Para_Set_Comp(void)
 		if(LoadSave.maxv > 1500000)
 		{
 			LoadSave.maxv = 1500000;
+		}
+	}else if(LoadSave.Version == 6){
+		if(LoadSave.maxv > 5000000)
+		{
+			LoadSave.maxv = 5000000;
 		}
 	}else{
 		if(LoadSave.maxv > MAX_SET_VOLT)
@@ -473,6 +490,27 @@ void Para_Set_Comp(void)
 		{
 			LoadSave.coffvr = 1500000;
 		}
+	}else if(LoadSave.Version == 6){
+		if(LoadSave.coffv1 > 5000000)
+		{
+			LoadSave.coffv1 = 5000000;
+		}
+		if(LoadSave.coffv2 > 5000000)
+		{
+			LoadSave.coffv2 = 5000000;
+		}
+		if(LoadSave.coffv3 > 5000000)
+		{
+			LoadSave.coffv3 = 5000000;
+		}
+		if(LoadSave.loadr > MAX_SET_RES)
+		{
+			LoadSave.loadr = MAX_SET_RES;
+		}
+		if(LoadSave.coffvr > 5000000)
+		{
+			LoadSave.coffvr = 5000000;
+		}
 	}else{
 		if(LoadSave.coffv1 > MAX_SET_VOLT)
 		{
@@ -656,6 +694,19 @@ void Para_Set_Comp(void)
 				{
 					LoadSave.listlow[i] = 1500000;
 				}
+			}else if(LoadSave.Version == 6){
+				if(LoadSave.listvalue[i] > 5000000)
+				{
+					LoadSave.listvalue[i] = 5000000;
+				}
+				if(LoadSave.listhigh[i] > 5000000)
+				{
+					LoadSave.listhigh[i] = 5000000;
+				}
+				if(LoadSave.listlow[i] > 5000000)
+				{
+					LoadSave.listlow[i] = 5000000;
+				}
 			}else{
 				if(LoadSave.listvalue[i] > MAX_SET_VOLT)
 				{
@@ -721,6 +772,16 @@ void Para_Set_Comp(void)
 				LoadSave.listonvol = 0;
 			}
 			if(LoadSave.gatev > 1500000)
+			{
+				LoadSave.gatev = 0;
+			}
+		}else if(LoadSave.Version == 6)
+		{
+			if(LoadSave.listonvol > 5000000)
+			{
+				LoadSave.listonvol = 0;
+			}
+			if(LoadSave.gatev > 5000000)
 			{
 				LoadSave.gatev = 0;
 			}
@@ -4046,7 +4107,19 @@ void listreset(void)
 	}
 	resdisp = 0;
 }
-
+void ReSend(u8 cmd)
+{
+	if(cmd == 1)
+	{
+		Set_Para();
+	}else if(cmd == 2){
+		mainswitch = 0;
+		OnOff_SW(mainswitch);
+	}else if(cmd == 3){
+		mainswitch = 1;
+		OnOff_SW(mainswitch);
+	}
+}
 void List_Process(void)
 {
 	static u8 skipkey;
@@ -4097,11 +4170,7 @@ void List_Process(void)
             Int_Pe3flag=0;
             
         }
-		if(UART_Buffer_Rece_flag==1)
-		{
-			UART_Buffer_Rece_flag=0;
-			Rec_Handle();
-		}
+		
     if(Disp_Flag==1 )//显示设置的值
 		{
 			Disp_List_value(keynum);
@@ -4119,20 +4188,30 @@ void List_Process(void)
 				listbeep = 0;
 			}
 		}
-		if(F_100ms == TRUE/* && resdisp == 0*//* && setflag == 0*/)
+		
+		if(setflag != 0/* && readflag == 0*/)
 		{
-			ReadData();
-			F_100ms=FALSE;
-		}
-		if(setflag != 0)
-		{
+			
 			if(setcount == 5)
 			{
-				Set_Para();
+				resendcount++;
+				ReSend(setflag);
+//				setflag=0;
 				setcount = 0;
 			}else{
 				setcount++;
 			}
+		}
+		if(F_100ms == TRUE && setflag == 0/* && resdisp == 0 && setflag == 0*/)
+		{
+			ReadData();
+			readflag=1;
+			F_100ms=FALSE;
+		}
+		if(UART_Buffer_Rece_flag==1)
+		{
+			UART_Buffer_Rece_flag=0;
+			Rec_Handle();
 		}
 		
 //		if(mainswitch == 1)
@@ -4650,9 +4729,11 @@ void List_Process(void)
 										{
 											switchdelay = SWITCH_DELAY;
 											mainswitch = 1;
+											setflag=1;
+//											Set_Para();
 											listreset();
 											SwitchLedOn();
-											Set_Para();
+											
 			//								OnOff_SW(mainswitch);
 											DispValue.listdelay = LoadSave.delay[0];
 											keynum=0;
@@ -4661,13 +4742,15 @@ void List_Process(void)
 											{
 												mainswitch = 1;
 												SwitchLedOn();
-												Set_Para();
+												setflag=1;
+//												Set_Para();
 											}else{
 												switchdelay = SWITCH_DELAY;
 												mainswitch = 1;
+												setflag=1;
 												listreset();
 												SwitchLedOn();
-												Set_Para();
+//												Set_Para();
 				//								OnOff_SW(mainswitch);
 												DispValue.listdelay = LoadSave.delay[0];
 											}
@@ -4677,8 +4760,9 @@ void List_Process(void)
 										DispValue.listrunstep = 0;
 										listtime=0;
 										mainswitch = 0;
+										setflag=1;
 										SwitchLedOff();
-										Set_Para();
+//										Set_Para();
 		//								OnOff_SW(mainswitch);
 									}
 								break;
@@ -5259,7 +5343,7 @@ void Use_DebugProcess(void)
 				}break;
 				case Key_SHIFT:
 				{
-					if(LoadSave.Version < 5)//0-1200;1-800;2-600;3-400;4-2400;5-3500
+					if(LoadSave.Version < 6)//0-1200;1-800;2-600;3-400;4-2400;5-3500;6-500V
 					{
 						LoadSave.Version++;
 					}else{
