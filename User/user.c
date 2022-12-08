@@ -2846,7 +2846,7 @@ void Disp_List_Process(void)
 	WriteString_16(360,26+6*22,DispBuf,0);
 	WriteString_16(360+80,26+6*22,"W",0); 
 	
-	Hex_Format(DispValue.listdelay,1,4,0);  
+	Hex_Format(DispValue.listdelay,1,5,0);  
 	WriteString_16(360,26+7*22,DispBuf,0);
 	WriteString_16(360+80,26+7*22,"s",0);
 }

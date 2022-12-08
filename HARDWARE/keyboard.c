@@ -889,32 +889,32 @@ void Key_Scan(void)
 			if (LastKeyTicks<LONGKEYCOUNT+1)//长按键节拍数100x10mS
 				LastKeyTicks++;
 			
-			if (LastKeyTicks==LONGKEYCOUNT)//等于长按键节拍数
-			{
-				ContinueKeyTicks=0;//持续按键节拍
-				//keyval|=LONG_PRESS;	//长按键
-				Keyboard.value=keyval;	//键值
-				Keyboard.state=TRUE;	//有按键
-//				Keyboard.continuance=FALSE; //持续按键
-				Keyboard.continuance=TRUE; //持续按键
-			}
-			else if (LastKeyTicks>LONGKEYCOUNT)//大于长按键节拍数
-			{
-				if(HW_KEYBOARD_CONTINUE_SUPPORT)//持续按键有效判别
-				{
-					//keyval|=LONG_PRESS;	//长按键
-					Keyboard.value=keyval;//键值
-//					Keyboard.state=TRUE;//有按键
-					Keyboard.continuance=TRUE; //持续按键
-					ContinueKeyTicks++;
-					if(ContinueKeyTicks>CONTINUEKEYCOUNT)//持续按键节拍数
-					{
-						ContinueKeyTicks=0;//持续按键节拍
-						if(Keyboard.state==FALSE)//按键已读取
-							Keyboard.state=TRUE;//有按键
-					}
-				}
-			}					
+//			if (LastKeyTicks==LONGKEYCOUNT)//等于长按键节拍数
+//			{
+//				ContinueKeyTicks=0;//持续按键节拍
+//				//keyval|=LONG_PRESS;	//长按键
+//				Keyboard.value=keyval;	//键值
+//				Keyboard.state=TRUE;	//有按键
+////				Keyboard.continuance=FALSE; //持续按键
+//				Keyboard.continuance=TRUE; //持续按键
+//			}
+//			else if (LastKeyTicks>LONGKEYCOUNT)//大于长按键节拍数
+//			{
+//				if(HW_KEYBOARD_CONTINUE_SUPPORT)//持续按键有效判别
+//				{
+//					//keyval|=LONG_PRESS;	//长按键
+//					Keyboard.value=keyval;//键值
+////					Keyboard.state=TRUE;//有按键
+//					Keyboard.continuance=TRUE; //持续按键
+//					ContinueKeyTicks++;
+//					if(ContinueKeyTicks>CONTINUEKEYCOUNT)//持续按键节拍数
+//					{
+//						ContinueKeyTicks=0;//持续按键节拍
+//						if(Keyboard.state==FALSE)//按键已读取
+//							Keyboard.state=TRUE;//有按键
+//					}
+//				}
+//			}					
 		}
 		else//上次按键和本次按键不同
 		{

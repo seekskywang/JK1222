@@ -47,6 +47,7 @@ u8 bmpname[30];
 u8 slaveID=1;
 u32 upfilesize;
 u16 resendcount;
+u16 listonoffdelay;
 //const u8 RANGE_UNIT[11]=
 //{
 //	4,
@@ -3693,7 +3694,7 @@ void Dynamic_Process(void)
 
     i=0;
 	
-	Set_Para();
+//	Set_Para();
 
 	while(GetSystemStatus()==SYS_STATUS_DYNAMIC)
 	{
@@ -4722,48 +4723,52 @@ void List_Process(void)
 
 								case Key_REST:
 								break;
-								case Key_ONOFF:							
-									if(mainswitch == 0)
+								case Key_ONOFF:	
+									if(listonoffdelay == 0)
 									{
-										if(LoadSave.StepMode == 0)
+										listonoffdelay=50;
+										if(mainswitch == 0)
 										{
-											switchdelay = SWITCH_DELAY;
-											mainswitch = 1;
-											setflag=1;
-//											Set_Para();
-											listreset();
-											SwitchLedOn();
-											
-			//								OnOff_SW(mainswitch);
-											DispValue.listdelay = LoadSave.delay[0];
-											keynum=0;
-										}else{
-											if(DispValue.listrunstep != 0)
+											if(LoadSave.StepMode == 0)
 											{
-												mainswitch = 1;
-												SwitchLedOn();
-												setflag=1;
-//												Set_Para();
-											}else{
 												switchdelay = SWITCH_DELAY;
 												mainswitch = 1;
 												setflag=1;
+	//											Set_Para();
 												listreset();
 												SwitchLedOn();
-//												Set_Para();
+												
 				//								OnOff_SW(mainswitch);
 												DispValue.listdelay = LoadSave.delay[0];
+												keynum=0;
+											}else{
+												if(DispValue.listrunstep != 0)
+												{
+													mainswitch = 1;
+													SwitchLedOn();
+													setflag=1;
+	//												Set_Para();
+												}else{
+													switchdelay = SWITCH_DELAY;
+													mainswitch = 1;
+													setflag=1;
+													listreset();
+													SwitchLedOn();
+	//												Set_Para();
+					//								OnOff_SW(mainswitch);
+													DispValue.listdelay = LoadSave.delay[0];
+												}
 											}
+										}else{
+											startdelay=STARTDELAY;
+											DispValue.listrunstep = 0;
+											listtime=0;
+											mainswitch = 0;
+											setflag=1;
+											SwitchLedOff();
+	//										Set_Para();
+			//								OnOff_SW(mainswitch);
 										}
-									}else{
-										startdelay=STARTDELAY;
-										DispValue.listrunstep = 0;
-										listtime=0;
-										mainswitch = 0;
-										setflag=1;
-										SwitchLedOff();
-//										Set_Para();
-		//								OnOff_SW(mainswitch);
 									}
 								break;
 								case Key_TRIG:
@@ -4957,15 +4962,19 @@ void List_Process(void)
 								}break;
 								case Key_ONOFF:
 								{
-									resdisp = 0;
-									
-									switchdelay = SWITCH_DELAY;
-									mainswitch = 1;
-									listreset();
-									SwitchLedOn();
-									Set_Para();
-									DispValue.listdelay = LoadSave.delay[0];
-									List_Process();
+									if(listonoffdelay == 0)
+									{
+										listonoffdelay=50;
+										resdisp = 0;
+										
+										switchdelay = SWITCH_DELAY;
+										mainswitch = 1;
+										listreset();
+										SwitchLedOn();
+										Set_Para();
+										DispValue.listdelay = LoadSave.delay[0];
+										List_Process();
+									}
 								}break;
 								case Key_SAVE:
 								{

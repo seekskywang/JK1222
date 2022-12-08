@@ -274,6 +274,11 @@
           <WinNumber>1</WinNumber>
           <ItemText>UART_Buffer_Rece</ItemText>
         </Ww>
+        <Ww>
+          <count>24</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>Keyboard.state</ItemText>
+        </Ww>
       </WatchWindow1>
       <WatchWindow2>
         <Ww>

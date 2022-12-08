@@ -42,6 +42,7 @@ extern USB_OTG_CORE_HANDLE          USB_OTG_Core;
 extern USBH_HOST                    USB_Host;
 extern u8 startdelay;
 struct MODS_T g_tModS;
+extern u16 listonoffdelay;
 u8 g_mods_timeout = 0;
 u32 Tick_10ms=0;
 char scpinum[20],scpinum1[20];
@@ -453,6 +454,10 @@ void  BASIC_TIM_IRQHandler (void)
 		
 		if(SystemStatus==SYS_STATUS_LIST)
 		{
+			if(listonoffdelay > 0)
+			{
+				listonoffdelay--;
+			}
 			if(mainswitch == 1 && resdisp==0)
 			{
 				if(DispValue.listdelay == 1)//列表分选和结果
