@@ -155,7 +155,7 @@ void Para_Set_Comp(void)
 		powermax = 24000000;
 	}else if(LoadSave.Version == 5){
 		powermax = 32000000;
-	}else if(LoadSave.Version == 5){
+	}else if(LoadSave.Version == 6){
 		powermax = 2000000;
 	}
 	if(LoadSave.sence > 1)
@@ -2524,7 +2524,7 @@ void Test_Beep(void)
 								if(LoadSave.devmode == 2)
 								{
 									buttonpage1++;
-									if(buttonpage1 > 2)
+									if(buttonpage1 > 3)
 										buttonpage1 = 1;
 //									if(buttonpage1 == 1)
 //									{
