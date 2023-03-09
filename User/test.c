@@ -637,7 +637,7 @@ void Para_Set_Comp(void)
 		{
 			LoadSave.listmode[i] = 4;
 		}
-		if(LoadSave.listmode[i] == 0)
+		if(LoadSave.listcomp[i] == 1)
 		{
 			if(LoadSave.Version == 3)
 			{
@@ -681,7 +681,7 @@ void Para_Set_Comp(void)
 				}
 			}
 			
-		}else if(LoadSave.listmode[i] == 1){
+		}else if(LoadSave.listcomp[i] == 2){
 			if(LoadSave.Version == 5){
 				if(LoadSave.listvalue[i] > 1500000)
 				{
@@ -723,20 +723,7 @@ void Para_Set_Comp(void)
 				}
 			}
 			
-		}else if(LoadSave.listmode[i] == 2){
-			if(LoadSave.listvalue[i] > MAX_SET_RES)
-			{
-				LoadSave.listvalue[i] = MAX_SET_RES;
-			}
-			if(LoadSave.listhigh[i] > MAX_SET_RES)
-			{
-				LoadSave.listhigh[i] = MAX_SET_RES;
-			}
-			if(LoadSave.listlow[i] > MAX_SET_RES)
-			{
-				LoadSave.listlow[i] = MAX_SET_RES;
-			}
-		}else if(LoadSave.listmode[i] == 3){
+		}else if(LoadSave.listcomp[i] == 3){
 			if(LoadSave.listvalue[i] > powermax)
 			{
 				LoadSave.listvalue[i] = powermax;

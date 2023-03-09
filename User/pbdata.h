@@ -147,7 +147,7 @@ void UpError(u8 code);
 //#define		powermax           8000000    //800.0000W  最大功率
 //#elif define LOADVER600
 //#define		powermax           6000000    //600.0000W  最大功率
-//#endif
+//#endif.
 #define		MAX_SET_RES           2000000   //200000.0R  最大电阻
 
 
