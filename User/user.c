@@ -1950,7 +1950,8 @@ void Disp_Test_value(u8 num)
 	}else if(LoadSave.mode == 2){//CR
 		Hex_Format(LoadSave.risistence,1,7,0);
 	}else if(LoadSave.mode == 3){//CP
-		if(LoadSave.Version == 0 || LoadSave.Version == 4 || LoadSave.Version == 5)
+		if(LoadSave.Version == 0 || LoadSave.Version == 4 || LoadSave.Version == 5
+			|| LoadSave.Version == 7 || LoadSave.Version == 8)
 		{
 			Hex_Format(LoadSave.power,4,8,0);
 		}else{
@@ -1958,7 +1959,8 @@ void Disp_Test_value(u8 num)
 		}
 	}
 	if(LoadSave.mode == 3){//CP
-		if(LoadSave.Version == 0 || LoadSave.Version == 4 || LoadSave.Version == 5)
+		if(LoadSave.Version == 0 || LoadSave.Version == 4 || LoadSave.Version == 5
+			|| LoadSave.Version == 7 || LoadSave.Version == 8)
 		{
 			WriteString_16(LIST2+88-10, FIRSTLINE, DispBuf,  0);//增加算法  把顺序改过来
 		}else{
@@ -6424,19 +6426,23 @@ void Disp_UserCheck_Item(void)
 	WriteString_16(200, 4,DispBuf ,  0);
 	if(LoadSave.Version == 0)
 	{
-		WriteString_16(360, 4,"1200W" ,  0);
+		WriteString_16(360, 4,"  1200W" ,  0);
 	}else if(LoadSave.Version == 1){
-		WriteString_16(360, 4," 800W" ,  0);
+		WriteString_16(360, 4,"   800W" ,  0);
 	}else if(LoadSave.Version == 2){
-		WriteString_16(360, 4," 600W" ,  0);
+		WriteString_16(360, 4,"   600W" ,  0);
 	}else if(LoadSave.Version == 3){
-		WriteString_16(360, 4," 400W" ,  0);
+		WriteString_16(360, 4,"   400W" ,  0);
 	}else if(LoadSave.Version == 4){
-		WriteString_16(360, 4,"2400W" ,  0);
+		WriteString_16(360, 4,"  2400W" ,  0);
 	}else if(LoadSave.Version == 5){
-		WriteString_16(360, 4,"3200W" ,  0);
+		WriteString_16(360, 4,"  3200W" ,  0);
 	}else if(LoadSave.Version == 6){
-		WriteString_16(360, 4," 500V" ,  0);
+		WriteString_16(360, 4,"   500V" ,  0);
+	}else if(LoadSave.Version == 7){
+		WriteString_16(360, 4,"250V120A" ,  0);
+	}else if(LoadSave.Version == 8){
+		WriteString_16(360, 4," 250V60A" ,  0);
 	}
 //	for(i=0;i<(sizeof(User_Check_main)/(sizeof(User_Check_main[0])));i++)
 //	{
