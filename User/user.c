@@ -5043,9 +5043,9 @@ void Use_SysSetProcess(void)
 						}break;
 						case 2:
 						{
-							LoadSave.Baudrate = 2;
-							Set_Baudrate();
-							Store_set_flash();
+//							LoadSave.Baudrate = 2;
+//							Set_Baudrate();
+//							Store_set_flash();
 						}break;
 						case 3:
 						{
@@ -5087,9 +5087,9 @@ void Use_SysSetProcess(void)
 							break;
 						case 2:
 						{
-							LoadSave.Baudrate = 3;
-							Set_Baudrate();
-							Store_set_flash();
+//							LoadSave.Baudrate = 3;
+//							Set_Baudrate();
+//							Store_set_flash();
 						}break;
 						case 3:
 							break;
@@ -5125,9 +5125,9 @@ void Use_SysSetProcess(void)
 						break;
 						case 2:
 						{
-							LoadSave.Baudrate = 4;
-							Set_Baudrate();
-							Store_set_flash();
+//							LoadSave.Baudrate = 4;
+//							Set_Baudrate();
+//							Store_set_flash();
 						}break;
 						case 4:
 						case 9:

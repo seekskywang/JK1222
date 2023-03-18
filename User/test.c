@@ -48,6 +48,7 @@ u8 slaveID=1;
 u32 upfilesize;
 u16 resendcount;
 u16 listonoffdelay;
+u32 initdelay;
 u32 verpowmax[10] = {
 12000000,8000000,6000000,4000000,24000000,
 32000000,2000000,12000000,12000000,12000000};
@@ -939,7 +940,7 @@ void Para_Set_Comp(void)
 		{
 			LoadSave.delay[i] = 36000;
 		}
-		if(LoadSave.Baudrate > 4)
+		if(LoadSave.Baudrate > 4 || LoadSave.Baudrate < 1)
 		{
 			LoadSave.Baudrate = 1;
 		}
@@ -2436,7 +2437,15 @@ void Test_Beep(void)
 //	DispValue.alertdisp=1;
 	while(GetSystemStatus()==SYS_STATUS_TEST)
 	{
-        USB_Count++;
+//		if(initdelay > 0)
+//		{
+//			initdelay --;
+//		}
+//		if(initdelay == 100)
+//		{
+//			Set_Para();
+//		}
+    USB_Count++;
 		keytrans=Encoder_Process(keynum);
 //		USBH_Process(&USB_OTG_Core, &USB_Host);
 //							USB_Count=0;
@@ -2453,13 +2462,13 @@ void Test_Beep(void)
 		}
         Colour.Fword=White;
 //		Set_Addr();
-        if(Disp_RTCflag)
-        {
-            Disp_RTCflag=0;
-            Disp_dateandtime();//1秒更新一次
-            Int_Pe3flag=0;
-            
-        }
+		if(Disp_RTCflag)
+		{
+				Disp_RTCflag=0;
+				Disp_dateandtime();//1秒更新一次
+				Int_Pe3flag=0;
+				
+		}
 		if(UART_Buffer_Rece_flag==1)
 		{
 			UART_Buffer_Rece_flag=0;

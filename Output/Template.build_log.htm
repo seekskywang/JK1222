@@ -27,45 +27,59 @@ Project File Date:  12/06/2022
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'E:\Keil_v5\ARM\ARMCC\Bin'
 Build target '¹¤³ÌÄ£°å'
-compiling user.c...
-..\..\User\user.c(1767): warning:  #177-D: variable "pt"  was declared but never referenced
-      const u8 (*pt)[sizeof(Bat_Setitem[0])];
-..\..\User\user.c(1814): warning:  #177-D: variable "pt"  was declared but never referenced
-        const u8 (*pt)[sizeof(List_Setitem[0])];
-..\..\User\user.c(1897): warning:  #177-D: variable "ppt"  was declared but never referenced
-      const u8 (*ppt)[11];
-..\..\User\user.c(2125): warning:  #177-D: variable "ppt"  was declared but never referenced
-      const u8 (*ppt)[11];
-..\..\User\user.c(2126): warning:  #177-D: variable "pt"  was declared but never referenced
-      const u8 (*pt)[7];
-..\..\User\user.c(2198): warning:  #177-D: variable "ppt"  was declared but never referenced
-      const u8 (*ppt)[11];
-..\..\User\user.c(2487): warning:  #177-D: variable "ppt"  was declared but never referenced
-      const u8 (*ppt)[11];
-..\..\User\user.c(2688): warning:  #177-D: variable "ppt"  was declared but never referenced
-        const u8 (*ppt)[11];
-..\..\User\user.c(2891): warning:  #177-D: variable "ppt"  was declared but never referenced
-        const u8 (*ppt)[11];
-..\..\User\user.c(3579): warning:  #177-D: variable "pt1"  was declared but never referenced
-        const u8 (*pt1)[8];
-..\..\User\user.c(3580): warning:  #177-D: variable "ppt"  was declared but never referenced
-      const u8 (*ppt)[11];
-..\..\User\user.c(3963): warning:  #177-D: variable "pt1"  was declared but never referenced
-        const u8 (*pt1)[8];
-..\..\User\user.c(3964): warning:  #177-D: variable "ppt"  was declared but never referenced
-      const u8 (*ppt)[11];
-..\..\User\user.c(4376): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "const uint8_t *"
-        WriteString_16(LIST2+90+40, FIRSTLINE+SPACE1*8, snbuf,  0);
-..\..\User\user.c(4815): warning:  #177-D: variable "key_count"  was declared but never referenced
-      char key_count=0;
-..\..\User\user.c(6343): warning:  #167-D: argument of type "u8 *" is incompatible with parameter of type "char *restrict"
-                sprintf(bmpname,"0:20%0.2d%0.2d%0.2d%0.2d%0.2d%0.2d.bmp", 
-..\..\User\user.c: 16 warnings, 0 errors
+compiling test.c...
+..\..\User\test.c(1013): warning:  #177-D: variable "textbuf"  was declared but never referenced
+        u8 textbuf[50];
+..\..\User\test.c(2404): warning:  #177-D: variable "oldskip"  was declared but never referenced
+        static u32 oldskip;
+..\..\User\test.c(2405): warning:  #177-D: variable "sendbuf"  was declared but never referenced
+        char sendbuf[24];
+..\..\User\test.c(2408): warning:  #177-D: variable "fnum"  was declared but never referenced
+      UINT fnum;
+..\..\User\test.c(2410): warning:  #177-D: variable "color"  was declared but never referenced
+      u32 color;
+..\..\User\test.c(3009): warning:  #177-D: variable "oldskip"  was declared but never referenced
+        static u32 oldskip;
+..\..\User\test.c(3010): warning:  #177-D: variable "sendbuf"  was declared but never referenced
+        char sendbuf[24];
+..\..\User\test.c(3014): warning:  #177-D: variable "fnum"  was declared but never referenced
+      UINT fnum;
+..\..\User\test.c(3015): warning:  #177-D: variable "color"  was declared but never referenced
+      u32 color;
+..\..\User\test.c(3293): warning:  #177-D: variable "oldskip"  was declared but never referenced
+        static u32 oldskip;
+..\..\User\test.c(3294): warning:  #177-D: variable "sendbuf"  was declared but never referenced
+        char sendbuf[24];
+..\..\User\test.c(3297): warning:  #177-D: variable "fnum"  was declared but never referenced
+      UINT fnum;
+..\..\User\test.c(3299): warning:  #177-D: variable "color"  was declared but never referenced
+      u32 color;
+..\..\User\test.c(3885): warning:  #177-D: variable "oldskip"  was declared but never referenced
+        static u32 oldskip;
+..\..\User\test.c(3886): warning:  #177-D: variable "sendbuf"  was declared but never referenced
+        char sendbuf[24];
+..\..\User\test.c(3889): warning:  #177-D: variable "fnum"  was declared but never referenced
+      UINT fnum;
+..\..\User\test.c(3891): warning:  #177-D: variable "color"  was declared but never referenced
+      u32 color;
+..\..\User\test.c(4335): warning:  #177-D: variable "oldskip"  was declared but never referenced
+        static u32 oldskip;
+..\..\User\test.c(4336): warning:  #177-D: variable "sendbuf"  was declared but never referenced
+        char sendbuf[24];
+..\..\User\test.c(4339): warning:  #177-D: variable "fnum"  was declared but never referenced
+        UINT fnum;
+..\..\User\test.c(4341): warning:  #177-D: variable "color"  was declared but never referenced
+        u32 color;
+..\..\User\test.c(5355): warning:  #177-D: variable "a"  was declared but never referenced
+      float a,b;
+..\..\User\test.c(5355): warning:  #177-D: variable "b"  was declared but never referenced
+      float a,b;
+..\..\User\test.c: 23 warnings, 0 errors
 linking...
-Program Size: Code=104332 RO-data=629948 RW-data=672 ZI-data=97504  
+Program Size: Code=104208 RO-data=629944 RW-data=676 ZI-data=97500  
 FromELF: creating hex file...
 After Build - User command #1: E:\Keil_v5\ARM\ARMCC\bin\fromelf.exe --bin -o ..\..\Output\update.bin ..\..\Output\Template.axf
-"..\..\Output\Template.axf" - 0 Error(s), 16 Warning(s).
+"..\..\Output\Template.axf" - 0 Error(s), 23 Warning(s).
 
 <h2>Software Packages used:</h2>
 

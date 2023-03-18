@@ -2,6 +2,7 @@
 #include "bsp_exti.h"
 #include "tm1650.h"
 
+extern u32 initdelay;
 int main(void)
 {  	
 //	SetSystemStatus(SYS_STATUS_POWER);//开机上电状态
@@ -16,7 +17,7 @@ int main(void)
     SetSystemStatus(SYS_STATUS_POWER);
     GPIO_Configuration();//端口初始化
 	TIM6_Configuration();//定时器6定时10ms
-
+	initdelay = INITDELAY;
 //	Beep_Off();
 	while(1)
 	{

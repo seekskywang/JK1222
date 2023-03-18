@@ -59,6 +59,7 @@ void SetSoftTimer(u8 id, u8 ticks);
 u8 GetSoftTimerOut(u8 id);
 void Para_Set_Comp(void);
 void UpError(u8 code);
+#define INITDELAY  256
 
 #define PACKAGE_SIZE  256
 
