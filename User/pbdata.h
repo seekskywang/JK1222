@@ -379,7 +379,7 @@ typedef struct
 	u32 listdelay;
 	u8 listcompres[15];
 	u32 listv[15];
-	u32 listc[15];
+	u32 listc[15]; 
 	u32 listp[15];
 	u8 listvrange[15];
 	u8 listcrange[15];

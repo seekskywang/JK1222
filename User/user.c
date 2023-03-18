@@ -35,6 +35,7 @@ u8 DispBuf[DISP_MAX_LEN];//显示缓冲区定义
 extern char scpinum[20],scpinum1[20];
 extern u8 scpidot,scpiunit,scpidot1,scpiunit1;
 extern u8 scpnum,scpnum1;
+extern u32 powermax;
 typedef struct{
 	u32 Voltage;
 	u32 Current;
@@ -385,7 +386,7 @@ const uint8_t List_Setitem[][14+1]=
 {
 	{"列表步数  :"},
 	{"步进模式  :"},
-	{"门槛电压  :"},
+	{"自动启动  :"},
 	{"列表讯响  :"},
 	{"启动电压  :"},
 	{"循环测试  :"},
@@ -395,7 +396,7 @@ const uint8_t List_Setitem_E[][14+1]=
 {
 	{"List Steps :"},
 	{"Step Mode  :"},
-	{"THRESHOLD  :"},
+	{"AUTOTRIG   :"},
 	{"LIST BEEP  :"},
 	{"START V    :"},
 	{"LOOP TEST  :"},
@@ -1087,9 +1088,20 @@ void Disp_Hint(u8 num)
 			Colour.black=LCD_COLOR_TEST_MID;
 			Colour.Fword = Red;
 			WriteString_16(LIST2+60,205,"请用数字键盘输入",0);
+		}else if(num == 9){
+			Colour.black=LCD_COLOR_TEST_MID;
+			Colour.Fword = Red;
+			WriteString_16(LIST2+60,205,"电压超限自动开始",0);
+		}else if(num == 10){
+			Colour.black=LCD_COLOR_TEST_MID;
+			Colour.Fword = Red;
+			WriteString_16(2,205,"接近极限功率,将在15分钟后关闭",0);
+		}else if(num == 11){
+			Colour.black=LCD_COLOR_TEST_MID;
+			LCD_DrawFullRect(2,205,240, SPACE1-2);
 		}
 	}else{
-		if(num == 1)
+		if(num == 1) 	
 		{
 			Colour.black=LCD_COLOR_TEST_MID;
 			Colour.Fword = Red;
@@ -1120,6 +1132,17 @@ void Disp_Hint(u8 num)
 			Colour.black=LCD_COLOR_TEST_MID;
 			Colour.Fword = Red;
 			WriteString_16(LIST2+30,205,"Input with keyboard.",0);
+		}else if(num == 9){
+			Colour.black=LCD_COLOR_TEST_MID;
+			Colour.Fword = Red;
+			WriteString_16(LIST2+60,205,"Auto start.         ",0);
+		}else if(num == 10){
+			Colour.black=LCD_COLOR_TEST_MID;
+			Colour.Fword = Red;
+			WriteString_16(2,205,"Approaching max power,shut down in 15 mins.",0);
+		}else if(num == 11){
+			Colour.black=LCD_COLOR_TEST_MID;
+			LCD_DrawFullRect(2,205,240, SPACE1-2);
 		}
 	}
 }
@@ -1197,6 +1220,12 @@ void Test_Disp(u8 vsw,u8 isw)
 	Hex_Format(DispValue.Power+SlaveDatas.Power,3,7,0);  
 	Disp_EN40(80-60,80+80,DispBuf);
 	Disp_EN40(310-60,80+80,"W"); 
+	if(DispValue.Power*10 > powermax*0.9)
+	{
+		Disp_Hint(10);
+	}else{
+		Disp_Hint(11);
+	}
 	
 	if(LoadSave.limitdisp == 1)
 	{
@@ -2909,8 +2938,13 @@ void Disp_List_value(u8 num)
 	LCD_DrawFullRect( LIST1+118, FIRSTLINE+SPACE1*2-2,88+4 , SPACE1-2  ) ;//SPACE1
 	Hex_Format(LoadSave.gatev,4,7,0);
   Colour.Fword=White;
-	WriteString_16(LIST1+118, FIRSTLINE+SPACE1*2, DispBuf,  0);//增加算法  把顺序改过来
-	WriteString_16(LIST1+118+82, FIRSTLINE+SPACE1*2, Unit_Setitem[1],  0);
+	if(LoadSave.gatev != 0)
+	{
+		WriteString_16(LIST1+118, FIRSTLINE+SPACE1*2, DispBuf,  0);//增加算法  把顺序改过来
+		WriteString_16(LIST1+118+82, FIRSTLINE+SPACE1*2, Unit_Setitem[1],  0);
+	}else{
+		WriteString_16(LIST1+118, FIRSTLINE+SPACE1*2, Test_Compvalue[0],  0);//增加算法  把顺序改过来
+	}
 
 	
 	Black_Select=(num==4)?1:0;//列表讯响
@@ -3255,6 +3289,8 @@ void Disp_List_value(u8 num)
 		case 7:
 		case 10:
 			Disp_Hint(7);
+		case 3:
+			Disp_Hint(9);
 		break;
 		default:
 			Disp_Hint(4);

@@ -1263,10 +1263,18 @@ void Set_Para(void)
 	
 	if(GetSystemStatus()==SYS_STATUS_LIST)
 	{
-		sendbuff[47+28] = LoadSave.listonvol/10>>24;
-		sendbuff[48+28] = LoadSave.listonvol/10>>16;
-		sendbuff[49+28] = LoadSave.listonvol/10>>8;
-		sendbuff[50+28] = LoadSave.listonvol/10;//加载电压
+		if(LoadSave.gatev == 0)
+		{
+			sendbuff[47+28] = LoadSave.listonvol/10>>24;
+			sendbuff[48+28] = LoadSave.listonvol/10>>16;
+			sendbuff[49+28] = LoadSave.listonvol/10>>8;
+			sendbuff[50+28] = LoadSave.listonvol/10;//加载电压
+		}else{
+			sendbuff[47+28] = 0;
+			sendbuff[48+28] = 0;
+			sendbuff[49+28] = 0;
+			sendbuff[50+28] = 0;//加载电压
+		}
 	}else{
 		sendbuff[47+28] = LoadSave.onvol/10>>24;
 		sendbuff[48+28] = LoadSave.onvol/10>>16;
