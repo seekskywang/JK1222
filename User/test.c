@@ -4930,16 +4930,19 @@ void List_Process(void)
 										{
 											if(LoadSave.StepMode == 0)
 											{
-												switchdelay = SWITCH_DELAY;
-												mainswitch = 1;
-												setflag=1;
-	//											Set_Para();
-												listreset();
-												SwitchLedOn();
-												
-				//								OnOff_SW(mainswitch);
-												DispValue.listdelay = LoadSave.delay[0];
-												keynum=0;
+												if(LoadSave.gatev == 0)
+												{
+													switchdelay = SWITCH_DELAY;
+													mainswitch = 1;
+													setflag=1;
+		//											Set_Para();
+													listreset();
+													SwitchLedOn();
+													
+					//								OnOff_SW(mainswitch);
+													DispValue.listdelay = LoadSave.delay[0];
+													keynum=0;
+												}
 											}else{
 												if(DispValue.listrunstep != 0)
 												{
@@ -4948,11 +4951,14 @@ void List_Process(void)
 													setflag=1;
 	//												Set_Para();
 												}else{
-													switchdelay = SWITCH_DELAY;
-													mainswitch = 1;
-													setflag=1;
-													listreset();
-													SwitchLedOn();
+													if(LoadSave.gatev == 0)
+													{
+														switchdelay = SWITCH_DELAY;
+														mainswitch = 1;
+														setflag=1;
+														listreset();
+														SwitchLedOn();
+													}
 	//												Set_Para();
 					//								OnOff_SW(mainswitch);
 													DispValue.listdelay = LoadSave.delay[0];
