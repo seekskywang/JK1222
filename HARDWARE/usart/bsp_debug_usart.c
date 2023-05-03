@@ -1416,10 +1416,10 @@ void Set_Para(void)
 	sendbuff[109+28] = LoadSave.COMM>>8;
 	sendbuff[110+28] = LoadSave.COMM;//通讯选择
 	
-	sendbuff[111+28] = LoadSave.Class_5>>24;
-	sendbuff[112+28] = LoadSave.Class_5>>16;
-	sendbuff[113+28] = LoadSave.Class_5>>8;
-	sendbuff[114+28] = LoadSave.Class_5;//快充模式选择开关
+	sendbuff[111+28] = LoadSave.Version>>24;
+	sendbuff[112+28] = LoadSave.Version>>16;
+	sendbuff[113+28] = LoadSave.Version>>8;
+	sendbuff[114+28] = LoadSave.Version;//版本
 	
 	sendbuff[115+28] = LoadSave.Class_9>>24;
 	sendbuff[116+28] = LoadSave.Class_9>>16;

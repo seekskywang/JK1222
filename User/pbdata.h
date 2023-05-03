@@ -391,6 +391,7 @@ typedef struct
 	u8 protectflag;
 	u8 alertdisp;
 	u8 version;
+	u8 poweralert;
 ////校准测量控制电压低档
 //	u32 VLOW1;
 //	u32 SETVLOW1;

@@ -18,7 +18,7 @@
 //==========================================================
 #define POWERON_DISP_TIME (100)	//开机显示界面延时20*100mS=2s
 u8 U15_4094,U16_4094;
-
+extern void Disp_Hint(u8 num);
 static u8 filesendbuf[PACKAGE_SIZE+2];//升级文件发送分包缓存，256字节+2字节CRC
 static u8 filedatabuf[64*1024];//升级文件数据缓存，最大64K
 static u32 sendcount;//升级文件发送计数
@@ -49,17 +49,20 @@ u32 upfilesize;
 u16 resendcount;
 u16 listonoffdelay;
 u32 initdelay;
-u32 verpowmax[10] = {
+u32 verpowmax[11] = {
 12000000,8000000,6000000,4000000,24000000,
-32000000,2000000,12000000,12000000,12000000};
+32000000,2000000,12000000,12000000,12000000,
+24000000};
 
-u32 vervolmax[10] = {
+u32 vervolmax[11] = {
 1500000,1500000,1500000,1500000,1500000,
-1500000,5000000,2500000,2500000,1500000};
+1500000,5000000,2500000,2500000,1500000,
+1500000};
 
-u32 vercurmax[10] = {
+u32 vercurmax[11] = {
 1200000,1200000,1200000,400000,2400000,
-2400000,1200000,1200000,600000,1200000};
+2400000,1200000,1200000,600000,1200000,
+1200000};
 //const u8 RANGE_UNIT[11]=
 //{
 //	4,
@@ -150,7 +153,7 @@ void Para_Set_Comp(void)
 	{
 		LoadSave.COMM=0;
 	}
-	if(LoadSave.Version > 9)
+	if(LoadSave.Version > 10)
 	{
 		LoadSave.Version=0;
 	}
@@ -2876,6 +2879,11 @@ void Test_Beep(void)
 								if(LoadSave.devmode==0)
 									slaveonoffflag=LoadSave.devnum;
 							}else{
+								if(DispValue.poweralert == 1)
+								{
+									Disp_Hint(11);
+									DispValue.poweralert = 0;
+								}
 								switchdelay = SWITCH_DELAY;
 								mainswitch = 0;
 								SwitchLedOff();
@@ -5566,7 +5574,7 @@ void Use_DebugProcess(void)
 				}break;
 				case Key_SHIFT:
 				{
-					if(LoadSave.Version < 8)//0-1200;1-800;2-600;3-400;4-2400;5-3500;6-500V;7-250V120A;8-250V60A
+					if(LoadSave.Version < 10)//0-1200;1-800;2-600;3-400;4-2400;5-3500;6-500V;7-250V120A;8-250V60A
 					{
 						LoadSave.Version++;
 					}else{
