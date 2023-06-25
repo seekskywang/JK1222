@@ -6493,6 +6493,10 @@ void Disp_UserCheck_Item(void)
 		WriteString_16(360, 4,"1200W150V120A" ,  0);
 	}else if(LoadSave.Version == 10){
 		WriteString_16(360, 4,"2400W150V120A" ,  0);
+	}else if(LoadSave.Version == 11){
+		WriteString_16(360, 4,"4000W150V150A" ,  0);
+	}else if(LoadSave.Version == 12){
+		WriteString_16(360, 4,"6400W150V500A" ,  0);
 	}
 //	for(i=0;i<(sizeof(User_Check_main)/(sizeof(User_Check_main[0])));i++)
 //	{

@@ -49,20 +49,20 @@ u32 upfilesize;
 u16 resendcount;
 u16 listonoffdelay;
 u32 initdelay;
-u32 verpowmax[11] = {
+u32 verpowmax[13] = {
 12000000,8000000,6000000,4000000,24000000,
 32000000,2000000,12000000,12000000,12000000,
-24000000};
+24000000,40000000,64000000};
 
-u32 vervolmax[11] = {
+u32 vervolmax[13] = {
 1500000,1500000,1500000,1500000,1500000,
 1500000,5000000,2500000,2500000,1500000,
-1500000};
+1500000,1500000,1500000};
 
-u32 vercurmax[11] = {
+u32 vercurmax[13] = {
 1200000,1200000,1200000,400000,2400000,
 2400000,1200000,1200000,600000,1200000,
-1200000};
+1200000,1500000,5000000};
 //const u8 RANGE_UNIT[11]=
 //{
 //	4,
@@ -153,7 +153,7 @@ void Para_Set_Comp(void)
 	{
 		LoadSave.COMM=0;
 	}
-	if(LoadSave.Version > 10)
+	if(LoadSave.Version > 12)
 	{
 		LoadSave.Version=0;
 	}
@@ -311,11 +311,11 @@ void Para_Set_Comp(void)
 		LoadSave.power = powermax;
 	}
 
-	if(LoadSave.onvol > MAX_LoadVOLOTE)
+	if(LoadSave.onvol > vervolmax[LoadSave.Version] || LoadSave.onvol < 1000)
 	{
 		LoadSave.onvol = 0;
 	}
-	if(LoadSave.offvol > MAX_FreeLoadVOLOTE)
+	if(LoadSave.offvol > vervolmax[LoadSave.Version] || LoadSave.offvol < 1000)
 	{
 		LoadSave.offvol = 0;
 	}
@@ -5574,7 +5574,7 @@ void Use_DebugProcess(void)
 				}break;
 				case Key_SHIFT:
 				{
-					if(LoadSave.Version < 10)//0-1200;1-800;2-600;3-400;4-2400;5-3500;6-500V;7-250V120A;8-250V60A
+					if(LoadSave.Version < 12)//0-1200;1-800;2-600;3-400;4-2400;5-3500;6-500V;7-250V120A;8-250V60A
 					{
 						LoadSave.Version++;
 					}else{
