@@ -6,7 +6,7 @@
 ..\..\output\diskio.o: ..\..\User\./APP/usb_conf.h
 ..\..\output\diskio.o: ..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h
 ..\..\output\diskio.o: ..\..\Libraries\CMSIS\Include\core_cm4.h
-..\..\output\diskio.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+..\..\output\diskio.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 ..\..\output\diskio.o: ..\..\Libraries\CMSIS\Include\core_cmInstr.h
 ..\..\output\diskio.o: ..\..\Libraries\CMSIS\Include\core_cmFunc.h
 ..\..\output\diskio.o: ..\..\Libraries\CMSIS\Include\core_cmSimd.h
@@ -61,7 +61,7 @@
 ..\..\output\diskio.o: ..\..\User\./APP/usbh_usr.h
 ..\..\output\diskio.o: ..\..\FATFS\ff.h
 ..\..\output\diskio.o: ..\..\FATFS\ffconf.h
-..\..\output\diskio.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+..\..\output\diskio.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 ..\..\output\diskio.o: ..\..\User\./RTC/bsp_rtc.h
 ..\..\output\diskio.o: ..\..\User\pbdata.h
 ..\..\output\diskio.o: ..\..\HARDWARE\./led/bsp_led.h
@@ -74,7 +74,7 @@
 ..\..\output\diskio.o: ..\..\HARDWARE\./tim_pwm/bsp_general_tim.h
 ..\..\output\diskio.o: ..\..\HARDWARE\./systick/bsp_SysTick.h
 ..\..\output\diskio.o: ..\..\HARDWARE\./adc/bsp_adc.h
-..\..\output\diskio.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+..\..\output\diskio.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 ..\..\output\diskio.o: ..\..\HARDWARE\gpio.h
 ..\..\output\diskio.o: ..\..\HARDWARE\4094.h
 ..\..\output\diskio.o: ..\..\HARDWARE\ad7706.h

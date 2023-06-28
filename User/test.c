@@ -60,7 +60,7 @@ u32 vervolmax[13] = {
 1500000,1500000,1500000};
 
 u32 vercurmax[13] = {
-1200000,1200000,1200000,400000,2400000,
+1200000,600000,600000,400000,2400000,
 2400000,1200000,1200000,600000,1200000,
 1200000,1500000,5000000};
 //const u8 RANGE_UNIT[11]=
@@ -5530,8 +5530,14 @@ void Use_DebugProcess(void)
 					}
 				break;
 				
-				case Key_REST:
-          LoadSave.jkflag=!LoadSave.jkflag;          
+				case Key_SAVE:
+					if(LoadSave.jkflag == 0)
+					{
+						LoadSave.jkflag = 1;
+					}else{
+						LoadSave.jkflag = 0;
+					}
+//          LoadSave.jkflag=!LoadSave.jkflag;          
 					Store_set_flash();
 				break;
 				case Key_TRIG:

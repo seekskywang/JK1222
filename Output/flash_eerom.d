@@ -2,7 +2,7 @@
 ..\..\output\flash_eerom.o: ..\..\User\pbdata.h
 ..\..\output\flash_eerom.o: ..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h
 ..\..\output\flash_eerom.o: ..\..\Libraries\CMSIS\Include\core_cm4.h
-..\..\output\flash_eerom.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+..\..\output\flash_eerom.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 ..\..\output\flash_eerom.o: ..\..\Libraries\CMSIS\Include\core_cmInstr.h
 ..\..\output\flash_eerom.o: ..\..\Libraries\CMSIS\Include\core_cmFunc.h
 ..\..\output\flash_eerom.o: ..\..\Libraries\CMSIS\Include\core_cmSimd.h
@@ -40,7 +40,7 @@
 ..\..\output\flash_eerom.o: ..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_sai.h
 ..\..\output\flash_eerom.o: ..\..\HARDWARE\./led/bsp_led.h
 ..\..\output\flash_eerom.o: ..\..\HARDWARE\./sdram/bsp_sdram.h
-..\..\output\flash_eerom.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+..\..\output\flash_eerom.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 ..\..\output\flash_eerom.o: ..\..\HARDWARE\./lcd/bsp_lcd.h
 ..\..\output\flash_eerom.o: ..\..\HARDWARE\./font/fonts.h
 ..\..\output\flash_eerom.o: ..\..\User\./flash/bsp_spi_flash.h
@@ -49,7 +49,7 @@
 ..\..\output\flash_eerom.o: ..\..\HARDWARE\./tim_pwm/bsp_general_tim.h
 ..\..\output\flash_eerom.o: ..\..\HARDWARE\./systick/bsp_SysTick.h
 ..\..\output\flash_eerom.o: ..\..\HARDWARE\./adc/bsp_adc.h
-..\..\output\flash_eerom.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+..\..\output\flash_eerom.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 ..\..\output\flash_eerom.o: ..\..\HARDWARE\gpio.h
 ..\..\output\flash_eerom.o: ..\..\HARDWARE\4094.h
 ..\..\output\flash_eerom.o: ..\..\HARDWARE\ad7706.h

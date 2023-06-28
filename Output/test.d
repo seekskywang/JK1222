@@ -2,7 +2,7 @@
 ..\..\output\test.o: ..\..\User\pbdata.h
 ..\..\output\test.o: ..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h
 ..\..\output\test.o: ..\..\Libraries\CMSIS\Include\core_cm4.h
-..\..\output\test.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+..\..\output\test.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 ..\..\output\test.o: ..\..\Libraries\CMSIS\Include\core_cmInstr.h
 ..\..\output\test.o: ..\..\Libraries\CMSIS\Include\core_cmFunc.h
 ..\..\output\test.o: ..\..\Libraries\CMSIS\Include\core_cmSimd.h
@@ -40,7 +40,7 @@
 ..\..\output\test.o: ..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_sai.h
 ..\..\output\test.o: ..\..\HARDWARE\./led/bsp_led.h
 ..\..\output\test.o: ..\..\HARDWARE\./sdram/bsp_sdram.h
-..\..\output\test.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+..\..\output\test.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 ..\..\output\test.o: ..\..\HARDWARE\./lcd/bsp_lcd.h
 ..\..\output\test.o: ..\..\HARDWARE\./font/fonts.h
 ..\..\output\test.o: ..\..\User\./flash/bsp_spi_flash.h
@@ -49,7 +49,7 @@
 ..\..\output\test.o: ..\..\HARDWARE\./tim_pwm/bsp_general_tim.h
 ..\..\output\test.o: ..\..\HARDWARE\./systick/bsp_SysTick.h
 ..\..\output\test.o: ..\..\HARDWARE\./adc/bsp_adc.h
-..\..\output\test.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+..\..\output\test.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 ..\..\output\test.o: ..\..\HARDWARE\gpio.h
 ..\..\output\test.o: ..\..\HARDWARE\4094.h
 ..\..\output\test.o: ..\..\HARDWARE\ad7706.h
@@ -66,7 +66,7 @@
 ..\..\output\test.o: ..\..\FATFS\ff.h
 ..\..\output\test.o: ..\..\FATFS\integer.h
 ..\..\output\test.o: ..\..\FATFS\ffconf.h
-..\..\output\test.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
+..\..\output\test.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
 ..\..\output\test.o: ..\..\HARDWARE\cpld.h
 ..\..\output\test.o: ..\..\User\./APP/usbh_bsp.h
 ..\..\output\test.o: ..\..\User\./APP/usb_conf.h
@@ -93,4 +93,4 @@
 ..\..\output\test.o: ..\..\User\flash_if.h
 ..\..\output\test.o: ..\..\HARDWARE\1650\tm1650.h
 ..\..\output\test.o: ..\..\HARDWARE\bsp_bmp.h
-..\..\output\test.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+..\..\output\test.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h

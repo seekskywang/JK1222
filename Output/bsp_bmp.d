@@ -2,7 +2,7 @@
 ..\..\output\bsp_bmp.o: ..\..\HARDWARE\./lcd/bsp_lcd.h
 ..\..\output\bsp_bmp.o: ..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h
 ..\..\output\bsp_bmp.o: ..\..\Libraries\CMSIS\Include\core_cm4.h
-..\..\output\bsp_bmp.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+..\..\output\bsp_bmp.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 ..\..\output\bsp_bmp.o: ..\..\Libraries\CMSIS\Include\core_cmInstr.h
 ..\..\output\bsp_bmp.o: ..\..\Libraries\CMSIS\Include\core_cmFunc.h
 ..\..\output\bsp_bmp.o: ..\..\Libraries\CMSIS\Include\core_cmSimd.h
@@ -39,7 +39,7 @@
 ..\..\output\bsp_bmp.o: ..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_ltdc.h
 ..\..\output\bsp_bmp.o: ..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_sai.h
 ..\..\output\bsp_bmp.o: ..\..\HARDWARE\./sdram/bsp_sdram.h
-..\..\output\bsp_bmp.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+..\..\output\bsp_bmp.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 ..\..\output\bsp_bmp.o: ..\..\HARDWARE\./font/fonts.h
 ..\..\output\bsp_bmp.o: ..\..\HARDWARE\bsp_bmp.h
 ..\..\output\bsp_bmp.o: ..\..\User\pbdata.h
@@ -50,7 +50,7 @@
 ..\..\output\bsp_bmp.o: ..\..\HARDWARE\./tim_pwm/bsp_general_tim.h
 ..\..\output\bsp_bmp.o: ..\..\HARDWARE\./systick/bsp_SysTick.h
 ..\..\output\bsp_bmp.o: ..\..\HARDWARE\./adc/bsp_adc.h
-..\..\output\bsp_bmp.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+..\..\output\bsp_bmp.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 ..\..\output\bsp_bmp.o: ..\..\HARDWARE\gpio.h
 ..\..\output\bsp_bmp.o: ..\..\HARDWARE\4094.h
 ..\..\output\bsp_bmp.o: ..\..\HARDWARE\ad7706.h
@@ -67,5 +67,5 @@
 ..\..\output\bsp_bmp.o: ..\..\FATFS\ff.h
 ..\..\output\bsp_bmp.o: ..\..\FATFS\integer.h
 ..\..\output\bsp_bmp.o: ..\..\FATFS\ffconf.h
-..\..\output\bsp_bmp.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
-..\..\output\bsp_bmp.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+..\..\output\bsp_bmp.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
+..\..\output\bsp_bmp.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h

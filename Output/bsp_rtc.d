@@ -1,7 +1,7 @@
 ..\..\output\bsp_rtc.o: ..\..\User\RTC\bsp_rtc.c
 ..\..\output\bsp_rtc.o: ..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h
 ..\..\output\bsp_rtc.o: ..\..\Libraries\CMSIS\Include\core_cm4.h
-..\..\output\bsp_rtc.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+..\..\output\bsp_rtc.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 ..\..\output\bsp_rtc.o: ..\..\Libraries\CMSIS\Include\core_cmInstr.h
 ..\..\output\bsp_rtc.o: ..\..\Libraries\CMSIS\Include\core_cmFunc.h
 ..\..\output\bsp_rtc.o: ..\..\Libraries\CMSIS\Include\core_cmSimd.h
@@ -39,7 +39,7 @@
 ..\..\output\bsp_rtc.o: ..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_sai.h
 ..\..\output\bsp_rtc.o: ..\..\User\./RTC/bsp_rtc.h
 ..\..\output\bsp_rtc.o: ..\..\HARDWARE\./usart/bsp_debug_usart.h
-..\..\output\bsp_rtc.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+..\..\output\bsp_rtc.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 ..\..\output\bsp_rtc.o: ..\..\HARDWARE\./lcd/bsp_lcd.h
 ..\..\output\bsp_rtc.o: ..\..\HARDWARE\./sdram/bsp_sdram.h
 ..\..\output\bsp_rtc.o: ..\..\HARDWARE\./font/fonts.h
@@ -50,7 +50,7 @@
 ..\..\output\bsp_rtc.o: ..\..\HARDWARE\./tim_pwm/bsp_general_tim.h
 ..\..\output\bsp_rtc.o: ..\..\HARDWARE\./systick/bsp_SysTick.h
 ..\..\output\bsp_rtc.o: ..\..\HARDWARE\./adc/bsp_adc.h
-..\..\output\bsp_rtc.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+..\..\output\bsp_rtc.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 ..\..\output\bsp_rtc.o: ..\..\HARDWARE\gpio.h
 ..\..\output\bsp_rtc.o: ..\..\HARDWARE\4094.h
 ..\..\output\bsp_rtc.o: ..\..\HARDWARE\ad7706.h

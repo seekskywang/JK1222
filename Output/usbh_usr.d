@@ -1,5 +1,5 @@
 ..\..\output\usbh_usr.o: ..\..\User\APP\usbh_usr.c
-..\..\output\usbh_usr.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+..\..\output\usbh_usr.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 ..\..\output\usbh_usr.o: ..\..\User\./APP/usbh_usr.h
 ..\..\output\usbh_usr.o: ..\..\FATFS\ff.h
 ..\..\output\usbh_usr.o: ..\..\FATFS\integer.h
@@ -10,7 +10,7 @@
 ..\..\output\usbh_usr.o: ..\..\User\APP\usb_conf.h
 ..\..\output\usbh_usr.o: ..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h
 ..\..\output\usbh_usr.o: ..\..\Libraries\CMSIS\Include\core_cm4.h
-..\..\output\usbh_usr.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+..\..\output\usbh_usr.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 ..\..\output\usbh_usr.o: ..\..\Libraries\CMSIS\Include\core_cmInstr.h
 ..\..\output\usbh_usr.o: ..\..\Libraries\CMSIS\Include\core_cmFunc.h
 ..\..\output\usbh_usr.o: ..\..\Libraries\CMSIS\Include\core_cmSimd.h
@@ -50,7 +50,7 @@
 ..\..\output\usbh_usr.o: ..\..\Libraries\STM32_USB_OTG_Driver\inc\usb_defines.h
 ..\..\output\usbh_usr.o: ..\..\Libraries\STM32_USB_HOST_Library\Core\inc\usbh_def.h
 ..\..\output\usbh_usr.o: ..\..\User\APP\usbh_conf.h
-..\..\output\usbh_usr.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+..\..\output\usbh_usr.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 ..\..\output\usbh_usr.o: ..\..\Libraries\STM32_USB_HOST_Library\Class\MSC\inc\usbh_msc_core.h
 ..\..\output\usbh_usr.o: ..\..\Libraries\STM32_USB_HOST_Library\Core\inc\usbh_stdreq.h
 ..\..\output\usbh_usr.o: ..\..\User\APP\usb_bsp.h

@@ -3,7 +3,7 @@
 ..\..\output\usb_core.o: ..\..\User\APP\usb_conf.h
 ..\..\output\usb_core.o: ..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h
 ..\..\output\usb_core.o: ..\..\Libraries\CMSIS\Include\core_cm4.h
-..\..\output\usb_core.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+..\..\output\usb_core.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 ..\..\output\usb_core.o: ..\..\Libraries\CMSIS\Include\core_cmInstr.h
 ..\..\output\usb_core.o: ..\..\Libraries\CMSIS\Include\core_cmFunc.h
 ..\..\output\usb_core.o: ..\..\Libraries\CMSIS\Include\core_cmSimd.h

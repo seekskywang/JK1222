@@ -3,7 +3,7 @@
 ..\..\output\usbh_stdreq.o: ..\..\User\APP\usb_conf.h
 ..\..\output\usbh_stdreq.o: ..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h
 ..\..\output\usbh_stdreq.o: ..\..\Libraries\CMSIS\Include\core_cm4.h
-..\..\output\usbh_stdreq.o: E:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+..\..\output\usbh_stdreq.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 ..\..\output\usbh_stdreq.o: ..\..\Libraries\CMSIS\Include\core_cmInstr.h
 ..\..\output\usbh_stdreq.o: ..\..\Libraries\CMSIS\Include\core_cmFunc.h
 ..\..\output\usbh_stdreq.o: ..\..\Libraries\CMSIS\Include\core_cmSimd.h

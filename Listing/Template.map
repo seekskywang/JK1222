@@ -1,4 +1,4 @@
-Component: ARM Compiler 5.06 update 6 (build 750) Tool: armlink [4d35ed]
+Component: ARM Compiler 5.06 update 4 (build 422) Tool: armlink [4d35d2]
 
 ==============================================================================
 
@@ -4163,132 +4163,132 @@ Image Symbol Table
     i.UpdateProcess                          0x080558a8   Section        0  test.o(i.UpdateProcess)
     i.UsageFault_Handler                     0x08055b90   Section        0  stm32f4xx_it.o(i.UsageFault_Handler)
     i.Use_DebugProcess                       0x08055b94   Section        0  test.o(i.Use_DebugProcess)
-    i.Use_SysSetProcess                      0x08055ff4   Section        0  user.o(i.Use_SysSetProcess)
-    i.V_Gear_SW                              0x08056568   Section        0  bsp_debug_usart.o(i.V_Gear_SW)
-    i.WriteOneHzChar_16                      0x080565cc   Section        0  bsp_lcd.o(i.WriteOneHzChar_16)
-    i.WriteString_16                         0x080565e8   Section        0  bsp_lcd.o(i.WriteString_16)
-    i.__0printf$6                            0x080566b4   Section        0  printf6.o(i.__0printf$6)
-    i.__0sprintf$6                           0x080566d4   Section        0  printf6.o(i.__0sprintf$6)
-    i.__ARM_fpclassify                       0x080566fc   Section        0  fpclassify.o(i.__ARM_fpclassify)
-    i.__hardfp_pow                           0x08056730   Section        0  pow.o(i.__hardfp_pow)
-    i.__kernel_poly                          0x08057380   Section        0  poly.o(i.__kernel_poly)
-    i.__mathlib_dbl_divzero                  0x08057478   Section        0  dunder.o(i.__mathlib_dbl_divzero)
-    i.__mathlib_dbl_infnan2                  0x080574a8   Section        0  dunder.o(i.__mathlib_dbl_infnan2)
-    i.__mathlib_dbl_invalid                  0x080574c0   Section        0  dunder.o(i.__mathlib_dbl_invalid)
-    i.__mathlib_dbl_overflow                 0x080574e0   Section        0  dunder.o(i.__mathlib_dbl_overflow)
-    i.__mathlib_dbl_underflow                0x08057500   Section        0  dunder.o(i.__mathlib_dbl_underflow)
-    i.__scatterload_copy                     0x08057520   Section       14  handlers.o(i.__scatterload_copy)
-    i.__scatterload_null                     0x0805752e   Section        2  handlers.o(i.__scatterload_null)
-    i.__scatterload_zeroinit                 0x08057530   Section       14  handlers.o(i.__scatterload_zeroinit)
-    i.__set_errno                            0x08057540   Section        0  errno.o(i.__set_errno)
-    i._printf_core                           0x0805754c   Section        0  printf6.o(i._printf_core)
-    _printf_core                             0x0805754d   Thumb Code   748  printf6.o(i._printf_core)
-    i._printf_post_padding                   0x0805783c   Section        0  printf6.o(i._printf_post_padding)
-    _printf_post_padding                     0x0805783d   Thumb Code    36  printf6.o(i._printf_post_padding)
-    i._printf_pre_padding                    0x08057860   Section        0  printf6.o(i._printf_pre_padding)
-    _printf_pre_padding                      0x08057861   Thumb Code    46  printf6.o(i._printf_pre_padding)
-    i._sputc                                 0x0805788e   Section        0  printf6.o(i._sputc)
-    _sputc                                   0x0805788f   Thumb Code    10  printf6.o(i._sputc)
-    i.check_fs                               0x08057898   Section        0  ff.o(i.check_fs)
-    check_fs                                 0x08057899   Thumb Code   140  ff.o(i.check_fs)
-    i.chk_chr                                0x08057928   Section        0  ff.o(i.chk_chr)
-    chk_chr                                  0x08057929   Thumb Code    20  ff.o(i.chk_chr)
-    i.clust2sect                             0x0805793c   Section        0  ff.o(i.clust2sect)
-    i.cmp_lfn                                0x08057958   Section        0  ff.o(i.cmp_lfn)
-    cmp_lfn                                  0x08057959   Thumb Code   138  ff.o(i.cmp_lfn)
-    i.create_chain                           0x080579e8   Section        0  ff.o(i.create_chain)
-    create_chain                             0x080579e9   Thumb Code   214  ff.o(i.create_chain)
-    i.create_name                            0x08057ac0   Section        0  ff.o(i.create_name)
-    create_name                              0x08057ac1   Thumb Code   604  ff.o(i.create_name)
-    i.delay                                  0x08057d30   Section        0  pbdata.o(i.delay)
-    i.delay_1us                              0x08057d3a   Section        0  bsp_systick.o(i.delay_1us)
-    i.delay_us                               0x08057d70   Section        0  bsp_systick.o(i.delay_us)
-    i.dir_alloc                              0x08057d7a   Section        0  ff.o(i.dir_alloc)
-    dir_alloc                                0x08057d7b   Thumb Code    92  ff.o(i.dir_alloc)
-    i.dir_find                               0x08057dd6   Section        0  ff.o(i.dir_find)
-    dir_find                                 0x08057dd7   Thumb Code   234  ff.o(i.dir_find)
-    i.dir_next                               0x08057ec0   Section        0  ff.o(i.dir_next)
-    dir_next                                 0x08057ec1   Thumb Code   316  ff.o(i.dir_next)
-    i.dir_register                           0x08057ffc   Section        0  ff.o(i.dir_register)
-    dir_register                             0x08057ffd   Thumb Code   298  ff.o(i.dir_register)
-    i.dir_sdi                                0x08058126   Section        0  ff.o(i.dir_sdi)
-    dir_sdi                                  0x08058127   Thumb Code   200  ff.o(i.dir_sdi)
-    i.disk_initialize                        0x080581f0   Section        0  diskio.o(i.disk_initialize)
-    i.disk_ioctl                             0x0805820c   Section        0  diskio.o(i.disk_ioctl)
-    i.disk_read                              0x08058250   Section        0  diskio.o(i.disk_read)
-    i.disk_status                            0x080582b8   Section        0  diskio.o(i.disk_status)
-    i.disk_write                             0x080582c0   Section        0  diskio.o(i.disk_write)
-    i.f_mount                                0x08058314   Section        0  ff.o(i.f_mount)
-    i.f_open                                 0x08058370   Section        0  ff.o(i.f_open)
-    i.f_read                                 0x080584da   Section        0  ff.o(i.f_read)
-    i.fabs                                   0x080586aa   Section        0  fabs.o(i.fabs)
-    i.ff_convert                             0x080586c4   Section        0  cc936.o(i.ff_convert)
-    i.ff_wtoupper                            0x08058740   Section        0  cc936.o(i.ff_wtoupper)
-    i.findHzIndex_16                         0x08058778   Section        0  bsp_lcd.o(i.findHzIndex_16)
-    i.find_volume                            0x080587b8   Section        0  ff.o(i.find_volume)
-    find_volume                              0x080587b9   Thumb Code   952  ff.o(i.find_volume)
-    i.fit_lfn                                0x08058b80   Section        0  ff.o(i.fit_lfn)
-    fit_lfn                                  0x08058b81   Thumb Code   122  ff.o(i.fit_lfn)
-    i.follow_path                            0x08058c00   Section        0  ff.o(i.follow_path)
-    follow_path                              0x08058c01   Thumb Code   144  ff.o(i.follow_path)
-    i.fputc                                  0x08058c90   Section        0  bsp_debug_usart.o(i.fputc)
-    i.gen_numname                            0x08058cb4   Section        0  ff.o(i.gen_numname)
-    gen_numname                              0x08058cb5   Thumb Code   194  ff.o(i.gen_numname)
-    i.get_fat                                0x08058d7c   Section        0  ff.o(i.get_fat)
-    i.get_fattime                            0x08058eba   Section        0  diskio.o(i.get_fattime)
-    i.get_ldnumber                           0x08058efe   Section        0  ff.o(i.get_ldnumber)
-    get_ldnumber                             0x08058eff   Thumb Code    74  ff.o(i.get_ldnumber)
-    i.input_num                              0x08058f48   Section        0  user.o(i.input_num)
-    i.input_password                         0x080591a8   Section        0  user.o(i.input_password)
-    i.insert_element                         0x080594c0   Section        0  user.o(i.insert_element)
-    i.keydelay                               0x080594f4   Section        0  gpio.o(i.keydelay)
-    i.lcd_image                              0x08059500   Section        0  bsp_lcd.o(i.lcd_image)
-    i.ld_clust                               0x08059530   Section        0  ff.o(i.ld_clust)
-    ld_clust                                 0x08059531   Thumb Code    32  ff.o(i.ld_clust)
-    i.listreset                              0x08059550   Section        0  test.o(i.listreset)
-    i.lockcheck                              0x08059574   Section        0  test.o(i.lockcheck)
-    i.main                                   0x08059590   Section        0  main.o(i.main)
-    i.mem_cmp                                0x08059650   Section        0  ff.o(i.mem_cmp)
-    mem_cmp                                  0x08059651   Thumb Code    38  ff.o(i.mem_cmp)
-    i.mem_cpy                                0x08059676   Section        0  ff.o(i.mem_cpy)
-    mem_cpy                                  0x08059677   Thumb Code    26  ff.o(i.mem_cpy)
-    i.mem_set                                0x08059690   Section        0  ff.o(i.mem_set)
-    mem_set                                  0x08059691   Thumb Code    20  ff.o(i.mem_set)
-    i.move_window                            0x080596a4   Section        0  ff.o(i.move_window)
-    move_window                              0x080596a5   Thumb Code    52  ff.o(i.move_window)
-    i.put_fat                                0x080596d8   Section        0  ff.o(i.put_fat)
-    i.remove_chain                           0x08059860   Section        0  ff.o(i.remove_chain)
-    remove_chain                             0x08059861   Thumb Code   108  ff.o(i.remove_chain)
-    i.sqrt                                   0x080598cc   Section        0  sqrt.o(i.sqrt)
-    i.st_clust                               0x0805993a   Section        0  ff.o(i.st_clust)
-    st_clust                                 0x0805993b   Thumb Code    16  ff.o(i.st_clust)
-    i.sum_sfn                                0x0805994a   Section        0  ff.o(i.sum_sfn)
-    sum_sfn                                  0x0805994b   Thumb Code    32  ff.o(i.sum_sfn)
-    i.sync_window                            0x0805996a   Section        0  ff.o(i.sync_window)
-    sync_window                              0x0805996b   Thumb Code    82  ff.o(i.sync_window)
-    i.validate                               0x080599bc   Section        0  ff.o(i.validate)
-    validate                                 0x080599bd   Thumb Code    54  ff.o(i.validate)
-    .constdata                               0x080599f4   Section     4748  user.o(.constdata)
-    .constdata                               0x0805ac80   Section    391680  test.o(.constdata)
-    .constdata                               0x080ba680   Section    17357  bsp_lcd.o(.constdata)
-    .constdata                               0x080bea4e   Section    40192  fonts.o(.constdata)
-    AsciiLib                                 0x080c80ce   Data        1520  fonts.o(.constdata)
-    .constdata                               0x080c874e   Section       58  ff.o(.constdata)
-    LfnOfs                                   0x080c874e   Data          13  ff.o(.constdata)
-    vst                                      0x080c875c   Data          22  ff.o(.constdata)
-    cst                                      0x080c8772   Data          22  ff.o(.constdata)
-    .constdata                               0x080c8788   Section    175304  cc936.o(.constdata)
-    uni2oem                                  0x080c8788   Data       87172  cc936.o(.constdata)
-    oem2uni                                  0x080ddc0c   Data       87172  cc936.o(.constdata)
-    tbl_lower                                0x080f3090   Data         480  cc936.o(.constdata)
-    tbl_upper                                0x080f3270   Data         480  cc936.o(.constdata)
-    .constdata                               0x080f3450   Section      136  pow.o(.constdata)
-    bp                                       0x080f3450   Data          16  pow.o(.constdata)
-    dp_h                                     0x080f3460   Data          16  pow.o(.constdata)
-    dp_l                                     0x080f3470   Data          16  pow.o(.constdata)
-    L                                        0x080f3480   Data          48  pow.o(.constdata)
-    P                                        0x080f34b0   Data          40  pow.o(.constdata)
-    .constdata                               0x080f34d8   Section        8  qnan.o(.constdata)
+    i.Use_SysSetProcess                      0x08055fd0   Section        0  user.o(i.Use_SysSetProcess)
+    i.V_Gear_SW                              0x08056544   Section        0  bsp_debug_usart.o(i.V_Gear_SW)
+    i.WriteOneHzChar_16                      0x080565a8   Section        0  bsp_lcd.o(i.WriteOneHzChar_16)
+    i.WriteString_16                         0x080565c4   Section        0  bsp_lcd.o(i.WriteString_16)
+    i.__0printf$6                            0x08056690   Section        0  printf6.o(i.__0printf$6)
+    i.__0sprintf$6                           0x080566b0   Section        0  printf6.o(i.__0sprintf$6)
+    i.__ARM_fpclassify                       0x080566d8   Section        0  fpclassify.o(i.__ARM_fpclassify)
+    i.__hardfp_pow                           0x08056708   Section        0  pow.o(i.__hardfp_pow)
+    i.__kernel_poly                          0x08057358   Section        0  poly.o(i.__kernel_poly)
+    i.__mathlib_dbl_divzero                  0x08057450   Section        0  dunder.o(i.__mathlib_dbl_divzero)
+    i.__mathlib_dbl_infnan2                  0x08057480   Section        0  dunder.o(i.__mathlib_dbl_infnan2)
+    i.__mathlib_dbl_invalid                  0x08057498   Section        0  dunder.o(i.__mathlib_dbl_invalid)
+    i.__mathlib_dbl_overflow                 0x080574b8   Section        0  dunder.o(i.__mathlib_dbl_overflow)
+    i.__mathlib_dbl_underflow                0x080574d8   Section        0  dunder.o(i.__mathlib_dbl_underflow)
+    i.__scatterload_copy                     0x080574f8   Section       14  handlers.o(i.__scatterload_copy)
+    i.__scatterload_null                     0x08057506   Section        2  handlers.o(i.__scatterload_null)
+    i.__scatterload_zeroinit                 0x08057508   Section       14  handlers.o(i.__scatterload_zeroinit)
+    i.__set_errno                            0x08057518   Section        0  errno.o(i.__set_errno)
+    i._printf_core                           0x08057524   Section        0  printf6.o(i._printf_core)
+    _printf_core                             0x08057525   Thumb Code   748  printf6.o(i._printf_core)
+    i._printf_post_padding                   0x08057814   Section        0  printf6.o(i._printf_post_padding)
+    _printf_post_padding                     0x08057815   Thumb Code    36  printf6.o(i._printf_post_padding)
+    i._printf_pre_padding                    0x08057838   Section        0  printf6.o(i._printf_pre_padding)
+    _printf_pre_padding                      0x08057839   Thumb Code    46  printf6.o(i._printf_pre_padding)
+    i._sputc                                 0x08057866   Section        0  printf6.o(i._sputc)
+    _sputc                                   0x08057867   Thumb Code    10  printf6.o(i._sputc)
+    i.check_fs                               0x08057870   Section        0  ff.o(i.check_fs)
+    check_fs                                 0x08057871   Thumb Code   140  ff.o(i.check_fs)
+    i.chk_chr                                0x08057900   Section        0  ff.o(i.chk_chr)
+    chk_chr                                  0x08057901   Thumb Code    20  ff.o(i.chk_chr)
+    i.clust2sect                             0x08057914   Section        0  ff.o(i.clust2sect)
+    i.cmp_lfn                                0x08057930   Section        0  ff.o(i.cmp_lfn)
+    cmp_lfn                                  0x08057931   Thumb Code   138  ff.o(i.cmp_lfn)
+    i.create_chain                           0x080579c0   Section        0  ff.o(i.create_chain)
+    create_chain                             0x080579c1   Thumb Code   214  ff.o(i.create_chain)
+    i.create_name                            0x08057a98   Section        0  ff.o(i.create_name)
+    create_name                              0x08057a99   Thumb Code   604  ff.o(i.create_name)
+    i.delay                                  0x08057d08   Section        0  pbdata.o(i.delay)
+    i.delay_1us                              0x08057d12   Section        0  bsp_systick.o(i.delay_1us)
+    i.delay_us                               0x08057d48   Section        0  bsp_systick.o(i.delay_us)
+    i.dir_alloc                              0x08057d52   Section        0  ff.o(i.dir_alloc)
+    dir_alloc                                0x08057d53   Thumb Code    92  ff.o(i.dir_alloc)
+    i.dir_find                               0x08057dae   Section        0  ff.o(i.dir_find)
+    dir_find                                 0x08057daf   Thumb Code   234  ff.o(i.dir_find)
+    i.dir_next                               0x08057e98   Section        0  ff.o(i.dir_next)
+    dir_next                                 0x08057e99   Thumb Code   316  ff.o(i.dir_next)
+    i.dir_register                           0x08057fd4   Section        0  ff.o(i.dir_register)
+    dir_register                             0x08057fd5   Thumb Code   298  ff.o(i.dir_register)
+    i.dir_sdi                                0x080580fe   Section        0  ff.o(i.dir_sdi)
+    dir_sdi                                  0x080580ff   Thumb Code   200  ff.o(i.dir_sdi)
+    i.disk_initialize                        0x080581c8   Section        0  diskio.o(i.disk_initialize)
+    i.disk_ioctl                             0x080581e4   Section        0  diskio.o(i.disk_ioctl)
+    i.disk_read                              0x08058228   Section        0  diskio.o(i.disk_read)
+    i.disk_status                            0x08058290   Section        0  diskio.o(i.disk_status)
+    i.disk_write                             0x08058298   Section        0  diskio.o(i.disk_write)
+    i.f_mount                                0x080582ec   Section        0  ff.o(i.f_mount)
+    i.f_open                                 0x08058348   Section        0  ff.o(i.f_open)
+    i.f_read                                 0x080584b2   Section        0  ff.o(i.f_read)
+    i.fabs                                   0x08058682   Section        0  fabs.o(i.fabs)
+    i.ff_convert                             0x0805869c   Section        0  cc936.o(i.ff_convert)
+    i.ff_wtoupper                            0x08058718   Section        0  cc936.o(i.ff_wtoupper)
+    i.findHzIndex_16                         0x08058750   Section        0  bsp_lcd.o(i.findHzIndex_16)
+    i.find_volume                            0x08058790   Section        0  ff.o(i.find_volume)
+    find_volume                              0x08058791   Thumb Code   952  ff.o(i.find_volume)
+    i.fit_lfn                                0x08058b58   Section        0  ff.o(i.fit_lfn)
+    fit_lfn                                  0x08058b59   Thumb Code   122  ff.o(i.fit_lfn)
+    i.follow_path                            0x08058bd8   Section        0  ff.o(i.follow_path)
+    follow_path                              0x08058bd9   Thumb Code   144  ff.o(i.follow_path)
+    i.fputc                                  0x08058c68   Section        0  bsp_debug_usart.o(i.fputc)
+    i.gen_numname                            0x08058c8c   Section        0  ff.o(i.gen_numname)
+    gen_numname                              0x08058c8d   Thumb Code   194  ff.o(i.gen_numname)
+    i.get_fat                                0x08058d54   Section        0  ff.o(i.get_fat)
+    i.get_fattime                            0x08058e92   Section        0  diskio.o(i.get_fattime)
+    i.get_ldnumber                           0x08058ed6   Section        0  ff.o(i.get_ldnumber)
+    get_ldnumber                             0x08058ed7   Thumb Code    74  ff.o(i.get_ldnumber)
+    i.input_num                              0x08058f20   Section        0  user.o(i.input_num)
+    i.input_password                         0x08059180   Section        0  user.o(i.input_password)
+    i.insert_element                         0x08059498   Section        0  user.o(i.insert_element)
+    i.keydelay                               0x080594cc   Section        0  gpio.o(i.keydelay)
+    i.lcd_image                              0x080594d8   Section        0  bsp_lcd.o(i.lcd_image)
+    i.ld_clust                               0x08059508   Section        0  ff.o(i.ld_clust)
+    ld_clust                                 0x08059509   Thumb Code    32  ff.o(i.ld_clust)
+    i.listreset                              0x08059528   Section        0  test.o(i.listreset)
+    i.lockcheck                              0x0805954c   Section        0  test.o(i.lockcheck)
+    i.main                                   0x08059568   Section        0  main.o(i.main)
+    i.mem_cmp                                0x08059628   Section        0  ff.o(i.mem_cmp)
+    mem_cmp                                  0x08059629   Thumb Code    38  ff.o(i.mem_cmp)
+    i.mem_cpy                                0x0805964e   Section        0  ff.o(i.mem_cpy)
+    mem_cpy                                  0x0805964f   Thumb Code    26  ff.o(i.mem_cpy)
+    i.mem_set                                0x08059668   Section        0  ff.o(i.mem_set)
+    mem_set                                  0x08059669   Thumb Code    20  ff.o(i.mem_set)
+    i.move_window                            0x0805967c   Section        0  ff.o(i.move_window)
+    move_window                              0x0805967d   Thumb Code    52  ff.o(i.move_window)
+    i.put_fat                                0x080596b0   Section        0  ff.o(i.put_fat)
+    i.remove_chain                           0x08059838   Section        0  ff.o(i.remove_chain)
+    remove_chain                             0x08059839   Thumb Code   108  ff.o(i.remove_chain)
+    i.sqrt                                   0x080598a4   Section        0  sqrt.o(i.sqrt)
+    i.st_clust                               0x08059912   Section        0  ff.o(i.st_clust)
+    st_clust                                 0x08059913   Thumb Code    16  ff.o(i.st_clust)
+    i.sum_sfn                                0x08059922   Section        0  ff.o(i.sum_sfn)
+    sum_sfn                                  0x08059923   Thumb Code    32  ff.o(i.sum_sfn)
+    i.sync_window                            0x08059942   Section        0  ff.o(i.sync_window)
+    sync_window                              0x08059943   Thumb Code    82  ff.o(i.sync_window)
+    i.validate                               0x08059994   Section        0  ff.o(i.validate)
+    validate                                 0x08059995   Thumb Code    54  ff.o(i.validate)
+    .constdata                               0x080599cc   Section     4748  user.o(.constdata)
+    .constdata                               0x0805ac58   Section    391680  test.o(.constdata)
+    .constdata                               0x080ba658   Section    17357  bsp_lcd.o(.constdata)
+    .constdata                               0x080bea26   Section    40192  fonts.o(.constdata)
+    AsciiLib                                 0x080c80a6   Data        1520  fonts.o(.constdata)
+    .constdata                               0x080c8726   Section       58  ff.o(.constdata)
+    LfnOfs                                   0x080c8726   Data          13  ff.o(.constdata)
+    vst                                      0x080c8734   Data          22  ff.o(.constdata)
+    cst                                      0x080c874a   Data          22  ff.o(.constdata)
+    .constdata                               0x080c8760   Section    175304  cc936.o(.constdata)
+    uni2oem                                  0x080c8760   Data       87172  cc936.o(.constdata)
+    oem2uni                                  0x080ddbe4   Data       87172  cc936.o(.constdata)
+    tbl_lower                                0x080f3068   Data         480  cc936.o(.constdata)
+    tbl_upper                                0x080f3248   Data         480  cc936.o(.constdata)
+    .constdata                               0x080f3428   Section      136  pow.o(.constdata)
+    bp                                       0x080f3428   Data          16  pow.o(.constdata)
+    dp_h                                     0x080f3438   Data          16  pow.o(.constdata)
+    dp_l                                     0x080f3448   Data          16  pow.o(.constdata)
+    L                                        0x080f3458   Data          48  pow.o(.constdata)
+    P                                        0x080f3488   Data          40  pow.o(.constdata)
+    .constdata                               0x080f34b0   Section        8  qnan.o(.constdata)
     .data                                    0x20000000   Section       20  system_stm32f4xx.o(.data)
     .data                                    0x20000014   Section       16  stm32f4xx_rcc.o(.data)
     APBAHBPrescTable                         0x20000014   Data          16  stm32f4xx_rcc.o(.data)
@@ -4926,156 +4926,156 @@ Image Symbol Table
     UpError                                  0x08055815   Thumb Code    80  test.o(i.UpError)
     UpdateProcess                            0x080558a9   Thumb Code   624  test.o(i.UpdateProcess)
     UsageFault_Handler                       0x08055b91   Thumb Code     4  stm32f4xx_it.o(i.UsageFault_Handler)
-    Use_DebugProcess                         0x08055b95   Thumb Code  1094  test.o(i.Use_DebugProcess)
-    Use_SysSetProcess                        0x08055ff5   Thumb Code  1384  user.o(i.Use_SysSetProcess)
-    V_Gear_SW                                0x08056569   Thumb Code    88  bsp_debug_usart.o(i.V_Gear_SW)
-    WriteOneHzChar_16                        0x080565cd   Thumb Code    26  bsp_lcd.o(i.WriteOneHzChar_16)
-    WriteString_16                           0x080565e9   Thumb Code   198  bsp_lcd.o(i.WriteString_16)
-    __0printf$6                              0x080566b5   Thumb Code    22  printf6.o(i.__0printf$6)
-    __1printf$6                              0x080566b5   Thumb Code     0  printf6.o(i.__0printf$6)
-    __2printf                                0x080566b5   Thumb Code     0  printf6.o(i.__0printf$6)
-    __0sprintf$6                             0x080566d5   Thumb Code    34  printf6.o(i.__0sprintf$6)
-    __1sprintf$6                             0x080566d5   Thumb Code     0  printf6.o(i.__0sprintf$6)
-    __2sprintf                               0x080566d5   Thumb Code     0  printf6.o(i.__0sprintf$6)
-    __ARM_fpclassify                         0x080566fd   Thumb Code    48  fpclassify.o(i.__ARM_fpclassify)
-    __hardfp_pow                             0x08056731   Thumb Code  3072  pow.o(i.__hardfp_pow)
-    __kernel_poly                            0x08057381   Thumb Code   248  poly.o(i.__kernel_poly)
-    __mathlib_dbl_divzero                    0x08057479   Thumb Code    28  dunder.o(i.__mathlib_dbl_divzero)
-    __mathlib_dbl_infnan2                    0x080574a9   Thumb Code    20  dunder.o(i.__mathlib_dbl_infnan2)
-    __mathlib_dbl_invalid                    0x080574c1   Thumb Code    24  dunder.o(i.__mathlib_dbl_invalid)
-    __mathlib_dbl_overflow                   0x080574e1   Thumb Code    24  dunder.o(i.__mathlib_dbl_overflow)
-    __mathlib_dbl_underflow                  0x08057501   Thumb Code    24  dunder.o(i.__mathlib_dbl_underflow)
-    __scatterload_copy                       0x08057521   Thumb Code    14  handlers.o(i.__scatterload_copy)
-    __scatterload_null                       0x0805752f   Thumb Code     2  handlers.o(i.__scatterload_null)
-    __scatterload_zeroinit                   0x08057531   Thumb Code    14  handlers.o(i.__scatterload_zeroinit)
-    __set_errno                              0x08057541   Thumb Code     6  errno.o(i.__set_errno)
-    clust2sect                               0x0805793d   Thumb Code    26  ff.o(i.clust2sect)
-    delay                                    0x08057d31   Thumb Code    10  pbdata.o(i.delay)
-    delay_1us                                0x08057d3b   Thumb Code    54  bsp_systick.o(i.delay_1us)
-    delay_us                                 0x08057d71   Thumb Code    10  bsp_systick.o(i.delay_us)
-    disk_initialize                          0x080581f1   Thumb Code    22  diskio.o(i.disk_initialize)
-    disk_ioctl                               0x0805820d   Thumb Code    64  diskio.o(i.disk_ioctl)
-    disk_read                                0x08058251   Thumb Code    96  diskio.o(i.disk_read)
-    disk_status                              0x080582b9   Thumb Code     8  diskio.o(i.disk_status)
-    disk_write                               0x080582c1   Thumb Code    76  diskio.o(i.disk_write)
-    f_mount                                  0x08058315   Thumb Code    86  ff.o(i.f_mount)
-    f_open                                   0x08058371   Thumb Code   362  ff.o(i.f_open)
-    f_read                                   0x080584db   Thumb Code   464  ff.o(i.f_read)
-    fabs                                     0x080586ab   Thumb Code    24  fabs.o(i.fabs)
-    ff_convert                               0x080586c5   Thumb Code   116  cc936.o(i.ff_convert)
-    ff_wtoupper                              0x08058741   Thumb Code    46  cc936.o(i.ff_wtoupper)
-    findHzIndex_16                           0x08058779   Thumb Code    60  bsp_lcd.o(i.findHzIndex_16)
-    fputc                                    0x08058c91   Thumb Code    32  bsp_debug_usart.o(i.fputc)
-    get_fat                                  0x08058d7d   Thumb Code   318  ff.o(i.get_fat)
-    get_fattime                              0x08058ebb   Thumb Code    68  diskio.o(i.get_fattime)
-    input_num                                0x08058f49   Thumb Code   566  user.o(i.input_num)
-    input_password                           0x080591a9   Thumb Code   728  user.o(i.input_password)
-    insert_element                           0x080594c1   Thumb Code    52  user.o(i.insert_element)
-    keydelay                                 0x080594f5   Thumb Code    10  gpio.o(i.keydelay)
-    lcd_image                                0x08059501   Thumb Code    42  bsp_lcd.o(i.lcd_image)
-    listreset                                0x08059551   Thumb Code    26  test.o(i.listreset)
-    lockcheck                                0x08059575   Thumb Code    18  test.o(i.lockcheck)
-    main                                     0x08059591   Thumb Code   172  main.o(i.main)
-    put_fat                                  0x080596d9   Thumb Code   392  ff.o(i.put_fat)
-    sqrt                                     0x080598cd   Thumb Code   110  sqrt.o(i.sqrt)
-    compCcolor                               0x080599f4   Data          16  user.o(.constdata)
-    compVcolor                               0x08059a04   Data          16  user.o(.constdata)
-    compPcolor                               0x08059a14   Data          16  user.o(.constdata)
-    testcompcolor                            0x08059a24   Data           8  user.o(.constdata)
-    User_Check_Item                          0x08059a2c   Data         208  user.o(.constdata)
-    User_Check_Item1                         0x08059afc   Data         117  user.o(.constdata)
-    Test_Setitem                             0x08059b71   Data          20  user.o(.constdata)
-    Led_Setitem                              0x08059b85   Data          30  user.o(.constdata)
-    Bat_Setitem                              0x08059ba3   Data         304  user.o(.constdata)
-    Bat_SetitemR                             0x08059cd3   Data         288  user.o(.constdata)
-    Dyn_Setitem                              0x08059df3   Data         128  user.o(.constdata)
-    Dyn_SetitemE                             0x08059e73   Data         128  user.o(.constdata)
-    Unit_Setitem                             0x08059ef3   Data          48  user.o(.constdata)
-    Unit_Compitem                            0x08059f23   Data          24  user.o(.constdata)
-    Test_Setitem_E                           0x08059f3b   Data          20  user.o(.constdata)
-    Mode_Setitem                             0x08059f4f   Data          80  user.o(.constdata)
-    All_TopName                              0x08059f9f   Data         242  user.o(.constdata)
-    All_TopName_E                            0x0805a091   Data         242  user.o(.constdata)
-    Set_testitem                             0x0805a183   Data         120  user.o(.constdata)
-    Set_testitem_E                           0x0805a1fb   Data         120  user.o(.constdata)
-    Limit_item                               0x0805a273   Data         110  user.o(.constdata)
-    Limit_itemE                              0x0805a2e1   Data         110  user.o(.constdata)
-    Test_Modevalue1                          0x0805a34f   Data          70  user.o(.constdata)
-    List_Setitem                             0x0805a395   Data          90  user.o(.constdata)
-    List_Setitem_E                           0x0805a3ef   Data          90  user.o(.constdata)
-    Test_Modevalue_E1                        0x0805a449   Data          56  user.o(.constdata)
-    Bat_Modevalue                            0x0805a481   Data          21  user.o(.constdata)
-    Bat_ModevalueE                           0x0805a496   Data          21  user.o(.constdata)
-    Calvalue                                 0x0805a4ab   Data          35  user.o(.constdata)
-    Test_Modevalue2                          0x0805a4ce   Data          28  user.o(.constdata)
-    Test_Modevalue_E2                        0x0805a4ea   Data          28  user.o(.constdata)
-    Bat_LoadMod                              0x0805a506   Data          21  user.o(.constdata)
-    Test_Tirpvalue                           0x0805a51b   Data          28  user.o(.constdata)
-    Test_Tirpvalue_E                         0x0805a537   Data          28  user.o(.constdata)
-    Test_Speedvalue                          0x0805a553   Data          28  user.o(.constdata)
-    Test_Speedvalue_E                        0x0805a56f   Data          28  user.o(.constdata)
-    Test_Compvalue                           0x0805a58b   Data          14  user.o(.constdata)
-    List_Beep                                0x0805a599   Data          14  user.o(.constdata)
-    DeviceMode_Item                          0x0805a5a7   Data          21  user.o(.constdata)
-    DeviceMode_ItemE                         0x0805a5bc   Data          21  user.o(.constdata)
-    List_BeepE                               0x0805a5d1   Data          14  user.o(.constdata)
-    Tran_Mode                                0x0805a5df   Data          21  user.o(.constdata)
-    Tran_ModeE                               0x0805a5f4   Data          21  user.o(.constdata)
-    Test_Compvalue_E                         0x0805a609   Data          14  user.o(.constdata)
-    Test_Commvalue_E                         0x0805a617   Data          21  user.o(.constdata)
-    Test_PCTLvalue_E                         0x0805a62c   Data          21  user.o(.constdata)
-    Test_Rangevalue                          0x0805a641   Data          14  user.o(.constdata)
-    Test_Rangevalue_E                        0x0805a64f   Data          14  user.o(.constdata)
-    Setup_Beep                               0x0805a65d   Data          28  user.o(.constdata)
-    Setup_Beep1                              0x0805a679   Data          32  user.o(.constdata)
-    Setup_Beep_E                             0x0805a699   Data          28  user.o(.constdata)
-    Setup_Beep_E1                            0x0805a6b5   Data          32  user.o(.constdata)
-    INPUT                                    0x0805a6d5   Data           7  user.o(.constdata)
-    INPUT_E                                  0x0805a6dc   Data           7  user.o(.constdata)
-    User_Range                               0x0805a6e3   Data          88  user.o(.constdata)
-    User_Range_E                             0x0805a73b   Data          88  user.o(.constdata)
-    DISP_UINT                                0x0805a793   Data          20  user.o(.constdata)
-    MODE_UINT                                0x0805a7a7   Data          16  user.o(.constdata)
-    User_Rangeset                            0x0805a7b7   Data          55  user.o(.constdata)
-    Sys_Setitem                              0x0805a7ee   Data          99  user.o(.constdata)
-    Sys_Setitem_E                            0x0805a851   Data          99  user.o(.constdata)
-    Sys_Buard_Value                          0x0805a8b4   Data          56  user.o(.constdata)
-    Sys_Language_Value                       0x0805a8ec   Data          16  user.o(.constdata)
-    BiasButton_Tip                           0x0805a8fc   Data          16  user.o(.constdata)
-    Sys_Sys                                  0x0805a90c   Data          84  user.o(.constdata)
-    Sys_Sys_E                                0x0805a960   Data          84  user.o(.constdata)
-    Sys_Sys1                                 0x0805a9b4   Data          84  user.o(.constdata)
-    Sys_Sys_E1                               0x0805aa08   Data          84  user.o(.constdata)
-    Range_Disp_Test                          0x0805aa5c   Data         168  user.o(.constdata)
-    Step_Mode                                0x0805ab04   Data          21  user.o(.constdata)
-    Step_ModeE                               0x0805ab19   Data          21  user.o(.constdata)
-    List_ItemDis                             0x0805ab2e   Data          35  user.o(.constdata)
-    List_Res                                 0x0805ab51   Data          35  user.o(.constdata)
-    List_ResE                                0x0805ab74   Data          35  user.o(.constdata)
-    List_ItemDisE                            0x0805ab97   Data          35  user.o(.constdata)
-    List_CompType                            0x0805abba   Data          28  user.o(.constdata)
-    List_ResBack                             0x0805abd6   Data          35  user.o(.constdata)
-    List_ResBackE                            0x0805abf9   Data          35  user.o(.constdata)
-    List_CompTypeE                           0x0805ac1c   Data          36  user.o(.constdata)
-    SystemLimit                              0x0805ac40   Data          16  user.o(.constdata)
-    SystemLimitDot                           0x0805ac50   Data          10  user.o(.constdata)
-    ParameterLimit                           0x0805ac5a   Data          12  user.o(.constdata)
-    Debug_Limit                              0x0805ac68   Data           8  user.o(.constdata)
-    Test_Uint                                0x0805ac70   Data          16  user.o(.constdata)
-    gImage_open                              0x0805ac80   Data       391680  test.o(.constdata)
-    GB_21                                    0x080ba680   Data        7735  bsp_lcd.o(.constdata)
-    GB_16                                    0x080bc4b7   Data        9622  bsp_lcd.o(.constdata)
-    ASCII16x24_Table                         0x080bea4e   Data        4560  fonts.o(.constdata)
-    Out_1224                                 0x080bfc1e   Data         624  fonts.o(.constdata)
-    Out_Assic                                0x080bfe8e   Data        8000  fonts.o(.constdata)
-    Out_Assic30                              0x080c1dce   Data       19200  fonts.o(.constdata)
-    ASCII12x12_Table                         0x080c68ce   Data        2304  fonts.o(.constdata)
-    ASCII8x12_Table                          0x080c71ce   Data        2304  fonts.o(.constdata)
-    ASCII8x8_Table                           0x080c7ace   Data        1536  fonts.o(.constdata)
-    nBitmapDot                               0x080c86be   Data         144  fonts.o(.constdata)
-    __mathlib_zero                           0x080f34d8   Data           8  qnan.o(.constdata)
-    Region$$Table$$Base                      0x080f34e0   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x080f3500   Number         0  anon$$obj.o(Region$$Table)
+    Use_DebugProcess                         0x08055b95   Thumb Code  1060  test.o(i.Use_DebugProcess)
+    Use_SysSetProcess                        0x08055fd1   Thumb Code  1384  user.o(i.Use_SysSetProcess)
+    V_Gear_SW                                0x08056545   Thumb Code    88  bsp_debug_usart.o(i.V_Gear_SW)
+    WriteOneHzChar_16                        0x080565a9   Thumb Code    26  bsp_lcd.o(i.WriteOneHzChar_16)
+    WriteString_16                           0x080565c5   Thumb Code   198  bsp_lcd.o(i.WriteString_16)
+    __0printf$6                              0x08056691   Thumb Code    22  printf6.o(i.__0printf$6)
+    __1printf$6                              0x08056691   Thumb Code     0  printf6.o(i.__0printf$6)
+    __2printf                                0x08056691   Thumb Code     0  printf6.o(i.__0printf$6)
+    __0sprintf$6                             0x080566b1   Thumb Code    34  printf6.o(i.__0sprintf$6)
+    __1sprintf$6                             0x080566b1   Thumb Code     0  printf6.o(i.__0sprintf$6)
+    __2sprintf                               0x080566b1   Thumb Code     0  printf6.o(i.__0sprintf$6)
+    __ARM_fpclassify                         0x080566d9   Thumb Code    48  fpclassify.o(i.__ARM_fpclassify)
+    __hardfp_pow                             0x08056709   Thumb Code  3072  pow.o(i.__hardfp_pow)
+    __kernel_poly                            0x08057359   Thumb Code   248  poly.o(i.__kernel_poly)
+    __mathlib_dbl_divzero                    0x08057451   Thumb Code    28  dunder.o(i.__mathlib_dbl_divzero)
+    __mathlib_dbl_infnan2                    0x08057481   Thumb Code    20  dunder.o(i.__mathlib_dbl_infnan2)
+    __mathlib_dbl_invalid                    0x08057499   Thumb Code    24  dunder.o(i.__mathlib_dbl_invalid)
+    __mathlib_dbl_overflow                   0x080574b9   Thumb Code    24  dunder.o(i.__mathlib_dbl_overflow)
+    __mathlib_dbl_underflow                  0x080574d9   Thumb Code    24  dunder.o(i.__mathlib_dbl_underflow)
+    __scatterload_copy                       0x080574f9   Thumb Code    14  handlers.o(i.__scatterload_copy)
+    __scatterload_null                       0x08057507   Thumb Code     2  handlers.o(i.__scatterload_null)
+    __scatterload_zeroinit                   0x08057509   Thumb Code    14  handlers.o(i.__scatterload_zeroinit)
+    __set_errno                              0x08057519   Thumb Code     6  errno.o(i.__set_errno)
+    clust2sect                               0x08057915   Thumb Code    26  ff.o(i.clust2sect)
+    delay                                    0x08057d09   Thumb Code    10  pbdata.o(i.delay)
+    delay_1us                                0x08057d13   Thumb Code    54  bsp_systick.o(i.delay_1us)
+    delay_us                                 0x08057d49   Thumb Code    10  bsp_systick.o(i.delay_us)
+    disk_initialize                          0x080581c9   Thumb Code    22  diskio.o(i.disk_initialize)
+    disk_ioctl                               0x080581e5   Thumb Code    64  diskio.o(i.disk_ioctl)
+    disk_read                                0x08058229   Thumb Code    96  diskio.o(i.disk_read)
+    disk_status                              0x08058291   Thumb Code     8  diskio.o(i.disk_status)
+    disk_write                               0x08058299   Thumb Code    76  diskio.o(i.disk_write)
+    f_mount                                  0x080582ed   Thumb Code    86  ff.o(i.f_mount)
+    f_open                                   0x08058349   Thumb Code   362  ff.o(i.f_open)
+    f_read                                   0x080584b3   Thumb Code   464  ff.o(i.f_read)
+    fabs                                     0x08058683   Thumb Code    24  fabs.o(i.fabs)
+    ff_convert                               0x0805869d   Thumb Code   116  cc936.o(i.ff_convert)
+    ff_wtoupper                              0x08058719   Thumb Code    46  cc936.o(i.ff_wtoupper)
+    findHzIndex_16                           0x08058751   Thumb Code    60  bsp_lcd.o(i.findHzIndex_16)
+    fputc                                    0x08058c69   Thumb Code    32  bsp_debug_usart.o(i.fputc)
+    get_fat                                  0x08058d55   Thumb Code   318  ff.o(i.get_fat)
+    get_fattime                              0x08058e93   Thumb Code    68  diskio.o(i.get_fattime)
+    input_num                                0x08058f21   Thumb Code   566  user.o(i.input_num)
+    input_password                           0x08059181   Thumb Code   728  user.o(i.input_password)
+    insert_element                           0x08059499   Thumb Code    52  user.o(i.insert_element)
+    keydelay                                 0x080594cd   Thumb Code    10  gpio.o(i.keydelay)
+    lcd_image                                0x080594d9   Thumb Code    42  bsp_lcd.o(i.lcd_image)
+    listreset                                0x08059529   Thumb Code    26  test.o(i.listreset)
+    lockcheck                                0x0805954d   Thumb Code    18  test.o(i.lockcheck)
+    main                                     0x08059569   Thumb Code   172  main.o(i.main)
+    put_fat                                  0x080596b1   Thumb Code   392  ff.o(i.put_fat)
+    sqrt                                     0x080598a5   Thumb Code   110  sqrt.o(i.sqrt)
+    compCcolor                               0x080599cc   Data          16  user.o(.constdata)
+    compVcolor                               0x080599dc   Data          16  user.o(.constdata)
+    compPcolor                               0x080599ec   Data          16  user.o(.constdata)
+    testcompcolor                            0x080599fc   Data           8  user.o(.constdata)
+    User_Check_Item                          0x08059a04   Data         208  user.o(.constdata)
+    User_Check_Item1                         0x08059ad4   Data         117  user.o(.constdata)
+    Test_Setitem                             0x08059b49   Data          20  user.o(.constdata)
+    Led_Setitem                              0x08059b5d   Data          30  user.o(.constdata)
+    Bat_Setitem                              0x08059b7b   Data         304  user.o(.constdata)
+    Bat_SetitemR                             0x08059cab   Data         288  user.o(.constdata)
+    Dyn_Setitem                              0x08059dcb   Data         128  user.o(.constdata)
+    Dyn_SetitemE                             0x08059e4b   Data         128  user.o(.constdata)
+    Unit_Setitem                             0x08059ecb   Data          48  user.o(.constdata)
+    Unit_Compitem                            0x08059efb   Data          24  user.o(.constdata)
+    Test_Setitem_E                           0x08059f13   Data          20  user.o(.constdata)
+    Mode_Setitem                             0x08059f27   Data          80  user.o(.constdata)
+    All_TopName                              0x08059f77   Data         242  user.o(.constdata)
+    All_TopName_E                            0x0805a069   Data         242  user.o(.constdata)
+    Set_testitem                             0x0805a15b   Data         120  user.o(.constdata)
+    Set_testitem_E                           0x0805a1d3   Data         120  user.o(.constdata)
+    Limit_item                               0x0805a24b   Data         110  user.o(.constdata)
+    Limit_itemE                              0x0805a2b9   Data         110  user.o(.constdata)
+    Test_Modevalue1                          0x0805a327   Data          70  user.o(.constdata)
+    List_Setitem                             0x0805a36d   Data          90  user.o(.constdata)
+    List_Setitem_E                           0x0805a3c7   Data          90  user.o(.constdata)
+    Test_Modevalue_E1                        0x0805a421   Data          56  user.o(.constdata)
+    Bat_Modevalue                            0x0805a459   Data          21  user.o(.constdata)
+    Bat_ModevalueE                           0x0805a46e   Data          21  user.o(.constdata)
+    Calvalue                                 0x0805a483   Data          35  user.o(.constdata)
+    Test_Modevalue2                          0x0805a4a6   Data          28  user.o(.constdata)
+    Test_Modevalue_E2                        0x0805a4c2   Data          28  user.o(.constdata)
+    Bat_LoadMod                              0x0805a4de   Data          21  user.o(.constdata)
+    Test_Tirpvalue                           0x0805a4f3   Data          28  user.o(.constdata)
+    Test_Tirpvalue_E                         0x0805a50f   Data          28  user.o(.constdata)
+    Test_Speedvalue                          0x0805a52b   Data          28  user.o(.constdata)
+    Test_Speedvalue_E                        0x0805a547   Data          28  user.o(.constdata)
+    Test_Compvalue                           0x0805a563   Data          14  user.o(.constdata)
+    List_Beep                                0x0805a571   Data          14  user.o(.constdata)
+    DeviceMode_Item                          0x0805a57f   Data          21  user.o(.constdata)
+    DeviceMode_ItemE                         0x0805a594   Data          21  user.o(.constdata)
+    List_BeepE                               0x0805a5a9   Data          14  user.o(.constdata)
+    Tran_Mode                                0x0805a5b7   Data          21  user.o(.constdata)
+    Tran_ModeE                               0x0805a5cc   Data          21  user.o(.constdata)
+    Test_Compvalue_E                         0x0805a5e1   Data          14  user.o(.constdata)
+    Test_Commvalue_E                         0x0805a5ef   Data          21  user.o(.constdata)
+    Test_PCTLvalue_E                         0x0805a604   Data          21  user.o(.constdata)
+    Test_Rangevalue                          0x0805a619   Data          14  user.o(.constdata)
+    Test_Rangevalue_E                        0x0805a627   Data          14  user.o(.constdata)
+    Setup_Beep                               0x0805a635   Data          28  user.o(.constdata)
+    Setup_Beep1                              0x0805a651   Data          32  user.o(.constdata)
+    Setup_Beep_E                             0x0805a671   Data          28  user.o(.constdata)
+    Setup_Beep_E1                            0x0805a68d   Data          32  user.o(.constdata)
+    INPUT                                    0x0805a6ad   Data           7  user.o(.constdata)
+    INPUT_E                                  0x0805a6b4   Data           7  user.o(.constdata)
+    User_Range                               0x0805a6bb   Data          88  user.o(.constdata)
+    User_Range_E                             0x0805a713   Data          88  user.o(.constdata)
+    DISP_UINT                                0x0805a76b   Data          20  user.o(.constdata)
+    MODE_UINT                                0x0805a77f   Data          16  user.o(.constdata)
+    User_Rangeset                            0x0805a78f   Data          55  user.o(.constdata)
+    Sys_Setitem                              0x0805a7c6   Data          99  user.o(.constdata)
+    Sys_Setitem_E                            0x0805a829   Data          99  user.o(.constdata)
+    Sys_Buard_Value                          0x0805a88c   Data          56  user.o(.constdata)
+    Sys_Language_Value                       0x0805a8c4   Data          16  user.o(.constdata)
+    BiasButton_Tip                           0x0805a8d4   Data          16  user.o(.constdata)
+    Sys_Sys                                  0x0805a8e4   Data          84  user.o(.constdata)
+    Sys_Sys_E                                0x0805a938   Data          84  user.o(.constdata)
+    Sys_Sys1                                 0x0805a98c   Data          84  user.o(.constdata)
+    Sys_Sys_E1                               0x0805a9e0   Data          84  user.o(.constdata)
+    Range_Disp_Test                          0x0805aa34   Data         168  user.o(.constdata)
+    Step_Mode                                0x0805aadc   Data          21  user.o(.constdata)
+    Step_ModeE                               0x0805aaf1   Data          21  user.o(.constdata)
+    List_ItemDis                             0x0805ab06   Data          35  user.o(.constdata)
+    List_Res                                 0x0805ab29   Data          35  user.o(.constdata)
+    List_ResE                                0x0805ab4c   Data          35  user.o(.constdata)
+    List_ItemDisE                            0x0805ab6f   Data          35  user.o(.constdata)
+    List_CompType                            0x0805ab92   Data          28  user.o(.constdata)
+    List_ResBack                             0x0805abae   Data          35  user.o(.constdata)
+    List_ResBackE                            0x0805abd1   Data          35  user.o(.constdata)
+    List_CompTypeE                           0x0805abf4   Data          36  user.o(.constdata)
+    SystemLimit                              0x0805ac18   Data          16  user.o(.constdata)
+    SystemLimitDot                           0x0805ac28   Data          10  user.o(.constdata)
+    ParameterLimit                           0x0805ac32   Data          12  user.o(.constdata)
+    Debug_Limit                              0x0805ac40   Data           8  user.o(.constdata)
+    Test_Uint                                0x0805ac48   Data          16  user.o(.constdata)
+    gImage_open                              0x0805ac58   Data       391680  test.o(.constdata)
+    GB_21                                    0x080ba658   Data        7735  bsp_lcd.o(.constdata)
+    GB_16                                    0x080bc48f   Data        9622  bsp_lcd.o(.constdata)
+    ASCII16x24_Table                         0x080bea26   Data        4560  fonts.o(.constdata)
+    Out_1224                                 0x080bfbf6   Data         624  fonts.o(.constdata)
+    Out_Assic                                0x080bfe66   Data        8000  fonts.o(.constdata)
+    Out_Assic30                              0x080c1da6   Data       19200  fonts.o(.constdata)
+    ASCII12x12_Table                         0x080c68a6   Data        2304  fonts.o(.constdata)
+    ASCII8x12_Table                          0x080c71a6   Data        2304  fonts.o(.constdata)
+    ASCII8x8_Table                           0x080c7aa6   Data        1536  fonts.o(.constdata)
+    nBitmapDot                               0x080c8696   Data         144  fonts.o(.constdata)
+    __mathlib_zero                           0x080f34b0   Data           8  qnan.o(.constdata)
+    Region$$Table$$Base                      0x080f34b8   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x080f34d8   Number         0  anon$$obj.o(Region$$Table)
     SystemCoreClock                          0x20000000   Data           4  system_stm32f4xx.o(.data)
     AHBPrescTable                            0x20000004   Data          16  system_stm32f4xx.o(.data)
     g_mods_timeout                           0x20000024   Data           1  stm32f4xx_it.o(.data)
@@ -5213,9 +5213,9 @@ Memory Map of the image
 
   Image Entry point : 0x080401ad
 
-  Load Region LR_IROM1 (Base: 0x08040000, Size: 0x000b37c8, Max: 0x00100000, ABSOLUTE, COMPRESSED[0x000b360c])
+  Load Region LR_IROM1 (Base: 0x08040000, Size: 0x000b37a0, Max: 0x00100000, ABSOLUTE, COMPRESSED[0x000b35e8])
 
-    Execution Region ER_IROM1 (Exec base: 0x08040000, Load base: 0x08040000, Size: 0x000b3500, Max: 0x00100000, ABSOLUTE)
+    Execution Region ER_IROM1 (Exec base: 0x08040000, Load base: 0x08040000, Size: 0x000b34d8, Max: 0x00100000, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
@@ -5696,111 +5696,110 @@ Memory Map of the image
     0x08055814   0x08055814   0x00000094   Code   RO         6081    i.UpError           test.o
     0x080558a8   0x080558a8   0x000002e8   Code   RO         6082    i.UpdateProcess     test.o
     0x08055b90   0x08055b90   0x00000004   Code   RO         5301    i.UsageFault_Handler  stm32f4xx_it.o
-    0x08055b94   0x08055b94   0x00000460   Code   RO         6083    i.Use_DebugProcess  test.o
-    0x08055ff4   0x08055ff4   0x00000574   Code   RO         5579    i.Use_SysSetProcess  user.o
-    0x08056568   0x08056568   0x00000064   Code   RO         7205    i.V_Gear_SW         bsp_debug_usart.o
-    0x080565cc   0x080565cc   0x0000001a   Code   RO         6560    i.WriteOneHzChar_16  bsp_lcd.o
-    0x080565e6   0x080565e6   0x00000002   PAD
-    0x080565e8   0x080565e8   0x000000cc   Code   RO         6561    i.WriteString_16    bsp_lcd.o
-    0x080566b4   0x080566b4   0x00000020   Code   RO         9469    i.__0printf$6       mc_w.l(printf6.o)
-    0x080566d4   0x080566d4   0x00000028   Code   RO         9471    i.__0sprintf$6      mc_w.l(printf6.o)
-    0x080566fc   0x080566fc   0x00000030   Code   RO         9615    i.__ARM_fpclassify  m_wm.l(fpclassify.o)
-    0x0805672c   0x0805672c   0x00000004   PAD
-    0x08056730   0x08056730   0x00000c50   Code   RO         9289    i.__hardfp_pow      m_wm.l(pow.o)
-    0x08057380   0x08057380   0x000000f8   Code   RO         9617    i.__kernel_poly     m_wm.l(poly.o)
-    0x08057478   0x08057478   0x00000030   Code   RO         9595    i.__mathlib_dbl_divzero  m_wm.l(dunder.o)
-    0x080574a8   0x080574a8   0x00000014   Code   RO         9597    i.__mathlib_dbl_infnan2  m_wm.l(dunder.o)
-    0x080574bc   0x080574bc   0x00000004   PAD
-    0x080574c0   0x080574c0   0x00000020   Code   RO         9598    i.__mathlib_dbl_invalid  m_wm.l(dunder.o)
-    0x080574e0   0x080574e0   0x00000020   Code   RO         9599    i.__mathlib_dbl_overflow  m_wm.l(dunder.o)
-    0x08057500   0x08057500   0x00000020   Code   RO         9601    i.__mathlib_dbl_underflow  m_wm.l(dunder.o)
-    0x08057520   0x08057520   0x0000000e   Code   RO         9681    i.__scatterload_copy  mc_w.l(handlers.o)
-    0x0805752e   0x0805752e   0x00000002   Code   RO         9682    i.__scatterload_null  mc_w.l(handlers.o)
-    0x08057530   0x08057530   0x0000000e   Code   RO         9683    i.__scatterload_zeroinit  mc_w.l(handlers.o)
-    0x0805753e   0x0805753e   0x00000002   PAD
-    0x08057540   0x08057540   0x0000000c   Code   RO         9659    i.__set_errno       mc_w.l(errno.o)
-    0x0805754c   0x0805754c   0x000002f0   Code   RO         9476    i._printf_core      mc_w.l(printf6.o)
-    0x0805783c   0x0805783c   0x00000024   Code   RO         9477    i._printf_post_padding  mc_w.l(printf6.o)
-    0x08057860   0x08057860   0x0000002e   Code   RO         9478    i._printf_pre_padding  mc_w.l(printf6.o)
-    0x0805788e   0x0805788e   0x0000000a   Code   RO         9480    i._sputc            mc_w.l(printf6.o)
-    0x08057898   0x08057898   0x00000090   Code   RO         7792    i.check_fs          ff.o
-    0x08057928   0x08057928   0x00000014   Code   RO         7793    i.chk_chr           ff.o
-    0x0805793c   0x0805793c   0x0000001a   Code   RO         7794    i.clust2sect        ff.o
-    0x08057956   0x08057956   0x00000002   PAD
-    0x08057958   0x08057958   0x00000090   Code   RO         7795    i.cmp_lfn           ff.o
-    0x080579e8   0x080579e8   0x000000d6   Code   RO         7796    i.create_chain      ff.o
-    0x08057abe   0x08057abe   0x00000002   PAD
-    0x08057ac0   0x08057ac0   0x00000270   Code   RO         7797    i.create_name       ff.o
-    0x08057d30   0x08057d30   0x0000000a   Code   RO         5456    i.delay             pbdata.o
-    0x08057d3a   0x08057d3a   0x00000036   Code   RO         7493    i.delay_1us         bsp_systick.o
-    0x08057d70   0x08057d70   0x0000000a   Code   RO         7494    i.delay_us          bsp_systick.o
-    0x08057d7a   0x08057d7a   0x0000005c   Code   RO         7798    i.dir_alloc         ff.o
-    0x08057dd6   0x08057dd6   0x000000ea   Code   RO         7799    i.dir_find          ff.o
-    0x08057ec0   0x08057ec0   0x0000013c   Code   RO         7800    i.dir_next          ff.o
-    0x08057ffc   0x08057ffc   0x0000012a   Code   RO         7802    i.dir_register      ff.o
-    0x08058126   0x08058126   0x000000c8   Code   RO         7804    i.dir_sdi           ff.o
-    0x080581ee   0x080581ee   0x00000002   PAD
-    0x080581f0   0x080581f0   0x0000001c   Code   RO         7728    i.disk_initialize   diskio.o
-    0x0805820c   0x0805820c   0x00000044   Code   RO         7729    i.disk_ioctl        diskio.o
-    0x08058250   0x08058250   0x00000068   Code   RO         7730    i.disk_read         diskio.o
-    0x080582b8   0x080582b8   0x00000008   Code   RO         7731    i.disk_status       diskio.o
-    0x080582c0   0x080582c0   0x00000054   Code   RO         7732    i.disk_write        diskio.o
-    0x08058314   0x08058314   0x0000005c   Code   RO         7814    i.f_mount           ff.o
-    0x08058370   0x08058370   0x0000016a   Code   RO         7815    i.f_open            ff.o
-    0x080584da   0x080584da   0x000001d0   Code   RO         7820    i.f_read            ff.o
-    0x080586aa   0x080586aa   0x00000018   Code   RO         9611    i.fabs              m_wm.l(fabs.o)
-    0x080586c2   0x080586c2   0x00000002   PAD
-    0x080586c4   0x080586c4   0x0000007c   Code   RO         8132    i.ff_convert        cc936.o
-    0x08058740   0x08058740   0x00000038   Code   RO         8133    i.ff_wtoupper       cc936.o
-    0x08058778   0x08058778   0x00000040   Code   RO         6563    i.findHzIndex_16    bsp_lcd.o
-    0x080587b8   0x080587b8   0x000003c8   Code   RO         7830    i.find_volume       ff.o
-    0x08058b80   0x08058b80   0x00000080   Code   RO         7831    i.fit_lfn           ff.o
-    0x08058c00   0x08058c00   0x00000090   Code   RO         7832    i.follow_path       ff.o
-    0x08058c90   0x08058c90   0x00000024   Code   RO         7207    i.fputc             bsp_debug_usart.o
-    0x08058cb4   0x08058cb4   0x000000c8   Code   RO         7833    i.gen_numname       ff.o
-    0x08058d7c   0x08058d7c   0x0000013e   Code   RO         7834    i.get_fat           ff.o
-    0x08058eba   0x08058eba   0x00000044   Code   RO         7733    i.get_fattime       diskio.o
-    0x08058efe   0x08058efe   0x0000004a   Code   RO         7836    i.get_ldnumber      ff.o
-    0x08058f48   0x08058f48   0x00000260   Code   RO         5580    i.input_num         user.o
-    0x080591a8   0x080591a8   0x00000318   Code   RO         5581    i.input_password    user.o
-    0x080594c0   0x080594c0   0x00000034   Code   RO         5582    i.insert_element    user.o
-    0x080594f4   0x080594f4   0x0000000a   Code   RO         6261    i.keydelay          gpio.o
-    0x080594fe   0x080594fe   0x00000002   PAD
-    0x08059500   0x08059500   0x00000030   Code   RO         6564    i.lcd_image         bsp_lcd.o
-    0x08059530   0x08059530   0x00000020   Code   RO         7837    i.ld_clust          ff.o
-    0x08059550   0x08059550   0x00000024   Code   RO         6084    i.listreset         test.o
-    0x08059574   0x08059574   0x0000001c   Code   RO         6085    i.lockcheck         test.o
-    0x08059590   0x08059590   0x000000c0   Code   RO         5161    i.main              main.o
-    0x08059650   0x08059650   0x00000026   Code   RO         7838    i.mem_cmp           ff.o
-    0x08059676   0x08059676   0x0000001a   Code   RO         7839    i.mem_cpy           ff.o
-    0x08059690   0x08059690   0x00000014   Code   RO         7840    i.mem_set           ff.o
-    0x080596a4   0x080596a4   0x00000034   Code   RO         7841    i.move_window       ff.o
-    0x080596d8   0x080596d8   0x00000188   Code   RO         7843    i.put_fat           ff.o
-    0x08059860   0x08059860   0x0000006c   Code   RO         7845    i.remove_chain      ff.o
-    0x080598cc   0x080598cc   0x0000006e   Code   RO         9622    i.sqrt              m_wm.l(sqrt.o)
-    0x0805993a   0x0805993a   0x00000010   Code   RO         7846    i.st_clust          ff.o
-    0x0805994a   0x0805994a   0x00000020   Code   RO         7847    i.sum_sfn           ff.o
-    0x0805996a   0x0805996a   0x00000052   Code   RO         7849    i.sync_window       ff.o
-    0x080599bc   0x080599bc   0x00000036   Code   RO         7850    i.validate          ff.o
-    0x080599f2   0x080599f2   0x00000002   PAD
-    0x080599f4   0x080599f4   0x0000128c   Data   RO         5584    .constdata          user.o
-    0x0805ac80   0x0805ac80   0x0005fa00   Data   RO         6087    .constdata          test.o
-    0x080ba680   0x080ba680   0x000043cd   Data   RO         6566    .constdata          bsp_lcd.o
-    0x080bea4d   0x080bea4d   0x00000001   PAD
-    0x080bea4e   0x080bea4e   0x00009d00   Data   RO         6903    .constdata          fonts.o
-    0x080c874e   0x080c874e   0x0000003a   Data   RO         7852    .constdata          ff.o
-    0x080c8788   0x080c8788   0x0002acc8   Data   RO         8134    .constdata          cc936.o
-    0x080f3450   0x080f3450   0x00000088   Data   RO         9292    .constdata          m_wm.l(pow.o)
-    0x080f34d8   0x080f34d8   0x00000008   Data   RO         9619    .constdata          m_wm.l(qnan.o)
-    0x080f34e0   0x080f34e0   0x00000020   Data   RO         9679    Region$$Table       anon$$obj.o
+    0x08055b94   0x08055b94   0x0000043c   Code   RO         6083    i.Use_DebugProcess  test.o
+    0x08055fd0   0x08055fd0   0x00000574   Code   RO         5579    i.Use_SysSetProcess  user.o
+    0x08056544   0x08056544   0x00000064   Code   RO         7205    i.V_Gear_SW         bsp_debug_usart.o
+    0x080565a8   0x080565a8   0x0000001a   Code   RO         6560    i.WriteOneHzChar_16  bsp_lcd.o
+    0x080565c2   0x080565c2   0x00000002   PAD
+    0x080565c4   0x080565c4   0x000000cc   Code   RO         6561    i.WriteString_16    bsp_lcd.o
+    0x08056690   0x08056690   0x00000020   Code   RO         9469    i.__0printf$6       mc_w.l(printf6.o)
+    0x080566b0   0x080566b0   0x00000028   Code   RO         9471    i.__0sprintf$6      mc_w.l(printf6.o)
+    0x080566d8   0x080566d8   0x00000030   Code   RO         9615    i.__ARM_fpclassify  m_wm.l(fpclassify.o)
+    0x08056708   0x08056708   0x00000c50   Code   RO         9289    i.__hardfp_pow      m_wm.l(pow.o)
+    0x08057358   0x08057358   0x000000f8   Code   RO         9617    i.__kernel_poly     m_wm.l(poly.o)
+    0x08057450   0x08057450   0x00000030   Code   RO         9595    i.__mathlib_dbl_divzero  m_wm.l(dunder.o)
+    0x08057480   0x08057480   0x00000014   Code   RO         9597    i.__mathlib_dbl_infnan2  m_wm.l(dunder.o)
+    0x08057494   0x08057494   0x00000004   PAD
+    0x08057498   0x08057498   0x00000020   Code   RO         9598    i.__mathlib_dbl_invalid  m_wm.l(dunder.o)
+    0x080574b8   0x080574b8   0x00000020   Code   RO         9599    i.__mathlib_dbl_overflow  m_wm.l(dunder.o)
+    0x080574d8   0x080574d8   0x00000020   Code   RO         9601    i.__mathlib_dbl_underflow  m_wm.l(dunder.o)
+    0x080574f8   0x080574f8   0x0000000e   Code   RO         9681    i.__scatterload_copy  mc_w.l(handlers.o)
+    0x08057506   0x08057506   0x00000002   Code   RO         9682    i.__scatterload_null  mc_w.l(handlers.o)
+    0x08057508   0x08057508   0x0000000e   Code   RO         9683    i.__scatterload_zeroinit  mc_w.l(handlers.o)
+    0x08057516   0x08057516   0x00000002   PAD
+    0x08057518   0x08057518   0x0000000c   Code   RO         9659    i.__set_errno       mc_w.l(errno.o)
+    0x08057524   0x08057524   0x000002f0   Code   RO         9476    i._printf_core      mc_w.l(printf6.o)
+    0x08057814   0x08057814   0x00000024   Code   RO         9477    i._printf_post_padding  mc_w.l(printf6.o)
+    0x08057838   0x08057838   0x0000002e   Code   RO         9478    i._printf_pre_padding  mc_w.l(printf6.o)
+    0x08057866   0x08057866   0x0000000a   Code   RO         9480    i._sputc            mc_w.l(printf6.o)
+    0x08057870   0x08057870   0x00000090   Code   RO         7792    i.check_fs          ff.o
+    0x08057900   0x08057900   0x00000014   Code   RO         7793    i.chk_chr           ff.o
+    0x08057914   0x08057914   0x0000001a   Code   RO         7794    i.clust2sect        ff.o
+    0x0805792e   0x0805792e   0x00000002   PAD
+    0x08057930   0x08057930   0x00000090   Code   RO         7795    i.cmp_lfn           ff.o
+    0x080579c0   0x080579c0   0x000000d6   Code   RO         7796    i.create_chain      ff.o
+    0x08057a96   0x08057a96   0x00000002   PAD
+    0x08057a98   0x08057a98   0x00000270   Code   RO         7797    i.create_name       ff.o
+    0x08057d08   0x08057d08   0x0000000a   Code   RO         5456    i.delay             pbdata.o
+    0x08057d12   0x08057d12   0x00000036   Code   RO         7493    i.delay_1us         bsp_systick.o
+    0x08057d48   0x08057d48   0x0000000a   Code   RO         7494    i.delay_us          bsp_systick.o
+    0x08057d52   0x08057d52   0x0000005c   Code   RO         7798    i.dir_alloc         ff.o
+    0x08057dae   0x08057dae   0x000000ea   Code   RO         7799    i.dir_find          ff.o
+    0x08057e98   0x08057e98   0x0000013c   Code   RO         7800    i.dir_next          ff.o
+    0x08057fd4   0x08057fd4   0x0000012a   Code   RO         7802    i.dir_register      ff.o
+    0x080580fe   0x080580fe   0x000000c8   Code   RO         7804    i.dir_sdi           ff.o
+    0x080581c6   0x080581c6   0x00000002   PAD
+    0x080581c8   0x080581c8   0x0000001c   Code   RO         7728    i.disk_initialize   diskio.o
+    0x080581e4   0x080581e4   0x00000044   Code   RO         7729    i.disk_ioctl        diskio.o
+    0x08058228   0x08058228   0x00000068   Code   RO         7730    i.disk_read         diskio.o
+    0x08058290   0x08058290   0x00000008   Code   RO         7731    i.disk_status       diskio.o
+    0x08058298   0x08058298   0x00000054   Code   RO         7732    i.disk_write        diskio.o
+    0x080582ec   0x080582ec   0x0000005c   Code   RO         7814    i.f_mount           ff.o
+    0x08058348   0x08058348   0x0000016a   Code   RO         7815    i.f_open            ff.o
+    0x080584b2   0x080584b2   0x000001d0   Code   RO         7820    i.f_read            ff.o
+    0x08058682   0x08058682   0x00000018   Code   RO         9611    i.fabs              m_wm.l(fabs.o)
+    0x0805869a   0x0805869a   0x00000002   PAD
+    0x0805869c   0x0805869c   0x0000007c   Code   RO         8132    i.ff_convert        cc936.o
+    0x08058718   0x08058718   0x00000038   Code   RO         8133    i.ff_wtoupper       cc936.o
+    0x08058750   0x08058750   0x00000040   Code   RO         6563    i.findHzIndex_16    bsp_lcd.o
+    0x08058790   0x08058790   0x000003c8   Code   RO         7830    i.find_volume       ff.o
+    0x08058b58   0x08058b58   0x00000080   Code   RO         7831    i.fit_lfn           ff.o
+    0x08058bd8   0x08058bd8   0x00000090   Code   RO         7832    i.follow_path       ff.o
+    0x08058c68   0x08058c68   0x00000024   Code   RO         7207    i.fputc             bsp_debug_usart.o
+    0x08058c8c   0x08058c8c   0x000000c8   Code   RO         7833    i.gen_numname       ff.o
+    0x08058d54   0x08058d54   0x0000013e   Code   RO         7834    i.get_fat           ff.o
+    0x08058e92   0x08058e92   0x00000044   Code   RO         7733    i.get_fattime       diskio.o
+    0x08058ed6   0x08058ed6   0x0000004a   Code   RO         7836    i.get_ldnumber      ff.o
+    0x08058f20   0x08058f20   0x00000260   Code   RO         5580    i.input_num         user.o
+    0x08059180   0x08059180   0x00000318   Code   RO         5581    i.input_password    user.o
+    0x08059498   0x08059498   0x00000034   Code   RO         5582    i.insert_element    user.o
+    0x080594cc   0x080594cc   0x0000000a   Code   RO         6261    i.keydelay          gpio.o
+    0x080594d6   0x080594d6   0x00000002   PAD
+    0x080594d8   0x080594d8   0x00000030   Code   RO         6564    i.lcd_image         bsp_lcd.o
+    0x08059508   0x08059508   0x00000020   Code   RO         7837    i.ld_clust          ff.o
+    0x08059528   0x08059528   0x00000024   Code   RO         6084    i.listreset         test.o
+    0x0805954c   0x0805954c   0x0000001c   Code   RO         6085    i.lockcheck         test.o
+    0x08059568   0x08059568   0x000000c0   Code   RO         5161    i.main              main.o
+    0x08059628   0x08059628   0x00000026   Code   RO         7838    i.mem_cmp           ff.o
+    0x0805964e   0x0805964e   0x0000001a   Code   RO         7839    i.mem_cpy           ff.o
+    0x08059668   0x08059668   0x00000014   Code   RO         7840    i.mem_set           ff.o
+    0x0805967c   0x0805967c   0x00000034   Code   RO         7841    i.move_window       ff.o
+    0x080596b0   0x080596b0   0x00000188   Code   RO         7843    i.put_fat           ff.o
+    0x08059838   0x08059838   0x0000006c   Code   RO         7845    i.remove_chain      ff.o
+    0x080598a4   0x080598a4   0x0000006e   Code   RO         9622    i.sqrt              m_wm.l(sqrt.o)
+    0x08059912   0x08059912   0x00000010   Code   RO         7846    i.st_clust          ff.o
+    0x08059922   0x08059922   0x00000020   Code   RO         7847    i.sum_sfn           ff.o
+    0x08059942   0x08059942   0x00000052   Code   RO         7849    i.sync_window       ff.o
+    0x08059994   0x08059994   0x00000036   Code   RO         7850    i.validate          ff.o
+    0x080599ca   0x080599ca   0x00000002   PAD
+    0x080599cc   0x080599cc   0x0000128c   Data   RO         5584    .constdata          user.o
+    0x0805ac58   0x0805ac58   0x0005fa00   Data   RO         6087    .constdata          test.o
+    0x080ba658   0x080ba658   0x000043cd   Data   RO         6566    .constdata          bsp_lcd.o
+    0x080bea25   0x080bea25   0x00000001   PAD
+    0x080bea26   0x080bea26   0x00009d00   Data   RO         6903    .constdata          fonts.o
+    0x080c8726   0x080c8726   0x0000003a   Data   RO         7852    .constdata          ff.o
+    0x080c8760   0x080c8760   0x0002acc8   Data   RO         8134    .constdata          cc936.o
+    0x080f3428   0x080f3428   0x00000088   Data   RO         9292    .constdata          m_wm.l(pow.o)
+    0x080f34b0   0x080f34b0   0x00000008   Data   RO         9619    .constdata          m_wm.l(qnan.o)
+    0x080f34b8   0x080f34b8   0x00000020   Data   RO         9679    Region$$Table       anon$$obj.o
 
 
-    Execution Region RW_IRAM2 (Exec base: 0x10000000, Load base: 0x080f360c, Size: 0x00000000, Max: 0x00010000, ABSOLUTE)
+    Execution Region RW_IRAM2 (Exec base: 0x10000000, Load base: 0x080f35e8, Size: 0x00000000, Max: 0x00010000, ABSOLUTE)
 
     **** No section assigned to this execution region ****
 
 
-    Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x080f3500, Size: 0x00017fa8, Max: 0x00030000, ABSOLUTE, COMPRESSED[0x0000010c])
+    Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x080f34d8, Size: 0x00017fa8, Max: 0x00030000, ABSOLUTE, COMPRESSED[0x00000110])
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
@@ -5891,8 +5890,8 @@ Image component sizes
        112          0          0          0          0       3790   stm32f4xx_spi.o
       1234         82          0          0          0      14356   stm32f4xx_tim.o
        446          8          0          0          0       5908   stm32f4xx_usart.o
-       396         38          0         20          0     361285   system_stm32f4xx.o
-     17848       1498     391680        252      74102      24500   test.o
+       396         38          0         20          0     361277   system_stm32f4xx.o
+     17812       1506     391680        252      74102      24508   test.o
        444         22          0          8          0       6076   usb_bsp.o
       2996         18          0          0          0      19475   usb_core.o
        202          0          0          0          0       5435   usb_hcd.o
@@ -5909,7 +5908,7 @@ Image component sizes
      28448       3156       4748          0        140      59435   user.o
 
     ----------------------------------------------------------------------
-     98032       7160     629800        704      97504     871209   Object Totals
+     97996       7168     629800        704      97504     871209   Object Totals
          0          0         32          0          0          0   (incl. Generated)
         68          0          1         27          9          0   (incl. Padding)
 
@@ -5959,8 +5958,8 @@ Image component sizes
        162          0          0          0          0        100   dsqrt.o
 
     ----------------------------------------------------------------------
-      6488        382        144          8          0       3760   Library Totals
-        16          0          0          0          0          0   (incl. Padding)
+      6484        382        144          8          0       3760   Library Totals
+        12          0          0          0          0          0   (incl. Padding)
 
     ----------------------------------------------------------------------
 
@@ -5971,7 +5970,7 @@ Image component sizes
       1384          0          0          0          0       1064   mf_w.l
 
     ----------------------------------------------------------------------
-      6488        382        144          8          0       3760   Library Totals
+      6484        382        144          8          0       3760   Library Totals
 
     ----------------------------------------------------------------------
 
@@ -5980,15 +5979,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-    104520       7542     629944        712      97504     826557   Grand Totals
-    104520       7542     629944        268      97504     826557   ELF Image Totals (compressed)
-    104520       7542     629944        268          0          0   ROM Totals
+    104480       7550     629944        712      97504     826557   Grand Totals
+    104480       7550     629944        272      97504     826557   ELF Image Totals (compressed)
+    104480       7550     629944        272          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)               734464 ( 717.25kB)
+    Total RO  Size (Code + RO Data)               734424 ( 717.21kB)
     Total RW  Size (RW Data + ZI Data)             98216 (  95.91kB)
-    Total ROM Size (Code + RO Data + RW Data)     734732 ( 717.51kB)
+    Total ROM Size (Code + RO Data + RW Data)     734696 ( 717.48kB)
 
 ==============================================================================
 
