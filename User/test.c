@@ -149,9 +149,13 @@ void Para_Set_Comp(void)
 	{
 		LoadSave.devmode=0;
 	}
-	if(LoadSave.COMM > 2)
+	if(LoadSave.COMM > 1)
 	{
 		LoadSave.COMM=0;
+	}
+	if(LoadSave.TCP > 2)
+	{
+		LoadSave.TCP=0;
 	}
 	if(LoadSave.Version > 12)
 	{
@@ -5027,7 +5031,7 @@ void List_Process(void)
 												Coordinates.xpos=LIST2+118;
 												Coordinates.ypos=FIRSTLINE+SPACE1*1;
 												Coordinates.lenth=76;
-												LoadSave.listonvol=Disp_Set_Num(&Coordinates);
+ 												LoadSave.listonvol=Disp_Set_Num(&Coordinates);
 												Para_Set_Comp();
 												Store_set_flash();
 											}

@@ -558,13 +558,21 @@ const uint8_t Test_Commvalue_E[][6+1]=
 {
 	{"RS232"},
 	{"RS485"},
-  {"RS232"},
+//  {"RS232"},
+};
+
+const uint8_t Test_PCTLvalue[][6+1]=
+{
+	{"定制"},
+	{"标准"},
+	{"SCPI"}
+
 };
 
 const uint8_t Test_PCTLvalue_E[][6+1]=
 {
-	{"MODBUS"},
-	{"SCPI"},
+	{"CS "},
+	{"STD"},
 	{"SCPI"}
 
 };
@@ -1133,9 +1141,9 @@ void Disp_Hint(u8 num)
 			Colour.Fword = Red;
 			WriteString_16(LIST2+30,205,"Input with keyboard.",0);
 		}else if(num == 9){
-			Colour.black=LCD_COLOR_TEST_MID;
+			Colour.black=LCD_COLOR_TEST_BACK;
 			Colour.Fword = Red;
-			WriteString_16(LIST2+60,205,"Auto start.         ",0);
+			WriteString_16(LIST2+30,205,"Auto start.         ",0);
 		}else if(num == 10){
 			Colour.black=LCD_COLOR_TEST_MID;
 			Colour.Fword = Red;
@@ -1510,8 +1518,8 @@ void Disp_Button_value1(uint32_t value)
             WriteString_16(10+98+94+18, 271-20, "SETUP",  0);
 //            WriteString_16(10+98+94+94+94+18, 271-40, "SYS",  0);
 //            WriteString_16(10+98+94+94+94+18, 271-20, "INFO",  0);
-						WriteString_16(10+98+94+94+94+94+18, 271-40, "FIRM",  0);
-						WriteString_16(10+98+94+94+94+94+18, 271-20, "UPDATE",  0);
+						WriteString_16(10+98+94+94+94+18, 271-40, "FIRM",  0);
+						WriteString_16(10+98+94+94+94+18, 271-20, "UPDATE",  0);
         }
         else
         {
@@ -2779,9 +2787,10 @@ void Disp_Res_Sheet(u8 num,u8 page)
 //		LCD_DrawRect(3, 95+22*i,35 ,95+22*i+32 , Colour.black ) ;
 		Hex_Format(i+DispValue.respage*5+1,0,2,0);
 		WriteString_16(3,97+22+22*i, DispBuf, 0);//序号
-		
-		WriteString_16(3+50,97+22+22*i, List_ItemDis[LoadSave.listmode[i+DispValue.respage*5]], 0);//项目
-		
+		if(LoadSave.language == 0)
+			WriteString_16(3+50,97+22+22*i, List_ItemDis[LoadSave.listmode[i+DispValue.respage*5]], 0);//项目
+		else
+			WriteString_16(3+50,97+22+22*i, List_ItemDisE[LoadSave.listmode[i+DispValue.respage*5]], 0);//项目
 		Colour.Fword=compVcolor[DispValue.listcompres[i+DispValue.respage*5]];
 		if(DispValue.listvrange[i+DispValue.respage*5] == 0)//电压
 		{
@@ -2953,7 +2962,10 @@ void Disp_List_value(u8 num)
 		WriteString_16(LIST1+118, FIRSTLINE+SPACE1*2, DispBuf,  0);//增加算法  把顺序改过来
 		WriteString_16(LIST1+118+82, FIRSTLINE+SPACE1*2, Unit_Setitem[1],  0);
 	}else{
-		WriteString_16(LIST1+118, FIRSTLINE+SPACE1*2, Test_Compvalue[0],  0);//增加算法  把顺序改过来
+		if(LoadSave.language == 0)
+			WriteString_16(LIST1+118, FIRSTLINE+SPACE1*2, Test_Compvalue[0],  0);//增加算法  把顺序改过来
+		else
+			WriteString_16(LIST1+118, FIRSTLINE+SPACE1*2, Test_Compvalue_E[0],  0);//增加算法  把顺序改过来
 	}
 
 	
@@ -4376,7 +4388,8 @@ void Disp_Sys_Item(void)
         
 	}
 	Colour.Fword=LCD_COLOR_GREY;
-	WriteString_16(LIST2+90, FIRSTLINE+SPACE1*6, "SoftVer :2.4",  0);
+	WriteString_16(LIST2+90, FIRSTLINE+SPACE1*6, "SoftVer :2.5",  0);
+	//2.5增加标准RTU协议选择
 	Hex_Format(DispValue.version,1,2,0);
 	WriteString_16(LIST2+90, FIRSTLINE+SPACE1*7, "BoardVer:",  0);
 	WriteString_16(LIST2+90+90, FIRSTLINE+SPACE1*7, DispBuf,  0);
@@ -4445,7 +4458,12 @@ void Disp_Sys_value(u8 keynum)
 	}
 		
 	LCD_DrawFullRect( LIST1+90, FIRSTLINE+SPACE1,SELECT_1END-(LIST1+90) , SPACE1-4  ) ;//SPACE1
-	WriteString_16(LIST1+90, FIRSTLINE+SPACE1+2, Test_PCTLvalue_E[LoadSave.COMM],  0);
+	if(LoadSave.language)
+  {
+		WriteString_16(LIST1+90, FIRSTLINE+SPACE1+2, Test_PCTLvalue_E[LoadSave.TCP],  0);
+	}else{
+		WriteString_16(LIST1+90, FIRSTLINE+SPACE1+2, Test_PCTLvalue[LoadSave.TCP],  0);
+	}
 	//仪器模式
     Black_Select=(keynum==3)?1:0;
 	if(Black_Select)
@@ -4680,10 +4698,12 @@ void Disp_Sys_value(u8 keynum)
 
 //		break;
 		case 2:
-			for(i=0;i<2;i++)
+			for(i=0;i<3;i++)
 			{
-				
-				WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, Test_PCTLvalue_E[i],  0);
+				if(LoadSave.language)
+					WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, Test_PCTLvalue_E[i],  0);
+				else
+					WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, Test_PCTLvalue[i],  0);
 			}
 		break;
 		case 3:
@@ -4870,8 +4890,8 @@ void Use_SysSetProcess(void)
 							break;
 						case 2:
 						{
-							LoadSave.COMM = 0;
-							Set_Comm();
+							LoadSave.TCP = 0;
+							Set_Tcp();
 							Store_set_flash();
 						}break;
 						case 3:
@@ -4968,8 +4988,8 @@ void Use_SysSetProcess(void)
 							break;
 						case 2:
 						{
-							LoadSave.COMM = 2;
-							Set_Comm();
+							LoadSave.TCP = 1;
+							Set_Tcp();
 							Store_set_flash();
 						}break;
 						case 3:
@@ -5053,6 +5073,9 @@ void Use_SysSetProcess(void)
 						}break;
 						case 2:
 						{
+							LoadSave.TCP = 2;
+							Set_Tcp();
+							Store_set_flash();
 //							LoadSave.Baudrate = 2;
 //							Set_Baudrate();
 //							Store_set_flash();
@@ -6477,7 +6500,7 @@ void Disp_UserCheck_Item(void)
 		WriteString_16(360, 4,"         800W" ,  0);
 	}else if(LoadSave.Version == 2){
 		WriteString_16(360, 4,"         600W" ,  0);
-	}else if(LoadSave.Version == 3){
+	}else if(LoadSave.Version == 3){  
 		WriteString_16(360, 4,"         400W" ,  0);
 	}else if(LoadSave.Version == 4){
 		WriteString_16(360, 4,"        2400W" ,  0);

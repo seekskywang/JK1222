@@ -70,6 +70,7 @@ void Sence_SW(void);
 void ProtectRst(void);
 void Set_Baudrate(void);
 void Set_Comm(void);
+void Set_Tcp(void);
 void Set_Boot(void);
 void UP_FILESIZE(void);
 void CalHandle(u8 step);

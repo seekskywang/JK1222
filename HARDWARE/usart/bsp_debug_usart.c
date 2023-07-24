@@ -814,6 +814,24 @@ void Set_Comm(void)
 	setflag = 1;
 }
 
+//设置通讯方式
+void Set_Tcp(void)
+{
+	memset((char *)sendbuff,0,sizeof(sendbuff));
+	sendbuff[0] = 0x01;
+	sendbuff[1] = 0x06;
+	sendbuff[2] = 0x00;
+	sendbuff[3] = 0x2E;
+	sendbuff[4] = 0x00;
+	sendbuff[5] = 0x00;
+	sendbuff[6] = 0x00;
+	sendbuff[7] = LoadSave.TCP;
+	sendbuff[8] = Hardware_CRC(sendbuff,8)>>8;
+	sendbuff[9] = Hardware_CRC(sendbuff,8);
+	Uart1SendBuff(sendbuff,10);
+//	Usart1_Send((char *)sendbuff,10);
+	setflag = 1;
+}
 
 //发送跳转boot命令
 void Set_Boot(void)
@@ -1421,10 +1439,10 @@ void Set_Para(void)
 	sendbuff[113+28] = LoadSave.Version>>8;
 	sendbuff[114+28] = LoadSave.Version;//版本
 	
-	sendbuff[115+28] = LoadSave.Class_9>>24;
-	sendbuff[116+28] = LoadSave.Class_9>>16;
-	sendbuff[117+28] = LoadSave.Class_9>>8;
-	sendbuff[118+28] = LoadSave.Class_9;//快充模式选择开关
+	sendbuff[115+28] = LoadSave.TCP>>24;
+	sendbuff[116+28] = LoadSave.TCP>>16;
+	sendbuff[117+28] = LoadSave.TCP>>8;
+	sendbuff[118+28] = LoadSave.TCP;//协议选择
 	
 	sendbuff[119+28] = LoadSave.Class_12>>24;
 	sendbuff[120+28] = LoadSave.Class_12>>16;

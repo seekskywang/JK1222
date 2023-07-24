@@ -353,6 +353,8 @@ typedef struct
 	u8 slaveNo;
 //序列号
 	u8 serialnumber[8];
+//通讯协议
+	u8 TCP;//0-modbus非标准;1-MODBUS-RTU;2-SCPI;
 }SaveData_Typedef;
 extern SaveData_Typedef LoadSave;
 
