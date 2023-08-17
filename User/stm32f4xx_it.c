@@ -60,6 +60,7 @@ static void MODS_06H(void);
 static void RemTrig(void);
 u8 UART_Buffer_Rece[BUFFSIZEMAX];
 u8 UART3_Buffer_Rece[BUFFSIZEMAX];
+
 u8 flag_Tim_USART;
 u8 flag_spin;
 u16 t_USART;

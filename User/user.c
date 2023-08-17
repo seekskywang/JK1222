@@ -753,10 +753,12 @@ const uint8_t Sys_Sys_E[][20+1]=
 
 
 };
+
+//2.6上位机通讯改到前面板
 const uint8_t Sys_Sys1[][20+1]=
 {
 	{"仪器型号  2520C"},
-	{"软件版本  Ver:2.5"},
+	{"软件版本  Ver:2.6"},
 	{"硬件版本  Ver:1.1"},
 	{"仪器编号"},
 //	{"账号    "},
@@ -767,7 +769,7 @@ const uint8_t Sys_Sys1[][20+1]=
 const uint8_t Sys_Sys_E1[][20+1]=
 {
 	{"INST MODEL  2520C"},
-	{"SOFT VER   Ver:2.5"},
+	{"SOFT VER   Ver:2.6"},
 	{"HARD VER   Ver:1.1"},
 	{"SERIALNO"},
 //	{"账号    "},
@@ -1997,7 +1999,8 @@ void Disp_Test_value(u8 num)
 	}else if(LoadSave.mode == 3){//CP
 		if(LoadSave.Version == 0 || LoadSave.Version == 4 || LoadSave.Version == 5
 			|| LoadSave.Version == 7 || LoadSave.Version == 8 || LoadSave.Version == 9
-		|| LoadSave.Version == 10)
+		|| LoadSave.Version == 10|| LoadSave.Version == 11|| LoadSave.Version == 12
+		|| LoadSave.Version == 13)
 		{
 			Hex_Format(LoadSave.power,4,8,0);
 		}else{
@@ -2007,7 +2010,8 @@ void Disp_Test_value(u8 num)
 	if(LoadSave.mode == 3){//CP
 		if(LoadSave.Version == 0 || LoadSave.Version == 4 || LoadSave.Version == 5
 			|| LoadSave.Version == 7 || LoadSave.Version == 8 || LoadSave.Version == 9
-			|| LoadSave.Version == 10)
+			|| LoadSave.Version == 10|| LoadSave.Version == 11|| LoadSave.Version == 12
+		|| LoadSave.Version == 13)
 		{
 			WriteString_16(LIST2+88-10, FIRSTLINE, DispBuf,  0);//增加算法  把顺序改过来
 		}else{
@@ -4388,8 +4392,9 @@ void Disp_Sys_Item(void)
         
 	}
 	Colour.Fword=LCD_COLOR_GREY;
-	WriteString_16(LIST2+90, FIRSTLINE+SPACE1*6, "SoftVer :2.5",  0);
+	WriteString_16(LIST2+90, FIRSTLINE+SPACE1*6, "SoftVer :2.6",  0);
 	//2.5增加标准RTU协议选择
+	//2.6上位机通讯改到前面板
 	Hex_Format(DispValue.version,1,2,0);
 	WriteString_16(LIST2+90, FIRSTLINE+SPACE1*7, "BoardVer:",  0);
 	WriteString_16(LIST2+90+90, FIRSTLINE+SPACE1*7, DispBuf,  0);
@@ -4858,6 +4863,7 @@ void Use_SysSetProcess(void)
 	//Delay_Key();
  	while(GetSystemStatus()==SYS_STATUS_SYSSET)
 	{
+		if(lockflag == 0)
 	  	keytrans=Encoder_Process(keynum);
 		if(spinflag == 1)
 		{
@@ -4870,13 +4876,19 @@ void Use_SysSetProcess(void)
 			Disp_flag=0;
             
 		}
+		if(UART3_Buffer_Rece_flag==1)
+		{
+			UART3_Buffer_Rece_flag=0;
+			Rec3_Handle();
+			Disp_flag = 1;
+		}
 //		key=Key_Read_WithTimeOut(TICKS_PER_SEC_SOFTTIMER/10);
         RTC_GetTime(RTC_Format_BIN, &RTC_TimeStructure);
         RTC_GetDate(RTC_Format_BIN, &RTC_DateStructure);
 		
 		key=Key_Read();
 		inputtrans = key;
-        if(key!=KEY_NONE)
+		if(key!=KEY_NONE && lockflag == 0)
 		{	
 			Disp_flag=1;
 			switch(key)
@@ -5249,6 +5261,22 @@ void Use_SysSetProcess(void)
 				default:
 				break;
 					
+			}
+		}else if(key!=KEY_NONE && lockflag == 1){
+			switch(key)
+			{
+				case Key_ON:
+				{
+					if(lockflag == 1)
+					{
+						lockflag = 0;
+						DrawLock(lockflag);								
+					}
+		//							ReadSlaveData(1);
+		//							ReadData();
+				}break;
+				default:
+				break;
 			}
 		}
 		
@@ -6366,7 +6394,7 @@ void Disp_dateandtime(void)
     
     //);
     Colour.black =LCD_COLOR_TEST_BACK;
-    WriteString_16(LIST2, LIST1+4, (const uint8_t *)LCDTemp,  0);
+    WriteString_16(LIST2-20, LIST1+4, (const uint8_t *)LCDTemp,  0);
 //    sprintf(LCDTemp,"The Time :  %0.2d:%0.2d:%0.2d", 
 //    RTC_TimeStructure.RTC_Hours, 
 //    RTC_TimeStructure.RTC_Minutes, 
@@ -6520,6 +6548,8 @@ void Disp_UserCheck_Item(void)
 		WriteString_16(360, 4,"4000W150V150A" ,  0);
 	}else if(LoadSave.Version == 12){
 		WriteString_16(360, 4,"6400W150V500A" ,  0);
+	}else if(LoadSave.Version == 13){
+		WriteString_16(360, 4,"2000W150V120A" ,  0);
 	}
 //	for(i=0;i<(sizeof(User_Check_main)/(sizeof(User_Check_main[0])));i++)
 //	{

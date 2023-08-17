@@ -27,6 +27,7 @@ FATFS fs;
 FIL file;
 UINT readcount;
 
+u8 lockflag;//通讯键盘锁标志
 u8 keyvalue;
 u16 spinvalue;
 u8 mainswitch;
@@ -49,20 +50,20 @@ u32 upfilesize;
 u16 resendcount;
 u16 listonoffdelay;
 u32 initdelay;
-u32 verpowmax[13] = {
+u32 verpowmax[14] = {
 12000000,8000000,6000000,4000000,24000000,
 32000000,2000000,12000000,12000000,12000000,
-24000000,40000000,64000000};
+24000000,40000000,64000000,20000000};
 
-u32 vervolmax[13] = {
+u32 vervolmax[14] = {
 1500000,1500000,1500000,1500000,1500000,
 1500000,5000000,2500000,2500000,1500000,
-1500000,1500000,1500000};
+1500000,1500000,1500000,1500000};
 
-u32 vercurmax[13] = {
+u32 vercurmax[14] = {
 1200000,600000,600000,400000,2400000,
 2400000,1200000,1200000,600000,1200000,
-1200000,1500000,5000000};
+1200000,1500000,5000000,1200000};
 //const u8 RANGE_UNIT[11]=
 //{
 //	4,
@@ -77,6 +78,18 @@ u32 vercurmax[13] = {
 //	1,
 //	3
 //	
+
+void DrawLock(u8 sw)
+{
+	Colour.Fword = Red;
+	Colour.black = LCD_COLOR_TEST_BACK;
+	if(sw == 1)
+		WriteString_16(LIST2+19*10, LIST1+4, "Lock",  0);
+	else
+		WriteString_16(LIST2+19*10, LIST1+4, "    ",  0);
+	Colour.Fword = White;
+}
+
 void JumpBoot(u8 flag)
 {
   	void (*pUserApp)(void);
@@ -157,7 +170,7 @@ void Para_Set_Comp(void)
 	{
 		LoadSave.TCP=0;
 	}
-	if(LoadSave.Version > 12)
+	if(LoadSave.Version > 13)
 	{
 		LoadSave.Version=0;
 	}
@@ -1285,7 +1298,7 @@ void Power_Process(void)
     
 //    delay_ms(10);
 	 Debug_USART_Config(DEBUG_USART_BAUDRATE);
-	 HS_USART_Config(DEBUG_USART_BAUDRATE);
+	 HS_USART_Config(HS_USART_BAUDRATE);
     Keyboard_Init();//按键初始化
 	Spin_Init();
 
@@ -1423,6 +1436,7 @@ void Setup_Process(void)
  	while(GetSystemStatus()==SYS_STATUS_SETUP)
 	{
 //		DispValue.Operation_MODE = 1;
+		if(lockflag == 0)
 	    keytrans=Encoder_Process(keynum);
 
 		if(spinflag == 1)
@@ -1443,6 +1457,12 @@ void Setup_Process(void)
 			UART_Buffer_Rece_flag=0;
 			Rec_Handle();
 		}
+		if(UART3_Buffer_Rece_flag==1)
+		{
+			UART3_Buffer_Rece_flag=0;
+			Rec3_Handle();
+			Disp_Flag = 1;
+		}
 		if(setflag != 0)
 		{
 			if(setcount == 5)
@@ -1455,7 +1475,7 @@ void Setup_Process(void)
 		}
         key=Key_Read();
  		inputtrans = key;
-        if(key!=KEY_NONE)
+		if(key!=KEY_NONE && lockflag == 0)
 		{	
 			Disp_Flag=1;
 			switch(key)
@@ -1883,11 +1903,37 @@ void Setup_Process(void)
 					result=Screen_shot(0,0,480,272,(const char *)bmpname);
 #endif				
 				}break;
+//				case Key_ON:
+//				{
+//					if(lockflag == 1)
+//					{
+//						lockflag = 0;
+//						DrawLock(lockflag);								
+//					}
+////							ReadSlaveData(1);
+////							ReadData();
+//				}break;
 				default:
 				break;
 					
 			}
 			
+		}else if(key!=KEY_NONE && lockflag == 1){
+			switch(key)
+			{
+				case Key_ON:
+				{
+					if(lockflag == 1)
+					{
+						lockflag = 0;
+						DrawLock(lockflag);								
+					}
+//							ReadSlaveData(1);
+//							ReadData();
+				}break;
+				default:
+				break;
+			}
 		}
 	 	
 	
@@ -1920,6 +1966,7 @@ void Limit_Process(void)
     Disp_Limit_Item();
  	while(GetSystemStatus()==SYS_STATUS_LIMITSET)
 	{
+		if(lockflag == 0)
 	    keytrans=Encoder_Process(keynum);
 		if(spinflag == 1)
 		{
@@ -1934,10 +1981,15 @@ void Limit_Process(void)
 			Disp_Flag=0;
 		
 		}
-
+		if(UART3_Buffer_Rece_flag==1)
+		{
+			UART3_Buffer_Rece_flag=0;
+			Rec3_Handle();
+			Disp_Flag = 1;
+		}
         key=Key_Read();
 		inputtrans = key;
-        if(key!=KEY_NONE)
+        if(key!=KEY_NONE && lockflag == 0)
 		{	Disp_Flag=1;
 			switch(key)
 			{
@@ -2263,12 +2315,29 @@ void Limit_Process(void)
 					result=Screen_shot(0,0,480,272,(const char *)bmpname);
 #endif
 				}break;
+
 				default:
 				break;
 					
 			}
 		
 		
+		}else if(key!=KEY_NONE && lockflag == 1){
+			switch(key)
+			{
+				case Key_ON:
+				{
+					if(lockflag == 1)
+					{
+						lockflag = 0;
+						DrawLock(lockflag);								
+					}
+		//							ReadSlaveData(1);
+		//							ReadData();
+				}break;
+				default:
+				break;
+			}
 		}
 	 	
 	
@@ -2442,6 +2511,7 @@ void Test_Beep(void)
 	buttonpage1 = 1;
 //	DispValue.protectflag = 2;
 //	DispValue.alertdisp=1;
+	
 	while(GetSystemStatus()==SYS_STATUS_TEST)
 	{
 //		if(initdelay > 0)
@@ -2453,7 +2523,8 @@ void Test_Beep(void)
 //			Set_Para();
 //		}
     USB_Count++;
-		keytrans=Encoder_Process(keynum);
+		if(lockflag == 0)
+			keytrans=Encoder_Process(keynum);
 //		USBH_Process(&USB_OTG_Core, &USB_Host);
 //							USB_Count=0;
 
@@ -2485,6 +2556,7 @@ void Test_Beep(void)
 		{
 			UART3_Buffer_Rece_flag=0;
 			Rec3_Handle();
+			Disp_Flag = 1;
 		}
 		if(flag_spin!=0)
 		{
@@ -2584,18 +2656,12 @@ void Test_Beep(void)
 				Disp_Flag=1;
 				key=Key_Read();
 				inputtrans = key;
-				if(key!=KEY_NONE)
+				if(key!=KEY_NONE && lockflag == 0)
+				{
 				switch(key)
 				{
 						case Key_F1:
 							
-//							switch(keynum)
-//							{
-//								case 0:
-//									keynum=0;
-//										//SetSystemStatus(SYS_STATUS_TEST);
-//									break;
-//								case 1:
 							if(buttonpage1 == 1)
 							{
 								if(LoadSave.devmode != 1)
@@ -2990,16 +3056,29 @@ void Test_Beep(void)
 					result=Screen_shot(0,0,480,272,(const char *)bmpname);
 #endif
 						}break;
-						case Key_ON:
-						{
-//							ReadSlaveData(1);
-//							ReadData();
-						}break;
+						
 						default:
 							SetSystemStatus(SYS_STATUS_TEST);
 						break;
 							
 					}
+				}else if(key!=KEY_NONE && lockflag == 1){
+					switch(key)
+					{
+						case Key_ON:
+						{
+							if(lockflag == 1)
+							{
+								lockflag = 0;
+								DrawLock(lockflag);								
+							}
+//							ReadSlaveData(1);
+//							ReadData();
+						}break;
+						default:
+						break;
+					}
+				}
 				}
          }
      }
@@ -3050,7 +3129,8 @@ void Led_Process(void)
 	{
         USB_Count++;
 //        Key_Scan();
-		keytrans=Encoder_Process(keynum);
+		if(lockflag == 0)
+			keytrans=Encoder_Process(keynum);
 		if(spinflag == 1)
 		{
 			Disp_Flag = 1;
@@ -3065,10 +3145,16 @@ void Led_Process(void)
             Int_Pe3flag=0;
             
         }
-				if(UART_Buffer_Rece_flag==1)
+		if(UART_Buffer_Rece_flag==1)
 		{
 			UART_Buffer_Rece_flag=0;
 			Rec_Handle();
+		}
+		if(UART3_Buffer_Rece_flag==1)
+		{
+			UART3_Buffer_Rece_flag=0;
+			Rec3_Handle();
+			Disp_Flag = 1;
 		}
     if(Disp_Flag==1 )//显示设置的值
 		{
@@ -3102,7 +3188,8 @@ void Led_Process(void)
 				Disp_Flag=1;
 				key=Key_Read();
 				inputtrans = key;
-				if(key!=KEY_NONE)
+				if(key!=KEY_NONE && lockflag == 0)
+				{
 				switch(key)
 				{
 						case Key_F1:
@@ -3289,11 +3376,38 @@ void Led_Process(void)
 								SwitchLedOff();
 							}
 						}break;
+//						case Key_ON:
+//						{
+//							if(lockflag == 1)
+//							{
+//								lockflag = 0;
+//								DrawLock(lockflag);								
+//							}
+//							ReadSlaveData(1);
+//							ReadData();
+//						}break;
 						default:
 //							SetSystemStatus(SYS_STATUS_TEST);
 						break;
 							
 					}
+				}else if(key!=KEY_NONE && lockflag == 1){
+					switch(key)
+					{
+						case Key_ON:
+						{
+							if(lockflag == 1)
+							{
+								lockflag = 0;
+								DrawLock(lockflag);								
+							}
+				//							ReadSlaveData(1);
+				//							ReadData();
+						}break;
+						default:
+						break;
+					}
+				}
 				}
          }
      }
@@ -3340,7 +3454,8 @@ void Battery_Process(void)
 	{
         USB_Count++;
 //        Key_Scan();
-		keytrans=Encoder_Process(keynum);
+		if(lockflag == 0)
+			keytrans=Encoder_Process(keynum);
 		if(spinflag == 1)
 		{
 			Disp_Flag = 1;
@@ -3360,7 +3475,13 @@ void Battery_Process(void)
 			UART_Buffer_Rece_flag=0;
 			Rec_Handle();
 		}
-         if(Disp_Flag==1 )//显示设置的值
+		if(UART3_Buffer_Rece_flag==1)
+		{
+			UART3_Buffer_Rece_flag=0;
+			Rec3_Handle();
+			Disp_Flag = 1;
+		}
+	  if(Disp_Flag==1 )//显示设置的值
 		{
 			Disp_Bat_value(keynum);
 			Disp_Flag = 0;
@@ -3402,7 +3523,8 @@ void Battery_Process(void)
 				Disp_Flag=1;
 				key=Key_Read();
 				inputtrans = key;
-				if(key!=KEY_NONE)
+				if(key!=KEY_NONE && lockflag == 0)
+				{
 				switch(key)
 				{
 						case Key_F1:
@@ -3881,11 +4003,38 @@ void Battery_Process(void)
 					result=Screen_shot(0,0,480,272,(const char *)bmpname);
 #endif
 						}break;
+//						case Key_ON:
+//						{
+//							if(lockflag == 1)
+//							{
+//								lockflag = 0;
+//								DrawLock(lockflag);								
+//							}
+////							ReadSlaveData(1);
+////							ReadData();
+//						}break;
 						default:
 //							SetSystemStatus(SYS_STATUS_TEST);
 						break;
 							
 					}
+				}else if(key!=KEY_NONE && lockflag == 1){
+					switch(key)
+					{
+						case Key_ON:
+						{
+							if(lockflag == 1)
+							{
+								lockflag = 0;
+								DrawLock(lockflag);								
+							}
+				//							ReadSlaveData(1);
+				//							ReadData();
+						}break;
+						default:
+						break;
+					}
+				}
 				}
          }
      }
@@ -3920,7 +4069,8 @@ void Dynamic_Process(void)
 	{
         USB_Count++;
 //        Key_Scan();
-		keytrans=Encoder_Process(keynum);
+		if(lockflag == 0)
+			keytrans=Encoder_Process(keynum);
 		if(spinflag == 1)
 		{
 			Disp_Flag = 1;
@@ -3945,6 +4095,12 @@ void Dynamic_Process(void)
 		{
 			UART_Buffer_Rece_flag=0;
 			Rec_Handle();
+		}
+		if(UART3_Buffer_Rece_flag==1)
+		{
+			UART3_Buffer_Rece_flag=0;
+			Rec3_Handle();
+			Disp_Flag = 1;
 		}
 		if(F_100ms == TRUE)
 		{
@@ -3974,7 +4130,8 @@ void Dynamic_Process(void)
 				Disp_Flag=1;
 				key=Key_Read();
 				inputtrans = key;
-				if(key!=KEY_NONE)
+				if(key!=KEY_NONE && lockflag == 0)
+				{
 				switch(key)
 				{
 						case Key_F1:
@@ -4309,11 +4466,38 @@ void Dynamic_Process(void)
 					result=Screen_shot(0,0,480,272,(const char *)bmpname);
 #endif
 						}break;
+//						case Key_ON:
+//						{
+//							if(lockflag == 1)
+//							{
+//								lockflag = 0;
+//								DrawLock(lockflag);								
+//							}
+////							ReadSlaveData(1);
+////							ReadData();
+//						}break;
 						default:
 //							SetSystemStatus(SYS_STATUS_TEST);
 						break;
 							
 					}
+				}else if(key!=KEY_NONE && lockflag == 1){
+					switch(key)
+					{
+						case Key_ON:
+						{
+							if(lockflag == 1)
+							{
+								lockflag = 0;
+								DrawLock(lockflag);								
+							}
+				//							ReadSlaveData(1);
+				//							ReadData();
+						}break;
+						default:
+						break;
+					}
+				}
 				}
          }
      }
@@ -4374,7 +4558,8 @@ void List_Process(void)
 //        Key_Scan();
 		if(resdisp == 0)
 		{
-			keytrans=Encoder_Process(keynum);
+			if(lockflag == 0)
+				keytrans=Encoder_Process(keynum);
 		}
 //		spinvalue = TIM_GetCounter(TIM3);
 
@@ -4434,7 +4619,12 @@ void List_Process(void)
 			UART_Buffer_Rece_flag=0;
 			Rec_Handle();
 		}
-		
+		if(UART3_Buffer_Rece_flag==1)
+		{
+			UART3_Buffer_Rece_flag=0;
+			Rec3_Handle();
+			Disp_Flag = 1;
+		}
 //		if(mainswitch == 1)
 //		{
 		if(resdisp != 1)
@@ -4535,7 +4725,7 @@ void List_Process(void)
 			{
 				Disp_Flag=1;
 				key=Key_Read();
-				if(key!=KEY_NONE)
+				if(key!=KEY_NONE && lockflag == 0)
 				{
 					if(resdisp == 0)
 					{
@@ -5212,6 +5402,22 @@ void List_Process(void)
 									Disp_Flag = 0;
 								break;
 							}
+						}
+					}else if(key!=KEY_NONE && lockflag == 1){
+						switch(key)
+						{
+							case Key_ON:
+							{
+								if(lockflag == 1)
+								{
+									lockflag = 0;
+									DrawLock(lockflag);								
+								}
+					//							ReadSlaveData(1);
+					//							ReadData();
+							}break;
+							default:
+							break;
 						}
 					}
 				}

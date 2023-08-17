@@ -59,6 +59,7 @@ void SetSoftTimer(u8 id, u8 ticks);
 u8 GetSoftTimerOut(u8 id);
 void Para_Set_Comp(void);
 void UpError(u8 code);
+void DrawLock(u8 sw);
 #define INITDELAY  256
 
 #define PACKAGE_SIZE  256
@@ -210,6 +211,7 @@ extern FRESULT result;
 extern FATFS fs;
 extern FIL file;
 extern u8 bmpname[30];
+extern u8 lockflag;//通讯键盘锁标志
 //==========================================================
 //系统状态
 enum SysStatusEnum

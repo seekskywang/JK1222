@@ -37,6 +37,635 @@ u8 usart1txbuff[BUFFSIZEMAX];
 
 u8 usart3rxbuff[BUFFSIZEMAX];
 u8 usart3txbuff[BUFFSIZEMAX];
+
+u16 uart3sendlen;
+
+uint16_t BEBufToUint16(uint8_t *_pBuf)
+{
+    return (((uint16_t)_pBuf[0] << 8) | _pBuf[1]);
+}
+
+static uint8_t MODS_ReadRegValue(uint16_t reg_addr, uint8_t *reg_value)
+{
+    uint16_t value;
+
+	switch (reg_addr)									/* ??????? */
+	{
+		case SLAVE_REG_P00://电压1
+			value = DispValue.Voltage>>16;
+			break;
+		case SLAVE_REG_P01://电压2
+			value = (u16)DispValue.Voltage;
+			break;
+	
+		case SLAVE_REG_P02://电流1
+			value = DispValue.Current>>16;
+			break;
+		case SLAVE_REG_P03: //电流2
+			value = (u16)DispValue.Current;
+			break;
+
+		case SLAVE_REG_P04://电阻1
+			value = DispValue.Rdata>>16;
+			break;
+		case SLAVE_REG_P05://电阻2
+			value = (u16)DispValue.Rdata;
+			break;
+		case SLAVE_REG_P06://功率1
+			value = DispValue.Power>>16;
+			break;
+		case SLAVE_REG_P07://功率2
+			value = (u16)DispValue.Power;
+			break;
+		case SLAVE_REG_P08://
+			value = 0;
+			break;
+		case SLAVE_REG_P09://
+			value = 0;
+			break;
+		case SLAVE_REG_P10://
+			value = 0;
+			break;
+		case SLAVE_REG_P11://
+			value = 0;
+			break;
+		case SLAVE_REG_P12://
+			value = 0;
+		break;
+
+		case SLAVE_REG_P13://
+			value = 0;
+		break;
+		case SLAVE_REG_P14://
+			value = 0;
+		break;
+
+		case SLAVE_REG_P15://
+			value = 0;
+		break;
+		case SLAVE_REG_P16://
+			value = 0;
+		break;
+
+		case SLAVE_REG_P17://
+			value = 0;
+		break;
+		case SLAVE_REG_P18://
+			value = 0;
+		break;	
+		case 0x0013://
+			value = 0;
+		break;
+		case 0x0014://操作模式1
+			value = 0;
+			break;
+		case 0x0015://操作模式2
+			value = 0;
+		break;
+		case 0x0016://保护标志1
+			value = 0;
+		break;
+		case 0x0017://保护标志1
+			value = 0;
+		break;
+		case 0x0018://开关1
+			value =	mainswitch>>16;
+		break;
+		case 0x0019://开关2
+			value =	(u16)mainswitch;
+		break;
+		case 0x001A://模式1
+			value =	LoadSave.mode>>16;
+		break;
+		case 0x001B://模式2
+			value =	(u16)LoadSave.mode;
+		break;
+		case 0x001C://电流档位1
+			value =	LoadSave.crange>>16;
+		break;
+		case 0x001D://电流档位2
+			value =	(u16)LoadSave.crange;
+		break;
+		case 0x001E://电压档位1
+			value =	LoadSave.vrange>>16;
+		break;
+		case 0x001F://电压档位2
+			value =	(u16)LoadSave.vrange;
+		break;
+		case 0x0020://本机地址1
+			value =	LoadSave.Addr>>16;
+		break;
+		case 0x0021://本机地址2
+			value =	(u16)LoadSave.Addr;
+		break;
+		case 0x0022://波特率1
+			value =	0;
+		break;
+		case 0x0023://波特率2
+			value =	0;
+		break;
+		case 0x0024://远端测量开关1
+			value =	LoadSave.sence>>16;
+		break;
+		case 0x0025://远端测量开关2
+			value =	(u16)LoadSave.sence;
+		break;
+		case 0x0026://设置电压1
+			value =	LoadSave.voltage>>16;
+		break;
+		case 0x0027://设置电压2
+			value =	(u16)LoadSave.voltage;
+		break;
+		case 0x0028://设置电流1
+			value =	LoadSave.current>>16;
+		break;
+		case 0x0029://设置电流2
+			value =	(u16)LoadSave.current;
+		break;
+		case 0x002A://设置电阻1
+			value =	LoadSave.risistence>>16;
+		break;
+		case 0x002B://设置电阻2
+			value =	(u16)LoadSave.risistence;
+		break;
+		case 0x002C://设置功率1
+			value =	LoadSave.power>>16;
+		break;
+		case 0x002D://设置功率2
+			value =	(u16)LoadSave.power;
+		break;
+		case 0x002E://OVP1
+			value =	0;
+		break;
+		case 0x002F://OVP2
+			value =	0;
+		break;
+		case 0x0030://OCP1
+			value =	0;
+		break;
+		case 0x0031://OCP2
+			value =	0;
+		break;
+		case 0x0032://OPP1
+			value =	0;
+		break;
+		case 0x0033://OPP2	
+			value =	0;
+		break;
+		case 0x0034://最大限制功率1
+			value =	LoadSave.maxp>>16;
+		break;
+		case 0x0035://最大限制功率2
+			value =	(u16)LoadSave.maxp;
+		break;
+		case 0x0036://最大限制电压1
+			value =	LoadSave.maxv>>16;
+		break;
+		case 0x0037://最大限制电压2
+			value =	(u16)LoadSave.maxv;
+		break;
+		case 0x0038://最大限制电流1
+			value =	LoadSave.maxc>>16;
+		break;
+		case 0x0039://最大限制电流2
+			value =	(u16)LoadSave.maxc;
+		break;
+		case 0x003A://加载电压1
+			value =	LoadSave.onvol>>16;
+		break;
+		case 0x003B://加载电压2
+			value =	(u16)LoadSave.onvol;
+		break;
+		case 0x003C://卸载电压1
+			value =	LoadSave.offvol>>16;
+		break;
+		case 0x003D://卸载电压2
+			value =	(u16)LoadSave.offvol;
+		break;
+		case 0x003E://电流上升率1
+			value =	LoadSave.crise>>16;
+		break;
+		case 0x003F://电流上升率2
+			value =	(u16)LoadSave.crise;
+		break;
+		case 0x0040://电流下降率1
+			value =	LoadSave.cdrop>>16;
+		break;
+		case 0x0041://电流下降率2
+			value =	(u16)LoadSave.cdrop;
+		break;
+		case 0x0042://CV电压下降率1
+			value =	LoadSave.cvdowntime>>16;
+		break;
+		case 0x0043://CV电压下降率2
+			value =	(u16)LoadSave.cvdowntime;
+		break;
+		case 0x0044://ledvo1
+			value =	LoadSave.ledvo>>16;
+		break;
+		case 0x0045://ledvo2
+			value = (u16)LoadSave.ledvo;
+		break;
+		case 0x0046://ledio1
+			value =	LoadSave.ledio>>16;
+		break;
+		case 0x0047://ledio2
+			value = (u16)LoadSave.ledio;
+		break;
+		case 0x0048://ledrd1
+			value =	LoadSave.ledrd>>16;
+		break;
+		case 0x0049://ledrd2	
+			value = (u16)LoadSave.ledrd;
+		break;
+		case 0x004A://动态模式拉载电流A1
+			value =	LoadSave.valA>>16;
+		break;
+		case 0x004B://动态模式拉载电流A2
+			value = (u16)LoadSave.valA;
+		break;
+		case 0x004C://动态模式拉载电流B1
+			value =	LoadSave.valB>>16;
+		break;
+		case 0x004D://动态模式拉载电流B2
+			value = (u16)LoadSave.valB;
+		break;
+		case 0x004E://动态模式拉载持续时间A1
+			value =	LoadSave.timeA>>16;
+		break;
+		case 0x004F://动态模式拉载持续时间A2
+			value = (u16)LoadSave.timeA;
+		break;
+		case 0x0050://动态模式拉载持续时间B1
+			value =	LoadSave.timeB>>16;
+		break;
+		case 0x0051://动态模式拉载持续时间B2
+			value = (u16)LoadSave.timeB;
+		break;
+		case 0x0052://动态模式电流上升率1
+			value =	LoadSave.dynaIRise>>16;
+		break;
+		case 0x0053://动态模式电流上升率2
+			value = (u16)LoadSave.dynaIRise;
+		break;
+		case 0x0054://动态模式电流下降率1
+			value =	LoadSave.dynaIDrop>>16;
+		break;
+		case 0x0055://动态模式电流下降率2
+			value = (u16)LoadSave.dynaIDrop;
+		break;
+		case 0x0056://动态模式触发模式选择1
+			value =	LoadSave.dynamode>>16;
+		break;
+		case 0x0057://动态模式触发模式选择2
+			value = (u16)LoadSave.dynamode;
+		break;
+		default:
+			return 0;
+	}
+	reg_value[0] = value >> 8;
+	reg_value[1] = value;
+
+	return 1;											/* ???? */
+}
+
+static uint8_t MODS_WriteRegValue(uint16_t reg_addr, uint16_t reg_value)
+{
+
+
+	switch (reg_addr)							/* 判断寄存器地址 */
+	{		
+		case 0x0014://操作模式1
+			break;
+		case 0x0015://操作模式2
+		break;
+		case 0x0016://保护标志1
+		break;
+		case 0x0017://保护标志1
+		break;
+		case 0x0018://开关1
+			mainswitch = (u32)reg_value << 16;
+		break;
+		case 0x0019://开关2
+			mainswitch = mainswitch + reg_value;
+		break;
+		case 0x001A://模式1
+			LoadSave.mode = (u32)reg_value << 16;
+		break;
+		case 0x001B://模式2
+			LoadSave.mode = LoadSave.mode + reg_value;
+			if(LoadSave.mode == 4)
+			{
+				SetSystemStatus(SYS_STATUS_DYNAMIC);
+			}else if(LoadSave.mode == 5){
+				SetSystemStatus(SYS_STATUS_LED);
+			}else{
+				SetSystemStatus(SYS_STATUS_TEST);
+			}
+		break;
+		case 0x001C://电流档位1
+			LoadSave.crange = (u32)reg_value << 16;
+		break;
+		case 0x001D://电流档位2
+			LoadSave.crange = LoadSave.crange + reg_value;
+		break;
+		case 0x001E://电压档位1
+			LoadSave.vrange = (u32)reg_value << 16;
+		break;
+		case 0x001F://电压档位2
+			LoadSave.vrange = LoadSave.vrange + reg_value;
+		break;
+		case 0x0020://本机地址1
+			LoadSave.Addr = (u32)reg_value << 16;
+		break;
+		case 0x0021://本机地址2
+			LoadSave.Addr = LoadSave.Addr + reg_value;
+		break;
+		case 0x0022://波特率1
+		break;
+		case 0x0023://波特率2
+		break;
+		case 0x0024://远端测量开关1
+			LoadSave.sence = (u32)reg_value << 16;
+		break;
+		case 0x0025://远端测量开关2
+			LoadSave.sence = LoadSave.sence + reg_value;
+		break;
+		case 0x0026://设置电压1
+			LoadSave.voltage = (u32)reg_value << 16;
+		break;
+		case 0x0027://设置电压2
+			LoadSave.voltage = LoadSave.voltage + reg_value;
+		break;
+		case 0x0028://设置电流1
+			LoadSave.current = (u32)reg_value << 16;
+		break;
+		case 0x0029://设置电流2
+			LoadSave.current = LoadSave.current + reg_value;
+		break;
+		case 0x002A://设置电阻1
+			LoadSave.risistence = (u32)reg_value << 16;
+		break;
+		case 0x002B://设置电阻2
+			LoadSave.risistence = LoadSave.risistence + reg_value;
+		break;
+		case 0x002C://设置功率1
+			LoadSave.power = (u32)reg_value << 16;
+		break;
+		case 0x002D://设置功率2
+			LoadSave.power = LoadSave.power + reg_value;
+		break;
+		case 0x002E://OVP1
+		break;
+		case 0x002F://OVP2
+		break;
+		case 0x0030://OCP1
+		break;
+		case 0x0031://OCP2
+		break;
+		case 0x0032://OPP1
+		break;
+		case 0x0033://OPP2	
+		break;
+		case 0x0034://最大限制功率1
+			LoadSave.maxp = (u32)reg_value << 16;
+		break;
+		case 0x0035://最大限制功率2
+			LoadSave.maxp = LoadSave.maxp + reg_value;
+		break;
+		case 0x0036://最大限制电压1
+			LoadSave.maxv = (u32)reg_value << 16;
+		break;
+		case 0x0037://最大限制电压2
+			LoadSave.maxv = LoadSave.maxv + reg_value;
+		break;
+		case 0x0038://最大限制电流1
+			LoadSave.maxc = (u32)reg_value << 16;
+		break;
+		case 0x0039://最大限制电流2
+			LoadSave.maxc = LoadSave.maxc + reg_value;
+		break;
+		case 0x003A://加载电压1
+			LoadSave.onvol = (u32)reg_value << 16;
+		break;
+		case 0x003B://加载电压2
+			LoadSave.onvol = LoadSave.onvol + reg_value;
+		break;
+		case 0x003C://卸载电压1
+			LoadSave.offvol = (u32)reg_value << 16;
+		break;
+		case 0x003D://卸载电压2
+			LoadSave.offvol = LoadSave.offvol + reg_value;
+		break;
+		case 0x003E://电流上升率1
+			LoadSave.crise = (u32)reg_value << 16;
+		break;
+		case 0x003F://电流上升率2
+			LoadSave.crise = LoadSave.crise + reg_value;
+		break;
+		case 0x0040://电流下降率1
+			LoadSave.cdrop = (u32)reg_value << 16;
+		break;
+		case 0x0041://电流下降率2
+			LoadSave.cdrop = LoadSave.cdrop + reg_value;
+		break;
+		case 0x0042://CV电压下降率1
+			LoadSave.cvdowntime = (u32)reg_value << 16;
+		break;
+		case 0x0043://CV电压下降率2
+			LoadSave.cvdowntime = LoadSave.cvdowntime + reg_value;
+		break;
+		case 0x0044://ledvo1
+			LoadSave.ledvo = (u32)reg_value << 16;
+		break;
+		case 0x0045://ledvo2
+			LoadSave.ledvo = LoadSave.ledvo + reg_value;
+		break;
+		case 0x0046://ledio1
+			LoadSave.ledio = (u32)reg_value << 16;
+		break;
+		case 0x0047://ledio2
+			LoadSave.ledio = LoadSave.ledio + reg_value;
+		break;
+		case 0x0048://ledrd1
+			LoadSave.ledrd = (u32)reg_value << 16;
+		break;
+		case 0x0049://ledrd2	
+			LoadSave.ledrd = LoadSave.ledrd + reg_value;
+		break;
+		case 0x004A://动态模式拉载电流A1
+			LoadSave.valA = (u32)reg_value << 16;
+		break;
+		case 0x004B://动态模式拉载电流A2
+			LoadSave.valA = LoadSave.valA + reg_value;
+		break;
+		case 0x004C://动态模式拉载电流B1
+			LoadSave.valB = (u32)reg_value << 16;
+		break;
+		case 0x004D://动态模式拉载电流B2
+			LoadSave.valB = LoadSave.valB + reg_value;
+		break;
+		case 0x004E://动态模式拉载持续时间A1
+			LoadSave.timeA = (u32)reg_value << 16;
+		break;
+		case 0x004F://动态模式拉载持续时间A2
+			LoadSave.timeA = LoadSave.timeA + reg_value;
+		break;
+		case 0x0050://动态模式拉载持续时间B1
+			LoadSave.timeB = (u32)reg_value << 16;
+		break;
+		case 0x0051://动态模式拉载持续时间B2
+			LoadSave.timeB = LoadSave.timeB + reg_value;
+		break;
+		case 0x0052://动态模式电流上升率1
+			LoadSave.dynaIRise = (u32)reg_value << 16;
+		break;
+		case 0x0053://动态模式电流上升率2
+			LoadSave.dynaIRise = LoadSave.dynaIRise + reg_value;
+		break;
+		case 0x0054://动态模式电流下降率1
+			LoadSave.dynaIDrop = (u32)reg_value << 16;
+		break;
+		case 0x0055://动态模式电流下降率2
+			LoadSave.dynaIDrop = LoadSave.dynaIDrop + reg_value;
+		break;
+		case 0x0056://动态模式触发模式选择1
+			LoadSave.dynamode = (u32)reg_value << 16;
+		break;
+		case 0x0057://动态模式触发模式选择2
+			LoadSave.dynamode = LoadSave.dynamode + reg_value;
+		break;
+		
+		default:
+			return 0;		/* 参数异常，返回 0 */
+	}
+}
+
+static void MODS_03H(void)
+{
+    uint16_t reg;
+	uint16_t num;
+	uint16_t i;
+	uint8_t reg_value[256]; 
+
+    
+
+//	if (g_tModS.RxCount != 8)								/* 03H????ˇ8??? */
+//	{
+//		g_tModS.RspCode = RSP_ERR_VALUE;					/* ?????? */
+//		goto err_ret;
+//	}
+
+	reg = BEBufToUint16(&UART3_Buffer_Rece[2]); 				/* ???? */
+	num = BEBufToUint16(&UART3_Buffer_Rece[4])*2;					/* ????? */
+
+
+	for (i = 0; i < num/2; i++)
+	{
+		if (MODS_ReadRegValue(reg, &reg_value[2 * i]) == 0)	/* ????????reg_value */
+		{
+//			g_tModS.RspCode = RSP_ERR_REG_ADDR;				/* ??????? */
+			break;
+		}
+		reg++;
+	}
+
+//err_ret:
+		uart3sendlen = 0;
+		u3sendbuff[uart3sendlen++] = UART3_Buffer_Rece[0];
+		u3sendbuff[uart3sendlen++] = UART3_Buffer_Rece[1];
+		u3sendbuff[uart3sendlen++] = num;			/* ????? */
+
+		for (i = 0; i < num/2; i++)
+		{
+			u3sendbuff[uart3sendlen++] = reg_value[2*i];
+			u3sendbuff[uart3sendlen++] = reg_value[2*i+1];
+		}
+		u3sendbuff[uart3sendlen++] = Hardware_CRC(u3sendbuff,num+3);
+		u3sendbuff[uart3sendlen++] = Hardware_CRC(u3sendbuff,num+3)>>8;
+		
+		Uart3SendBuff(u3sendbuff,uart3sendlen);
+
+    
+}
+
+static void MODS_06H(void)
+{
+  uint16_t reg;
+	uint16_t value;
+	uint8_t i;
+
+	reg = BEBufToUint16(&UART3_Buffer_Rece[2]); 	/* 寄存器号 */
+	value = BEBufToUint16(&UART3_Buffer_Rece[4]);		/* 寄存器个数 */
+    
+ 	if (MODS_WriteRegValue(reg, value) == 1)	/* ????ёд???????? */
+ 	{
+ 		
+ 	}
+	uart3sendlen = 0;
+	for (i = 0; i < 6; i++)
+	{
+		u3sendbuff[i] = UART3_Buffer_Rece[i];
+	}
+	u3sendbuff[6] = Hardware_CRC(u3sendbuff,6);
+	u3sendbuff[7] = Hardware_CRC(u3sendbuff,6)>>8;
+	
+	Uart3SendBuff(u3sendbuff,8);
+
+
+}
+
+/*
+*********************************************************************************************************
+*	函 数 名: MODS_10H
+*	功能说明: 连续写多个寄存器.  进用于改写时钟
+*	形    参: 无
+*	返 回 值: 无
+*********************************************************************************************************
+*/
+static void MODS_10H(void)
+{
+	uint16_t reg_addr;
+	uint16_t reg_num;
+	uint8_t byte_num;
+	uint8_t i;
+	uint16_t value;
+	
+
+
+	/** 第2步： 数据解析 ===========================================================================*/
+	/* 数据是大端，要转换为小端 */
+	reg_addr = BEBufToUint16(&UART3_Buffer_Rece[2]); 	/* 寄存器号 */
+	reg_num = BEBufToUint16(&UART3_Buffer_Rece[4]);		/* 寄存器个数 */
+	byte_num = UART3_Buffer_Rece[6];					/* 后面的数据体字节数 */
+
+	/* 判断寄存器个数和后面数据字节数是否一致 */
+	if (byte_num != 2 * reg_num)
+	{
+		;
+	}
+	
+	/* 数据写入 */
+	for (i = 0; i < reg_num; i++)
+	{
+		value = BEBufToUint16(&UART3_Buffer_Rece[7 + 2 * i]);	/* 寄存器值 */
+
+		if (MODS_WriteRegValue(reg_addr + i, value) == 1)
+		{
+			;
+		}
+	}
+	uart3sendlen = 0;
+	for (i = 0; i < 6; i++)
+	{
+		u3sendbuff[i] = UART3_Buffer_Rece[i];
+	}
+	u3sendbuff[6] = Hardware_CRC(u3sendbuff,6);
+	u3sendbuff[7] = Hardware_CRC(u3sendbuff,6)>>8;
+	
+	Uart3SendBuff(u3sendbuff,8);
+}
+
 static void NVIC_Configuration(void)
 {
   NVIC_InitTypeDef NVIC_InitStructure;
@@ -1921,7 +2550,10 @@ void Rec3_Handle(void)
 	u8 sendnum=0;
 	memcpy(UART3_Buffer_Rece, usart3rxbuff, 256);
 	
-	crc_result = (UART3_Buffer_Rece[Uart3RXbuff_len-2] << 8) + UART3_Buffer_Rece[Uart3RXbuff_len-1];
+	if(LoadSave.devmode==2)
+		crc_result = (UART3_Buffer_Rece[Uart3RXbuff_len-1] << 8) + UART3_Buffer_Rece[Uart3RXbuff_len-2];
+	else
+		crc_result = (UART3_Buffer_Rece[Uart3RXbuff_len-2] << 8) + UART3_Buffer_Rece[Uart3RXbuff_len-1];
 	if(crc_result == Hardware_CRC(UART3_Buffer_Rece,Uart3RXbuff_len-2))//
 	{
 		if(UART3_Buffer_Rece[1] == 0x03)//判断功能码
@@ -2006,6 +2638,11 @@ void Rec3_Handle(void)
 					u3sendbuff[sendnum++] = Hardware_CRC(u3sendbuff,UART3_Buffer_Rece[5]*4+3);
 					Uart3SendBuff(u3sendbuff,sendnum);
 				}
+			}else if(LoadSave.devmode==2){//普通模式
+				memset((char *)u3sendbuff,0,sizeof(u3sendbuff));
+				lockflag = 1;
+				DrawLock(lockflag);
+				MODS_03H();
 			}
 		}else if(UART3_Buffer_Rece[1] == 0x10){
 			if(LoadSave.devmode==0)//主机模式
@@ -2042,6 +2679,13 @@ void Rec3_Handle(void)
 					Store_set_flash();
 					Test_Process();
 				}
+			}else if(LoadSave.devmode==2){//普通模式
+				memset((char *)u3sendbuff,0,sizeof(u3sendbuff));
+				lockflag = 1;
+				DrawLock(lockflag);
+				MODS_10H();
+				Para_Set_Comp();
+				Set_Para();
 			}
 		}else if(UART3_Buffer_Rece[1] == 0x06){
 			if(LoadSave.devmode==0)//主机模式
@@ -2060,6 +2704,13 @@ void Rec3_Handle(void)
 					Uart3SendBuff(UART3_Buffer_Rece,Uart3RXbuff_len);
 					Set_Para();
 				}
+			}else if(LoadSave.devmode==2){
+				memset((char *)u3sendbuff,0,sizeof(u3sendbuff));
+				lockflag = 1;
+				DrawLock(lockflag);
+				MODS_06H();
+				Para_Set_Comp();
+				Set_Para();
 			}
 		}
 		
