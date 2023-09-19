@@ -5790,7 +5790,7 @@ void Use_DebugProcess(void)
 				}break;
 				case Key_SHIFT:
 				{
-					if(LoadSave.Version < 12)//0-1200;1-800;2-600;3-400;4-2400;5-3500;6-500V;7-250V120A;8-250V60A
+					if(LoadSave.Version < 13)//0-1200;1-800;2-600;3-400;4-2400;5-3500;6-500V;7-250V120A;8-250V60A
 					{
 						LoadSave.Version++;
 					}else{
