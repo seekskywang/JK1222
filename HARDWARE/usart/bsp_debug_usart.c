@@ -2073,20 +2073,20 @@ void Set_Para(void)
 	sendbuff[117+28] = LoadSave.TCP>>8;
 	sendbuff[118+28] = LoadSave.TCP;//协议选择
 	
-	sendbuff[119+28] = LoadSave.Class_12>>24;
-	sendbuff[120+28] = LoadSave.Class_12>>16;
-	sendbuff[121+28] = LoadSave.Class_12>>8;
-	sendbuff[122+28] = LoadSave.Class_12;//快充模式选择开关
+	sendbuff[119+28] = LoadSave.facmaxpow>>24;
+	sendbuff[120+28] = LoadSave.facmaxpow>>16;
+	sendbuff[121+28] = LoadSave.facmaxpow>>8;
+	sendbuff[122+28] = LoadSave.facmaxpow;//快充模式选择开关
 	
-	sendbuff[123+28] = LoadSave.Class_15>>24;
-	sendbuff[124+28] = LoadSave.Class_15>>16;
-	sendbuff[125+28] = LoadSave.Class_15>>8; 
-	sendbuff[126+28] = LoadSave.Class_15;//快充模式选择开关
+	sendbuff[123+28] = LoadSave.facmaxvol>>24;
+	sendbuff[124+28] = LoadSave.facmaxvol>>16;
+	sendbuff[125+28] = LoadSave.facmaxvol>>8; 
+	sendbuff[126+28] = LoadSave.facmaxvol;//快充模式选择开关
 	
-	sendbuff[127+28] = LoadSave.Class_20>>24;
-	sendbuff[128+28] = LoadSave.Class_20>>16;
-	sendbuff[129+28] = LoadSave.Class_20>>8;
-	sendbuff[130+28] = LoadSave.Class_20;//快充模式选择开关
+	sendbuff[127+28] = LoadSave.facmaxcur>>24;
+	sendbuff[128+28] = LoadSave.facmaxcur>>16;
+	sendbuff[129+28] = LoadSave.facmaxcur>>8;
+	sendbuff[130+28] = LoadSave.facmaxcur;//快充模式选择开关
 	sendbuff[131+28] = Hardware_CRC(sendbuff,131+28)>>8;
 	sendbuff[132+28] = Hardware_CRC(sendbuff,131+28);
 	Uart1SendBuff(sendbuff,133+28);

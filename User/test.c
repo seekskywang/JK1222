@@ -196,7 +196,9 @@ void Para_Set_Comp(void)
 //	}else if(LoadSave.Version == 9){
 //		powermax = 12000000;
 //	}
-	powermax = verpowmax[LoadSave.Version];
+//	powermax = verpowmax[LoadSave.Version];
+	
+	powermax = LoadSave.facmaxpow;
 	if(LoadSave.sence > 1)
 	{
 		LoadSave.sence = 0;
@@ -287,9 +289,9 @@ void Para_Set_Comp(void)
 //			LoadSave.ledvo = MAX_SET_VOLT;
 //		}
 //	}
-	if(LoadSave.voltage > vervolmax[LoadSave.Version])
+	if(LoadSave.voltage > LoadSave.facmaxvol)
 	{
-		LoadSave.voltage = vervolmax[LoadSave.Version];
+		LoadSave.voltage = LoadSave.facmaxvol;
 	}
 		
 //	if(LoadSave.Version == 3)
@@ -314,9 +316,9 @@ void Para_Set_Comp(void)
 //			LoadSave.current = MAX_SET_CURRENT;
 //		}
 //	}
-	if(LoadSave.current > vercurmax[LoadSave.Version])
+	if(LoadSave.current > LoadSave.facmaxcur)
 	{
-		LoadSave.current = vercurmax[LoadSave.Version];
+		LoadSave.current = LoadSave.facmaxcur;
 	}
 	
 	if(LoadSave.risistence > MAX_SET_RES)
@@ -328,11 +330,11 @@ void Para_Set_Comp(void)
 		LoadSave.power = powermax;
 	}
 
-	if(LoadSave.onvol > vervolmax[LoadSave.Version] || LoadSave.onvol < 1000)
+	if(LoadSave.onvol > LoadSave.facmaxvol || LoadSave.onvol < 1000)
 	{
 		LoadSave.onvol = 0;
 	}
-	if(LoadSave.offvol > vervolmax[LoadSave.Version] || LoadSave.offvol < 1000)
+	if(LoadSave.offvol > LoadSave.facmaxvol || LoadSave.offvol < 1000)
 	{
 		LoadSave.offvol = 0;
 	}
@@ -364,9 +366,9 @@ void Para_Set_Comp(void)
 //			LoadSave.maxv = MAX_SET_VOLT;
 //		}
 //	}
-	if(LoadSave.maxv > vervolmax[LoadSave.Version])
+	if(LoadSave.maxv > LoadSave.facmaxvol)
 	{
-		LoadSave.maxv = vervolmax[LoadSave.Version];
+		LoadSave.maxv = LoadSave.facmaxvol;
 	}
 //	if(LoadSave.maxc > MAX_SET_CURRENT)
 //	{
@@ -410,9 +412,9 @@ void Para_Set_Comp(void)
 //			LoadSave.ledio = MAX_SET_CURRENT;
 //		}
 //	}
-	if(LoadSave.maxc > vercurmax[LoadSave.Version])
+	if(LoadSave.maxc > LoadSave.facmaxcur)
 	{
-		LoadSave.maxc = vercurmax[LoadSave.Version];
+		LoadSave.maxc = LoadSave.facmaxcur;
 	}
 	
 	if(LoadSave.maxp > powermax)
@@ -485,9 +487,9 @@ void Para_Set_Comp(void)
 //			LoadSave.ledio = MAX_SET_CURRENT;
 //		}
 //	}
-	if(LoadSave.ledio > vercurmax[LoadSave.Version])
+	if(LoadSave.ledio > LoadSave.facmaxcur)
 	{
-		LoadSave.ledio = vercurmax[LoadSave.Version];
+		LoadSave.ledio = LoadSave.facmaxcur;
 	}
 //	if(LoadSave.ledio > MAX_SET_CURRENT)
 //	{
@@ -555,17 +557,17 @@ void Para_Set_Comp(void)
 //			LoadSave.loadc3 = MAX_SET_CURRENT;
 //		}
 //	}
-	if(LoadSave.loadc1 > vercurmax[LoadSave.Version])
+	if(LoadSave.loadc1 > LoadSave.facmaxcur)
 	{
-		LoadSave.loadc1 = vercurmax[LoadSave.Version];
+		LoadSave.loadc1 = LoadSave.facmaxcur;
 	}
-	if(LoadSave.loadc2 > vercurmax[LoadSave.Version])
+	if(LoadSave.loadc2 > LoadSave.facmaxcur)
 	{
-		LoadSave.loadc2 = vercurmax[LoadSave.Version];
+		LoadSave.loadc2 = LoadSave.facmaxcur;
 	}
-	if(LoadSave.loadc3 > vercurmax[LoadSave.Version])
+	if(LoadSave.loadc3 > LoadSave.facmaxcur)
 	{
-		LoadSave.loadc3 = vercurmax[LoadSave.Version];
+		LoadSave.loadc3 = LoadSave.facmaxcur;
 	}
 //	if(LoadSave.loadc1 > MAX_SET_CURRENT)
 //	{
@@ -670,25 +672,25 @@ void Para_Set_Comp(void)
 //		}
 //	}
 	
-	if(LoadSave.coffv1 > vervolmax[LoadSave.Version])
+	if(LoadSave.coffv1 > LoadSave.facmaxvol)
 	{
-		LoadSave.coffv1 = vervolmax[LoadSave.Version];
+		LoadSave.coffv1 = LoadSave.facmaxvol;
 	}
-	if(LoadSave.coffv2 > vervolmax[LoadSave.Version])
+	if(LoadSave.coffv2 > LoadSave.facmaxvol)
 	{
-		LoadSave.coffv2 = vervolmax[LoadSave.Version];
+		LoadSave.coffv2 = LoadSave.facmaxvol;
 	}
-	if(LoadSave.coffv3 > vervolmax[LoadSave.Version])
+	if(LoadSave.coffv3 > LoadSave.facmaxvol)
 	{
-		LoadSave.coffv3 = vervolmax[LoadSave.Version];
+		LoadSave.coffv3 = LoadSave.facmaxvol;
 	}
 	if(LoadSave.loadr > MAX_SET_RES)
 	{
 		LoadSave.loadr = MAX_SET_RES;
 	}
-	if(LoadSave.coffvr > vervolmax[LoadSave.Version])
+	if(LoadSave.coffvr > LoadSave.facmaxvol)
 	{
-		LoadSave.coffvr = vervolmax[LoadSave.Version];
+		LoadSave.coffvr = LoadSave.facmaxvol;
 	}
 	
 	if(LoadSave.testdis > 1)
@@ -737,13 +739,13 @@ void Para_Set_Comp(void)
 //			LoadSave.valB = MAX_SET_CURRENT;
 //		}
 //	}
-	if(LoadSave.valA > vercurmax[LoadSave.Version])
+	if(LoadSave.valA > LoadSave.facmaxcur)
 	{
-		LoadSave.valA = vercurmax[LoadSave.Version];
+		LoadSave.valA = LoadSave.facmaxcur;
 	}
-	if(LoadSave.valB > vercurmax[LoadSave.Version])
+	if(LoadSave.valB > LoadSave.facmaxcur)
 	{
-		LoadSave.valB = vercurmax[LoadSave.Version];
+		LoadSave.valB = LoadSave.facmaxcur;
 	}
 	
 	if(LoadSave.timeA > 600000)
@@ -763,9 +765,9 @@ void Para_Set_Comp(void)
 		LoadSave.dynaIDrop = MAX_CURRENTUP;
 	}
 	
-	if(LoadSave.vhigh > vervolmax[LoadSave.Version])
+	if(LoadSave.vhigh > LoadSave.facmaxvol)
 	{
-		LoadSave.vhigh = vervolmax[LoadSave.Version];
+		LoadSave.vhigh = LoadSave.facmaxvol;
 	}
 	if(LoadSave.vlow > LoadSave.vhigh)
 	{
@@ -793,9 +795,9 @@ void Para_Set_Comp(void)
 //			LoadSave.chigh = MAX_SET_CURRENT;
 //		}
 //	}
-	if(LoadSave.chigh > vercurmax[LoadSave.Version])
+	if(LoadSave.chigh > LoadSave.facmaxcur)
 	{
-		LoadSave.chigh = vercurmax[LoadSave.Version];
+		LoadSave.chigh = LoadSave.facmaxcur;
 	}
 
 	if(LoadSave.clow > LoadSave.chigh)
@@ -876,9 +878,9 @@ void Para_Set_Comp(void)
 //					LoadSave.listlow[i] = MAX_SET_CURRENT;
 //				}
 //			}
-			if(LoadSave.listlow[i] > vercurmax[LoadSave.Version])
+			if(LoadSave.listlow[i] > LoadSave.facmaxcur)
 			{
-				LoadSave.listlow[i] = vercurmax[LoadSave.Version];
+				LoadSave.listlow[i] = LoadSave.facmaxcur;
 			}
 		}else if(LoadSave.listcomp[i] == 2){
 //			if(LoadSave.Version == 5){
@@ -934,9 +936,9 @@ void Para_Set_Comp(void)
 //					LoadSave.listlow[i] = MAX_SET_VOLT;
 //				}
 //			}
-			if(LoadSave.listlow[i] > vervolmax[LoadSave.Version])
+			if(LoadSave.listlow[i] > LoadSave.facmaxvol)
 			{
-				LoadSave.listlow[i] = vervolmax[LoadSave.Version];
+				LoadSave.listlow[i] = LoadSave.facmaxvol;
 			}
 		}else if(LoadSave.listcomp[i] == 3){
 			if(LoadSave.listvalue[i] > powermax)
@@ -1008,11 +1010,11 @@ void Para_Set_Comp(void)
 //				LoadSave.gatev = 0;
 //			}
 //		}
-		if(LoadSave.listonvol > vervolmax[LoadSave.Version])
+		if(LoadSave.listonvol > LoadSave.facmaxvol)
 		{
 			LoadSave.listonvol = 0;
 		}
-		if(LoadSave.gatev > vervolmax[LoadSave.Version])
+		if(LoadSave.gatev > LoadSave.facmaxvol)
 		{
 			LoadSave.gatev = 0;
 		}
@@ -5654,7 +5656,7 @@ void Use_DebugProcess(void)
 					if(calpage == 0)
 					{
 						if(list<1){
-							list=DEBUG_RANGE;
+							list=DEBUG_RANGE+3;
 						}else{
 							list --;
 						}
@@ -5676,7 +5678,7 @@ void Use_DebugProcess(void)
 				case Key_RIGHT:
 					if(calpage == 0)
 					{
-						if(list>15){
+						if(list>15+3){
 							list=0;
 						}else{
 							list ++;
@@ -5726,11 +5728,26 @@ void Use_DebugProcess(void)
 							Coordinates.ypos=FIRSTLINE+(SPACE1-2)*(list-1);
 							Coordinates.lenth=70;
 							DispValue.CalValue[list-1] = Disp_Set_Num(&Coordinates);
-						}else{
+						}else if(list >= 11 && list < 17){
 							Coordinates.xpos=LIST2+100;
 							Coordinates.ypos=FIRSTLINE+(SPACE1-2)*(list-11);
 							Coordinates.lenth=70;
 							DispValue.CalValue[list-1] = Disp_Set_Num(&Coordinates);
+						}else if(list == 17){
+							Coordinates.xpos=LIST2+100;
+							Coordinates.ypos=FIRSTLINE+(SPACE1-2)*(list-11);
+							Coordinates.lenth=80;
+							LoadSave.facmaxpow = Disp_Set_Num(&Coordinates);
+						}else if(list == 18){
+							Coordinates.xpos=LIST2+100;
+							Coordinates.ypos=FIRSTLINE+(SPACE1-2)*(list-11);
+							Coordinates.lenth=80;
+							LoadSave.facmaxvol = Disp_Set_Num(&Coordinates);
+						}else if(list == 19){
+							Coordinates.xpos=LIST2+100;
+							Coordinates.ypos=FIRSTLINE+(SPACE1-2)*(list-11);
+							Coordinates.lenth=80;
+							LoadSave.facmaxcur = Disp_Set_Num(&Coordinates);
 						}
 					}else if(calpage == 1){
 						Coordinates.xpos=LIST1+160;

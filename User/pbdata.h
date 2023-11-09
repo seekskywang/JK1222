@@ -357,6 +357,10 @@ typedef struct
 	u8 serialnumber[8];
 //通讯协议
 	u8 TCP;//0-modbus非标准;1-MODBUS-RTU;2-SCPI;
+//出厂设置仪器参数
+	u32 facmaxpow;//出厂最大功率
+	u32 facmaxvol;//出厂最大电压
+	u32 facmaxcur;//出厂最大电流
 }SaveData_Typedef;
 extern SaveData_Typedef LoadSave;
 

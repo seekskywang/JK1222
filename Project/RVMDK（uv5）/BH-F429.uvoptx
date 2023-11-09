@@ -119,6 +119,11 @@
       <TargetDriverDllRegistry>
         <SetRegEntry>
           <Number>0</Number>
+          <Key>DLGUARM</Key>
+          <Name>€w圷?€w圷?</Name>
+        </SetRegEntry>
+        <SetRegEntry>
+          <Number>0</Number>
           <Key>PWSTATINFO</Key>
           <Name>200,50,700</Name>
         </SetRegEntry>
@@ -154,7 +159,7 @@
           <Type>0</Type>
           <LineNumber>387</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134530720</Address>
+          <Address>134531104</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -296,6 +301,11 @@
           <count>25</count>
           <WinNumber>1</WinNumber>
           <ItemText>UART3_Buffer_Rece</ItemText>
+        </Ww>
+        <Ww>
+          <count>26</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>LoadSave,0x0A</ItemText>
         </Ww>
       </WatchWindow1>
       <WatchWindow2>
@@ -1133,7 +1143,7 @@
       <GroupNumber>6</GroupNumber>
       <FileNumber>60</FileNumber>
       <FileType>1</FileType>
-      <tvExp>1</tvExp>
+      <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\HARDWARE\flash_eerom.c</PathWithFileName>

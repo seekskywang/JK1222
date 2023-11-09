@@ -71,7 +71,13 @@ const uint8_t User_Check_Item[][12+1]=
     {"CV高档3"},
 	{"CV高档4"},
 	{"CV高档5"},
-    {"CV高档6"}
+    {"CV高档6"},
+		
+		{"功率"},
+	{"电压"},
+    {"电流"}
+		
+		
 //	
 //	{"电流低档4"},
 //    {"电流高档1"},
@@ -4392,9 +4398,10 @@ void Disp_Sys_Item(void)
         
 	}
 	Colour.Fword=LCD_COLOR_GREY;
-	WriteString_16(LIST2+90, FIRSTLINE+SPACE1*6, "SoftVer :2.6",  0);
+	WriteString_16(LIST2+90, FIRSTLINE+SPACE1*6, "SoftVer :2.7",  0);
 	//2.5增加标准RTU协议选择
 	//2.6上位机通讯改到前面板
+	//2.7仪器出厂参数可以自定义设置
 	Hex_Format(DispValue.version,1,2,0);
 	WriteString_16(LIST2+90, FIRSTLINE+SPACE1*7, "BoardVer:",  0);
 	WriteString_16(LIST2+90+90, FIRSTLINE+SPACE1*7, DispBuf,  0);
@@ -6467,6 +6474,44 @@ void Disp_Debug_value(vu8 list)
 				WriteString_16(LIST2+100, FIRSTLINE+(SPACE1-2)*(i-10), DispBuf,  1);
 			}
 		}
+		if(list==17)
+		{
+			Colour.black=LCD_COLOR_SELECT;
+		
+		}
+		else
+		{
+			Colour.black=LCD_COLOR_TEST_BACK;
+		}
+		LCD_DrawFullRect( LIST2+100, FIRSTLINE+(SPACE1-2)*(6),90 , SPACE1-2 ) ;//SPACE1
+		Hex_Format(LoadSave.facmaxpow, 4 , 8 , 0);
+		WriteString_16(LIST2+100, FIRSTLINE+(SPACE1-2)*(6), DispBuf,  1);
+		
+		if(list==18)
+		{
+			Colour.black=LCD_COLOR_SELECT;
+		
+		}
+		else
+		{
+			Colour.black=LCD_COLOR_TEST_BACK;
+		}
+		LCD_DrawFullRect( LIST2+100, FIRSTLINE+(SPACE1-2)*(7),90 , SPACE1-2 ) ;//SPACE1
+		Hex_Format(LoadSave.facmaxvol, 4 , 8 , 0);
+		WriteString_16(LIST2+100, FIRSTLINE+(SPACE1-2)*(7), DispBuf,  1);
+		
+		if(list==19)
+		{
+			Colour.black=LCD_COLOR_SELECT;
+		
+		}
+		else
+		{
+			Colour.black=LCD_COLOR_TEST_BACK;
+		}
+		LCD_DrawFullRect( LIST2+100, FIRSTLINE+(SPACE1-2)*(8),90 , SPACE1-2 ) ;//SPACE1
+		Hex_Format(LoadSave.facmaxcur, 4 , 8 , 0);
+		WriteString_16(LIST2+100, FIRSTLINE+(SPACE1-2)*(8), DispBuf,  1);
 	}else if(calpage == 1){
 		for(i=0;i<9;i++)
 		{
@@ -6565,7 +6610,7 @@ void Disp_UserCheck_Item(void)
 
 		}
 		
-		for(i=0;i<6;i++)
+		for(i=0;i<6+3;i++)
 		{
 			WriteString_16(LIST2, FIRSTLINE+(SPACE1-2)*(i), User_Check_Item[i+10],  0);
 		}
