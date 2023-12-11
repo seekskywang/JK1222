@@ -362,7 +362,7 @@ typedef struct
 	u32 facmaxvol;//出厂最大电压
 	u32 facmaxcur;//出厂最大电流
 }SaveData_Typedef;
-extern SaveData_Typedef LoadSave;
+extern SaveData_Typedef LoadSave; 
 
 
 

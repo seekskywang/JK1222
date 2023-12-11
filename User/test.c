@@ -1317,10 +1317,7 @@ void Power_Process(void)
 //	/*默认设置不透明	，该函数参数为不透明度，范围 0-0xff ，0为全透明，0xff为不透明*/
     LCD_SetTransparency(0xff);
 	LCD_Clear(LCD_COLOR_TEST_BACK);
-	if(LoadSave.jkflag == 0)
-	{
-    lcd_image((uint8_t *)gImage_open);
-	}
+	
     SPI_FLASH_Init();
 
 	
@@ -1330,6 +1327,10 @@ void Power_Process(void)
 
 	i=0;//显示延时
 	Read_set_flash();
+	if(LoadSave.jkflag == 0)
+	{
+    lcd_image((uint8_t *)gImage_open);
+	}
 // USBH_Init(&USB_OTG_Core,
 //	USB_OTG_FS_CORE_ID,
 //				&USB_Host,
@@ -5755,6 +5756,7 @@ void Use_DebugProcess(void)
 						Coordinates.lenth=70;
 						DispValue.CalValue[list+16-1] = Disp_Set_Num(&Coordinates);
 					}
+					Store_set_flash();
 				break;
 				
 				case Key_SAVE:

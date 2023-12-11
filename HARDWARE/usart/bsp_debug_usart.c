@@ -555,9 +555,13 @@ static void MODS_03H(void)
 //		g_tModS.RspCode = RSP_ERR_VALUE;					/* ?????? */
 //		goto err_ret;
 //	}
-
-	reg = BEBufToUint16(&UART3_Buffer_Rece[2]); 				/* ???? */
-	num = BEBufToUint16(&UART3_Buffer_Rece[4])*2;					/* ????? */
+	reg = BEBufToUint16(&UART3_Buffer_Rece[2]);
+	if(LoadSave.TCP == 0)
+	{
+		num = BEBufToUint16(&UART3_Buffer_Rece[4])*4;					/* ????? */
+	}else{
+		num = BEBufToUint16(&UART3_Buffer_Rece[4])*2;					/* ????? */
+	}
 
 
 	for (i = 0; i < num/2; i++)
@@ -581,8 +585,14 @@ static void MODS_03H(void)
 			u3sendbuff[uart3sendlen++] = reg_value[2*i];
 			u3sendbuff[uart3sendlen++] = reg_value[2*i+1];
 		}
-		u3sendbuff[uart3sendlen++] = Hardware_CRC(u3sendbuff,num+3);
-		u3sendbuff[uart3sendlen++] = Hardware_CRC(u3sendbuff,num+3)>>8;
+		if(LoadSave.TCP == 0)
+		{
+			u3sendbuff[uart3sendlen++] = Hardware_CRC(u3sendbuff,num+3)>>8;
+			u3sendbuff[uart3sendlen++] = Hardware_CRC(u3sendbuff,num+3);			
+		}else{
+			u3sendbuff[uart3sendlen++] = Hardware_CRC(u3sendbuff,num+3);
+			u3sendbuff[uart3sendlen++] = Hardware_CRC(u3sendbuff,num+3)>>8;
+		}
 		
 		Uart3SendBuff(u3sendbuff,uart3sendlen);
 
@@ -635,9 +645,16 @@ static void MODS_10H(void)
 
 	/** 第2步： 数据解析 ===========================================================================*/
 	/* 数据是大端，要转换为小端 */
-	reg_addr = BEBufToUint16(&UART3_Buffer_Rece[2]); 	/* 寄存器号 */
-	reg_num = BEBufToUint16(&UART3_Buffer_Rece[4]);		/* 寄存器个数 */
-	byte_num = UART3_Buffer_Rece[6];					/* 后面的数据体字节数 */
+	if(LoadSave.TCP == 0)//定制
+	{
+		reg_addr = BEBufToUint16(&UART3_Buffer_Rece[2])*2; 	/* 寄存器号 */
+		byte_num = BEBufToUint16(&UART3_Buffer_Rece[4]);		/* 后面的数据体字节数 */
+		reg_num = UART3_Buffer_Rece[6]*2;					/* 寄存器个数 */
+	}else{//标准
+		reg_addr = BEBufToUint16(&UART3_Buffer_Rece[2]); 	/* 寄存器号 */
+		reg_num = BEBufToUint16(&UART3_Buffer_Rece[4]);		/* 寄存器个数 */
+		byte_num = UART3_Buffer_Rece[6];					/* 后面的数据体字节数 */
+	}
 
 	/* 判断寄存器个数和后面数据字节数是否一致 */
 	if (byte_num != 2 * reg_num)
@@ -660,9 +677,16 @@ static void MODS_10H(void)
 	{
 		u3sendbuff[i] = UART3_Buffer_Rece[i];
 	}
-	u3sendbuff[6] = Hardware_CRC(u3sendbuff,6);
-	u3sendbuff[7] = Hardware_CRC(u3sendbuff,6)>>8;
 	
+	
+	if(LoadSave.TCP == 0)
+	{
+		u3sendbuff[7] = Hardware_CRC(u3sendbuff,6)>>8;	
+		u3sendbuff[6] = Hardware_CRC(u3sendbuff,6);		
+	}else{
+		u3sendbuff[6] = Hardware_CRC(u3sendbuff,6);
+		u3sendbuff[7] = Hardware_CRC(u3sendbuff,6)>>8;
+	}
 	Uart3SendBuff(u3sendbuff,8);
 }
 
@@ -2551,9 +2575,16 @@ void Rec3_Handle(void)
 	memcpy(UART3_Buffer_Rece, usart3rxbuff, 256);
 	
 	if(LoadSave.devmode==2)
-		crc_result = (UART3_Buffer_Rece[Uart3RXbuff_len-1] << 8) + UART3_Buffer_Rece[Uart3RXbuff_len-2];
-	else
+	{
+		if(LoadSave.TCP == 0)
+		{
+			crc_result = (UART3_Buffer_Rece[Uart3RXbuff_len-2] << 8) + UART3_Buffer_Rece[Uart3RXbuff_len-1];
+		}else{
+			crc_result = (UART3_Buffer_Rece[Uart3RXbuff_len-1] << 8) + UART3_Buffer_Rece[Uart3RXbuff_len-2];
+		}
+	}else{
 		crc_result = (UART3_Buffer_Rece[Uart3RXbuff_len-2] << 8) + UART3_Buffer_Rece[Uart3RXbuff_len-1];
+	}
 	if(crc_result == Hardware_CRC(UART3_Buffer_Rece,Uart3RXbuff_len-2))//
 	{
 		if(UART3_Buffer_Rece[1] == 0x03)//判断功能码

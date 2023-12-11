@@ -2003,10 +2003,7 @@ void Disp_Test_value(u8 num)
 	}else if(LoadSave.mode == 2){//CR
 		Hex_Format(LoadSave.risistence,1,7,0);
 	}else if(LoadSave.mode == 3){//CP
-		if(LoadSave.Version == 0 || LoadSave.Version == 4 || LoadSave.Version == 5
-			|| LoadSave.Version == 7 || LoadSave.Version == 8 || LoadSave.Version == 9
-		|| LoadSave.Version == 10|| LoadSave.Version == 11|| LoadSave.Version == 12
-		|| LoadSave.Version == 13)
+		if(LoadSave.facmaxpow >= 10000000)
 		{
 			Hex_Format(LoadSave.power,4,8,0);
 		}else{
@@ -2014,10 +2011,7 @@ void Disp_Test_value(u8 num)
 		}
 	}
 	if(LoadSave.mode == 3){//CP
-		if(LoadSave.Version == 0 || LoadSave.Version == 4 || LoadSave.Version == 5
-			|| LoadSave.Version == 7 || LoadSave.Version == 8 || LoadSave.Version == 9
-			|| LoadSave.Version == 10|| LoadSave.Version == 11|| LoadSave.Version == 12
-		|| LoadSave.Version == 13)
+		if(LoadSave.facmaxpow >= 10000000)
 		{
 			WriteString_16(LIST2+88-10, FIRSTLINE, DispBuf,  0);//增加算法  把顺序改过来
 		}else{
@@ -4398,10 +4392,11 @@ void Disp_Sys_Item(void)
         
 	}
 	Colour.Fword=LCD_COLOR_GREY;
-	WriteString_16(LIST2+90, FIRSTLINE+SPACE1*6, "SoftVer :2.7",  0);
+	WriteString_16(LIST2+90, FIRSTLINE+SPACE1*6, "SoftVer :2.8",  0);
 	//2.5增加标准RTU协议选择
 	//2.6上位机通讯改到前面板
 	//2.7仪器出厂参数可以自定义设置
+	//2.8增加定制协议选择
 	Hex_Format(DispValue.version,1,2,0);
 	WriteString_16(LIST2+90, FIRSTLINE+SPACE1*7, "BoardVer:",  0);
 	WriteString_16(LIST2+90+90, FIRSTLINE+SPACE1*7, DispBuf,  0);

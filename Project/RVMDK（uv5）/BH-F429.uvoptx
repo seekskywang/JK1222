@@ -120,7 +120,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGUARM</Key>
-          <Name>€w圷?€w圷?</Name>
+          <Name>€wP%?€wP%?</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -153,24 +153,7 @@
           <Name></Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
-      <Breakpoint>
-        <Bp>
-          <Number>0</Number>
-          <Type>0</Type>
-          <LineNumber>387</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>134531104</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>H:\JK1222\Project\HARDWARE\usart\bsp_debug_usart.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\Template\../../HARDWARE/usart/bsp_debug_usart.c\387</Expression>
-        </Bp>
-      </Breakpoint>
+      <Breakpoint/>
       <WatchWindow1>
         <Ww>
           <count>0</count>
@@ -306,6 +289,11 @@
           <count>26</count>
           <WinNumber>1</WinNumber>
           <ItemText>LoadSave,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>27</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>Uart3RXbuff_len,0x0A</ItemText>
         </Ww>
       </WatchWindow1>
       <WatchWindow2>

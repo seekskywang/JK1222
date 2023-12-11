@@ -3,7 +3,7 @@
 <title>Static Call Graph - [..\..\Output\Template.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image ..\..\Output\Template.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060422: Last Updated: Wed Sep 20 15:02:28 2023
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060422: Last Updated: Tue Nov 21 15:18:52 2023
 <BR><P>
 <H3>Maximum Stack Usage =       1020 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -1381,7 +1381,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[19f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Setup_Process
 </UL>
 
-<P><STRONG><a name="[109]"></a>Disp_Test_value</STRONG> (Thumb, 1568 bytes, Stack size 24 bytes, user.o(i.Disp_Test_value))
+<P><STRONG><a name="[109]"></a>Disp_Test_value</STRONG> (Thumb, 1404 bytes, Stack size 24 bytes, user.o(i.Disp_Test_value))
 <BR><BR>[Stack]<UL><LI>Max Depth = 136<LI>Call Chain = Disp_Test_value &rArr; Disp_Hint &rArr; WriteString_16 &rArr; PutChar &rArr; GetASCIICode
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WriteString_16
@@ -1682,7 +1682,7 @@ Global Symbols
 <LI><a href="#[13b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_GPIO_Config
 <LI><a href="#[186]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDRAM_GPIO_Config
 <LI><a href="#[166]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Spin_Init
-<LI><a href="#[169]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_FLASH_Init
+<LI><a href="#[168]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_FLASH_Init
 <LI><a href="#[132]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Keyboard_Init
 <LI><a href="#[126]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HS_USART_Config
 <LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Debug_USART_Config
@@ -1695,7 +1695,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[13b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_GPIO_Config
 <LI><a href="#[186]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDRAM_GPIO_Config
 <LI><a href="#[166]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Spin_Init
-<LI><a href="#[169]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_FLASH_Init
+<LI><a href="#[168]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_FLASH_Init
 <LI><a href="#[126]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HS_USART_Config
 <LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Debug_USART_Config
 <LI><a href="#[1e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USB_OTG_BSP_Init
@@ -2365,7 +2365,7 @@ Global Symbols
 <LI><a href="#[14e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Led_Process
 <LI><a href="#[10f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Dynamic_Process
 <LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Battery_Process
-<LI><a href="#[16b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_set_flash
+<LI><a href="#[16a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_set_flash
 <LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Rec3_Handle
 <LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Encoder_Process
 </UL>
@@ -2381,12 +2381,12 @@ Global Symbols
 <LI><a href="#[165]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RTC_WaitForSynchro
 <LI><a href="#[162]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RTC_ReadBackupRegister
 <LI><a href="#[127]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_APB1PeriphClockCmd
-<LI><a href="#[16a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM6_Configuration
+<LI><a href="#[169]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM6_Configuration
 <LI><a href="#[117]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_Configuration
-<LI><a href="#[168]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_image
+<LI><a href="#[16b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_image
 <LI><a href="#[166]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Spin_Init
-<LI><a href="#[169]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_FLASH_Init
-<LI><a href="#[16b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_set_flash
+<LI><a href="#[168]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_FLASH_Init
+<LI><a href="#[16a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_set_flash
 <LI><a href="#[163]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RTC_TimeAndDate_Set
 <LI><a href="#[161]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RTC_Set_WakeUp
 <LI><a href="#[160]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RTC_CLK_Config
@@ -2430,7 +2430,7 @@ Global Symbols
 <LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Debug_USART_DMA_INIT
 <LI><a href="#[186]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SDRAM_GPIO_Config
 <LI><a href="#[166]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Spin_Init
-<LI><a href="#[169]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_FLASH_Init
+<LI><a href="#[168]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_FLASH_Init
 <LI><a href="#[13c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Init
 <LI><a href="#[132]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Keyboard_Init
 <LI><a href="#[126]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HS_USART_Config
@@ -2464,7 +2464,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[c5]"></a>RCC_APB2PeriphClockCmd</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, stm32f4xx_rcc.o(i.RCC_APB2PeriphClockCmd))
-<BR><BR>[Called By]<UL><LI><a href="#[169]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_FLASH_Init
+<BR><BR>[Called By]<UL><LI><a href="#[168]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_FLASH_Init
 <LI><a href="#[13c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Init
 <LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Debug_USART_Config
 </UL>
@@ -2714,7 +2714,7 @@ Global Symbols
 <LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Battery_Process
 </UL>
 
-<P><STRONG><a name="[16b]"></a>Read_set_flash</STRONG> (Thumb, 24 bytes, Stack size 16 bytes, flash_eerom.o(i.Read_set_flash))
+<P><STRONG><a name="[16a]"></a>Read_set_flash</STRONG> (Thumb, 24 bytes, Stack size 16 bytes, flash_eerom.o(i.Read_set_flash))
 <BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = Read_set_flash &rArr; SPI_FLASH_BufferRead &rArr; SPI_FLASH_SendByte &rArr; SPI_TIMEOUT_UserCallback &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[183]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_FLASH_BufferRead
@@ -2723,7 +2723,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[15f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Power_Process
 </UL>
 
-<P><STRONG><a name="[ac]"></a>Rec3_Handle</STRONG> (Thumb, 1414 bytes, Stack size 16 bytes, bsp_debug_usart.o(i.Rec3_Handle))
+<P><STRONG><a name="[ac]"></a>Rec3_Handle</STRONG> (Thumb, 1448 bytes, Stack size 16 bytes, bsp_debug_usart.o(i.Rec3_Handle))
 <BR><BR>[Stack]<UL><LI>Max Depth = 408<LI>Call Chain = Rec3_Handle &rArr; Test_Process &rArr;  Rec3_Handle (Cycle)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SwitchLedOff
@@ -2783,7 +2783,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[192]"></a>SPI_Cmd</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, stm32f4xx_spi.o(i.SPI_Cmd))
-<BR><BR>[Called By]<UL><LI><a href="#[169]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_FLASH_Init
+<BR><BR>[Called By]<UL><LI><a href="#[168]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_FLASH_Init
 </UL>
 
 <P><STRONG><a name="[183]"></a>SPI_FLASH_BufferRead</STRONG> (Thumb, 74 bytes, Stack size 16 bytes, bsp_spi_flash.o(i.SPI_FLASH_BufferRead))
@@ -2791,7 +2791,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[18e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_FLASH_SendByte
 </UL>
-<BR>[Called By]<UL><LI><a href="#[16b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_set_flash
+<BR>[Called By]<UL><LI><a href="#[16a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_set_flash
 </UL>
 
 <P><STRONG><a name="[18f]"></a>SPI_FLASH_BufferWrite</STRONG> (Thumb, 290 bytes, Stack size 40 bytes, bsp_spi_flash.o(i.SPI_FLASH_BufferWrite))
@@ -2802,7 +2802,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Store_set_flash
 </UL>
 
-<P><STRONG><a name="[169]"></a>SPI_FLASH_Init</STRONG> (Thumb, 210 bytes, Stack size 32 bytes, bsp_spi_flash.o(i.SPI_FLASH_Init))
+<P><STRONG><a name="[168]"></a>SPI_FLASH_Init</STRONG> (Thumb, 210 bytes, Stack size 32 bytes, bsp_spi_flash.o(i.SPI_FLASH_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 52<LI>Call Chain = SPI_FLASH_Init &rArr; GPIO_PinAFConfig
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_PinAFConfig
@@ -2885,7 +2885,7 @@ Global Symbols
 <P><STRONG><a name="[191]"></a>SPI_Init</STRONG> (Thumb, 60 bytes, Stack size 8 bytes, stm32f4xx_spi.o(i.SPI_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = SPI_Init
 </UL>
-<BR>[Called By]<UL><LI><a href="#[169]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_FLASH_Init
+<BR>[Called By]<UL><LI><a href="#[168]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_FLASH_Init
 </UL>
 
 <P><STRONG><a name="[20]"></a>SVC_Handler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f4xx_it.o(i.SVC_Handler))
@@ -3109,7 +3109,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f429_439xx.o(RESET)
 </UL>
-<P><STRONG><a name="[16a]"></a>TIM6_Configuration</STRONG> (Thumb, 12 bytes, Stack size 8 bytes, bsp_basic_tim.o(i.TIM6_Configuration))
+<P><STRONG><a name="[169]"></a>TIM6_Configuration</STRONG> (Thumb, 12 bytes, Stack size 8 bytes, bsp_basic_tim.o(i.TIM6_Configuration))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = TIM6_Configuration &rArr; TIM6_NVIC_Configuration &rArr; NVIC_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_Mode_Config
@@ -4086,7 +4086,7 @@ Global Symbols
 <P><STRONG><a name="[1f]"></a>UsageFault_Handler</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, stm32f4xx_it.o(i.UsageFault_Handler))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f429_439xx.o(RESET)
 </UL>
-<P><STRONG><a name="[224]"></a>Use_DebugProcess</STRONG> (Thumb, 1264 bytes, Stack size 40 bytes, test.o(i.Use_DebugProcess))
+<P><STRONG><a name="[224]"></a>Use_DebugProcess</STRONG> (Thumb, 1268 bytes, Stack size 40 bytes, test.o(i.Use_DebugProcess))
 <BR><BR>[Stack]<UL><LI>Max Depth = 392<LI>Call Chain = Use_DebugProcess &rArr; Encoder_Process &rArr; __hardfp_pow &rArr; __kernel_poly &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SwitchLedOff
@@ -4523,7 +4523,7 @@ Global Symbols
 <LI><a href="#[150]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ListCompBeep
 </UL>
 
-<P><STRONG><a name="[168]"></a>lcd_image</STRONG> (Thumb, 42 bytes, Stack size 0 bytes, bsp_lcd.o(i.lcd_image))
+<P><STRONG><a name="[16b]"></a>lcd_image</STRONG> (Thumb, 42 bytes, Stack size 0 bytes, bsp_lcd.o(i.lcd_image))
 <BR><BR>[Called By]<UL><LI><a href="#[15f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Power_Process
 </UL>
 
@@ -4543,7 +4543,7 @@ Global Symbols
 <LI><a href="#[224]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Use_DebugProcess
 <LI><a href="#[220]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UpdateProcess
 <LI><a href="#[184]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Test_Process
-<LI><a href="#[16a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM6_Configuration
+<LI><a href="#[169]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM6_Configuration
 <LI><a href="#[262]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysTick_Init
 <LI><a href="#[19f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Setup_Process
 <LI><a href="#[15f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Power_Process
@@ -4677,7 +4677,7 @@ Local Symbols
 <BR>[Calls]<UL><LI><a href="#[125]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NVIC_PriorityGroupConfig
 <LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NVIC_Init
 </UL>
-<BR>[Called By]<UL><LI><a href="#[16a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM6_Configuration
+<BR>[Called By]<UL><LI><a href="#[169]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM6_Configuration
 </UL>
 
 <P><STRONG><a name="[1ac]"></a>TIM_Mode_Config</STRONG> (Thumb, 58 bytes, Stack size 16 bytes, bsp_basic_tim.o(i.TIM_Mode_Config))
@@ -4689,7 +4689,7 @@ Local Symbols
 <LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_ITConfig
 <LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_Cmd
 </UL>
-<BR>[Called By]<UL><LI><a href="#[16a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM6_Configuration
+<BR>[Called By]<UL><LI><a href="#[169]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM6_Configuration
 </UL>
 
 <P><STRONG><a name="[cd]"></a>Debug_USART_DMA_INIT</STRONG> (Thumb, 240 bytes, Stack size 72 bytes, bsp_debug_usart.o(i.Debug_USART_DMA_INIT))
@@ -4741,7 +4741,7 @@ Local Symbols
 <BR>[Called By]<UL><LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Set_Para
 </UL>
 
-<P><STRONG><a name="[155]"></a>MODS_03H</STRONG> (Thumb, 262 bytes, Stack size 272 bytes, bsp_debug_usart.o(i.MODS_03H))
+<P><STRONG><a name="[155]"></a>MODS_03H</STRONG> (Thumb, 354 bytes, Stack size 272 bytes, bsp_debug_usart.o(i.MODS_03H))
 <BR><BR>[Stack]<UL><LI>Max Depth = 296<LI>Call Chain = MODS_03H &rArr; Uart3SendBuff &rArr; delay_us
 </UL>
 <BR>[Calls]<UL><LI><a href="#[158]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart3SendBuff
@@ -4763,7 +4763,7 @@ Local Symbols
 <BR>[Called By]<UL><LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Rec3_Handle
 </UL>
 
-<P><STRONG><a name="[15b]"></a>MODS_10H</STRONG> (Thumb, 132 bytes, Stack size 24 bytes, bsp_debug_usart.o(i.MODS_10H))
+<P><STRONG><a name="[15b]"></a>MODS_10H</STRONG> (Thumb, 210 bytes, Stack size 24 bytes, bsp_debug_usart.o(i.MODS_10H))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = MODS_10H &rArr; Uart3SendBuff &rArr; delay_us
 </UL>
 <BR>[Calls]<UL><LI><a href="#[158]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Uart3SendBuff
