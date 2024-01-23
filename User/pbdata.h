@@ -361,6 +361,8 @@ typedef struct
 	u32 facmaxpow;//出厂最大功率
 	u32 facmaxvol;//出厂最大电压
 	u32 facmaxcur;//出厂最大电流
+//测试模式
+	u8 testmode;//0-精准；1-快速
 }SaveData_Typedef;
 extern SaveData_Typedef LoadSave; 
 

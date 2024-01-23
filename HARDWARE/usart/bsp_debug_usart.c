@@ -1486,6 +1486,25 @@ void Set_Tcp(void)
 	setflag = 1;
 }
 
+//发送设置测试模式命令
+void Set_Test_Mode(void)
+{
+	memset((char *)sendbuff,0,sizeof(sendbuff));
+	sendbuff[0] = 0x01;
+	sendbuff[1] = 0x06;
+	sendbuff[2] = 0x00;
+	sendbuff[3] = 0x35;
+	sendbuff[4] = 0x00;
+	sendbuff[5] = 0x00;
+	sendbuff[6] = 0x00;
+	sendbuff[7] = LoadSave.testmode;
+	sendbuff[8] = Hardware_CRC(sendbuff,8)>>8;
+	sendbuff[9] = Hardware_CRC(sendbuff,8);
+	Uart1SendBuff(sendbuff,10);
+//	Usart1_Send((char *)sendbuff,10);
+	setflag = 1;
+}
+
 //发送跳转boot命令
 void Set_Boot(void)
 {
@@ -1551,7 +1570,7 @@ void Set_Para(void)
 //	sendbuff[5] = 0x7C;
 //	sendbuff[6] = 0x1F;
 	sendbuff[5] = 0x98;
-	sendbuff[6] = 0x26;
+	sendbuff[6] = 0x2A;
 	
 	sendbuff[7] = 0x00;
 	sendbuff[8] = 0x00;
@@ -2100,20 +2119,41 @@ void Set_Para(void)
 	sendbuff[119+28] = LoadSave.facmaxpow>>24;
 	sendbuff[120+28] = LoadSave.facmaxpow>>16;
 	sendbuff[121+28] = LoadSave.facmaxpow>>8;
-	sendbuff[122+28] = LoadSave.facmaxpow;//快充模式选择开关
+	sendbuff[122+28] = LoadSave.facmaxpow;//最大功率
 	
 	sendbuff[123+28] = LoadSave.facmaxvol>>24;
 	sendbuff[124+28] = LoadSave.facmaxvol>>16;
 	sendbuff[125+28] = LoadSave.facmaxvol>>8; 
-	sendbuff[126+28] = LoadSave.facmaxvol;//快充模式选择开关
+	sendbuff[126+28] = LoadSave.facmaxvol;//最大电压
 	
 	sendbuff[127+28] = LoadSave.facmaxcur>>24;
 	sendbuff[128+28] = LoadSave.facmaxcur>>16;
 	sendbuff[129+28] = LoadSave.facmaxcur>>8;
-	sendbuff[130+28] = LoadSave.facmaxcur;//快充模式选择开关
-	sendbuff[131+28] = Hardware_CRC(sendbuff,131+28)>>8;
-	sendbuff[132+28] = Hardware_CRC(sendbuff,131+28);
-	Uart1SendBuff(sendbuff,133+28);
+	sendbuff[130+28] = LoadSave.facmaxcur;//最大电流
+	
+	sendbuff[131+28] = 0;
+	sendbuff[132+28] = 0;
+	sendbuff[133+28] = 0;
+	sendbuff[134+28] = 0;//BOOTLOAD
+	
+	sendbuff[135+28] = 0;
+	sendbuff[136+28] = 0;
+	sendbuff[137+28] = 0;
+	sendbuff[138+28] = 0;//BOOTLOAD
+	
+	sendbuff[139+28] = 0;
+	sendbuff[140+28] = 0;
+	sendbuff[141+28] = 0;
+	sendbuff[142+28] = 0;//BOOTMODE
+	
+	sendbuff[143+28] = LoadSave.testmode>>24;
+	sendbuff[144+28] = LoadSave.testmode>>16;
+	sendbuff[145+28] = LoadSave.testmode>>8;
+	sendbuff[146+28] = LoadSave.testmode;//测试模式
+	
+	sendbuff[147+28] = Hardware_CRC(sendbuff,147+28)>>8;
+	sendbuff[148+28] = Hardware_CRC(sendbuff,147+28);
+	Uart1SendBuff(sendbuff,149+28);
 //	Usart1_Send((char *)sendbuff,133+28);
 	setflag = 1;
 }

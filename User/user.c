@@ -692,6 +692,7 @@ const uint8_t Sys_Setitem[][10+1]=
   {"时间"},
 	{"从机数量"},
 	{"从机编号"},
+	{"测试模式"},
 //    {"文件名称"},
 	
 };
@@ -707,6 +708,7 @@ const uint8_t Sys_Setitem_E[][10+1]=
   {"TIME"},
 	{"DEVNUM"},
 	{"DEVNo"},
+	{"TESTMODE"},
 //    {"FILE"},
 	
 };
@@ -737,6 +739,20 @@ const uint8_t BiasButton_Tip[][7+1]=  //频率选择时候的下面的提示符号
 
 };
 
+
+const uint8_t Testmode_Item[][7+1]=
+{
+	{"精准"},
+	{"快速"}
+
+};
+
+const uint8_t Testmode_Item_E[][7+1]=
+{
+	{"ACCU"},
+	{"FAST"}
+
+};
 const uint8_t Sys_Sys[][20+1]=
 {
 	{"仪器型号  JK5016"},
@@ -4334,12 +4350,12 @@ void Disp_Sys_Screen(void)
 void Disp_SysLine(void)
 {
  	uint32_t i;
-	for(i=0;i<9;i++)
+	for(i=0;i<10;i++)
 	{
-		//if(i<=13/2)
+		if(i<9)
 			LCD_DrawFullRect( 90, FIRSTLINE+(i+1)*SPACE1-2, 100,1);
-//		else
-//			LCD_DrawLine( 90+250, FIRSTLINE+(i-13/2+1)*SPACE1-2, 90+100+250,FIRSTLINE+(i-13/2+1)*SPACE1-2, White );
+		else
+			LCD_DrawFullRect( 90+250, FIRSTLINE+(i+1-9)*SPACE1-2, 100,1);
 	}
 
 }
@@ -4388,15 +4404,19 @@ void Disp_Sys_Item(void)
 	for(i=0;i<(sizeof(Sys_Setitem)/(sizeof(Sys_Setitem[0])));i++)
 	//if(i<=sizeof(Sys_Setitem)/(sizeof(Sys_Setitem[0]))/2)
 	{
-		WriteString_16(LIST1, FIRSTLINE+SPACE1*i, pt[i],  0);
+		if(i < 9)
+			WriteString_16(LIST1, FIRSTLINE+SPACE1*i, pt[i],  0);
+		else
+			WriteString_16(LIST2, FIRSTLINE+SPACE1*(i-9), pt[i],  0);
         
 	}
 	Colour.Fword=LCD_COLOR_GREY;
-	WriteString_16(LIST2+90, FIRSTLINE+SPACE1*6, "SoftVer :2.8",  0);
+	WriteString_16(LIST2+90, FIRSTLINE+SPACE1*6, "SoftVer :2.9",  0);
 	//2.5增加标准RTU协议选择
 	//2.6上位机通讯改到前面板
 	//2.7仪器出厂参数可以自定义设置
 	//2.8增加定制协议选择
+	//2.9增加测试模式精准和快速选择
 	Hex_Format(DispValue.version,1,2,0);
 	WriteString_16(LIST2+90, FIRSTLINE+SPACE1*7, "BoardVer:",  0);
 	WriteString_16(LIST2+90+90, FIRSTLINE+SPACE1*7, DispBuf,  0);
@@ -4425,6 +4445,7 @@ void Disp_Sys_value(u8 keynum)
     RTC_TimeTypeDef RTC_TimeStructure;
 	RTC_DateTypeDef RTC_DateStructure;
     RTC_TimeStructure.RTC_H12 = RTC_HourFormat_24;
+	Colour.Fword = White;
 //	vu32 Select_color;
 //串口
 //    keynum=1;
@@ -4602,6 +4623,11 @@ void Disp_Sys_value(u8 keynum)
 	else
 	{
 		Colour.black=LCD_COLOR_TEST_BACK;
+	}if(LoadSave.language)
+  {
+		WriteString_16(LIST1+90, FIRSTLINE+SPACE1+2, Test_PCTLvalue_E[LoadSave.TCP],  0);
+	}else{
+		WriteString_16(LIST1+90, FIRSTLINE+SPACE1+2, Test_PCTLvalue[LoadSave.TCP],  0);
 	}
 	//SaveData.Sys_Setup.Timer_Value.Hour=1;
 	LCD_DrawFullRect( LIST1+90, FIRSTLINE+SPACE1*6,18 , SPACE1-4 ) ;//SPACE1
@@ -4679,6 +4705,27 @@ void Disp_Sys_value(u8 keynum)
 	LCD_DrawFullRect( LIST1+90, FIRSTLINE+SPACE1*8,SELECT_1END-(LIST1+90) , SPACE1-4 ) ;
 	Hex_Format(LoadSave.slaveNo,0,3,0);
 	WriteString_16(LIST1+90, FIRSTLINE+SPACE1*8+2, DispBuf,  0);
+	
+	//测试模式
+	Black_Select=(keynum==14)?1:0;
+	if(Black_Select)
+	{
+		Colour.black=LCD_COLOR_SELECT;
+	
+	}
+	else
+	{
+		Colour.black=LCD_COLOR_TEST_BACK;
+	}
+		
+	LCD_DrawFullRect( LIST2+90, FIRSTLINE,SELECT_2END-(LIST2+90) , SPACE1-4 ) ;
+	if(LoadSave.language)
+  {
+		WriteString_16(LIST2+90, FIRSTLINE+2,Testmode_Item_E[LoadSave.testmode],  0);
+	}else{
+		WriteString_16(LIST2+90, FIRSTLINE+2, Testmode_Item[LoadSave.testmode],  0);
+	}
+//	WriteString_16(LIST2+90, FIRSTLINE+2, DispBuf,  0);
 	
 	Disp_Fastbutton();
   Colour.Fword=White;
@@ -4770,7 +4817,16 @@ void Disp_Sys_value(u8 keynum)
 				WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, BiasButton_Tip[i],  0);
 			}
 			break;
-	
+		case 14:
+		
+			for(i=0;i<2;i++)
+			{
+				if(LoadSave.language)
+					WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE-16, BUTTOM_Y_VALUE, Testmode_Item_E[i],  0);
+				else
+					WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE-16, BUTTOM_Y_VALUE, Testmode_Item[i],  0);
+			}
+			break;
 //		case 12:
 //			Colour.Fword=White;
 //			Colour.black=LCD_COLOR_TEST_BUTON;
@@ -4981,6 +5037,11 @@ void Use_SysSetProcess(void)
                             RTC_SetTime(RTC_Format_BINorBCD, &RTC_TimeStructure);
                             RTC_WriteBackupRegister(RTC_BKP_DRX, RTC_BKP_DATA);
 							break;	
+							case 14:
+								LoadSave.testmode = 0;
+								Set_Test_Mode();
+								Store_set_flash();
+							break;	
 						default:
 						break;
 					
@@ -5070,7 +5131,11 @@ void Use_SysSetProcess(void)
                             RTC_SetTime(RTC_Format_BINorBCD, &RTC_TimeStructure);
                             RTC_WriteBackupRegister(RTC_BKP_DRX, RTC_BKP_DATA);
 							break;
-						
+						case 14:
+							LoadSave.testmode = 1;
+							Set_Test_Mode();
+							Store_set_flash();
+						break;
 						default:
 						break;
 					}				

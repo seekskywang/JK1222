@@ -210,7 +210,7 @@ uint16_t Encoder_Process(u8 list)
 			case SYS_STATUS_SYSSET:
 			{
 				key = list;
-				if(key<13)
+				if(key<14)
 				{
 					key++;
 				}else{
@@ -435,7 +435,7 @@ uint16_t Encoder_Process(u8 list)
 				{
 					key--;
 				}else{
-					key = 13;
+					key = 14;
 				}
 			}break;
 			case SYS_STATUS_DYNAMIC:

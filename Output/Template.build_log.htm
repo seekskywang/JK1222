@@ -27,134 +27,15 @@ Project File Date:  06/25/2023
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 4 (build 422)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
 Build target '工程模板'
-compiling main.c...
-compiling GPIO.C...
-compiling pbdata.c...
-compiling keyboard.c...
-..\..\HARDWARE\keyboard.c(168): warning:  #111-D: statement is unreachable
-  			}break;
-..\..\HARDWARE\keyboard.c(209): warning:  #111-D: statement is unreachable
-  			}break;
-..\..\HARDWARE\keyboard.c(377): warning:  #111-D: statement is unreachable
-  			}break;
-..\..\HARDWARE\keyboard.c(430): warning:  #111-D: statement is unreachable
-  			}break;
-..\..\HARDWARE\keyboard.c(468): warning:  #940-D: missing return statement at end of non-void function "Encoder_Process" 
-  }
-..\..\HARDWARE\keyboard.c(9): warning:  #177-D: variable "ContinueKeyTicks"  was declared but never referenced
-  static u8 ContinueKeyTicks;//持续按键节拍
-..\..\HARDWARE\keyboard.c: 6 warnings, 0 errors
-compiling stm32f4xx_it.c...
-..\..\User\stm32f4xx_it.c(58): warning:  #177-D: function "MODS_03H"  was declared but never referenced
-  static void MODS_03H(void);
-..\..\User\stm32f4xx_it.c(59): warning:  #177-D: function "MODS_06H"  was declared but never referenced
-  static void MODS_06H(void);
-..\..\User\stm32f4xx_it.c(60): warning:  #177-D: function "RemTrig"  was declared but never referenced
-  static void RemTrig(void);
-..\..\User\stm32f4xx_it.c: 3 warnings, 0 errors
-compiling bsp_lcd.c...
-..\..\User\hzk.h(1100): warning:  #375-D: declaration requires a typedef name
-  };
-..\..\HARDWARE\lcd\bsp_lcd.c: 1 warning, 0 errors
-compiling user.c...
-..\..\User\user.c(1791): warning:  #177-D: variable "pt"  was declared but never referenced
-      const u8 (*pt)[sizeof(Bat_Setitem[0])];
-..\..\User\user.c(1838): warning:  #177-D: variable "pt"  was declared but never referenced
-  	const u8 (*pt)[sizeof(List_Setitem[0])];
-..\..\User\user.c(1921): warning:  #177-D: variable "ppt"  was declared but never referenced
-      const u8 (*ppt)[11];
-..\..\User\user.c(2147): warning:  #177-D: variable "ppt"  was declared but never referenced
-      const u8 (*ppt)[11];
-..\..\User\user.c(2148): warning:  #177-D: variable "pt"  was declared but never referenced
-      const u8 (*pt)[7];
-..\..\User\user.c(2220): warning:  #177-D: variable "ppt"  was declared but never referenced
-      const u8 (*ppt)[11];
-..\..\User\user.c(2509): warning:  #177-D: variable "ppt"  was declared but never referenced
-      const u8 (*ppt)[11];
-..\..\User\user.c(2710): warning:  #177-D: variable "ppt"  was declared but never referenced
-  	const u8 (*ppt)[11];
-..\..\User\user.c(2914): warning:  #177-D: variable "ppt"  was declared but never referenced
-  	const u8 (*ppt)[11];
-..\..\User\user.c(3605): warning:  #177-D: variable "pt1"  was declared but never referenced
-  	const u8 (*pt1)[8];
-..\..\User\user.c(3606): warning:  #177-D: variable "ppt"  was declared but never referenced
-      const u8 (*ppt)[11];
-..\..\User\user.c(3989): warning:  #177-D: variable "pt1"  was declared but never referenced
-  	const u8 (*pt1)[8];
-..\..\User\user.c(3990): warning:  #177-D: variable "ppt"  was declared but never referenced
-      const u8 (*ppt)[11];
-..\..\User\user.c(4406): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "const uint8_t *"
-  	WriteString_16(
-IST2+90+40, 
-IRSTLINE+
-PACE1*8, snbuf,  0);
-..\..\User\user.c(4852): warning:  #177-D: variable "key_count"  was declared but never referenced
-      char key_count=0;
-..\..\User\user.c(6406): warning:  #167-D: argument of type "u8 *" is incompatible with parameter of type "char *restrict"
-  		sprintf(bmpname,"0:20%0.2d%0.2d%0.2d%0.2d%0.2d%0.2d.bmp", 
-..\..\User\user.c: 16 warnings, 0 errors
-compiling test.c...
-..\..\User\test.c(1035): warning:  #177-D: variable "textbuf"  was declared but never referenced
-  	u8 textbuf[50];
-..\..\User\test.c(2483): warning:  #177-D: variable "oldskip"  was declared but never referenced
-  	static u32 oldskip;
-..\..\User\test.c(2484): warning:  #177-D: variable "sendbuf"  was declared but never referenced
-  	char sendbuf[24];
-..\..\User\test.c(2487): warning:  #177-D: variable "fnum"  was declared but never referenced
-      UINT fnum;
-..\..\User\test.c(2489): warning:  #177-D: variable "color"  was declared but never referenced
-      u32 color;
-..\..\User\test.c(3103): warning:  #177-D: variable "oldskip"  was declared but never referenced
-  	static u32 oldskip;
-..\..\User\test.c(3104): warning:  #177-D: variable "sendbuf"  was declared but never referenced
-  	char sendbuf[24];
-..\..\User\test.c(3108): warning:  #177-D: variable "fnum"  was declared but never referenced
-      UINT fnum;
-..\..\User\test.c(3109): warning:  #177-D: variable "color"  was declared but never referenced
-      u32 color;
-..\..\User\test.c(3422): warning:  #177-D: variable "oldskip"  was declared but never referenced
-  	static u32 oldskip;
-..\..\User\test.c(3423): warning:  #177-D: variable "sendbuf"  was declared but never referenced
-  	char sendbuf[24];
-..\..\User\test.c(3426): warning:  #177-D: variable "fnum"  was declared but never referenced
-      UINT fnum;
-..\..\User\test.c(3428): warning:  #177-D: variable "color"  was declared but never referenced
-      u32 color;
-..\..\User\test.c(4049): warning:  #177-D: variable "oldskip"  was declared but never referenced
-  	static u32 oldskip;
-..\..\User\test.c(4050): warning:  #177-D: variable "sendbuf"  was declared but never referenced
-  	char sendbuf[24];
-..\..\User\test.c(4053): warning:  #177-D: variable "fnum"  was declared but never referenced
-      UINT fnum;
-..\..\User\test.c(4055): warning:  #177-D: variable "color"  was declared but never referenced
-      u32 color;
-..\..\User\test.c(4534): warning:  #177-D: variable "oldskip"  was declared but never referenced
-  	static u32 oldskip;
-..\..\User\test.c(4535): warning:  #177-D: variable "sendbuf"  was declared but never referenced
-  	char sendbuf[24];
-..\..\User\test.c(4538): warning:  #177-D: variable "fnum"  was declared but never referenced
-  	UINT fnum;
-..\..\User\test.c(4540): warning:  #177-D: variable "color"  was declared but never referenced
-  	u32 color;
-..\..\User\test.c(5576): warning:  #177-D: variable "a"  was declared but never referenced
-      float a,b;
-..\..\User\test.c(5576): warning:  #177-D: variable "b"  was declared but never referenced
-      float a,b;
-..\..\User\test.c: 23 warnings, 0 errors
-compiling bsp_rtc.c...
-compiling flash_eerom.c...
-compiling bsp_bmp.c...
-compiling diskio.c...
 compiling bsp_debug_usart.c...
 ..\..\HARDWARE\usart\bsp_debug_usart.c(542): warning:  #940-D: missing return statement at end of non-void function "MODS_WriteRegValue" 
   }
 ..\..\HARDWARE\usart\bsp_debug_usart.c: 1 warning, 0 errors
-compiling usbh_usr.c...
 linking...
-Program Size: Code=108376 RO-data=630000 RW-data=724 ZI-data=97516  
+Program Size: Code=109000 RO-data=630088 RW-data=724 ZI-data=97516  
 FromELF: creating hex file...
 After Build - User command #1: C:\Keil_v5\ARM\ARMCC\bin\fromelf.exe --bin -o ..\..\Output\update.bin ..\..\Output\Template.axf
-"..\..\Output\Template.axf" - 0 Error(s), 50 Warning(s).
+"..\..\Output\Template.axf" - 0 Error(s), 1 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -167,7 +48,7 @@ Package Vendor: Keil
   C:/Keil_v5/ARM/PACK/Keil/STM32F4xx_DFP/2.17.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include
 
 <h2>Collection of Component Files used:</h2>
-Build Time Elapsed:  00:00:06
+Build Time Elapsed:  00:00:04
 </pre>
 </body>
 </html>

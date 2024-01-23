@@ -158,6 +158,10 @@ void READ_COMP(void)
 void Para_Set_Comp(void)
 {
 	u8 i;
+	if(LoadSave.testmode > 1)
+	{
+		LoadSave.testmode=0;
+	}
 	if(LoadSave.devmode > 2)
 	{
 		LoadSave.devmode=0;
@@ -2593,7 +2597,7 @@ void Test_Beep(void)
 				else
 					slaveID=1;
 			}
-			F_100ms=FALSE;
+			F_100ms=FALSE; 
 		}
 		if(setflag != 0)
 		{
