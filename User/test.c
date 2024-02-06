@@ -2577,6 +2577,7 @@ void Test_Beep(void)
 			Set_Para();
 			if(LoadSave.devmode==0)
 				setslaveflag=LoadSave.devnum;
+			Store_set_flash();
 		}
     if(Disp_Flag==1 )//显示设置的值
 		{
@@ -2933,6 +2934,7 @@ void Test_Beep(void)
 									Set_Para();
 									if(LoadSave.devmode == 0)
 										setslaveflag=LoadSave.devnum;
+									Store_set_flash();
 								}
 
 //							}
