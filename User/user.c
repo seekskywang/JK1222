@@ -4411,13 +4411,14 @@ void Disp_Sys_Item(void)
         
 	}
 	Colour.Fword=LCD_COLOR_GREY;
-	WriteString_16(LIST2+90, FIRSTLINE+SPACE1*6, "SoftVer :3.0",  0);
+	WriteString_16(LIST2+90, FIRSTLINE+SPACE1*6, "SoftVer :3.1",  0);
 	//2.5增加标准RTU协议选择
 	//2.6上位机通讯改到前面板
 	//2.7仪器出厂参数可以自定义设置
 	//2.8增加定制协议选择
 	//2.9增加测试模式精准和快速选择
 	//3.0修正关机设置点参数不保存bug
+	//3.1读取时间增加到40ms一次，修正编码器设置bug（&& flag_spin == 0）
 	Hex_Format(DispValue.version,1,2,0);
 	WriteString_16(LIST2+90, FIRSTLINE+SPACE1*7, "BoardVer:",  0);
 	WriteString_16(LIST2+90+90, FIRSTLINE+SPACE1*7, DispBuf,  0);

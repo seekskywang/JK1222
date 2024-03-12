@@ -2587,7 +2587,7 @@ void Test_Beep(void)
 			Disp_Flag = 0;
 		}
 //		ReadData();
-		if(F_100ms == TRUE/* && setflag == 0*/)
+		if(F_100ms == TRUE && flag_spin == 0)
 		{
 			ReadData();//读本机数据
 			if(LoadSave.devmode==0 && setslaveflag == 0)//主机模式

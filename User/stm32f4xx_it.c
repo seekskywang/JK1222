@@ -426,7 +426,7 @@ void  BASIC_TIM_IRQHandler (void)
 									F_100ms=TRUE;//200ms????
 							}
 						}else{
-							if(num>9)//10mS??
+							if(num>3)//10mS??
 							{
 									num=0;
 									F_100ms=TRUE;//100ms????
