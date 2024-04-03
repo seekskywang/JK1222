@@ -391,7 +391,7 @@ u8 ListBeep(void)
 
 void  BASIC_TIM_IRQHandler (void)
 {
-    static u8 num,cnum=0;
+    static u8 num,cnum,setnum=0;
 	static u32 autooffcount=0;
 	static u16 countdown=0;
     u8 i;
@@ -425,22 +425,27 @@ void  BASIC_TIM_IRQHandler (void)
 			|| SystemStatus==SYS_STATUS_LIST || SystemStatus==SYS_STATUS_DYNAMIC
 				|| SystemStatus==SYS_STATUS_LED)
         {
-            num++;
-						if(SystemStatus==SYS_STATUS_LIST)
+					num++;
+					setnum ++;
+					if(SystemStatus==SYS_STATUS_LIST)
+					{
+						if(num>24)//10mS??
 						{
-							if(num>24)//10mS??
-							{
-									num=0;
-									F_100ms=TRUE;//200ms????
-							}
-						}else{
-							if(num>3)//10mS??
-							{
-									num=0;
-									F_100ms=TRUE;//100ms????
-							}
+								num=0;
+								F_100ms=TRUE;//200ms????
 						}
-
+					}else{
+						if(num>3)//10mS??
+						{
+								num=0;
+								F_100ms=TRUE;//100ms????
+						}
+					}
+//					if(setnum > 9)
+//					{
+//						setnum = 0;
+//						F_set = TRUE;
+//					}
         }
         else
         {

@@ -3,7 +3,7 @@
 <title>Static Call Graph - [..\..\Output\Template.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image ..\..\Output\Template.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060422: Last Updated: Fri Mar 15 13:43:24 2024
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060422: Last Updated: Wed Apr 03 11:24:22 2024
 <BR><P>
 <H3>Maximum Stack Usage =       1020 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -3074,8 +3074,8 @@ Global Symbols
 <P><STRONG><a name="[b1]"></a>Store_set_flash</STRONG> (Thumb, 24 bytes, Stack size 8 bytes, flash_eerom.o(i.Store_set_flash))
 <BR><BR>[Stack]<UL><LI>Max Depth = 112<LI>Call Chain = Store_set_flash &rArr; SPI_FLASH_BufferWrite &rArr; SPI_FLASH_PageWrite &rArr; SPI_FLASH_WriteEnable &rArr; SPI_FLASH_SendByte &rArr; SPI_TIMEOUT_UserCallback &rArr; __2printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[190]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_FLASH_BufferWrite
-<LI><a href="#[196]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_FLASH_SectorErase
+<BR>[Calls]<UL><LI><a href="#[196]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_FLASH_SectorErase
+<LI><a href="#[190]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_FLASH_BufferWrite
 </UL>
 <BR>[Called By]<UL><LI><a href="#[228]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Use_SysSetProcess
 <LI><a href="#[226]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Use_DebugProcess
@@ -3159,7 +3159,7 @@ Global Symbols
 <LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[5a]"></a>TIM6_DAC_IRQHandler</STRONG> (Thumb, 1654 bytes, Stack size 8 bytes, stm32f4xx_it.o(i.TIM6_DAC_IRQHandler))
+<P><STRONG><a name="[5a]"></a>TIM6_DAC_IRQHandler</STRONG> (Thumb, 1668 bytes, Stack size 8 bytes, stm32f4xx_it.o(i.TIM6_DAC_IRQHandler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 144<LI>Call Chain = TIM6_DAC_IRQHandler &rArr; Set_Para &rArr; HostParaProc &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
 </UL>
 <BR>[Calls]<UL><LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_ClearITPendingBit
@@ -3297,7 +3297,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[185]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Test_Process
 </UL>
 
-<P><STRONG><a name="[185]"></a>Test_Process</STRONG> (Thumb, 1930 bytes, Stack size 40 bytes, test.o(i.Test_Process))
+<P><STRONG><a name="[185]"></a>Test_Process</STRONG> (Thumb, 1942 bytes, Stack size 40 bytes, test.o(i.Test_Process))
 <BR><BR>[Stack]<UL><LI>Max Depth = 392 + In Cycle
 <LI>Call Chain = Test_Process &rArr;  Rec3_Handle (Cycle)
 </UL>

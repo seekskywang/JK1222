@@ -2617,7 +2617,7 @@ void SetCurrentLimit(vu32* setc,u8* flag)
 			Disp_Flag = 0;
 		}
 //		ReadData();
-		if(F_100ms == TRUE && flag_spin == 0)
+		if(F_100ms == TRUE && flag_spin == 0 && setflag == 0)
 		{
 			ReadData();//读本机数据
 			if(LoadSave.devmode==0 && setslaveflag == 0)//主机模式
@@ -2978,29 +2978,32 @@ void SetCurrentLimit(vu32* setc,u8* flag)
 						case Key_REST:
 							
 						break;
-						case Key_ONOFF:							
-							if(mainswitch == 0)
+						case Key_ONOFF:		
+							if(setflag == 0)
 							{
-								switchdelay = SWITCH_DELAY;
-								mainswitch = 1;
-								SwitchLedOn();
-//								OnOff_SW(mainswitch);
-								Set_Para();
-								if(LoadSave.devmode==0)
-									slaveonoffflag=LoadSave.devnum;
-							}else{
-								if(DispValue.poweralert == 1)
+								if(mainswitch == 0)
 								{
-									Disp_Hint(11);
-									DispValue.poweralert = 0;
+									switchdelay = SWITCH_DELAY;
+									mainswitch = 1;
+									SwitchLedOn();
+	//								OnOff_SW(mainswitch);
+									Set_Para();
+									if(LoadSave.devmode==0)
+										slaveonoffflag=LoadSave.devnum;
+								}else{
+									if(DispValue.poweralert == 1)
+									{
+										Disp_Hint(11);
+										DispValue.poweralert = 0;
+									}
+									switchdelay = SWITCH_DELAY;
+									mainswitch = 0;
+									SwitchLedOff();
+	//								OnOff_SW(mainswitch);
+									Set_Para();
+									if(LoadSave.devmode==0)
+										slaveonoffflag=LoadSave.devnum;
 								}
-								switchdelay = SWITCH_DELAY;
-								mainswitch = 0;
-								SwitchLedOff();
-//								OnOff_SW(mainswitch);
-								Set_Para();
-								if(LoadSave.devmode==0)
-									slaveonoffflag=LoadSave.devnum;
 							}
 						break;
 						case Key_SET1:
@@ -4120,15 +4123,15 @@ void Dynamic_Process(void)
 			keynum = keytrans;
 		}
 //		spinvalue = TIM_GetCounter(TIM3);
-        Colour.Fword=White;
-        if(Disp_RTCflag)
-        {
-            Disp_RTCflag=0;
-            Disp_dateandtime();//1秒更新一次
-            Int_Pe3flag=0;
-            
-        }
-         if(Disp_Flag==1 )//显示设置的值
+		Colour.Fword=White;
+		if(Disp_RTCflag)
+		{
+				Disp_RTCflag=0;
+				Disp_dateandtime();//1秒更新一次
+				Int_Pe3flag=0;
+				
+		}
+	 if(Disp_Flag==1 )//显示设置的值
 		{
 			Disp_Dyn_value(keynum);
 			Disp_Flag = 0;
