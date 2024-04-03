@@ -2472,6 +2472,36 @@ void Test_Beep(void)
 	}
 }
 
+//设置电流限制
+void SetCurrentLimit(vu32* setc,u8* flag)
+{
+	if(LoadSave.vrange == 0)
+	{
+		if((double)(DispValue.Voltage)/10000 * 
+			 (double)(*setc)/10000 > 
+				LoadSave.facmaxpow/10000)
+		{
+			*setc = 0;		
+			Set_Para();
+			Store_set_flash();			
+			*flag = 1;
+			Disp_Hint(12);
+			DispValue.currentalert = 201;
+		}		
+	}else if(LoadSave.vrange == 1){
+		if((double)(DispValue.Voltage)/1000 * 
+			 (double)(*setc)/10000 > 
+				LoadSave.facmaxpow/10000)
+		{
+			*setc = 0;		
+			Set_Para();
+			Store_set_flash();
+			*flag = 1;
+			Disp_Hint(12);
+			DispValue.currentalert = 201;
+		}	
+	}
+}
 //==========================================================
 //函数名称：Test_Process
 //函数功能：测试主程序
@@ -2600,6 +2630,7 @@ void Test_Beep(void)
 			}
 			F_100ms=FALSE; 
 		}
+		SetCurrentLimit(&LoadSave.current,&Disp_Flag);
 		if(setflag != 0)
 		{
 			if(setcount == 5)
@@ -2906,7 +2937,7 @@ void Test_Beep(void)
 											Coordinates.ypos=FIRSTLINE*1;
 											Coordinates.lenth=76;
 											LoadSave.current=Disp_Set_Num(&Coordinates);
-
+										
 										}break;
 										case 1:
 										{
@@ -3513,6 +3544,9 @@ void Battery_Process(void)
 			LoadSave.ErrCnt[0]++;
 			Store_set_flash();
 		}
+		SetCurrentLimit(&LoadSave.loadc1,&Disp_Flag);
+		SetCurrentLimit(&LoadSave.loadc2,&Disp_Flag);
+		SetCurrentLimit(&LoadSave.loadc3,&Disp_Flag);
 		
         if(setflag != 0)
 		{
@@ -4129,7 +4163,8 @@ void Dynamic_Process(void)
 			LoadSave.ErrCnt[0]++;
 			Store_set_flash();
 		}
-		
+		SetCurrentLimit(&LoadSave.valA,&Disp_Flag);
+		SetCurrentLimit(&LoadSave.valB,&Disp_Flag);
              
 //		Uart_Process();//串口处理
         if(Keyboard.state==TRUE)
@@ -5068,6 +5103,7 @@ void List_Process(void)
 												if(LoadSave.listmode[DispValue.liststep] == 0)
 												{
 													LoadSave.listvalue[DispValue.liststep]=Disp_Set_CNum(&Coordinates);
+													SetCurrentLimit(&LoadSave.listvalue[DispValue.liststep],&Disp_Flag);
 												}else if(LoadSave.listmode[DispValue.liststep] == 1){
 													LoadSave.listvalue[DispValue.liststep]=Disp_Set_VNum(&Coordinates);
 												}else if(LoadSave.listmode[DispValue.liststep] == 2){

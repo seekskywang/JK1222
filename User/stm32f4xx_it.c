@@ -413,6 +413,14 @@ void  BASIC_TIM_IRQHandler (void)
 				}
 			}
 		}
+		if(DispValue.currentalert > 0)
+		{
+			DispValue.currentalert --;
+			if(DispValue.currentalert == 1)
+			{
+				Disp_Hint(13);
+			}
+		}
         if(SystemStatus==SYS_STATUS_TEST || SystemStatus==SYS_STATUS_BATTERY
 			|| SystemStatus==SYS_STATUS_LIST || SystemStatus==SYS_STATUS_DYNAMIC
 				|| SystemStatus==SYS_STATUS_LED)

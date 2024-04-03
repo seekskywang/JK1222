@@ -4,6 +4,7 @@ u8 F_Fail;//测试失败标志
 u8 F_100ms;//100ms定时标志
 u8 F_set;//设置命令定时标志
 u8 F_1s;//1s定时标志
+u8 F_ocerror;//电流超限定时标志
 vu8 SystemStatus;//系统状态
 vu8 SystemMessage;//系统信息
 

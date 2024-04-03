@@ -402,6 +402,7 @@ typedef struct
 	u8 alertdisp;
 	u8 version;
 	u8 poweralert;
+	u16 currentalert;
 ////校准测量控制电压低档
 //	u32 VLOW1;
 //	u32 SETVLOW1;
@@ -474,6 +475,7 @@ extern u8 F_Fail;//测试失败标志
 extern u8 F_100ms;//100ms定时标志
 extern u8 F_set;//设置命令定时标志
 extern u8 F_1s;//1s定时标志
+extern u8 F_ocerror;//电流超限定时标志
 extern u8 SoftTimer[MAXTSOFTTIMER];
 
 extern u8 USB_Openflag,Disp_usbflag,Disp_RTCflag;

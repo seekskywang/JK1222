@@ -1131,6 +1131,13 @@ void Disp_Hint(u8 num)
 		}else if(num == 11){
 			Colour.black=LCD_COLOR_TEST_MID;
 			LCD_DrawFullRect(2,205,240, SPACE1-2);
+		}else if(num == 12){
+			Colour.black=LCD_COLOR_TEST_BACK;
+			Colour.Fword = Red;
+			WriteString_16(400,LIST1+4,"设置超限",0);
+		}else if(num == 13){
+			Colour.black=LCD_COLOR_TEST_BACK;
+			LCD_DrawFullRect(400,LIST1+4,64, SPACE1-2);
 		}
 	}else{
 		if(num == 1) 	
@@ -1175,6 +1182,13 @@ void Disp_Hint(u8 num)
 		}else if(num == 11){
 			Colour.black=LCD_COLOR_TEST_MID;
 			LCD_DrawFullRect(2,205,240, SPACE1-2);
+		}else if(num == 12){
+			Colour.black=LCD_COLOR_TEST_BACK;
+			Colour.Fword = Red;
+			WriteString_16(400,LIST1+4,"Set ERR",0);
+		}else if(num == 13){
+			Colour.black=LCD_COLOR_TEST_BACK;
+			LCD_DrawFullRect(400,LIST1+4,64, SPACE1-2);
 		}
 	}
 }
@@ -4411,7 +4425,7 @@ void Disp_Sys_Item(void)
         
 	}
 	Colour.Fword=LCD_COLOR_GREY;
-	WriteString_16(LIST2+90, FIRSTLINE+SPACE1*6, "SoftVer :3.1",  0);
+	WriteString_16(LIST2+90, FIRSTLINE+SPACE1*6, "SoftVer :3.2",  0);
 	//2.5增加标准RTU协议选择
 	//2.6上位机通讯改到前面板
 	//2.7仪器出厂参数可以自定义设置
@@ -4419,6 +4433,7 @@ void Disp_Sys_Item(void)
 	//2.9增加测试模式精准和快速选择
 	//3.0修正关机设置点参数不保存bug
 	//3.1读取时间增加到40ms一次，修正编码器设置bug（&& flag_spin == 0）
+	//3.2增加设置电流时的功率限制判断
 	Hex_Format(DispValue.version,1,2,0);
 	WriteString_16(LIST2+90, FIRSTLINE+SPACE1*7, "BoardVer:",  0);
 	WriteString_16(LIST2+90+90, FIRSTLINE+SPACE1*7, DispBuf,  0);
@@ -6463,7 +6478,7 @@ void Disp_dateandtime(void)
     
     //);
     Colour.black =LCD_COLOR_TEST_BACK;
-    WriteString_16(LIST2-20, LIST1+4, (const uint8_t *)LCDTemp,  0);
+    WriteString_16(LIST2-20-20, LIST1+4, (const uint8_t *)LCDTemp,  0);
 //    sprintf(LCDTemp,"The Time :  %0.2d:%0.2d:%0.2d", 
 //    RTC_TimeStructure.RTC_Hours, 
 //    RTC_TimeStructure.RTC_Minutes, 
