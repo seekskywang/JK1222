@@ -45,6 +45,7 @@
 "..\..\output\pbdata.o"
 "..\..\output\user.o"
 "..\..\output\test.o"
+"..\..\output\scpi-def.o"
 "..\..\output\gpio.o"
 "..\..\output\keyboard.o"
 "..\..\output\bsp_lcd.o"
@@ -77,6 +78,15 @@
 "..\..\output\usbh_msc_bot.o"
 "..\..\output\usbh_msc_core.o"
 "..\..\output\usbh_msc_scsi.o"
+"..\..\output\error.o"
+"..\..\output\expression.o"
+"..\..\output\fifo.o"
+"..\..\output\ieee488.o"
+"..\..\output\lexer.o"
+"..\..\output\minimal.o"
+"..\..\output\units.o"
+"..\..\output\parser.o"
+"..\..\output\utils.o"
 --library_type=microlib --strict --scatter "..\..\Output\Template.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

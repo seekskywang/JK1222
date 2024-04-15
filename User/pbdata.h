@@ -518,4 +518,6 @@ extern u8 spinsetflag;
 extern u8 slaveID;
 extern u32 listtime;
 extern u32 upfilesize;
+extern uint8_t remotedispflag;
+extern uint8_t remoteonoffflag;
 #endif

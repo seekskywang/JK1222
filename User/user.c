@@ -4425,7 +4425,7 @@ void Disp_Sys_Item(void)
         
 	}
 	Colour.Fword=LCD_COLOR_GREY;
-	WriteString_16(LIST2+90, FIRSTLINE+SPACE1*6, "SoftVer :3.3",  0);
+	WriteString_16(LIST2+90, FIRSTLINE+SPACE1*6, "SoftVer :3.5",  0);
 	//2.5增加标准RTU协议选择
 	//2.6上位机通讯改到前面板
 	//2.7仪器出厂参数可以自定义设置
@@ -4435,6 +4435,8 @@ void Disp_Sys_Item(void)
 	//3.1读取时间增加到40ms一次，修正编码器设置bug（&& flag_spin == 0）
 	//3.2增加设置电流时的功率限制判断
 	//3.3修正按键开关bug
+	//3.4增加部分SCPI命令
+	//3.5上位机通讯波特率改9600
 	Hex_Format(DispValue.version,1,2,0);
 	WriteString_16(LIST2+90, FIRSTLINE+SPACE1*7, "BoardVer:",  0);
 	WriteString_16(LIST2+90+90, FIRSTLINE+SPACE1*7, DispBuf,  0);
@@ -4641,12 +4643,13 @@ void Disp_Sys_value(u8 keynum)
 	else
 	{
 		Colour.black=LCD_COLOR_TEST_BACK;
-	}if(LoadSave.language)
-  {
-		WriteString_16(LIST1+90, FIRSTLINE+SPACE1+2, Test_PCTLvalue_E[LoadSave.TCP],  0);
-	}else{
-		WriteString_16(LIST1+90, FIRSTLINE+SPACE1+2, Test_PCTLvalue[LoadSave.TCP],  0);
 	}
+//	if(LoadSave.language)
+//  {
+//		WriteString_16(LIST1+90, FIRSTLINE+SPACE1+2, Test_PCTLvalue_E[LoadSave.TCP],  0);
+//	}else{
+//		WriteString_16(LIST1+90, FIRSTLINE+SPACE1+2, Test_PCTLvalue[LoadSave.TCP],  0);
+//	}
 	//SaveData.Sys_Setup.Timer_Value.Hour=1;
 	LCD_DrawFullRect( LIST1+90, FIRSTLINE+SPACE1*6,18 , SPACE1-4 ) ;//SPACE1
 

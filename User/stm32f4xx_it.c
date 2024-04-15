@@ -37,6 +37,8 @@
 #include "./tim/bsp_basic_tim.h"
 #include "stdlib.h"
 #include "math.h"
+#include "scpi/scpi.h"
+#include "scpi-def.h"
 
 extern USB_OTG_CORE_HANDLE          USB_OTG_Core;
 extern USBH_HOST                    USB_Host;
@@ -307,7 +309,19 @@ void USART3_IRQHandler(void)
 		DMA_SetCurrDataCounter(DMA1_Stream1, BUFFSIZEMAX);  
 		DMA_Cmd(DMA1_Stream1, ENABLE);     //´ò¿ªDMA, 
 		DMA_ClearITPendingBit(DMA1_Stream1, DMA_IT_TCIF1);
-		UART3_Buffer_Rece_flag=1;
+		if(LoadSave.TCP == 2)
+		{
+			if(SCPI_Input(&scpi_context, usart3rxbuff, Uart3RXbuff_len))
+			{
+				if(lockflag == 0)
+				{
+					lockflag = 1;
+					DrawLock(lockflag);
+				}
+			}
+		}else{
+			UART3_Buffer_Rece_flag=1;
+		}
 	} 
 }
 

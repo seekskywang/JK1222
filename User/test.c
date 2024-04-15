@@ -9,6 +9,8 @@
 #include "flash_if.h"
 #include "tm1650.h"
 #include "bsp_bmp.h"
+#include "scpi/scpi.h"
+#include "scpi-def.h"
 
 //反馈切换
 // 输入0 1 2 3  U16_4094
@@ -19,6 +21,7 @@
 #define POWERON_DISP_TIME (100)	//开机显示界面延时20*100mS=2s
 u8 U15_4094,U16_4094;
 extern void Disp_Hint(u8 num);
+void InputSwitch(u8 para);
 static u8 filesendbuf[PACKAGE_SIZE+2];//升级文件发送分包缓存，256字节+2字节CRC
 static u8 filedatabuf[64*1024];//升级文件数据缓存，最大64K
 static u32 sendcount;//升级文件发送计数
@@ -79,6 +82,91 @@ u32 vercurmax[14] = {
 //	3
 //	
 
+size_t SCPI_Write(scpi_t * context, const char * data, size_t len) {
+  (void) context;	
+	Uart3SendBuff((u8 *)data,len);
+//	if (len > 0)
+//	{	
+//		for(int i =0 ; i < len; i++)
+//		{
+//				USART_SendData(USART1,*(data+i));
+//				while (USART_GetFlagStatus(USART1,USART_FLAG_TXE) == RESET);//等待发送完成
+//		}
+////		for (int i = 0;i < len;i++)
+////		{
+////			osMessageQueuePut(cmdTxQueueHandle,&data[i],NULL,0U);
+////		}
+////		LL_USART_EnableIT_TXE(USART1);
+//	}
+	return len;
+}
+
+scpi_result_t SCPI_Flush(scpi_t * context) {
+    (void) context;
+
+    return SCPI_RES_OK;
+}
+
+int SCPI_Error(scpi_t * context, int_fast16_t err) {
+    (void) context;
+
+//    printf("**ERROR: %d, \"%s\"\r\n", (int16_t) err, SCPI_ErrorTranslate(err));
+    return 0;
+}
+
+scpi_result_t SCPI_Control(scpi_t * context, scpi_ctrl_name_t ctrl, scpi_reg_val_t val) {
+    (void) context;
+
+    if (SCPI_CTRL_SRQ == ctrl) {
+//        printf("**SRQ: 0x%X (%d)\r\n", val, val);
+    } else {
+//        printf("**CTRL %02x: 0x%X (%d)\r\n", ctrl, val, val);
+    }
+    return SCPI_RES_OK;
+}
+
+scpi_result_t SCPI_Reset(scpi_t * context) {
+    (void) context;
+
+//    printf("**Reset\r\n");
+    return SCPI_RES_OK;
+}
+
+scpi_result_t SCPI_SystemCommTcpipControlQ(scpi_t * context) {
+    (void) context;
+
+    return SCPI_RES_ERR;
+}
+
+void InputSwitch(u8 para)
+{
+	if(setflag == 0)
+	{
+		if(para == 1)
+		{
+			switchdelay = SWITCH_DELAY;
+			mainswitch = 1;
+			SwitchLedOn();
+//								OnOff_SW(mainswitch);
+			Set_Para();
+			if(LoadSave.devmode==0)
+				slaveonoffflag=LoadSave.devnum;
+		}else if(para == 0){
+			if(DispValue.poweralert == 1)
+			{
+				Disp_Hint(11);
+				DispValue.poweralert = 0;
+			}
+			switchdelay = SWITCH_DELAY;
+			mainswitch = 0;
+			SwitchLedOff();
+//								OnOff_SW(mainswitch);
+			Set_Para();
+			if(LoadSave.devmode==0)
+				slaveonoffflag=LoadSave.devnum;
+		}
+	}
+}
 void DrawLock(u8 sw)
 {
 	Colour.Fword = Red;
@@ -88,6 +176,7 @@ void DrawLock(u8 sw)
 	else
 		WriteString_16(LIST2+19*10, LIST1+4, "    ",  0);
 	Colour.Fword = White;
+	Colour.black = LCD_COLOR_TEST_MID;
 }
 
 void JumpBoot(u8 flag)
@@ -1343,6 +1432,13 @@ void Power_Process(void)
 // USBH_Process(&USB_OTG_Core, &USB_Host);
 	Beep_Off();
 	READ_COMP();
+	SCPI_Init(&scpi_context,
+					scpi_commands,
+					&scpi_interface,
+					scpi_units_def,
+					SCPI_IDN1, SCPI_IDN2, SCPI_IDN3, SCPI_IDN4,
+					scpi_input_buffer, SCPI_INPUT_BUFFER_LENGTH,
+					scpi_error_queue_data, SCPI_ERROR_QUEUE_SIZE);
 	while(GetSystemStatus()==SYS_STATUS_POWER)
 	{
 		i++;
@@ -2609,12 +2705,13 @@ void SetCurrentLimit(vu32* setc,u8* flag)
 				setslaveflag=LoadSave.devnum;
 			Store_set_flash();
 		}
-    if(Disp_Flag==1 )//显示设置的值
+    if(Disp_Flag==1 || remotedispflag == 1)//显示设置的值
 		{
 			Disp_Test_value(keynum);
             
 //			Disp_R_V("V");
 			Disp_Flag = 0;
+			remotedispflag = 0;
 		}
 //		ReadData();
 		if(F_100ms == TRUE && flag_spin == 0 && setflag == 0)
@@ -2686,7 +2783,11 @@ void SetCurrentLimit(vu32* setc,u8* flag)
 			LoadSave.ErrCnt[0]++;
 			Store_set_flash();
 		}
-		
+		if(remoteonoffflag == 1)
+		{
+			remoteonoffflag = 0;
+			InputSwitch(mainswitch);
+		}
 		
         if(Keyboard.state==TRUE)
         {

@@ -79,3 +79,17 @@
 ..\..\output\stm32f4xx_it.o: ..\..\User\APP\usbh_conf.h
 ..\..\output\stm32f4xx_it.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 ..\..\output\stm32f4xx_it.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
+..\..\output\stm32f4xx_it.o: ..\..\libscpi\inc\scpi/scpi.h
+..\..\output\stm32f4xx_it.o: ..\..\libscpi\inc\scpi/parser.h
+..\..\output\stm32f4xx_it.o: ..\..\libscpi\inc\scpi/types.h
+..\..\output\stm32f4xx_it.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+..\..\output\stm32f4xx_it.o: ..\..\libscpi\inc\scpi/config.h
+..\..\output\stm32f4xx_it.o: ..\..\libscpi\inc\scpi/cc.h
+..\..\output\stm32f4xx_it.o: ..\..\libscpi\inc\scpi/ieee488.h
+..\..\output\stm32f4xx_it.o: ..\..\libscpi\inc\scpi/error.h
+..\..\output\stm32f4xx_it.o: ..\..\libscpi\inc\scpi/constants.h
+..\..\output\stm32f4xx_it.o: ..\..\libscpi\inc\scpi/minimal.h
+..\..\output\stm32f4xx_it.o: ..\..\libscpi\inc\scpi/units.h
+..\..\output\stm32f4xx_it.o: ..\..\libscpi\inc\scpi/utils.h
+..\..\output\stm32f4xx_it.o: ..\..\libscpi\inc\scpi/expression.h
+..\..\output\stm32f4xx_it.o: ..\..\User\scpi-def.h

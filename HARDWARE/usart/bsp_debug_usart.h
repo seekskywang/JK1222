@@ -25,7 +25,7 @@
 
 #define HS_USART                             		USART3
 #define HS_USART_CLK                         		RCC_APB1Periph_USART3
-#define HS_USART_BAUDRATE                    		115200
+#define HS_USART_BAUDRATE                    		9600
 
 #define HS_USART_RX_GPIO_PORT                		GPIOB
 #define HS_USART_RX_GPIO_CLK                 		RCC_AHB1Periph_GPIOB

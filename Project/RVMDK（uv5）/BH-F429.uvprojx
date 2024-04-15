@@ -327,7 +327,7 @@
             <wLevel>0</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
-            <uC99>0</uC99>
+            <uC99>1</uC99>
             <uGnu>0</uGnu>
             <useXO>0</useXO>
             <v6Lang>1</v6Lang>
@@ -341,7 +341,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F429_439xx,USE_STDPERIPH_DRIVER,USE_USB_OTG_FS,USE_EMBEDDED_PHY</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include;..\..\Libraries\CMSIS\Include;..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\User;..\..\HARDWARE;..\..\User\lcd;..\..\FATFS;..\..\Libraries\STM32_USB_HOST_Library\Class\MSC\inc;..\..\Libraries\STM32_USB_HOST_Library\Core\inc;..\..\Libraries\STM32_USB_OTG_Driver\inc;..\..\User\flash;..\..\HARDWARE\font;..\..\User\APP;..\..\User\RTC;..\..\Output;..\..\HARDWARE\1650</IncludePath>
+              <IncludePath>..\..\Libraries\CMSIS\Device\ST\STM32F4xx\Include;..\..\Libraries\CMSIS\Include;..\..\Libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\User;..\..\HARDWARE;..\..\User\lcd;..\..\FATFS;..\..\Libraries\STM32_USB_HOST_Library\Class\MSC\inc;..\..\Libraries\STM32_USB_HOST_Library\Core\inc;..\..\Libraries\STM32_USB_OTG_Driver\inc;..\..\User\flash;..\..\HARDWARE\font;..\..\User\APP;..\..\User\RTC;..\..\Output;..\..\HARDWARE\1650;..\..\libscpi\inc\</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -686,6 +686,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\User\test.c</FilePath>
             </File>
+            <File>
+              <FileName>scpi-def.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\scpi-def.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -880,6 +885,76 @@
               <FileName>usbh_msc_scsi.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Libraries\STM32_USB_HOST_Library\Class\MSC\src\usbh_msc_scsi.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>libscpi</GroupName>
+          <Files>
+            <File>
+              <FileName>error.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\libscpi\src\error.c</FilePath>
+            </File>
+            <File>
+              <FileName>expression.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\libscpi\src\expression.c</FilePath>
+            </File>
+            <File>
+              <FileName>fifo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\libscpi\src\fifo.c</FilePath>
+            </File>
+            <File>
+              <FileName>ieee488.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\libscpi\src\ieee488.c</FilePath>
+            </File>
+            <File>
+              <FileName>lexer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\libscpi\src\lexer.c</FilePath>
+            </File>
+            <File>
+              <FileName>minimal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\libscpi\src\minimal.c</FilePath>
+            </File>
+            <File>
+              <FileName>units.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\libscpi\src\units.c</FilePath>
+            </File>
+            <File>
+              <FileName>parser.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\libscpi\src\parser.c</FilePath>
+            </File>
+            <File>
+              <FileName>utils.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\libscpi\src\utils.c</FilePath>
+            </File>
+            <File>
+              <FileName>fifo_private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\libscpi\src\fifo_private.h</FilePath>
+            </File>
+            <File>
+              <FileName>lexer_private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\libscpi\src\lexer_private.h</FilePath>
+            </File>
+            <File>
+              <FileName>parser_private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\libscpi\src\parser_private.h</FilePath>
+            </File>
+            <File>
+              <FileName>utils_private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\libscpi\src\utils_private.h</FilePath>
             </File>
           </Files>
         </Group>
