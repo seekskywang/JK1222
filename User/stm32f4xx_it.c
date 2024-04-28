@@ -75,6 +75,7 @@ u32 listtime;
 u8 spinsend;
 u16 Uart1RXbuff_len=0;
 u16 Uart3RXbuff_len=0;
+uint8_t scpifinishflag;
 //extern void Read__Convert_read(void);
 /** @addtogroup STM32F429I_DISCOVERY_Examples
   * @{
@@ -313,6 +314,7 @@ void USART3_IRQHandler(void)
 		{
 			if(SCPI_Input(&scpi_context, usart3rxbuff, Uart3RXbuff_len))
 			{
+				switchdelay = SWITCH_DELAY;
 				if(lockflag == 0)
 				{
 					lockflag = 1;
@@ -413,6 +415,16 @@ void  BASIC_TIM_IRQHandler (void)
 	{	
 		TIM_ClearITPendingBit(BASIC_TIM , TIM_IT_Update); 
 		lockcheck();
+		if(scpirecflag == 1)
+		{
+			scpirectimeout++;
+			if(scpirectimeout > 3)
+			{
+				scpirectimeout = 0;
+				scpirecflag = 0;
+				scpifinishflag = 1;
+			}
+		}
 		if(LoadSave.autooff != 0)
 		{
 			if(mainswitch == 1)
@@ -470,11 +482,11 @@ void  BASIC_TIM_IRQHandler (void)
 		if(SystemStatus==SYS_STATUS_BATTERY)
 		{
 			cnum++;
-            if(cnum>99)//10mS??
-            {
-                cnum=0;
-                F_1s=TRUE;//100ms????
-            }
+			if(cnum>99)//10mS??
+			{
+					cnum=0;
+					F_1s=TRUE;//100ms????
+			}
 		}else{
 			if(cnum!=0)
 				cnum = 0;

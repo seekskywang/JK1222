@@ -520,4 +520,7 @@ extern u32 listtime;
 extern u32 upfilesize;
 extern uint8_t remotedispflag;
 extern uint8_t remoteonoffflag;
+extern uint8_t scpirecflag;
+extern uint8_t scpirectimeout;
+extern uint8_t scpifinishflag;
 #endif

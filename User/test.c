@@ -2783,12 +2783,16 @@ void SetCurrentLimit(vu32* setc,u8* flag)
 			LoadSave.ErrCnt[0]++;
 			Store_set_flash();
 		}
-		if(remoteonoffflag == 1)
+//		if(remoteonoffflag == 1)
+//		{
+//			remoteonoffflag = 0;
+//			InputSwitch(mainswitch);
+//		}
+		if(scpifinishflag == 1)
 		{
-			remoteonoffflag = 0;
+			scpifinishflag = 0;
 			InputSwitch(mainswitch);
 		}
-		
         if(Keyboard.state==TRUE)
         {
 			if(skipkey == 0 && Keyboard.continuance == FALSE)

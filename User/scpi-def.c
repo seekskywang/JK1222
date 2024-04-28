@@ -44,6 +44,8 @@
 
 uint8_t remotedispflag;
 uint8_t remoteonoffflag;
+uint8_t scpirecflag;
+uint8_t scpirectimeout;
 scpi_choice_def_t mode_source[] = {
     {"CCH", 0},
 		{"CCL", 0},
@@ -427,10 +429,12 @@ static scpi_result_t INPUTSET(scpi_t * context) {
 			return SCPI_RES_ERR;
 	}
 	mainswitch = param;
-	remoteonoffflag = 1;
+	scpirecflag = 1;
+	scpirectimeout = 0;
+//	remoteonoffflag = 1;
 //	InputSwitch(param);
 //	onoff_ch = param;
-	SCPI_ResultCharacters(context, Respond[0],2);
+//	SCPI_ResultCharacters(context, Respond[0],2);
   return SCPI_RES_OK;
 }
 
@@ -724,11 +728,13 @@ static scpi_result_t MODESET(scpi_t * context) {
 //	SCPI_ChoiceToName(mode_source, param, &name);
 //	MODE=param;
 	LoadSave.mode = param;
-	Mode_SW();
-	Store_set_flash();
+	scpirecflag = 1;
+	scpirectimeout = 0;
+//	Mode_SW();
+//	Store_set_flash();
 	remotedispflag = 1;
 //    fprintf(stderr, "\tP1=%s (%ld)\r\n", name, (long int) param);
-	SCPI_ResultCharacters(context, Respond[0],2);
+//	SCPI_ResultCharacters(context, Respond[0],2);
 //	SCPI_ResultInt32(context, param);
 
 	return SCPI_RES_OK;
@@ -756,10 +762,12 @@ static scpi_result_t CCSET(scpi_t * context) {
 	}
 //	SET_Current = param*10000;
 	LoadSave.current = param*10000;
-	Para_Set_Comp();
-	Set_Para();
+	scpirecflag = 1;
+	scpirectimeout = 0;
+//	Para_Set_Comp();
+//	Set_Para();
 	remotedispflag = 1;
-	SCPI_ResultCharacters(context, Respond[0],2);
+//	SCPI_ResultCharacters(context, Respond[0],2);
   return SCPI_RES_OK;
 }
 
@@ -784,10 +792,12 @@ static scpi_result_t CVSET(scpi_t * context) {
 	}
 //	SET_Voltage = param*10000;
 	LoadSave.voltage = param*10000;
-	Para_Set_Comp();
-	Set_Para();
+	scpirecflag = 1;
+	scpirectimeout = 0;
+//	Para_Set_Comp();
+//	Set_Para();
 	remotedispflag = 1;
-	SCPI_ResultCharacters(context, Respond[0],2);
+//	SCPI_ResultCharacters(context, Respond[0],2);
   return SCPI_RES_OK;
 }
 
@@ -835,10 +845,12 @@ static scpi_result_t CRSET(scpi_t * context) {
 		return SCPI_RES_ERR;
 	}
 	LoadSave.risistence = param*10;
-	Para_Set_Comp();
-	Set_Para();
+	scpirecflag = 1;
+	scpirectimeout = 0;
+//	Para_Set_Comp();
+//	Set_Para();
 	remotedispflag = 1;
-	SCPI_ResultCharacters(context, Respond[0],2);
+//	SCPI_ResultCharacters(context, Respond[0],2);
   return SCPI_RES_OK;
 }
 
