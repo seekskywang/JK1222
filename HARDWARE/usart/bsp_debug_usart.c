@@ -39,7 +39,9 @@ u8 usart3rxbuff[BUFFSIZEMAX];
 u8 usart3txbuff[BUFFSIZEMAX];
 
 u16 uart3sendlen;
-
+u32 readcbuf[10];
+u32 readcsum;
+u32 readccount;
 uint16_t BEBufToUint16(uint8_t *_pBuf)
 {
     return (((uint16_t)_pBuf[0] << 8) | _pBuf[1]);
@@ -2443,6 +2445,106 @@ void DispRead(void)
 	WriteString_16(2,50,textbuf,  0);
 }
 
+
+
+//已排序递增数组队首进入新数据排序
+void HeadSort(uint32_t A[], uint16_t n)
+{
+	int i;
+	for(i = 0;i < n-1;i ++)
+	{
+		if (A[i] > A[i + 1])
+		{
+				Swap(A, i, i + 1);
+		}else{
+			break;
+		}
+	}
+}
+
+//已排序递增数组队尾进入新数据排序
+void TailSort(uint32_t A[], uint16_t n)
+{
+	int i;
+	for(i = n-1;i > 0;i --)
+	{
+		if (A[i] < A[i - 1])
+		{
+				Swap(A, i, i - 1);
+		}else{
+			break;
+		}
+	}
+}
+
+void CurrentHandle(u32 readc)
+{
+	u8 i;
+	readcsum = 0;
+	if(readc > DispValue.Current)
+	{
+		if(readc - DispValue.Current > 50)
+		{
+			for(i = 0;i < 10;i++)
+			{
+				readcbuf[i] = readc;
+			}
+			DispValue.Current = readc;
+			readccount = 0;
+		}else{
+			if(readccount == 0)
+			{
+				readccount++;
+				readcbuf[0] = readc;
+				HeadSort(readcbuf,10);//新数据单独排序
+			}else if(readccount == 1){
+				readccount ++; 
+				readcbuf[9] = readc;
+				TailSort(readcbuf,10);//新数据单独排序
+			}
+			if(readccount == 2)
+			{
+				readccount = 0;
+				for(i=2;i<8;i++)
+				{
+					readcsum+=readcbuf[i];
+				}
+				DispValue.Current = readcsum/6;
+			}
+		}
+	}else{
+		if(DispValue.Current - readc > 50)
+		{
+			for(i = 0;i < 10;i++)
+			{
+				readcbuf[i] = readc;
+			}
+			DispValue.Current = readc;
+			readccount = 0;
+		}else{
+			if(readccount == 0)
+			{
+				readccount++;
+				readcbuf[0] = readc;
+				HeadSort(readcbuf,10);//新数据单独排序
+			}else if(readccount == 1){
+				readccount ++; 
+				readcbuf[9] = readc;
+				TailSort(readcbuf,10);//新数据单独排序
+			}
+			if(readccount == 2)
+			{
+				readccount = 0;
+				for(i=2;i<8;i++)
+				{
+					readcsum+=readcbuf[i];
+				}
+				DispValue.Current = readcsum/6;
+			}
+		}
+	}
+}
+
 void Rec_Handle(void)	
 {
 	static u8 sumcount;
@@ -2482,7 +2584,8 @@ void Rec_Handle(void)
 //					DispValue.Current = isum/DISP_FILTER;
 //					isum = 0;
 //				}
-				DispValue.Current = readbuf;
+				CurrentHandle(readbuf);
+//				DispValue.Current = readbuf;
 				
 				readbuf = 0;
 				readbuf += UART_Buffer_Rece[11] << 24;

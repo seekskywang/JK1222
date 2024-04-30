@@ -60,6 +60,7 @@ u8 GetSoftTimerOut(u8 id);
 void Para_Set_Comp(void);
 void UpError(u8 code);
 void DrawLock(u8 sw);
+void Swap(uint32_t A[], uint16_t i, uint16_t j);
 #define INITDELAY  256
 
 #define PACKAGE_SIZE  256
