@@ -119,6 +119,10 @@
       <TargetDriverDllRegistry>
         <SetRegEntry>
           <Number>0</Number>
+          <Key>DLGUARM</Key>
+        </SetRegEntry>
+        <SetRegEntry>
+          <Number>0</Number>
           <Key>PWSTATINFO</Key>
           <Name>200,50,700</Name>
         </SetRegEntry>
@@ -314,6 +318,11 @@
           <count>32</count>
           <WinNumber>1</WinNumber>
           <ItemText>readcsum,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>33</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>DispValue.Rdata,0x0A</ItemText>
         </Ww>
       </WatchWindow1>
       <WatchWindow2>
