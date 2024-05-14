@@ -67,6 +67,8 @@ u32 vercurmax[14] = {
 1200000,600000,600000,400000,2400000,
 2400000,1200000,1200000,600000,1200000,
 1200000,1500000,5000000,1200000};
+
+u32 baudval[5] = {4800,9600,19200,38400,115200};
 //const u8 RANGE_UNIT[11]=
 //{
 //	4,
@@ -1055,7 +1057,7 @@ void Para_Set_Comp(void)
 		{
 			LoadSave.delay[i] = 36000;
 		}
-		if(LoadSave.Baudrate > 4 || LoadSave.Baudrate < 1)
+		if(LoadSave.Baudrate != 1 && LoadSave.Baudrate != 2)
 		{
 			LoadSave.Baudrate = 1;
 		}
@@ -1392,8 +1394,9 @@ void Power_Process(void)
       } 
     
 //    delay_ms(10);
+//			LoadSave.Baudrate = 1;
 	 Debug_USART_Config(DEBUG_USART_BAUDRATE);
-	 HS_USART_Config(HS_USART_BAUDRATE);
+//	 HS_USART_Config(baudval[LoadSave.Baudrate]);
     Keyboard_Init();//按键初始化
 	Spin_Init();
 
@@ -1420,6 +1423,7 @@ void Power_Process(void)
 
 	i=0;//显示延时
 	Read_set_flash();
+	HS_USART_Config(baudval[LoadSave.Baudrate]);
 	if(LoadSave.jkflag == 0)
 	{
     lcd_image((uint8_t *)gImage_open);

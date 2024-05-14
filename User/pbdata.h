@@ -213,6 +213,7 @@ extern FATFS fs;
 extern FIL file;
 extern u8 bmpname[30];
 extern u8 lockflag;//通讯键盘锁标志
+extern u32 baudval[5];
 //==========================================================
 //系统状态
 enum SysStatusEnum

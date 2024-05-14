@@ -98,6 +98,24 @@ static uint8_t MODS_ReadRegValue(uint16_t reg_addr, uint8_t *reg_value)
 			else if(LoadSave.sence == 0)
 				value = 8;
 		break;
+		case 0x0008://波特率 5-9600,7-19200
+			if(LoadSave.Baudrate == 1)
+				value = 5;
+			else if(LoadSave.Baudrate == 2)
+				value = 7;
+		break;
+		case 0x0009:
+			value = 0;
+		break;	
+		case 0x000A:
+			value = 0;
+		break;
+		case 0x000B:
+			value = 0;
+		break;
+		case 0x000C:
+			value = 0;
+		break;
 		default:
 			return 0;
 	}
@@ -170,7 +188,15 @@ static uint8_t MODS_ReadInputRegValue(uint16_t reg_addr, uint8_t *reg_value)
 		case 0x0009://被测电阻
 			value = DispValue.Rdata/1000;
 		break;
-
+		case 0x000A://被测容量
+			value = 0;
+		break;
+		case 0x000B://被测瓦时
+			value = 0;
+		break;
+		case 0x000C://运行时间
+			value = 0;
+		break;
 		default:
 			return 0;
 	}
@@ -240,7 +266,25 @@ static uint8_t MODS_WriteRegValue(uint16_t reg_addr, uint16_t reg_value)
 			else if(reg_value == 8)
 				LoadSave.sence = 0;
 		break;
-			
+		case 0x0008://波特率 5-9600,7-19200
+			if(reg_value == 5)
+				LoadSave.Baudrate = 1;
+			else if(reg_value == 7)
+				LoadSave.Baudrate = 2;
+			HS_USART_Config(baudval[LoadSave.Baudrate]);
+		break;
+		case 0x0009://波特率 5-9600,7-19200
+
+		break;
+		case 0x000A://波特率 5-9600,7-19200
+
+		break;
+		case 0x000B://波特率 5-9600,7-19200
+
+		break;
+		case 0x000C://波特率 5-9600,7-19200
+
+		break;
 		default:
 			return 0;		/* 参数异常，返回 0 */
 	}
@@ -2476,6 +2520,7 @@ void Rec3_Handle(void)
 	vu16 crc_result;
 	u32 readbuf;
 	u8 sendnum=0;
+	u8 i;
 	memcpy(UART3_Buffer_Rece, usart3rxbuff, 256);
 	
 	if(LoadSave.devmode==2)
@@ -2574,17 +2619,43 @@ void Rec3_Handle(void)
 					Uart3SendBuff(u3sendbuff,sendnum);
 				}
 			}else if(LoadSave.devmode==2){//普通模式
-				if(UART3_Buffer_Rece[0] == LoadSave.Addr ||
+				if(UART3_Buffer_Rece[0] == 1 ||
 						UART3_Buffer_Rece[0] == 0)
 				{
 					memset((char *)u3sendbuff,0,sizeof(u3sendbuff));
 					lockflag = 1;
 					DrawLock(lockflag);
 					MODS_03H();
+				}else if(UART3_Buffer_Rece[0] == 4){
+					uart3sendlen = 0;
+					u3sendbuff[uart3sendlen++] = UART3_Buffer_Rece[0];
+					u3sendbuff[uart3sendlen++] = UART3_Buffer_Rece[1];
+					u3sendbuff[uart3sendlen++] = 2;			/* ????? */
+
+					for (i = 0; i < 2/2; i++)
+					{
+						if(LoadSave.vrange == 0)
+						{
+							u3sendbuff[uart3sendlen++] = ((u16)(DispValue.Voltage/100))>>8;
+							u3sendbuff[uart3sendlen++] = ((u16)(DispValue.Voltage/100));
+						}else{
+							u3sendbuff[uart3sendlen++] = ((u16)(DispValue.Voltage/10))>>8;
+							u3sendbuff[uart3sendlen++] = ((u16)(DispValue.Voltage/10));
+						}
+					}
+					if(LoadSave.TCP == 0)
+					{
+						u3sendbuff[uart3sendlen++] = Hardware_CRC(u3sendbuff,2+3)>>8;
+						u3sendbuff[uart3sendlen++] = Hardware_CRC(u3sendbuff,2+3);			
+					}else{
+						u3sendbuff[uart3sendlen++] = Hardware_CRC(u3sendbuff,2+3);
+						u3sendbuff[uart3sendlen++] = Hardware_CRC(u3sendbuff,2+3)>>8;
+					}
+					Uart3SendBuff(u3sendbuff,uart3sendlen);
 				}
 			}
 		}else if(UART3_Buffer_Rece[1] == 0x04){
-			if(UART3_Buffer_Rece[0] == LoadSave.Addr ||
+			if(UART3_Buffer_Rece[0] == 1 ||
 						UART3_Buffer_Rece[0] == 0)
 			{
 				memset((char *)u3sendbuff,0,sizeof(u3sendbuff));
@@ -2614,7 +2685,7 @@ void Rec3_Handle(void)
 					readbuf += UART3_Buffer_Rece[16] << 8;
 					readbuf += UART3_Buffer_Rece[17];
 					LoadSave.risistence = readbuf;
-					
+										
 					readbuf = 0;
 					readbuf += UART3_Buffer_Rece[18] << 24;
 					readbuf += UART3_Buffer_Rece[19] << 16;
@@ -2628,7 +2699,7 @@ void Rec3_Handle(void)
 					Test_Process();
 				}
 			}else if(LoadSave.devmode==2){//普通模式
-				if(UART3_Buffer_Rece[0] == LoadSave.Addr ||
+				if(UART3_Buffer_Rece[0] == 	1 ||
 						UART3_Buffer_Rece[0] == 0)
 				{
 					memset((char *)u3sendbuff,0,sizeof(u3sendbuff));
@@ -2657,7 +2728,7 @@ void Rec3_Handle(void)
 					Set_Para();
 				}
 			}else if(LoadSave.devmode==2){
-				if(UART3_Buffer_Rece[0] == LoadSave.Addr ||
+				if(UART3_Buffer_Rece[0] == 1 ||
 						UART3_Buffer_Rece[0] == 0)
 				{
 					memset((char *)u3sendbuff,0,sizeof(u3sendbuff));

@@ -4425,7 +4425,7 @@ void Disp_Sys_Item(void)
         
 	}
 	Colour.Fword=LCD_COLOR_GREY;
-	WriteString_16(LIST2+90, FIRSTLINE+SPACE1*6, "SoftVer :3.7",  0);
+	WriteString_16(LIST2+90, FIRSTLINE+SPACE1*6, "SoftVer :3.8",  0);
 	//2.5增加标准RTU协议选择
 	//2.6上位机通讯改到前面板
 	//2.7仪器出厂参数可以自定义设置
@@ -4439,6 +4439,7 @@ void Disp_Sys_Item(void)
 	//3.5上位机通讯波特率改9600
 	//3.6 SCPI协议接收做缓存处理用于处理连续多条命令
 	//3.7 增加电流滤波处理，客户定制modbus协议版本
+	//3.8 增加上位机波特率设置
 	Hex_Format(DispValue.version,1,2,0);
 	WriteString_16(LIST2+90, FIRSTLINE+SPACE1*7, "BoardVer:",  0);
 	WriteString_16(LIST2+90+90, FIRSTLINE+SPACE1*7, DispBuf,  0);
