@@ -364,6 +364,8 @@ typedef struct
 	u32 facmaxcur;//出厂最大电流
 //测试模式
 	u8 testmode;//0-精准；1-快速
+//循环测试次数
+	u16 LoopNum;//0-精准；1-快速
 }SaveData_Typedef;
 extern SaveData_Typedef LoadSave; 
 
@@ -404,6 +406,7 @@ typedef struct
 	u8 version;
 	u8 poweralert;
 	u16 currentalert;
+	u16 currentlistloop;
 ////校准测量控制电压低档
 //	u32 VLOW1;
 //	u32 SETVLOW1;

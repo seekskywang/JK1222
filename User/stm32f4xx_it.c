@@ -540,7 +540,27 @@ void  BASIC_TIM_IRQHandler (void)
 								SwitchLedOff();
 								resflag = 1;
 								listbeep = ListBeep();
-							}else{//循环测试开
+							}else if(LoadSave.LoopTest == 2){//有限次数循环
+								if(DispValue.currentlistloop < LoadSave.LoopNum)
+								{
+									DispValue.currentlistloop++;
+									listtime = 0;
+									DispValue.listrunstep = 0;
+									DispValue.listdelay = LoadSave.delay[DispValue.listrunstep];
+									setflag=1;//Set_Para();
+								}else{
+									DispValue.currentlistloop = 1;
+									startdelay=STARTDELAY;
+									listtime = 0;
+									DispValue.listrunstep = 0;
+									mainswitch = 0;
+									setflag=2;//Set_Para();
+	//								OnOff_SW(mainswitch);
+									SwitchLedOff();
+									resflag = 1;
+									listbeep = ListBeep();
+								}
+							}else{//循环连续测试
 								listtime = 0;
 								DispValue.listrunstep = 0;
 								DispValue.listdelay = LoadSave.delay[DispValue.listrunstep];
@@ -567,7 +587,27 @@ void  BASIC_TIM_IRQHandler (void)
 								SwitchLedOff();
 								resflag = 1;
 								listbeep = ListBeep();
-							}else{//循环测试开
+							}else if(LoadSave.LoopTest == 2){//有限次数循环
+								if(DispValue.currentlistloop < LoadSave.LoopNum)
+								{
+									DispValue.currentlistloop++;
+									listtime = 0;
+									DispValue.listrunstep = 0;
+									DispValue.listdelay = LoadSave.delay[DispValue.listrunstep];
+									setflag=1;//Set_Para();
+								}else{
+									DispValue.currentlistloop = 1;
+									startdelay=STARTDELAY;
+									listtime = 0;
+									DispValue.listrunstep = 0;
+									mainswitch = 0;
+									setflag=2;//Set_Para();
+	//								OnOff_SW(mainswitch);
+									SwitchLedOff();
+									resflag = 1;
+									listbeep = ListBeep();
+								}
+							}else{//循环连续测试
 								listtime = 0;
 								DispValue.listrunstep = 0;
 								DispValue.listdelay = LoadSave.delay[DispValue.listrunstep];

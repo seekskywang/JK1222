@@ -218,6 +218,7 @@ const uint8_t Unit_Setitem[][5+1]=
 	{"A/ms"},
 	{"步"},
 	{"ms"},
+	{"次"},
 };
 
 const uint8_t Unit_Compitem[][5+1]=
@@ -514,6 +515,20 @@ const uint8_t List_Beep[][6+1]=
 	{"合格"},
 	{"不合格"}
 
+};
+
+const uint8_t ListLoop_Item[][6+1]=
+{
+	{"关闭"},
+	{"连续"},
+	{"次数"}
+};
+
+const uint8_t ListLoop_ItemE[][6+1]=
+{
+	{"OFF"},
+	{"CONST"},
+	{"NUM"}
 };
 
 const uint8_t DeviceMode_Item[][6+1]=
@@ -2864,6 +2879,13 @@ void Disp_List_Process(void)
 	Colour.Fword=LCD_COLOR_YELLOW;
 	Colour.black=LCD_COLOR_TEST_BACK;
 //	LCD_DrawRect(300,26+3*22,250,26+8*22);
+	if(LoadSave.LoopTest == 2)
+	{
+		Hex_Format(DispValue.currentlistloop,0 , 4 , 0);//显示步数
+		WriteString_16(LIST2-20-20+200, LIST1+4 ,DispBuf,0);
+	}else{
+		WriteString_16(LIST2-20-20+200, LIST1+4 ,"    ",0);
+	}
 	if(LoadSave.language == 0)
 	{
 		WriteString_16(300,94,"第",0);
@@ -3049,10 +3071,16 @@ void Disp_List_value(u8 num)
 	}	
 	LCD_DrawFullRect( LIST2+118, FIRSTLINE+SPACE1*2-2,88+4 , SPACE1-2  ) ;//SPACE1
   Colour.Fword=White;
-	if(LoadSave.language == 0)
-		WriteString_16(LIST2+118, FIRSTLINE+SPACE1*2, Test_Compvalue[LoadSave.LoopTest],  0);//增加算法  把顺序改过来
-	else
-		WriteString_16(LIST2+118, FIRSTLINE+SPACE1*2, Test_Compvalue_E[LoadSave.LoopTest],  0);
+	if(LoadSave.LoopTest < 2)
+	{
+		if(LoadSave.language == 0)
+			WriteString_16(LIST2+118, FIRSTLINE+SPACE1*2, ListLoop_Item[LoadSave.LoopTest],  0);//增加算法  把顺序改过来
+		else
+			WriteString_16(LIST2+118, FIRSTLINE+SPACE1*2, ListLoop_ItemE[LoadSave.LoopTest],  0);
+	}else if(LoadSave.LoopTest == 2){
+		Hex_Format(LoadSave.LoopNum,0,4,0);
+		WriteString_16(LIST2+118, FIRSTLINE+SPACE1*2, DispBuf,  0);
+	}
 	
 	
 	//步骤和项目
@@ -3470,14 +3498,14 @@ void Disp_List_value(u8 num)
 						
 						if(LoadSave.language)
 						{
-							for(i=0;i<2;i++)
-								WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, Test_Compvalue_E[i],  0);
+							for(i=0;i<3;i++)
+								WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, ListLoop_ItemE[i],  0);
 //							pt=List_CompTypeE;
 						}
 						else
 						{
-							for(i=0;i<2;i++)
-								WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, Test_Compvalue[i],  0);
+							for(i=0;i<3;i++)
+								WriteString_16(BUTTOM_X_VALUE+i*BUTTOM_MID_VALUE, BUTTOM_Y_VALUE, ListLoop_Item[i],  0);
 //							pt=List_CompType;
 						
 						}
@@ -4425,7 +4453,7 @@ void Disp_Sys_Item(void)
         
 	}
 	Colour.Fword=LCD_COLOR_GREY;
-	WriteString_16(LIST2+90, FIRSTLINE+SPACE1*6, "SoftVer :3.7",  0);
+	WriteString_16(LIST2+90, FIRSTLINE+SPACE1*6, "SoftVer :3.8",  0);
 	//2.5增加标准RTU协议选择
 	//2.6上位机通讯改到前面板
 	//2.7仪器出厂参数可以自定义设置
@@ -4438,7 +4466,8 @@ void Disp_Sys_Item(void)
 	//3.4增加部分SCPI命令
 	//3.5上位机通讯波特率改9600
 	//3.6 SCPI协议接收做缓存处理用于处理连续多条命令
-	//3.6 增加电流滤波处理
+	//3.6增加电流滤波处理
+	//3.8列表测试增加循环次数选项
 	Hex_Format(DispValue.version,1,2,0);
 	WriteString_16(LIST2+90, FIRSTLINE+SPACE1*7, "BoardVer:",  0);
 	WriteString_16(LIST2+90+90, FIRSTLINE+SPACE1*7, DispBuf,  0);
@@ -5516,6 +5545,19 @@ void Disp_button_Num_Step(void)
 
 }
 
+void Disp_button_Num_Num(void)
+{
+	const u8 (*pt)[sizeof(Unit_Setitem[0])];
+	
+	Disp_Fastbutton();
+	
+	pt = Unit_Setitem;
+	Colour.black=LCD_COLOR_TEST_BUTON;
+	Colour.Fword=White;
+	WriteString_16(BUTTOM_X_VALUE, BUTTOM_Y_VALUE, pt[8],  0);
+
+}
+
 void Disp_button_Num_time(void)
 {
 	const u8 (*pt)[sizeof(Unit_Setitem[0])];
@@ -6147,6 +6189,25 @@ vu32 Disp_Set_Step(Disp_Coordinates_Typedef *Coordinates)
 {
 	Sort_TypeDef Sort_num,Sort_num1;
 	Disp_button_Num_Step();
+	Sort_num=Disp_NumKeyboard_Set(Coordinates,1);
+//	Sort_num1=Time_Set_Cov(&Sort_num);
+	Sort_num.Num/=10000;
+	if(Sort_num1.Updata_flag==0)
+	{
+		Sort_num1.Dot=0;
+		Sort_num1.Num=0;
+		Sort_num1.Unit=0;
+	
+	}
+		
+	return Sort_num.Num;
+
+}
+
+vu32 Disp_Set_Loopnum(Disp_Coordinates_Typedef *Coordinates)
+{
+	Sort_TypeDef Sort_num,Sort_num1;
+	Disp_button_Num_Num();
 	Sort_num=Disp_NumKeyboard_Set(Coordinates,1);
 //	Sort_num1=Time_Set_Cov(&Sort_num);
 	Sort_num.Num/=10000;

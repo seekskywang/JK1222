@@ -336,9 +336,9 @@ void Para_Set_Comp(void)
 	{
 		LoadSave.StepMode = 1;
 	}
-	if(LoadSave.LoopTest > 1)
+	if(LoadSave.LoopTest > 2)
 	{
-		LoadSave.LoopTest = 1;
+		LoadSave.LoopTest = 0;
 	}
 	if(LoadSave.ListBeep > 1)
 	{
@@ -1110,6 +1110,10 @@ void Para_Set_Comp(void)
 		if(LoadSave.gatev > LoadSave.facmaxvol)
 		{
 			LoadSave.gatev = 0;
+		}
+		if(LoadSave.LoopNum > 1000 || LoadSave.LoopNum < 1)
+		{
+			LoadSave.LoopNum = 1;
 		}
 	}
 }
@@ -4700,10 +4704,11 @@ void List_Process(void)
   Disp_List_Item();  
 
 
-    i=0;
+	i=0;
 	Set_Para();
 
 	startdelay=STARTDELAY;
+	DispValue.currentlistloop = 1;
 	while(GetSystemStatus()==SYS_STATUS_LIST)
 	{
         USB_Count++;
@@ -5046,7 +5051,15 @@ void List_Process(void)
 												Store_set_flash();
 											}
 										}break;
-									
+										case 13:
+										{
+											if(mainswitch == 0)
+											{
+												LoadSave.LoopTest = 2;
+												Store_set_flash();
+											}
+										}
+										break;
 									}
 				//					Savetoeeprom();
 								break;
@@ -5277,6 +5290,20 @@ void List_Process(void)
 												Store_set_flash();
 											}
 										}break;
+										case 13:
+										{
+											if(mainswitch == 0)
+											{
+												LoadSave.LoopTest = 2;
+												Coordinates.xpos=LIST2+118;
+												Coordinates.ypos=FIRSTLINE+SPACE1*2;
+												Coordinates.lenth=76;
+												LoadSave.LoopNum=Disp_Set_Loopnum(&Coordinates);
+												Para_Set_Comp();
+												Store_set_flash();
+											}
+										}
+										break;
 										default:
 											break;
 									
@@ -5296,6 +5323,7 @@ void List_Process(void)
 											{
 												if(LoadSave.gatev == 0)
 												{
+													DispValue.currentlistloop = 1;
 													switchdelay = SWITCH_DELAY;
 													mainswitch = 1;
 													setflag=1;
@@ -5310,6 +5338,7 @@ void List_Process(void)
 											}else{
 												if(DispValue.listrunstep != 0)
 												{
+													DispValue.currentlistloop = 1;
 													mainswitch = 1;
 													SwitchLedOn();
 													setflag=1;
@@ -5317,6 +5346,7 @@ void List_Process(void)
 												}else{
 													if(LoadSave.gatev == 0)
 													{
+														DispValue.currentlistloop = 1;
 														switchdelay = SWITCH_DELAY;
 														mainswitch = 1;
 														setflag=1;
