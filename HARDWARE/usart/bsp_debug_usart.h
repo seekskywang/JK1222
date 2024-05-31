@@ -76,6 +76,7 @@ void Set_Test_Mode(void);
 void UP_FILESIZE(void);
 void CalHandle(u8 step);
 void ReadData(void);
+void ReadData2(void);
 void ReadBootMode(void);
 void ReadVersoin(void);
 void Rec_Handle(void);

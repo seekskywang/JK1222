@@ -29,7 +29,7 @@ FRESULT result=FR_NOT_READY;
 FATFS fs;
 FIL file;
 UINT readcount;
-
+u8 sendreadflag;
 u8 lockflag;//通讯键盘锁标志
 u8 keyvalue;
 u16 spinvalue;
@@ -1572,7 +1572,7 @@ void Setup_Process(void)
 		}
 		if(setflag != 0)
 		{
-			if(setcount == 5)
+			if(setcount == 20)
 			{
 				Set_Para();
 				setcount = 0;
@@ -2720,7 +2720,14 @@ void SetCurrentLimit(vu32* setc,u8* flag)
 //		ReadData();
 		if(F_100ms == TRUE && flag_spin == 0 && setflag == 0)
 		{
-			ReadData();//读本机数据
+//			if(sendreadflag == 0)
+//			{
+				ReadData();//读本机数据
+//				sendreadflag = 1;
+//			}else if(sendreadflag == 1){
+//				ReadData2();//读本机数据
+//				sendreadflag = 0;
+//			}
 			if(LoadSave.devmode==0 && setslaveflag == 0)//主机模式
 			{
 //				ReadSlaveData(slaveID);//读取从机数据
@@ -2734,7 +2741,7 @@ void SetCurrentLimit(vu32* setc,u8* flag)
 		SetCurrentLimit(&LoadSave.current,&Disp_Flag);
 		if(setflag != 0)
 		{
-			if(setcount == 5)
+			if(setcount == 20)
 			{
 				Set_Para();
 				setcount = 0;
@@ -3204,6 +3211,7 @@ void SetCurrentLimit(vu32* setc,u8* flag)
 						}break;
 						case Key_SAVE:
 						{
+//							ReadData2();
 #if(BMP_SWITCH)
 					result=Screen_shot(0,0,480,272,(const char *)bmpname);
 #endif

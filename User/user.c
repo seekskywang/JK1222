@@ -693,6 +693,7 @@ const uint8_t Sys_Setitem[][10+1]=
 	{"从机数量"},
 	{"从机编号"},
 	{"测试模式"},
+	{"波特率"},
 //    {"文件名称"},
 	
 };
@@ -709,6 +710,7 @@ const uint8_t Sys_Setitem_E[][10+1]=
 	{"DEVNUM"},
 	{"DEVNo"},
 	{"TESTMODE"},
+	{"BAUDRATE"},
 //    {"FILE"},
 	
 };
@@ -5061,11 +5063,16 @@ void Use_SysSetProcess(void)
                             RTC_SetTime(RTC_Format_BINorBCD, &RTC_TimeStructure);
                             RTC_WriteBackupRegister(RTC_BKP_DRX, RTC_BKP_DATA);
 							break;	
-							case 14:
-								LoadSave.testmode = 0;
-								Set_Test_Mode();
-								Store_set_flash();
-							break;	
+						case 14:
+							LoadSave.testmode = 0;
+							Set_Test_Mode();
+							Store_set_flash();
+						break;
+						case 15:
+							LoadSave.testmode = 0;
+							Set_Test_Mode();
+							Store_set_flash();
+						break;							
 						default:
 						break;
 					

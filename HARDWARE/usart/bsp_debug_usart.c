@@ -2210,6 +2210,22 @@ void ReadData(void)
 //	Usart1_Send((char *)sendbuff,8);
 }
 
+//读取数据
+void ReadData2(void)
+{
+	memset((char *)sendbuff,0,sizeof(sendbuff));
+	sendbuff[0] = 0x01;
+	sendbuff[1] = 0x03;
+	sendbuff[2] = 0x00;
+	sendbuff[3] = 0x00;
+	sendbuff[4] = 0x00;
+	sendbuff[5] = 0x13;
+	sendbuff[6] = Hardware_CRC(sendbuff,6)>>8;
+	sendbuff[7] = Hardware_CRC(sendbuff,6);
+	Uart1SendBuff(sendbuff,7);
+//	Usart1_Send((char *)sendbuff,8);
+}
+
 //读取启动模式
 void ReadBootMode(void)
 {
