@@ -2579,7 +2579,7 @@ void SetCurrentLimit(vu32* setc,u8* flag)
 	{
 		if((double)(DispValue.Voltage)/10000 * 
 			 (double)(*setc)/10000 > 
-				(double)(LoadSave.facmaxpow/10000)*1.1)
+				(double)(LoadSave.facmaxpow/10000))
 		{
 			*setc = 0;		
 			Set_Para();
@@ -2591,7 +2591,7 @@ void SetCurrentLimit(vu32* setc,u8* flag)
 	}else if(LoadSave.vrange == 1){
 		if((double)(DispValue.Voltage)/1000 * 
 			 (double)(*setc)/10000 > 
-				(double)(LoadSave.facmaxpow/10000)*1.1)
+				(double)(LoadSave.facmaxpow/10000))
 		{
 			*setc = 0;		
 			Set_Para();
