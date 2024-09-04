@@ -366,6 +366,8 @@ typedef struct
 	u8 testmode;//0-精准；1-快速
 //循环测试次数
 	u16 LoopNum;//0-精准；1-快速
+//电压功率限制开关
+	u8 alterprotect;
 }SaveData_Typedef;
 extern SaveData_Typedef LoadSave; 
 

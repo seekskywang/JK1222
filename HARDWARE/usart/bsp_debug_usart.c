@@ -2138,10 +2138,10 @@ void Set_Para(void)
 	sendbuff[133+28] = 0;
 	sendbuff[134+28] = 0;//BOOTLOAD
 	
-	sendbuff[135+28] = 0;
-	sendbuff[136+28] = 0;
-	sendbuff[137+28] = 0;
-	sendbuff[138+28] = 0;//BOOTLOAD
+	sendbuff[135+28] = LoadSave.alterprotect>>24;
+	sendbuff[136+28] = LoadSave.alterprotect>>16;
+	sendbuff[137+28] = LoadSave.alterprotect>>8;
+	sendbuff[138+28] = LoadSave.alterprotect;//PROTECT
 	
 	sendbuff[139+28] = 0;
 	sendbuff[140+28] = 0;

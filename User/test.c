@@ -247,6 +247,10 @@ void READ_COMP(void)
 void Para_Set_Comp(void)
 {
 	u8 i;
+	if(LoadSave.alterprotect > 1)
+	{
+		LoadSave.alterprotect=0;
+	}
 	if(LoadSave.testmode > 1)
 	{
 		LoadSave.testmode=0;
@@ -5989,11 +5993,17 @@ void Use_DebugProcess(void)
 				}break;
 				case Key_SHIFT:
 				{
-					if(LoadSave.Version < 13)//0-1200;1-800;2-600;3-400;4-2400;5-3500;6-500V;7-250V120A;8-250V60A
+//					if(LoadSave.Version < 13)//0-1200;1-800;2-600;3-400;4-2400;5-3500;6-500V;7-250V120A;8-250V60A
+//					{
+//						LoadSave.Version++;
+//					}else{
+//						LoadSave.Version=0;
+//					}
+					if(LoadSave.alterprotect == 1)
 					{
-						LoadSave.Version++;
-					}else{
-						LoadSave.Version=0;
+						LoadSave.alterprotect = 0;
+					}else if(LoadSave.alterprotect == 0){
+						LoadSave.alterprotect = 1;
 					}
 					Store_set_flash();
 					LCD_Clear(LCD_COLOR_TEST_BACK);

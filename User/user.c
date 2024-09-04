@@ -4453,7 +4453,7 @@ void Disp_Sys_Item(void)
         
 	}
 	Colour.Fword=LCD_COLOR_GREY;
-	WriteString_16(LIST2+90, FIRSTLINE+SPACE1*6, "SoftVer :3.8",  0);
+	WriteString_16(LIST2+90, FIRSTLINE+SPACE1*6, "SoftVer :3.9",  0);
 	//2.5增加标准RTU协议选择
 	//2.6上位机通讯改到前面板
 	//2.7仪器出厂参数可以自定义设置
@@ -4468,6 +4468,7 @@ void Disp_Sys_Item(void)
 	//3.6 SCPI协议接收做缓存处理用于处理连续多条命令
 	//3.6增加电流滤波处理
 	//3.8列表测试增加循环次数选项
+	//3.9增加电压功率限制开关
 	Hex_Format(DispValue.version,1,2,0);
 	WriteString_16(LIST2+90, FIRSTLINE+SPACE1*7, "BoardVer:",  0);
 	WriteString_16(LIST2+90+90, FIRSTLINE+SPACE1*7, DispBuf,  0);
@@ -6710,36 +6711,42 @@ void Disp_UserCheck_Item(void)
 	Colour.black=LCD_COLOR_TEST_BACK;//User_Check_main
 	Hex_Format(LoadSave.ErrCnt[0],0,5,0);
 	WriteString_16(200, 4,DispBuf ,  0);
-	if(LoadSave.Version == 0)
+	if(LoadSave.alterprotect == 1)
 	{
-		WriteString_16(360, 4,"        1200W" ,  0);
-	}else if(LoadSave.Version == 1){
-		WriteString_16(360, 4,"         800W" ,  0);
-	}else if(LoadSave.Version == 2){
-		WriteString_16(360, 4,"         600W" ,  0);
-	}else if(LoadSave.Version == 3){  
-		WriteString_16(360, 4,"         400W" ,  0);
-	}else if(LoadSave.Version == 4){
-		WriteString_16(360, 4,"        2400W" ,  0);
-	}else if(LoadSave.Version == 5){
-		WriteString_16(360, 4,"        3200W" ,  0);
-	}else if(LoadSave.Version == 6){
-		WriteString_16(360, 4,"         500V" ,  0);
-	}else if(LoadSave.Version == 7){
-		WriteString_16(360, 4,"     250V120A" ,  0);
-	}else if(LoadSave.Version == 8){
-		WriteString_16(360, 4,"      250V60A" ,  0);
-	}else if(LoadSave.Version == 9){
-		WriteString_16(360, 4,"1200W150V120A" ,  0);
-	}else if(LoadSave.Version == 10){
-		WriteString_16(360, 4,"2400W150V120A" ,  0);
-	}else if(LoadSave.Version == 11){
-		WriteString_16(360, 4,"4000W150V150A" ,  0);
-	}else if(LoadSave.Version == 12){
-		WriteString_16(360, 4,"6400W150V500A" ,  0);
-	}else if(LoadSave.Version == 13){
-		WriteString_16(360, 4,"2000W150V120A" ,  0);
+		WriteString_16(360, 4,"      ON" ,  0);
+	}else if(LoadSave.alterprotect == 0){
+		WriteString_16(360, 4,"     OFF" ,  0);
 	}
+//	if(LoadSave.Version == 0)
+//	{
+//		WriteString_16(360, 4,"        1200W" ,  0);
+//	}else if(LoadSave.Version == 1){
+//		WriteString_16(360, 4,"         800W" ,  0);
+//	}else if(LoadSave.Version == 2){
+//		WriteString_16(360, 4,"         600W" ,  0);
+//	}else if(LoadSave.Version == 3){  
+//		WriteString_16(360, 4,"         400W" ,  0);
+//	}else if(LoadSave.Version == 4){
+//		WriteString_16(360, 4,"        2400W" ,  0);
+//	}else if(LoadSave.Version == 5){
+//		WriteString_16(360, 4,"        3200W" ,  0);
+//	}else if(LoadSave.Version == 6){
+//		WriteString_16(360, 4,"         500V" ,  0);
+//	}else if(LoadSave.Version == 7){
+//		WriteString_16(360, 4,"     250V120A" ,  0);
+//	}else if(LoadSave.Version == 8){
+//		WriteString_16(360, 4,"      250V60A" ,  0);
+//	}else if(LoadSave.Version == 9){
+//		WriteString_16(360, 4,"1200W150V120A" ,  0);
+//	}else if(LoadSave.Version == 10){
+//		WriteString_16(360, 4,"2400W150V120A" ,  0);
+//	}else if(LoadSave.Version == 11){
+//		WriteString_16(360, 4,"4000W150V150A" ,  0);
+//	}else if(LoadSave.Version == 12){
+//		WriteString_16(360, 4,"6400W150V500A" ,  0);
+//	}else if(LoadSave.Version == 13){
+//		WriteString_16(360, 4,"2000W150V120A" ,  0);
+//	}
 //	for(i=0;i<(sizeof(User_Check_main)/(sizeof(User_Check_main[0])));i++)
 //	{
 //		WriteString_16(LIST1+160*i, FIRSTLINE, User_Check_main[i],  0);
