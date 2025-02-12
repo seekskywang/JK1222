@@ -241,7 +241,7 @@ void READ_COMP(void)
 		}
 	}
 	if(LoadSave.devmode != 0 && LoadSave.devmode != 1 && LoadSave.devmode != 2)
-		LoadSave.devmode=0;
+		LoadSave.devmode=2;
 }
 
 void Para_Set_Comp(void)
@@ -1440,6 +1440,9 @@ void Power_Process(void)
 // USBH_Process(&USB_OTG_Core, &USB_Host);
 	Beep_Off();
 	READ_COMP();
+	LoadSave.devmode=2;
+	LoadSave.devnum=1;
+	LoadSave.slaveNo=1;
 	SCPI_Init(&scpi_context,
 					scpi_commands,
 					&scpi_interface,

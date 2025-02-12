@@ -4453,7 +4453,7 @@ void Disp_Sys_Item(void)
         
 	}
 	Colour.Fword=LCD_COLOR_GREY;
-	WriteString_16(LIST2+90, FIRSTLINE+SPACE1*6, "SoftVer :4.0",  0);
+	WriteString_16(LIST2+90, FIRSTLINE+SPACE1*6, "SoftVer :4.1",  0);
 	//2.5增加标准RTU协议选择
 	//2.6上位机通讯改到前面板
 	//2.7仪器出厂参数可以自定义设置
@@ -4470,6 +4470,7 @@ void Disp_Sys_Item(void)
 	//3.8列表测试增加循环次数选项
 	//3.9增加电压功率限制开关
 	//4.0关闭上位机通讯锁定
+	//4.1仪器模式锁定为普通且不能更改
 	Hex_Format(DispValue.version,1,2,0);
 	WriteString_16(LIST2+90, FIRSTLINE+SPACE1*7, "BoardVer:",  0);
 	WriteString_16(LIST2+90+90, FIRSTLINE+SPACE1*7, DispBuf,  0);
@@ -5018,11 +5019,11 @@ void Use_SysSetProcess(void)
 							Set_Tcp();
 							Store_set_flash();
 						}break;
-						case 3:
-						{
-							LoadSave.devmode = 0;
-							Store_set_flash();
-						}break;
+//						case 3:
+//						{
+//							LoadSave.devmode = 0;
+//							Store_set_flash();
+//						}break;
 						case 4:
 						{
 							LoadSave.COMM = 0;
@@ -5121,11 +5122,11 @@ void Use_SysSetProcess(void)
 							Set_Tcp();
 							Store_set_flash();
 						}break;
-						case 3:
-						{
-							LoadSave.devmode = 1;
-							Store_set_flash();
-						}break;
+//						case 3:
+//						{
+//							LoadSave.devmode = 1;
+//							Store_set_flash();
+//						}break;
 						case 4:
 						{
 							LoadSave.COMM = 1;
