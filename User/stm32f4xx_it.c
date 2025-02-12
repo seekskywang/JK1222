@@ -414,7 +414,7 @@ void  BASIC_TIM_IRQHandler (void)
 	if ( TIM_GetITStatus( BASIC_TIM, TIM_IT_Update) != RESET ) 
 	{	
 		TIM_ClearITPendingBit(BASIC_TIM , TIM_IT_Update); 
-		lockcheck();
+//		lockcheck();
 		if(scpirecflag == 1)
 		{
 			scpirectimeout++;
